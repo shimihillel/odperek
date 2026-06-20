@@ -1,5 +1,423 @@
-<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#b46a55"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="עוד פרק אחד"><title>עוד פרק אחד</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/icon-180.png"><link rel="icon" href="assets/icon-32.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet"><style>
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#b46a55"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="עוד פרק אחד"><title>עוד פרק אחד v2</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/icon-180.png"><link rel="icon" href="assets/icon-32.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet"><style>
 :root{--bg:#fbf2ec;--paper:#fff9f4;--paper2:#f7e4dc;--rose:#d7a49a;--terra:#b46a55;--terra2:#c8826e;--ink:#3a241e;--cocoa:#5a3830;--muted:#977b70;--line:#ead7cf;--shadow:0 16px 42px rgba(80,42,32,.12);--soft:0 8px 24px rgba(80,42,32,.08);--safe:env(safe-area-inset-bottom,0px);--top:env(safe-area-inset-top,0px)}*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}html,body{min-height:100%;background:radial-gradient(circle at 18% 0%,rgba(180,106,85,.18),transparent 28%),radial-gradient(circle at 86% 6%,rgba(215,164,154,.26),transparent 24%),linear-gradient(180deg,#fbf2ec 0%,#f8e9e2 100%);color:var(--ink);font-family:Assistant,system-ui,sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.15;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='110' height='110' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E")}#app{max-width:430px;margin:0 auto;min-height:100dvh;position:relative;padding-bottom:92px}.screen{display:none;padding:calc(18px + var(--top)) 16px 110px;animation:rise .2s ease}.screen.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.top{margin-bottom:16px}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:900}.brand{font-family:'Playfair Display',serif;font-size:44px;line-height:.98;font-weight:900;font-style:italic;color:var(--ink);letter-spacing:-1px}.sub{font-size:14px;color:var(--muted);font-weight:800;margin-top:5px}.card{background:rgba(255,249,244,.92);border:1px solid rgba(234,215,207,.95);border-radius:28px;padding:17px;margin-bottom:14px;box-shadow:var(--soft);backdrop-filter:blur(10px)}.sectionHead{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 10px}.sectionTitle{font-size:17px;font-weight:900;color:var(--cocoa)}.textLink{border:none;background:transparent;color:var(--terra);font:inherit;font-weight:900;padding:4px}.primary,.secondary,.ghost,.danger{border:none;border-radius:19px;padding:14px 16px;font-family:inherit;font-weight:900;font-size:15px;min-height:48px}.primary{background:var(--terra);color:#fff;box-shadow:0 10px 22px rgba(180,106,85,.28)}.secondary{background:var(--paper);border:1px solid var(--line);color:var(--cocoa)}.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}.danger{background:transparent;border:1px solid rgba(150,63,58,.22);color:#9b413a}.nowCard{background:linear-gradient(145deg,#fff9f4 0%,#f1d6ce 100%);border:1px solid rgba(180,106,85,.22);border-radius:32px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.nowCard:after{content:"";position:absolute;left:-40px;top:-40px;width:150px;height:150px;background:rgba(255,255,255,.25);border-radius:50%}.nowLbl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:900;position:relative}.emptyNow{font-family:'Playfair Display',serif;font-style:italic;font-size:27px;line-height:1.15;color:var(--cocoa);font-weight:900;margin:8px 0 16px;position:relative}.nowBook{position:relative}.nowTitle{font-family:'Playfair Display',serif;font-size:31px;font-style:italic;font-weight:900;line-height:1.05;color:var(--ink);margin:8px 0 4px}.nowAuthor{font-size:15px;color:var(--muted);font-weight:800;margin-bottom:15px}.nowActions{display:grid;grid-template-columns:1.3fr .9fr;gap:9px;position:relative}.addShelf{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 4px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:15px;color:var(--cocoa);font-weight:900;font-size:16px;box-shadow:var(--soft)}.hScroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory}.hScroll::-webkit-scrollbar{display:none}.bookMini{width:154px;min-width:154px;min-height:174px;border-radius:24px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;box-shadow:var(--soft);scroll-snap-align:start;cursor:pointer;position:relative;overflow:hidden}.bookMini:after{content:"";position:absolute;inset:auto -35px -45px auto;width:110px;height:110px;background:rgba(255,255,255,.11);border-radius:50%}.bookTag{align-self:flex-start;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:900;color:rgba(255,255,255,.92);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bookTitle{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.08;font-weight:900;position:relative}.bookAuthor{font-size:12px;color:rgba(255,255,255,.72);font-weight:700;margin-top:5px}.bookRatings{font-size:12px;letter-spacing:1px;position:relative}.empty{grid-column:1/-1;text-align:center;padding:36px 18px;color:var(--muted);font-weight:800}.empty strong{display:block;font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--cocoa);margin-bottom:6px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.libraryTop{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}.summary{font-size:13px;color:var(--muted);font-weight:900}.tools{display:flex;gap:8px}.pillBtn{border:1px solid var(--line);background:rgba(255,249,244,.75);border-radius:999px;padding:8px 11px;font:inherit;font-weight:900;font-size:12px;color:var(--cocoa)}.toggle{display:flex;background:#f2ddd5;border:1px solid var(--line);border-radius:999px;padding:3px;gap:3px}.toggle button{border:none;background:transparent;border-radius:999px;padding:7px 11px;font:inherit;font-size:12px;font-weight:900;color:var(--muted)}.toggle button.on{background:var(--paper);color:var(--terra);box-shadow:0 2px 8px rgba(70,30,20,.08)}.list{display:flex;flex-direction:column;gap:8px}.listRow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,249,244,.84);border-radius:20px;padding:11px;box-shadow:var(--soft);cursor:pointer}.colorDot{width:38px;height:52px;border-radius:12px;flex-shrink:0}.listMain{flex:1;min-width:0}.listTitle{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.listAuthor{font-size:12px;color:var(--muted);font-weight:800;margin-top:1px}.listMeta{font-size:12px;white-space:nowrap}.tagSmall{display:inline-block;border-radius:999px;padding:3px 7px;background:rgba(180,106,85,.12);color:var(--terra);font-size:11px;font-weight:900;max-width:105px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.searchRow{display:flex;gap:8px;margin-bottom:10px}.searchInput{flex:1}.input,.textarea{width:100%;border:1px solid var(--line);background:rgba(255,249,244,.84);border-radius:18px;padding:13px 14px;font:inherit;font-size:15px;font-weight:800;color:var(--ink);outline:none}.textarea{min-height:98px;resize:vertical;line-height:1.45}.input:focus,.textarea:focus{border-color:var(--terra)}.filtersOpen{display:none}.filtersOpen.open{display:block}.filterChips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chip{border:1px solid var(--line);background:rgba(255,249,244,.8);border-radius:999px;padding:7px 10px;font:inherit;font-size:12px;font-weight:900;color:var(--muted)}.chip.on{background:var(--terra);border-color:var(--terra);color:#fff}.groupBox{border:1px solid var(--line);background:rgba(255,249,244,.7);border-radius:20px;margin-bottom:8px;overflow:hidden}.groupHead{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-weight:900;color:var(--cocoa);cursor:pointer}.groupBody{display:none;padding:0 10px 12px}.groupBox.open .groupBody{display:flex;gap:7px;flex-wrap:wrap}.statsHero{background:linear-gradient(145deg,#fff9f4,#e9c5bd);border:1px solid rgba(180,106,85,.22);border-radius:32px;padding:21px;box-shadow:var(--shadow);margin-bottom:14px}.statsTitle{font-family:'Playfair Display',serif;font-size:31px;font-weight:900;font-style:italic;line-height:1;color:var(--ink)}.statsLine{margin-top:10px;font-size:15px;font-weight:900;color:var(--cocoa);line-height:1.45}.statsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.statCard{background:rgba(255,249,244,.88);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:var(--soft)}.statNum{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;font-style:italic;color:var(--terra);line-height:1}.statLbl{font-size:12px;color:var(--muted);font-weight:900;margin-top:4px}.leader{display:flex;flex-direction:column;gap:8px;margin-top:10px}.leaderItem{background:rgba(255,249,244,.82);border:1px solid var(--line);border-radius:18px;padding:10px}.leaderLbl{font-size:12px;color:var(--muted);font-weight:900}.leaderVal{font-weight:900;color:var(--cocoa);margin-top:2px}nav{position:fixed;bottom:0;left:0;right:0;max-width:430px;margin:0 auto;background:rgba(255,249,244,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:9px 12px calc(11px + var(--safe));display:grid;grid-template-columns:repeat(4,1fr);gap:4px;z-index:80}.navBtn{border:none;background:transparent;border-radius:16px;padding:8px 4px;color:var(--muted);font-family:inherit;font-weight:900;font-size:11px}.navBtn span{display:block;font-size:20px;line-height:1.1;margin-bottom:3px}.navBtn.on{background:#f2ddd5;color:var(--terra)}.overlay{position:fixed;inset:0;background:rgba(58,36,30,.28);backdrop-filter:blur(4px);display:none;align-items:flex-end;z-index:220}.overlay.open{display:flex}.sheet{width:100%;max-width:430px;margin:0 auto;background:var(--bg);border-radius:30px 30px 0 0;padding:16px 16px calc(20px + var(--safe));box-shadow:0 -20px 55px rgba(50,24,18,.25);max-height:92vh;overflow-y:auto}.handle{width:42px;height:4px;background:var(--line);border-radius:999px;margin:0 auto 14px}.sheetTitle{font-family:'Playfair Display',serif;font-size:27px;font-style:italic;font-weight:900;color:var(--ink);line-height:1.1}.sheetSub{font-size:13px;color:var(--muted);font-weight:800;margin:5px 0 14px}.form{display:grid;gap:9px}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}.qProg{display:flex;gap:4px;margin:8px 0 14px}.qDot{height:3px;flex:1;border-radius:999px;background:var(--line)}.qDot.done{background:var(--terra)}.qDot.now{background:var(--rose)}.qText{font-family:'Playfair Display',serif;font-size:25px;font-weight:900;font-style:italic;color:var(--ink);line-height:1.15;margin-bottom:12px}.preview{border-radius:24px;padding:15px;min-height:116px;margin-bottom:13px;color:#fff;display:flex;flex-direction:column;justify-content:space-between}.preview .bookTitle{font-size:22px}.ratingsGroup{display:grid;gap:12px}.ratingLbl{font-size:13px;color:var(--muted);font-weight:900;margin-bottom:6px}.ratingRow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.rateBtn{border:1px solid var(--line);background:var(--paper);border-radius:15px;min-height:44px;font:inherit;font-size:12px;font-weight:900;color:var(--muted)}.rateBtn.on{background:var(--terra);border-color:var(--terra);color:#fff}.rateBtn small{display:block;font-size:9px;margin-top:2px;opacity:.8}.sheetNav{display:flex;gap:9px;margin-top:14px}.sheetNav .primary{flex:1}.toast{position:fixed;top:calc(15px + var(--top));left:50%;transform:translateX(-50%) translateY(-70px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-weight:900;font-size:13px;z-index:300;transition:.28s;box-shadow:var(--shadow);white-space:nowrap}.toast.show{transform:translateX(-50%) translateY(0)}.detailHero{border-radius:28px;padding:19px;color:#fff;margin-bottom:12px}.detailTitle{font-family:'Playfair Display',serif;font-size:34px;font-style:italic;font-weight:900;line-height:1.04}.detailAuthor{font-weight:800;color:rgba(255,255,255,.75);margin:5px 0 12px}.detailRatings{font-size:16px}.detailBody{display:grid;gap:10px}.detailSec{background:rgba(255,249,244,.84);border:1px solid var(--line);border-radius:20px;padding:13px}.detailLbl{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:4px}.detailTxt{font-size:15px;line-height:1.45;font-weight:700;color:var(--cocoa)}@media(max-width:360px){.brand{font-size:39px}.nowTitle{font-size:27px}.grid{gap:8px}.bookMini{width:142px;min-width:142px}.two{grid-template-columns:1fr}}
+
+/* v2 — תוך כדי קריאה / עיצוב מחודש */
+:root{
+  --bg:#fbf0e8;
+  --paper:#fffaf5;
+  --paper2:#f3d9ce;
+  --rose:#dfaaa0;
+  --terra:#ad604c;
+  --terra2:#c97d64;
+  --ink:#321f1b;
+  --cocoa:#55332b;
+  --muted:#94756a;
+  --line:#ead4cb;
+  --shadow:0 20px 52px rgba(80,42,32,.14);
+  --soft:0 9px 26px rgba(80,42,32,.09);
+}
+body{
+  background:
+    radial-gradient(circle at 15% 0%,rgba(173,96,76,.18),transparent 32%),
+    radial-gradient(circle at 92% 9%,rgba(223,170,160,.26),transparent 26%),
+    linear-gradient(180deg,#fbf0e8 0%,#f8e7de 100%);
+}
+.brand{
+  font-size:42px;
+}
+.top{
+  padding-top:2px;
+}
+.nowCard{
+  background:
+    radial-gradient(circle at left top,rgba(255,255,255,.38),transparent 30%),
+    linear-gradient(145deg,#fffaf5 0%,#efd0c5 100%);
+  border:1px solid rgba(173,96,76,.22);
+  padding:18px;
+}
+.nowBookV2{
+  position:relative;
+  z-index:1;
+}
+.nowTitle{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  line-height:1.02;
+  font-weight:900;
+  letter-spacing:-.8px;
+}
+.nowAuthor{
+  color:var(--muted);
+  font-weight:800;
+  margin-top:5px;
+}
+.progressWrap{
+  margin:16px 0 12px;
+}
+.progressTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--cocoa);
+  font-weight:900;
+  font-size:13px;
+  margin-bottom:7px;
+}
+.progressBar{
+  height:12px;
+  background:rgba(255,255,255,.62);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid rgba(173,96,76,.13);
+}
+.progressFill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--terra),var(--terra2));
+  border-radius:999px;
+}
+.moodPill{
+  display:inline-flex;
+  padding:8px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.68);
+  color:var(--cocoa);
+  font-weight:900;
+  font-size:13px;
+  margin:4px 0 10px;
+}
+.nowActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:11px;
+}
+.nowActions .primary,
+.nowActions .ghost{
+  min-height:48px;
+}
+.readingTimeline{
+  margin-top:14px;
+  display:grid;
+  gap:8px;
+}
+.timelineItem{
+  background:rgba(255,250,245,.76);
+  border:1px solid rgba(234,212,203,.9);
+  border-radius:18px;
+  padding:10px 11px;
+  box-shadow:0 5px 14px rgba(80,42,32,.06);
+}
+.timelineMeta{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:3px;
+}
+.timelineText{
+  color:var(--ink);
+  font-weight:800;
+  line-height:1.35;
+}
+.quickGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.quickCard{
+  border:1px solid var(--line);
+  background:var(--paper);
+  color:var(--cocoa);
+  border-radius:22px;
+  padding:14px;
+  min-height:92px;
+  text-align:right;
+  box-shadow:var(--soft);
+}
+.quickIcon{
+  font-size:24px;
+  display:block;
+  margin-bottom:8px;
+}
+.quickTitle{
+  font-weight:900;
+  font-size:16px;
+}
+.quickSub{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-top:3px;
+}
+.moodGrid,.charGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+.moodBtn,.charBtn{
+  border:1px solid var(--line);
+  background:#fffaf5;
+  color:var(--cocoa);
+  border-radius:18px;
+  padding:12px 10px;
+  font-weight:900;
+}
+.percentBox{
+  display:grid;
+  gap:10px;
+}
+.percentHint{
+  color:var(--muted);
+  font-weight:800;
+  font-size:13px;
+}
+.timelineFull{
+  max-height:58dvh;
+  overflow:auto;
+  padding-left:3px;
+}
+.detailMiniGrid{
+  display:grid;
+  gap:9px;
+}
+.characterPill{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,250,245,.72);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:10px 12px;
+}
+.characterName{
+  font-weight:900;
+  color:var(--ink);
+}
+.characterTag{
+  font-weight:900;
+  color:var(--terra);
+  font-size:13px;
+}
+.addShelf{
+  background:rgba(255,250,245,.9);
+  color:var(--terra);
+  border:1px solid rgba(173,96,76,.20);
+}
+.emptyNow{
+  position:relative;
+  z-index:1;
+}
+
 </style></head><body><div id="app"><section id="s-home" class="screen active"></section><section id="s-library" class="screen"></section><section id="s-stats" class="screen"></section><section id="s-search" class="screen"></section></div><nav><button class="navBtn on" data-screen="home" onclick="showScreen('home')"><span>⌂</span>בית</button><button class="navBtn" data-screen="library" onclick="showScreen('library')"><span>▦</span>ספרייה</button><button class="navBtn" data-screen="stats" onclick="showScreen('stats')"><span>✦</span>סטטס</button><button class="navBtn" data-screen="search" onclick="showScreen('search')"><span>⌕</span>חיפוש</button></nav><div id="toast" class="toast"></div><div id="sheet" class="overlay" onclick="if(event.target.id==='sheet')hideSheet()"><div class="sheet" id="sheetBody" onclick="event.stopPropagation()"></div></div><script>
-const KEY='od-perek-ehad-v1';const TAG_GROUPS=[{name:'Romance types',tags:['contemporary romance','dark romance','mafia','billionaire','sports romance','college','small town','military','rockstar','royal','paranormal','vampire','shifter','fantasy romance','romantic suspense']},{name:'Relationship',tags:['MF','MM','FF','why choose','reverse harem']},{name:'Tropes',tags:['enemies to lovers','friends to lovers','strangers to lovers','forbidden','fake dating','forced proximity','second chance','slow burn','insta love','marriage of convenience','one bed','grumpy sunshine','opposites attract','brother’s best friend','best friend’s brother','boss/employee','age gap','secret relationship','single parent','roommates']},{name:'Spice / vibe',tags:['spicy','smutty','emotional','angsty','dramatic','toxic','protective hero','possessive hero','redemption','heartbreak','healing','found family']}];const ROMANCE_COLORS={'contemporary romance':'#b46a55','dark romance':'#6b3f3d','mafia':'#70443d','billionaire':'#66534b','sports romance':'#c17c5f','college':'#c98d83','small town':'#b98868','military':'#7e6d56','rockstar':'#805053','royal':'#9a6f7f','paranormal':'#715173','vampire':'#5e3a55','shifter':'#756243','fantasy romance':'#8b6780','romantic suspense':'#7e4f4f'};const SPEED_LABELS=['🐢 איטי','🐌 לקח זמן','🐇 זרם','⚡ עפתי','🚀 בלעתי'];const SORTS={recent:'הכי חדש',love:'הכי אהבתי',heat:'הכי לוהט',cry:'הכי בכי',fast:'הכי מהיר',slow:'הכי איטי'};let S=load(KEY,{books:[],current:null,libraryView:'grid',librarySort:'love',searchSort:'love',filters:{tags:[],stars:0,heat:0,cry:0,speed:0}}),draft=null,qStep=0,openTagGroup=0;function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}function save(){localStorage.setItem(KEY,JSON.stringify(S))}function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}function id(){return Date.now()+'-'+Math.random().toString(36).slice(2)}function header(){return `<div class="top"><div class="eyebrow">יומן הקריאה של שימי</div><div class="brand">עוד פרק אחד</div></div>`}function showScreen(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+s).classList.add('active');document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen===s));render();scrollTo(0,0)}function render(){renderHome();renderLibrary();renderStats();renderSearch()}function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove('show'),1900)}function sheet(html){document.getElementById('sheetBody').innerHTML=`<div class="handle"></div>${html}`;document.getElementById('sheet').classList.add('open')}function hideSheet(){document.getElementById('sheet').classList.remove('open')}function colorFor(b){const type=(b.tags||[]).find(t=>ROMANCE_COLORS[t]);return type?ROMANCE_COLORS[type]:'#b46a55'}function mainTag(b){return(b.tags&&b.tags.length)?b.tags[0]:''}function ratingsText(b,o={}){let r='';if(b.stars)r+='⭐'.repeat(b.stars);if(b.heat)r+=(r?' ':'')+'🔥'.repeat(b.heat);if(o.cry&&b.cry)r+=(r?' ':'')+'😭'.repeat(b.cry);if(o.speed&&b.speed)r+=(r?' ':'')+SPEED_LABELS[b.speed-1];return r||'—'}function sortBooks(arr,sort){return[...arr].sort((x,y)=>{if(sort==='recent')return new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='love')return(y.stars||0)-(x.stars||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='heat')return(y.heat||0)-(x.heat||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='cry')return(y.cry||0)-(x.cry||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='fast')return(y.speed||0)-(x.speed||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='slow')return(x.speed||9)-(y.speed||9)||new Date(y.createdAt||0)-new Date(x.createdAt||0);return 0})}function bookCard(b){return `<div class="bookMini" style="background:${colorFor(b)}" onclick="openDetail('${b.id}')"><div><div class="bookTag">${esc(mainTag(b)||'עוד פרק')}</div></div><div><div class="bookTitle">${esc(b.title)}</div><div class="bookAuthor">${esc(b.author)}</div></div><div class="bookRatings">${ratingsText(b)}</div></div>`}function listRow(b){return `<div class="listRow" onclick="openDetail('${b.id}')"><div class="colorDot" style="background:${colorFor(b)}"></div><div class="listMain"><div class="listTitle">${esc(b.title)}</div><div class="listAuthor">${esc(b.author)}</div><div style="margin-top:4px">${mainTag(b)?`<span class="tagSmall">${esc(mainTag(b))}</span>`:''}</div></div><div class="listMeta">${ratingsText(b,{cry:true})}</div></div>`}function renderHome(){const recent=[...S.books].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,6);document.getElementById('s-home').innerHTML=`${header()}<div class="nowCard">${S.current?`<div class="nowBook"><div class="nowLbl">קוראת עכשיו</div><div class="nowTitle">${esc(S.current.title)}</div><div class="nowAuthor">${esc(S.current.author)}</div><div class="nowActions"><button class="primary" onclick="finishCurrent()">סיימתי</button><button class="ghost" onclick="confirmSwitchCurrent()">שיניתי כיוון</button></div></div>`:`<div class="nowLbl">קוראת עכשיו</div><div class="emptyNow">רק עוד פרק אחד…<br>במה מתחילות?</div><button class="primary" onclick="openCurrentModal()">אני מתחילה לקרוא</button>`}</div><button class="addShelf" onclick="startBookFlow()">＋ להוסיף למדף</button><div class="sectionHead"><div class="sectionTitle">נוספו לאחרונה</div><button class="textLink" onclick="showScreen('library')">כל הספרייה ←</button></div>${recent.length?`<div class="hScroll">${recent.map(bookCard).join('')}</div>`:`<div class="card empty"><strong>המדף שלך מחכה לספר הראשון</strong>לחצי על להוסיף למדף או התחילי לקרוא</div>`}`}function openCurrentModal(p={title:'',author:''}){sheet(`<div class="sheetTitle">רק עוד פרק אחד…</div><div class="sheetSub">מה עולה למדף עכשיו?</div><div class="form"><input id="curTitle" class="input" placeholder="שם הספר" value="${esc(p.title||'')}"><input id="curAuthor" class="input" placeholder="סופרת" value="${esc(p.author||'')}"><button class="primary" onclick="saveCurrent()">התחלתי לקרוא</button></div>`);setTimeout(()=>document.getElementById('curTitle')?.focus(),80)}function saveCurrent(){const title=curTitle.value.trim(),author=curAuthor.value.trim();if(!title){toast('חסר שם ספר');return}S.current={title,author};save();hideSheet();render();toast('הספר על המדף עכשיו')}function confirmSwitchCurrent(){sheet(`<div class="sheetTitle">להחליף את הספר הנוכחי?</div><div class="sheetSub">הספר הנוכחי יוחלף, ולא ייכנס למדף עדיין.</div><div class="two"><button class="primary" onclick="hideSheet();openCurrentModal()">כן, שיניתי כיוון</button><button class="secondary" onclick="hideSheet()">חזרה לספר</button></div>`)}function finishCurrent(){startBookFlow(S.current||{})}function startBookFlow(p={}){draft={title:p.title||'',author:p.author||'',tags:[],stars:0,heat:0,cry:0,speed:0,heroine:'',hero:'',heartbreak:'',linger:''};qStep=0;openTagGroup=0;renderQuestion();document.getElementById('sheet').classList.add('open')}const QUESTIONS=[{id:'title',q:'שם הספר?',type:'text',ph:'שם הספר'},{id:'author',q:'סופרת?',type:'text',ph:'שם הסופרת'},{id:'tags',q:'תגיות',type:'tags'},{id:'ratings',q:'כמה כוכבים, לוהט, בכי ומהירות?',type:'ratings'},{id:'heroine',q:'מי הגיבורה?',type:'textarea',ph:'שם + תיאור קצר…'},{id:'hero',q:'מי הגיבור?',type:'textarea',ph:'שם + תיאור קצר…'},{id:'heartbreak',q:'מה שבר להם את הלב?',type:'textarea',ph:'הסוד, הפחד, העבר, הטעות…'},{id:'linger',q:'מה נשאר איתי מהספר?',type:'textarea',ph:'כאן כותבים את מה שלא נכנס לדירוגים',optional:true}];function renderQuestion(){const q=QUESTIONS[qStep],dots=QUESTIONS.map((_,i)=>`<div class="qDot ${i<qStep?'done':i===qStep?'now':''}"></div>`).join('');let content='';if(q.type==='text')content=`<input id="qInput" class="input" value="${esc(draft[q.id]||'')}" placeholder="${q.ph}">`;if(q.type==='textarea')content=`<textarea id="qInput" class="textarea" placeholder="${q.ph}">${esc(draft[q.id]||'')}</textarea>`;if(q.type==='tags')content=tagPicker();if(q.type==='ratings')content=ratingPicker();const prev=qStep>0?`<button class="secondary" onclick="prevQ()">חזרה</button>`:`<button class="ghost" onclick="hideSheet()">ביטול</button>`,next=qStep===QUESTIONS.length-1?'שמרי למדף':'הבאה';document.getElementById('sheetBody').innerHTML=`<div class="handle"></div>${previewCard()}<div class="qProg">${dots}</div><div class="qText">${q.q}</div>${content}<div class="sheetNav">${prev}<button class="primary" onclick="nextQ()">${next}</button></div>`}function previewCard(){const b={title:draft.title||'',author:draft.author||'',tags:draft.tags||[],stars:draft.stars||0,heat:draft.heat||0};return `<div class="preview" style="background:${colorFor(b)}"><div><div class="bookTag">${esc(mainTag(b)||'ביקורת אישית')}</div></div><div><div class="bookTitle">${esc(draft.title||'')}</div><div class="bookAuthor">${esc(draft.author||'')}</div></div><div class="bookRatings">${ratingsText(b)}</div></div>`}function saveQ(){const q=QUESTIONS[qStep];if(['text','textarea'].includes(q.type)){const el=document.getElementById('qInput');draft[q.id]=(el?.value||'').trim()}}function nextQ(){saveQ();if(qStep===0&&!draft.title){toast('חסר שם הספר');return}if(qStep<QUESTIONS.length-1){qStep++;renderQuestion();return}submitBook()}function prevQ(){saveQ();if(qStep>0){qStep--;renderQuestion()}}function tagPicker(){return TAG_GROUPS.map((g,i)=>`<div class="groupBox ${i===openTagGroup?'open':''}"><div class="groupHead" onclick="openTagGroup=${i};renderQuestion()"><span>${g.name}</span><span>⌄</span></div><div class="groupBody">${g.tags.map(t=>`<button class="chip ${draft.tags.includes(t)?'on':''}" onclick="toggleTag('${t.replace(/'/g,"\\'")}')">${t}</button>`).join('')}</div></div>`).join('')}function toggleTag(t){const i=draft.tags.indexOf(t);if(i>-1)draft.tags.splice(i,1);else draft.tags.push(t);renderQuestion()}function ratingPicker(){const group=(id,label,items)=>`<div><div class="ratingLbl">${label}</div><div class="ratingRow">${items.map((x,i)=>`<button class="rateBtn ${draft[id]===i+1?'on':''}" onclick="draft['${id}']=${i+1};renderQuestion()">${x}</button>`).join('')}</div></div>`;return `<div class="ratingsGroup">${group('stars','כוכבים ⭐',['1⭐','2⭐','3⭐','4⭐','5⭐'])}${group('heat','לוהט 🔥',['1🔥','2🔥','3🔥','4🔥','5🔥'])}${group('cry','בכי 😭',['😐','🥹','😢','😭','🌊'])}${group('speed','מהירות קריאה',SPEED_LABELS)}</div>`}function submitBook(){const b={...draft,id:id(),createdAt:new Date().toISOString()};S.books.unshift(b);if(S.current&&S.current.title===draft.title)S.current=null;save();hideSheet();showScreen('home');toast('עוד ספר נכנס למדף של שימי ✓')}function renderLibrary(){const books=sortBooks(S.books,S.librarySort),avg=avgStats(S.books);document.getElementById('s-library').innerHTML=`${header()}<div class="libraryTop"><div class="summary">${S.books.length} ספרים · ממוצע ${avg.stars}⭐ · הכי לוהט ${avg.maxHeat}🔥</div><div class="tools"><button class="pillBtn" onclick="sortSheet('library')">מיון</button><div class="toggle"><button class="${S.libraryView==='grid'?'on':''}" onclick="S.libraryView='grid';save();render()">כרטיסים</button><button class="${S.libraryView==='list'?'on':''}" onclick="S.libraryView='list';save();render()">רשימה</button></div></div></div>${books.length?(S.libraryView==='grid'?`<div class="grid">${books.map(bookCard).join('')}</div>`:`<div class="list">${books.map(listRow).join('')}</div>`):`<div class="card empty"><strong>המדף עדיין ריק, אבל יש לו פוטנציאל</strong></div>`}`}function avgStats(arr){const a=arr.length?arr.reduce((s,b)=>s+(b.stars||0),0)/arr.length:0;return{stars:a?a.toFixed(1):'—',maxHeat:arr.length?Math.max(...arr.map(b=>b.heat||0)):0}}function sortSheet(context){const cur=context==='library'?S.librarySort:S.searchSort,opts=context==='library'?['recent','love','heat','cry']:['recent','love','heat','cry','fast','slow'];sheet(`<div class="sheetTitle">מיון</div><div class="form">${opts.map(k=>`<button class="${cur===k?'primary':'secondary'}" onclick="setSort('${context}','${k}')">${SORTS[k]}</button>`).join('')}</div>`)}function setSort(ctx,k){if(ctx==='library')S.librarySort=k;else S.searchSort=k;save();hideSheet();render()}function openDetail(bookId){const b=S.books.find(x=>x.id===bookId);if(!b)return;sheet(`<div class="detailHero" style="background:${colorFor(b)}"><div class="bookTag">${esc(mainTag(b)||'עוד פרק')}</div><div class="detailTitle">${esc(b.title)}</div><div class="detailAuthor">${esc(b.author)}</div><div class="detailRatings">${ratingsText(b,{cry:true,speed:true})}</div></div><div class="detailBody">${detailSec('גיבורה',b.heroine)}${detailSec('גיבור',b.hero)}${detailSec('מה שבר להם את הלב?',b.heartbreak)}${b.tags?.length?`<div class="detailSec"><div class="detailLbl">תגיות</div><div class="filterChips">${b.tags.map(t=>`<span class="tagSmall">${esc(t)}</span>`).join('')}</div></div>`:''}${detailSec('מה נשאר איתי מהספר?',b.linger)}<button class="danger" onclick="confirmDelete('${b.id}')">מחקי ספר זה</button></div>`)}function detailSec(lbl,txt){return txt?`<div class="detailSec"><div class="detailLbl">${lbl}</div><div class="detailTxt">${esc(txt)}</div></div>`:''}function confirmDelete(bookId){sheet(`<div class="sheetTitle">רגע, הספר הזה באמת עוזב?</div><div class="sheetSub">אפשר לבטל ולחזור לפרטים.</div><div class="two"><button class="danger" onclick="deleteBook('${bookId}')">כן, מחקי</button><button class="secondary" onclick="hideSheet()">חזרה לספר</button></div>`)}function deleteBook(bookId){S.books=S.books.filter(b=>b.id!==bookId);save();hideSheet();render();toast('נמחק מהמדף')}function renderStats(){const yr=last12(S.books),avg=avgFull(yr),author=topAuthor(yr),funny=funnyLine(yr,avg),leaders=[['הכי לוהט 🔥',leadersBy(yr,'heat','max')],['הכי בכי 😭',leadersBy(yr,'cry','max')],['הכי אהבתי ⭐',leadersBy(yr,'stars','max')],['הכי מהיר 🚀',leadersBy(yr,'speed','max')],['הכי איטי 🐢',leadersBy(yr,'speed','min')]];document.getElementById('s-stats').innerHTML=`${header()}<div class="statsHero"><div class="statsTitle">השנה שלי בספרים</div><div class="statsLine">${funny}</div></div><div class="statsGrid"><div class="statCard"><div class="statNum">${yr.length}</div><div class="statLbl">ספרים ב־12 חודשים</div></div><div class="statCard"><div class="statNum">${avg.stars}</div><div class="statLbl">ממוצע ⭐</div></div><div class="statCard"><div class="statNum">${avg.heat}</div><div class="statLbl">ממוצע 🔥</div></div><div class="statCard"><div class="statNum">${avg.cry}</div><div class="statLbl">ממוצע 😭</div></div></div><div class="card"><div class="sectionTitle">הסופרת הכי נקראת</div><div class="leader"><div class="leaderItem"><div class="leaderVal">${esc(author||'עוד אין מספיק נתונים')}</div></div></div></div><div class="card"><div class="sectionTitle">המדדים הרגשיים</div><div class="leader">${leaders.map(([l,arr])=>`<div class="leaderItem"><div class="leaderLbl">${l}</div><div class="leaderVal">${arr.length?arr.map(b=>esc(b.title)).join(' · '):'—'}</div></div>`).join('')}</div></div>`}function last12(arr){const cutoff=new Date();cutoff.setMonth(cutoff.getMonth()-12);return arr.filter(b=>new Date(b.createdAt)>=cutoff)}function avgFull(arr){function a(k){const vals=arr.map(b=>+b[k]||0).filter(Boolean);return vals.length?(vals.reduce((x,y)=>x+y,0)/vals.length).toFixed(1):'—'}return{stars:a('stars'),heat:a('heat'),cry:a('cry')}}function topAuthor(arr){const m={};arr.forEach(b=>{if(b.author)m[b.author]=(m[b.author]||0)+1});return Object.keys(m).sort((a,b)=>m[b]-m[a])[0]||''}function leadersBy(arr,k,type){const vals=arr.map(b=>+b[k]||0).filter(Boolean);if(!vals.length)return[];const target=type==='min'?Math.min(...vals):Math.max(...vals);return arr.filter(b=>(+b[k]||0)===target)}function funnyLine(arr,avg){if(!arr.length)return 'המדף עוד מתחמם. תני לו ספר אחד והוא יתחיל לדבר.';if((+avg.heat||0)>=4)return 'השנה המדף שלך אמר: החלטות מפוקפקות, הרבה 🔥, ואפס התנצלות.';if((+avg.cry||0)>=4)return 'הרבה בכי, הרבה דרמה, מעט מאוד שינה. מדף עם רגשות.';return 'השנה קראת, דירגת, ונתת למדף שלך אופי. מכובד מאוד.'}function renderSearch(){const old=document.getElementById('searchInput'),q=(old?.value||'').trim().toLowerCase();let res=S.books.filter(b=>matchesSearch(b,q)&&matchesFilters(b));res=sortBooks(res,S.searchSort);const active=[...S.filters.tags];['stars','heat','cry','speed'].forEach(k=>{if(S.filters[k])active.push(k+' '+S.filters[k])});document.getElementById('s-search').innerHTML=`${header()}<div class="searchRow"><input id="searchInput" class="input searchInput" placeholder="חפשי ספר, סופרת או תגית" value="${esc(q)}" oninput="renderSearch()"><button class="pillBtn" onclick="toggleFilters()">סינון</button><button class="pillBtn" onclick="sortSheet('search')">מיון</button></div>${active.length?`<div class="filterChips">${active.map(x=>`<span class="tagSmall">${esc(x)}</span>`).join('')}<button class="textLink" onclick="resetSearch()">להתחיל מחדש</button></div>`:''}<div id="filterPanel" class="filtersOpen">${filterPanel()}</div>${res.length?(S.libraryView==='grid'?`<div class="grid">${res.map(bookCard).join('')}</div>`:`<div class="list">${res.map(listRow).join('')}</div>`):`<div class="card empty"><strong>המדף שקט פה… נסי חיפוש אחר</strong></div>`}`;if(window.__filtersOpen)document.getElementById('filterPanel').classList.add('open')}function matchesSearch(b,q){if(!q)return true;return[b.title,b.author,...(b.tags||[])].join(' ').toLowerCase().includes(q)}function matchesFilters(b){const f=S.filters;if(f.tags.length&&!f.tags.every(t=>(b.tags||[]).includes(t)))return false;for(const k of['stars','heat','cry','speed'])if(f[k]&&(+b[k]||0)!==f[k])return false;return true}function toggleFilters(){window.__filtersOpen=!window.__filtersOpen;renderSearch()}function filterPanel(){const rating=(k,label)=>`<div class="groupBox open"><div class="groupHead">${label}</div><div class="groupBody">${[1,2,3,4,5].map(v=>`<button class="chip ${S.filters[k]===v?'on':''}" onclick="S.filters['${k}']=${S.filters[k]===v?0:v};save();renderSearch()">${v}</button>`).join('')}</div></div>`;return TAG_GROUPS.map((g,i)=>`<div class="groupBox ${i===0?'open':''}"><div class="groupHead" onclick="this.parentElement.classList.toggle('open')"><span>${g.name}</span><span>⌄</span></div><div class="groupBody">${g.tags.map(t=>`<button class="chip ${S.filters.tags.includes(t)?'on':''}" onclick="toggleFilterTag('${t.replace(/'/g,"\\'")}')">${t}</button>`).join('')}</div></div>`).join('')+rating('stars','כוכבים')+rating('heat','לוהט')+rating('cry','בכי')+rating('speed','מהירות')}function toggleFilterTag(t){const i=S.filters.tags.indexOf(t);if(i>-1)S.filters.tags.splice(i,1);else S.filters.tags.push(t);save();renderSearch()}function resetSearch(){S.filters={tags:[],stars:0,heat:0,cry:0,speed:0};S.searchSort='love';window.__filtersOpen=false;save();renderSearch()}render();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+const KEY='od-perek-ehad-v1';
+const TAG_GROUPS=[
+  {name:'Romance types',tags:['contemporary romance','dark romance','mafia','billionaire','sports romance','college','small town','military','rockstar','royal','paranormal','vampire','shifter','fantasy romance','romantic suspense']},
+  {name:'Relationship',tags:['MF','MM','FF','why choose','reverse harem']},
+  {name:'Tropes',tags:['enemies to lovers','friends to lovers','strangers to lovers','forbidden','fake dating','forced proximity','second chance','slow burn','insta love','marriage of convenience','one bed','grumpy sunshine','opposites attract','brother’s best friend','best friend’s brother','boss/employee','age gap','secret relationship','single parent','roommates']},
+  {name:'Spice / vibe',tags:['spicy','smutty','emotional','angsty','dramatic','toxic','protective hero','possessive hero','redemption','heartbreak','healing','found family']}
+];
+const ROMANCE_COLORS={'contemporary romance':'#b46a55','dark romance':'#6b3f3d','mafia':'#70443d','billionaire':'#66534b','sports romance':'#c17c5f','college':'#c98d83','small town':'#b98868','military':'#7e6d56','rockstar':'#805053','royal':'#9a6f7f','paranormal':'#715173','vampire':'#5e3a55','shifter':'#756243','fantasy romance':'#8b6780','romantic suspense':'#7e4f4f'};
+const SPEED_LABELS=['🐢 איטי','🐌 לקח זמן','🐇 זרם','⚡ עפתי','🚀 בלעתי'];
+const SORTS={recent:'הכי חדש',love:'הכי אהבתי',heat:'הכי לוהט',cry:'הכי בכי',fast:'הכי מהיר',slow:'הכי איטי'};
+const MOODS=['נמרח','זורם','מתחמם','מכורה','לא לדבר איתי','עצבנית עליו','הלב שלי לא בנוי לזה','וואו וואו וואו'];
+const CHAR_TAGS=['אוהבת','חשודה','מעצבנת','רוצה עוד ממנה','Book boyfriend','דגל אדום','צריכה טיפול'];
+
+let S=load(KEY,{books:[],current:null,libraryView:'grid',librarySort:'love',searchSort:'love',filters:{tags:[],stars:0,heat:0,cry:0,speed:0}});
+let draft=null,qStep=0,openTagGroup=0;
+
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function jsEsc(s){return String(s||'').replaceAll('\\\\','\\\\\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
+function id(){return Date.now()+'-'+Math.random().toString(36).slice(2)}
+function header(){return `<div class="top"><div class="eyebrow">יומן הקריאה של שימי</div><div class="brand">עוד פרק אחד</div><div class="sub">ספרים, רגשות, ומה קרה לי בדרך</div></div>`}
+function ensureCurrent(){if(!S.current)return null;S.current.percent=Number(S.current.percent||0);S.current.updates=Array.isArray(S.current.updates)?S.current.updates:[];S.current.characters=Array.isArray(S.current.characters)?S.current.characters:[];return S.current}
+function showScreen(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+s).classList.add('active');document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen===s));render();scrollTo(0,0)}
+function render(){renderHome();renderLibrary();renderStats();renderSearch()}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove('show'),1900)}
+function sheet(html){document.getElementById('sheetBody').innerHTML=`<div class="handle"></div>${html}`;document.getElementById('sheet').classList.add('open')}
+function hideSheet(){document.getElementById('sheet').classList.remove('open')}
+function colorFor(b){const type=(b.tags||[]).find(t=>ROMANCE_COLORS[t]);return type?ROMANCE_COLORS[type]:'#b46a55'}
+function mainTag(b){return(b.tags&&b.tags.length)?b.tags[0]:''}
+function ratingsText(b,o={}){let r='';if(b.stars)r+='⭐'.repeat(b.stars);if(b.heat)r+=(r?' ':'')+'🔥'.repeat(b.heat);if(o.cry&&b.cry)r+=(r?' ':'')+'😭'.repeat(b.cry);if(o.speed&&b.speed)r+=(r?' ':'')+SPEED_LABELS[b.speed-1];return r||'—'}
+function sortBooks(arr,sort){return[...arr].sort((x,y)=>{if(sort==='recent')return new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='love')return(y.stars||0)-(x.stars||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='heat')return(y.heat||0)-(x.heat||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='cry')return(y.cry||0)-(x.cry||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='fast')return(y.speed||0)-(x.speed||0)||new Date(y.createdAt||0)-new Date(x.createdAt||0);if(sort==='slow')return(x.speed||9)-(y.speed||9)||new Date(y.createdAt||0)-new Date(x.createdAt||0);return 0})}
+function pct(n){return Math.max(0,Math.min(100,Number(n)||0))}
+function formatDate(ts){try{return new Date(ts).toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit'})}catch{return ''}}
+
+function bookCard(b){return `<div class="bookMini" style="background:${colorFor(b)}" onclick="openDetail('${b.id}')"><div><div class="bookTag">${esc(mainTag(b)||'עוד פרק')}</div></div><div><div class="bookTitle">${esc(b.title)}</div><div class="bookAuthor">${esc(b.author)}</div></div><div class="bookRatings">${ratingsText(b)}</div></div>`}
+function listRow(b){return `<div class="listRow" onclick="openDetail('${b.id}')"><div class="colorDot" style="background:${colorFor(b)}"></div><div class="listMain"><div class="listTitle">${esc(b.title)}</div><div class="listAuthor">${esc(b.author)}</div><div style="margin-top:4px">${mainTag(b)?`<span class="tagSmall">${esc(mainTag(b))}</span>`:''}</div></div><div class="listMeta">${ratingsText(b,{cry:true})}</div></div>`}
+
+function renderHome(){
+  const recent=[...S.books].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,6);
+  const cur=ensureCurrent();
+  document.getElementById('s-home').innerHTML=`${header()}${cur?currentCard(cur):emptyCurrentCard()}<button class="addShelf" onclick="startBookFlow()">＋ להוסיף למדף</button><div class="sectionHead"><div class="sectionTitle">נוספו לאחרונה</div><button class="textLink" onclick="showScreen('library')">כל הספרייה ←</button></div>${recent.length?`<div class="hScroll">${recent.map(bookCard).join('')}</div>`:`<div class="card empty"><strong>המדף שלך מחכה לספר הראשון</strong>לחצי על להוסיף למדף או התחילי לקרוא</div>`}`
+}
+function emptyCurrentCard(){
+  return `<div class="nowCard"><div class="nowLbl">קוראת עכשיו</div><div class="emptyNow">רק עוד פרק אחד…<br>במה מתחילות?</div><button class="primary" onclick="openCurrentModal()">אני מתחילה לקרוא</button></div>`
+}
+function currentCard(cur){
+  const last=cur.updates?.[0];
+  const timeline=(cur.updates||[]).slice(0,3).map(timelineItem).join('');
+  return `<div class="nowCard"><div class="nowBookV2"><div class="nowLbl">קוראת עכשיו</div><div class="nowTitle">${esc(cur.title)}</div><div class="nowAuthor">${esc(cur.author)}</div><div class="progressWrap"><div class="progressTop"><span>התקדמות</span><span>${pct(cur.percent)}%</span></div><div class="progressBar"><div class="progressFill" style="width:${pct(cur.percent)}%"></div></div></div>${cur.lastMood?`<div class="moodPill">מצב אחרון: ${esc(cur.lastMood)}</div>`:''}<div class="nowActions"><button class="primary" onclick="openReadingHub()">עדכון קריאה</button><button class="ghost" onclick="finishCurrent()">סיימתי</button></div><button class="textLink" onclick="confirmSwitchCurrent()">שיניתי כיוון</button>${timeline?`<div class="sectionHead"><div class="sectionTitle">ציר קריאה</div><button class="textLink" onclick="openTimeline()">הכול ←</button></div><div class="readingTimeline">${timeline}</div>`:''}</div></div>`
+}
+function timelineItem(u){
+  const meta=[u.percent!==undefined&&u.percent!==null?u.percent+'%':'',formatDate(u.ts),u.label||''].filter(Boolean).join(' · ');
+  return `<div class="timelineItem"><div class="timelineMeta">${esc(meta)}</div><div class="timelineText">${esc(u.text||'')}</div></div>`
+}
+function openCurrentModal(p={title:'',author:''}){
+  sheet(`<div class="sheetTitle">פותחות ספר</div><div class="sheetSub">שם, סופרת, ואפשר גם אחוז אם כבר התחלת.</div><div class="form"><input id="curTitle" class="input" placeholder="שם הספר" value="${esc(p.title||'')}"><input id="curAuthor" class="input" placeholder="סופרת" value="${esc(p.author||'')}"><input id="curPercent" class="input" type="number" min="0" max="100" placeholder="אחוז התקדמות" value="${p.percent||''}"><button class="primary" onclick="saveCurrent()">התחלתי לקרוא</button></div>`);
+  setTimeout(()=>document.getElementById('curTitle')?.focus(),80)
+}
+function saveCurrent(){
+  const title=document.getElementById('curTitle').value.trim(),author=document.getElementById('curAuthor').value.trim();
+  if(!title){toast('חסר שם ספר');return}
+  S.current={title,author,percent:pct(document.getElementById('curPercent').value||0),updates:[],characters:[],startedAt:new Date().toISOString()};
+  save();hideSheet();render();toast('הספר על המדף עכשיו')
+}
+function confirmSwitchCurrent(){
+  sheet(`<div class="sheetTitle">להחליף את הספר הנוכחי?</div><div class="sheetSub">הספר הנוכחי יוחלף, ולא ייכנס למדף עדיין.</div><div class="two"><button class="primary" onclick="hideSheet();openCurrentModal()">כן, שיניתי כיוון</button><button class="secondary" onclick="hideSheet()">חזרה לספר</button></div>`)
+}
+function finishCurrent(){startBookFlow(S.current||{})}
+
+function addReadingUpdate(type,label,text,extra={}){
+  const cur=ensureCurrent(); if(!cur)return;
+  const p=extra.percent!==undefined?pct(extra.percent):pct(cur.percent||0);
+  const item={id:id(),type,label,text,percent:p,ts:new Date().toISOString(),...extra};
+  cur.updates.unshift(item);
+  cur.updates=cur.updates.slice(0,120);
+  if(extra.percent!==undefined)cur.percent=p;
+  if(type==='mood')cur.lastMood=label;
+  save();hideSheet();render();toast('נשמר לציר הקריאה')
+}
+function openReadingHub(){
+  const cur=ensureCurrent(); if(!cur)return;
+  sheet(`<div class="sheetTitle">עדכון קריאה</div><div class="sheetSub">${esc(cur.title)} · ${pct(cur.percent)}%</div><div class="quickGrid">
+    <button class="quickCard" onclick="openPercentUpdate()"><span class="quickIcon">％</span><div class="quickTitle">התקדמתי</div><div class="quickSub">לעדכן אחוז</div></button>
+    <button class="quickCard" onclick="openMoodUpdate()"><span class="quickIcon">💓</span><div class="quickTitle">מצב הספר</div><div class="quickSub">מכורה / נמרח / וואו</div></button>
+    <button class="quickCard" onclick="openTextUpdate('note')"><span class="quickIcon">🗯️</span><div class="quickTitle">בא לי לפרוק</div><div class="quickSub">טקסט חופשי</div></button>
+    <button class="quickCard" onclick="openTextUpdate('quote')"><span class="quickIcon">❞</span><div class="quickTitle">ציטוט שאהבתי</div><div class="quickSub">משפט ששווה לשמור</div></button>
+    <button class="quickCard" onclick="openCharacterUpdate()"><span class="quickIcon">👀</span><div class="quickTitle">דמות</div><div class="quickSub">מי עושה לך משהו?</div></button>
+    <button class="quickCard" onclick="openTimeline()"><span class="quickIcon">📜</span><div class="quickTitle">ציר קריאה</div><div class="quickSub">כל מה ששמרת</div></button>
+  </div>`)
+}
+function openPercentUpdate(){
+  const cur=ensureCurrent();
+  sheet(`<div class="sheetTitle">איפה את בספר?</div><div class="sheetSub">רק אחוז, בלי שיעורי בית.</div><div class="percentBox"><input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(cur.percent)}"><div class="percentHint">אפשר גם להשאיר רק עדכון התקדמות בלי טקסט.</div><textarea id="percentNote" class="textarea" placeholder="משהו קצר על איפה זה תופס אותך? לא חובה"></textarea><button class="primary" onclick="savePercentUpdate()">שמירה</button></div>`)
+}
+function savePercentUpdate(){
+  const p=pct(document.getElementById('percentInput').value);
+  const note=(document.getElementById('percentNote').value||'').trim();
+  addReadingUpdate('progress','התקדמות',note||`הגעתי ל־${p}%`,{percent:p})
+}
+function openMoodUpdate(){
+  sheet(`<div class="sheetTitle">מה מצב הספר?</div><div class="sheetSub">לחיצה אחת וזה נשמר לציר.</div><div class="moodGrid">${MOODS.map(m=>`<button class="moodBtn" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>`)
+}
+function saveMood(m){addReadingUpdate('mood',m,m)}
+function openTextUpdate(type){
+  const isQuote=type==='quote';
+  sheet(`<div class="sheetTitle">${isQuote?'ציטוט שאהבתי':'בא לי לפרוק'}</div><div class="sheetSub">${isQuote?'משפט קטן שנרצה לזכור.':'כאן מותר לצעוק על דמויות בדיוניות.'}</div><div class="form"><textarea id="freeText" class="textarea" placeholder="${isQuote?'הציטוט…':'מה קרה עכשיו?'}"></textarea><button class="primary" onclick="saveTextUpdate('${type}')">שמירה</button></div>`)
+}
+function saveTextUpdate(type){
+  const text=(document.getElementById('freeText').value||'').trim();
+  if(!text){toast('אין מה לשמור');return}
+  addReadingUpdate(type,type==='quote'?'ציטוט':'פריקה',text)
+}
+function openCharacterUpdate(){
+  sheet(`<div class="sheetTitle">דמות</div><div class="sheetSub">שם + איך את מרגישה לגביה כרגע.</div><div class="form"><input id="charName" class="input" placeholder="שם הדמות"><div class="charGrid">${CHAR_TAGS.map(t=>`<button class="charBtn" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div></div>`)
+}
+function saveCharacter(tag){
+  const cur=ensureCurrent(); if(!cur)return;
+  const name=(document.getElementById('charName').value||'').trim();
+  if(!name){toast('חסר שם דמות');return}
+  cur.characters.unshift({id:id(),name,tag,ts:new Date().toISOString(),percent:pct(cur.percent||0)});
+  cur.characters=cur.characters.slice(0,60);
+  addReadingUpdate('character','דמות',`${name} · ${tag}`,{characterName:name,characterTag:tag});
+}
+function openTimeline(){
+  const cur=ensureCurrent(); if(!cur)return;
+  const items=cur.updates||[];
+  sheet(`<div class="sheetTitle">ציר קריאה</div><div class="sheetSub">${esc(cur.title)} · ${pct(cur.percent)}%</div><div class="timelineFull">${items.length?items.map(timelineItem).join(''):`<div class="card empty"><strong>עוד אין רגעים שמורים</strong>לחצי עדכון קריאה כשיש רגע.</div>`}</div>`)
+}
+
+function startBookFlow(p={}){
+  draft={title:p.title||'',author:p.author||'',tags:[],stars:0,heat:0,cry:0,speed:0,heroine:'',hero:'',heartbreak:'',linger:'',readingLog:p.updates||[],characters:p.characters||[],percent:p.percent||0,startedAt:p.startedAt||null};
+  qStep=0;openTagGroup=0;renderQuestion();document.getElementById('sheet').classList.add('open')
+}
+const QUESTIONS=[{id:'title',q:'שם הספר?',type:'text',ph:'שם הספר'},{id:'author',q:'סופרת?',type:'text',ph:'שם הסופרת'},{id:'tags',q:'תגיות',type:'tags'},{id:'ratings',q:'כמה כוכבים, לוהט, בכי ומהירות?',type:'ratings'},{id:'heroine',q:'מי הגיבורה?',type:'textarea',ph:'שם + תיאור קצר…'},{id:'hero',q:'מי הגיבור?',type:'textarea',ph:'שם + תיאור קצר…'},{id:'heartbreak',q:'מה שבר להם את הלב?',type:'textarea',ph:'הסוד, הפחד, העבר, הטעות…'},{id:'linger',q:'מה נשאר איתי מהספר?',type:'textarea',ph:'כאן כותבים את מה שלא נכנס לדירוגים',optional:true}];
+function renderQuestion(){
+  const q=QUESTIONS[qStep],dots=QUESTIONS.map((_,i)=>`<div class="qDot ${i<qStep?'done':i===qStep?'now':''}"></div>`).join('');
+  let content='';
+  if(q.type==='text')content=`<input id="qInput" class="input" value="${esc(draft[q.id]||'')}" placeholder="${q.ph}">`;
+  if(q.type==='textarea')content=`<textarea id="qInput" class="textarea" placeholder="${q.ph}">${esc(draft[q.id]||'')}</textarea>`;
+  if(q.type==='tags')content=tagPicker();
+  if(q.type==='ratings')content=ratingPicker();
+  const prev=qStep>0?`<button class="secondary" onclick="prevQ()">חזרה</button>`:`<button class="ghost" onclick="hideSheet()">ביטול</button>`,next=qStep===QUESTIONS.length-1?'שמרי למדף':'הבאה';
+  document.getElementById('sheetBody').innerHTML=`<div class="handle"></div>${previewCard()}<div class="qProg">${dots}</div><div class="qText">${q.q}</div>${content}<div class="sheetNav">${prev}<button class="primary" onclick="nextQ()">${next}</button></div>`
+}
+function previewCard(){
+  const b={title:draft.title||'',author:draft.author||'',tags:draft.tags||[],stars:draft.stars||0,heat:draft.heat||0};
+  return `<div class="preview" style="background:${colorFor(b)}"><div><div class="bookTag">${esc(mainTag(b)||'ביקורת אישית')}</div></div><div><div class="bookTitle">${esc(draft.title||'')}</div><div class="bookAuthor">${esc(draft.author||'')}</div></div><div class="bookRatings">${ratingsText(b)}</div></div>`
+}
+function saveQ(){const q=QUESTIONS[qStep];if(['text','textarea'].includes(q.type)){const el=document.getElementById('qInput');draft[q.id]=(el?.value||'').trim()}}
+function nextQ(){saveQ();if(qStep===0&&!draft.title){toast('חסר שם הספר');return}if(qStep<QUESTIONS.length-1){qStep++;renderQuestion();return}submitBook()}
+function prevQ(){saveQ();if(qStep>0){qStep--;renderQuestion()}}
+function tagPicker(){return TAG_GROUPS.map((g,i)=>`<div class="groupBox ${i===openTagGroup?'open':''}"><div class="groupHead" onclick="openTagGroup=${i};renderQuestion()"><span>${g.name}</span><span>⌄</span></div><div class="groupBody">${g.tags.map(t=>`<button class="chip ${draft.tags.includes(t)?'on':''}" onclick="toggleTag('${jsEsc(t)}')">${t}</button>`).join('')}</div></div>`).join('')}
+function toggleTag(t){const i=draft.tags.indexOf(t);if(i>-1)draft.tags.splice(i,1);else draft.tags.push(t);renderQuestion()}
+function ratingPicker(){const group=(id,label,items)=>`<div><div class="ratingLbl">${label}</div><div class="ratingRow">${items.map((x,i)=>`<button class="rateBtn ${draft[id]===i+1?'on':''}" onclick="draft['${id}']=${i+1};renderQuestion()">${x}</button>`).join('')}</div></div>`;return `<div class="ratingsGroup">${group('stars','כוכבים ⭐',['1⭐','2⭐','3⭐','4⭐','5⭐'])}${group('heat','לוהט 🔥',['1🔥','2🔥','3🔥','4🔥','5🔥'])}${group('cry','בכי 😭',['😐','🥹','😢','😭','🌊'])}${group('speed','מהירות קריאה',SPEED_LABELS)}</div>`}
+function submitBook(){
+  const b={...draft,id:id(),createdAt:new Date().toISOString()};
+  S.books.unshift(b);
+  if(S.current&&S.current.title===draft.title)S.current=null;
+  save();hideSheet();showScreen('home');toast('עוד ספר נכנס למדף של שימי ✓')
+}
+
+function renderLibrary(){
+  const books=sortBooks(S.books,S.librarySort),avg=avgStats(S.books);
+  document.getElementById('s-library').innerHTML=`${header()}<div class="libraryTop"><div class="summary">${S.books.length} ספרים · ממוצע ${avg.stars}⭐ · הכי לוהט ${avg.maxHeat}🔥</div><div class="tools"><button class="pillBtn" onclick="sortSheet('library')">מיון</button><div class="toggle"><button class="${S.libraryView==='grid'?'on':''}" onclick="S.libraryView='grid';save();render()">כרטיסים</button><button class="${S.libraryView==='list'?'on':''}" onclick="S.libraryView='list';save();render()">רשימה</button></div></div></div>${books.length?(S.libraryView==='grid'?`<div class="grid">${books.map(bookCard).join('')}</div>`:`<div class="list">${books.map(listRow).join('')}</div>`):`<div class="card empty"><strong>המדף עדיין ריק, אבל יש לו פוטנציאל</strong></div>`}`
+}
+function avgStats(arr){const a=arr.length?arr.reduce((s,b)=>s+(b.stars||0),0)/arr.length:0;return{stars:a?a.toFixed(1):'—',maxHeat:arr.length?Math.max(...arr.map(b=>b.heat||0)):0}}
+function sortSheet(context){const cur=context==='library'?S.librarySort:S.searchSort,opts=context==='library'?['recent','love','heat','cry']:['recent','love','heat','cry','fast','slow'];sheet(`<div class="sheetTitle">מיון</div><div class="form">${opts.map(k=>`<button class="${cur===k?'primary':'secondary'}" onclick="setSort('${context}','${k}')">${SORTS[k]}</button>`).join('')}</div>`)}
+function setSort(ctx,k){if(ctx==='library')S.librarySort=k;else S.searchSort=k;save();hideSheet();render()}
+
+function openDetail(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  sheet(`<div class="detailHero" style="background:${colorFor(b)}"><div class="bookTag">${esc(mainTag(b)||'עוד פרק')}</div><div class="detailTitle">${esc(b.title)}</div><div class="detailAuthor">${esc(b.author)}</div><div class="detailRatings">${ratingsText(b,{cry:true,speed:true})}</div></div><div class="detailBody">${detailSec('גיבורה',b.heroine)}${detailSec('גיבור',b.hero)}${detailSec('מה שבר להם את הלב?',b.heartbreak)}${b.tags?.length?`<div class="detailSec"><div class="detailLbl">תגיות</div><div class="filterChips">${b.tags.map(t=>`<span class="tagSmall">${esc(t)}</span>`).join('')}</div></div>`:''}${detailSec('מה נשאר איתי מהספר?',b.linger)}${charactersBlock(b)}${readingLogBlock(b)}<button class="danger" onclick="confirmDelete('${b.id}')">מחקי ספר זה</button></div>`)
+}
+function detailSec(lbl,txt){return txt?`<div class="detailSec"><div class="detailLbl">${lbl}</div><div class="detailTxt">${esc(txt)}</div></div>`:''}
+function charactersBlock(b){const chars=b.characters||[];if(!chars.length)return '';return `<div class="detailSec"><div class="detailLbl">דמויות שתפסו מקום</div><div class="detailMiniGrid">${chars.map(c=>`<div class="characterPill"><span class="characterName">${esc(c.name)}</span><span class="characterTag">${esc(c.tag)}</span></div>`).join('')}</div></div>`}
+function readingLogBlock(b){const log=b.readingLog||[];if(!log.length)return '';return `<div class="detailSec"><div class="detailLbl">ציר הקריאה</div><div class="readingTimeline">${log.slice(0,12).map(timelineItem).join('')}</div></div>`}
+function confirmDelete(bookId){sheet(`<div class="sheetTitle">רגע, הספר הזה באמת עוזב?</div><div class="sheetSub">אפשר לבטל ולחזור לפרטים.</div><div class="two"><button class="danger" onclick="deleteBook('${bookId}')">כן, מחקי</button><button class="secondary" onclick="hideSheet()">חזרה לספר</button></div>`)}
+function deleteBook(bookId){S.books=S.books.filter(b=>b.id!==bookId);save();hideSheet();render();toast('נמחק מהמדף')}
+
+function renderStats(){
+  const yr=last12(S.books),avg=avgFull(yr),author=topAuthor(yr),funny=funnyLine(yr,avg),leaders=[['הכי לוהט 🔥',leadersBy(yr,'heat','max')],['הכי בכי 😭',leadersBy(yr,'cry','max')],['הכי אהבתי ⭐',leadersBy(yr,'stars','max')],['הכי מהיר 🚀',leadersBy(yr,'speed','max')],['הכי איטי 🐢',leadersBy(yr,'speed','min')]];
+  document.getElementById('s-stats').innerHTML=`${header()}<div class="statsHero"><div class="statsTitle">השנה שלי בספרים</div><div class="statsLine">${funny}</div></div><div class="statsGrid"><div class="statCard"><div class="statNum">${yr.length}</div><div class="statLbl">ספרים ב־12 חודשים</div></div><div class="statCard"><div class="statNum">${avg.stars}</div><div class="statLbl">ממוצע ⭐</div></div><div class="statCard"><div class="statNum">${avg.heat}</div><div class="statLbl">ממוצע 🔥</div></div><div class="statCard"><div class="statNum">${avg.cry}</div><div class="statLbl">ממוצע 😭</div></div></div><div class="card"><div class="sectionTitle">הסופרת הכי נקראת</div><div class="leader"><div class="leaderItem"><div class="leaderVal">${esc(author||'עוד אין מספיק נתונים')}</div></div></div></div><div class="card"><div class="sectionTitle">המדדים הרגשיים</div><div class="leader">${leaders.map(([l,arr])=>`<div class="leaderItem"><div class="leaderLbl">${l}</div><div class="leaderVal">${arr.length?arr.map(b=>esc(b.title)).join(' · '):'—'}</div></div>`).join('')}</div></div>`
+}
+function last12(arr){const cutoff=new Date();cutoff.setMonth(cutoff.getMonth()-12);return arr.filter(b=>new Date(b.createdAt)>=cutoff)}
+function avgFull(arr){function a(k){const vals=arr.map(b=>+b[k]||0).filter(Boolean);return vals.length?(vals.reduce((x,y)=>x+y,0)/vals.length).toFixed(1):'—'}return{stars:a('stars'),heat:a('heat'),cry:a('cry')}}
+function topAuthor(arr){const m={};arr.forEach(b=>{if(b.author)m[b.author]=(m[b.author]||0)+1});return Object.keys(m).sort((a,b)=>m[b]-m[a])[0]||''}
+function leadersBy(arr,k,type){const vals=arr.map(b=>+b[k]||0).filter(Boolean);if(!vals.length)return[];const target=type==='min'?Math.min(...vals):Math.max(...vals);return arr.filter(b=>(+b[k]||0)===target)}
+function funnyLine(arr,avg){if(!arr.length)return 'המדף עוד מתחמם. תני לו ספר אחד והוא יתחיל לדבר.';if((+avg.heat||0)>=4)return 'השנה המדף שלך אמר: החלטות מפוקפקות, הרבה 🔥, ואפס התנצלות.';if((+avg.cry||0)>=4)return 'הרבה בכי, הרבה דרמה, מעט מאוד שינה. מדף עם רגשות.';return 'השנה קראת, דירגת, ונתת למדף שלך אופי. מכובד מאוד.'}
+
+function renderSearch(){
+  const old=document.getElementById('searchInput'),q=(old?.value||'').trim().toLowerCase();
+  let res=S.books.filter(b=>matchesSearch(b,q)&&matchesFilters(b));
+  res=sortBooks(res,S.searchSort);
+  const active=[...S.filters.tags];['stars','heat','cry','speed'].forEach(k=>{if(S.filters[k])active.push(k+' '+S.filters[k])});
+  document.getElementById('s-search').innerHTML=`${header()}<div class="searchRow"><input id="searchInput" class="input searchInput" placeholder="חפשי ספר, סופרת או תגית" value="${esc(q)}" oninput="renderSearch()"><button class="pillBtn" onclick="toggleFilters()">סינון</button><button class="pillBtn" onclick="sortSheet('search')">מיון</button></div>${active.length?`<div class="filterChips">${active.map(x=>`<span class="tagSmall">${esc(x)}</span>`).join('')}<button class="textLink" onclick="resetSearch()">להתחיל מחדש</button></div>`:''}<div id="filterPanel" class="filtersOpen">${filterPanel()}</div>${res.length?(S.libraryView==='grid'?`<div class="grid">${res.map(bookCard).join('')}</div>`:`<div class="list">${res.map(listRow).join('')}</div>`):`<div class="card empty"><strong>המדף שקט פה… נסי חיפוש אחר</strong></div>`}`;
+  if(window.__filtersOpen)document.getElementById('filterPanel').classList.add('open')
+}
+function matchesSearch(b,q){if(!q)return true;return[b.title,b.author,...(b.tags||[])].join(' ').toLowerCase().includes(q)}
+function matchesFilters(b){const f=S.filters;if(f.tags.length&&!f.tags.every(t=>(b.tags||[]).includes(t)))return false;for(const k of['stars','heat','cry','speed'])if(f[k]&&(+b[k]||0)!==f[k])return false;return true}
+function toggleFilters(){window.__filtersOpen=!window.__filtersOpen;renderSearch()}
+function filterPanel(){const rating=(k,label)=>`<div class="groupBox open"><div class="groupHead">${label}</div><div class="groupBody">${[1,2,3,4,5].map(v=>`<button class="chip ${S.filters[k]===v?'on':''}" onclick="S.filters['${k}']=${S.filters[k]===v?0:v};save();renderSearch()">${v}</button>`).join('')}</div></div>`;return TAG_GROUPS.map((g,i)=>`<div class="groupBox ${i===0?'open':''}"><div class="groupHead" onclick="this.parentElement.classList.toggle('open')"><span>${g.name}</span><span>⌄</span></div><div class="groupBody">${g.tags.map(t=>`<button class="chip ${S.filters.tags.includes(t)?'on':''}" onclick="toggleFilterTag('${jsEsc(t)}')">${t}</button>`).join('')}</div></div>`).join('')+rating('stars','כוכבים')+rating('heat','לוהט')+rating('cry','בכי')+rating('speed','מהירות')}
+function toggleFilterTag(t){const i=S.filters.tags.indexOf(t);if(i>-1)S.filters.tags.splice(i,1);else S.filters.tags.push(t);save();renderSearch()}
+function resetSearch(){S.filters={tags:[],stars:0,heat:0,cry:0,speed:0};S.searchSort='love';window.__filtersOpen=false;save();renderSearch()}
+
+render();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
 </script></body></html>

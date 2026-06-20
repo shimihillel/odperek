@@ -1,8 +1,8 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק",
-  "description": "יומן קריאה עם עדכונים תוך כדי הספר.",
-  "start_url": "./index.html?v=2",
+  "description": "יומן קריאה עם עדכון מהשטח וציר קריאה.",
+  "start_url": "./index.html?v=3",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fbf2ec",

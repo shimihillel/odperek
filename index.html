@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v11</title>
+<title>עוד פרק אחד v12</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -724,6 +724,98 @@ button{cursor:pointer}
   height:16px;
 }
 
+
+/* v12 — מיון וסינון במדף */
+.shelfTools{
+  display:grid;
+  gap:9px;
+  margin:3px 0 14px;
+}
+.toolRow{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  overflow-x:auto;
+  padding-bottom:2px;
+}
+.toolBtn{
+  border:1px solid rgba(159,63,70,.16);
+  background:rgba(255,250,244,.84);
+  color:var(--red2);
+  border-radius:999px;
+  padding:10px 13px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.toolBtn.on{
+  background:var(--red);
+  color:white;
+  border-color:var(--red);
+}
+.activeFilters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:-3px;
+}
+.filterTag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:999px;
+  padding:6px 9px;
+  background:rgba(201,88,82,.12);
+  color:var(--red2);
+  font-size:12px;
+  font-weight:950;
+}
+.filterPanel{
+  display:none;
+  background:rgba(255,250,244,.9);
+  border:1px solid rgba(159,63,70,.12);
+  border-radius:24px;
+  padding:13px;
+  box-shadow:var(--soft);
+}
+.filterPanel.open{display:block}
+.filterGroup{
+  margin-bottom:13px;
+}
+.filterGroup:last-child{margin-bottom:0}
+.filterTitle{
+  color:var(--wine);
+  font-weight:950;
+  margin-bottom:8px;
+}
+.filterChips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.filterChip{
+  border:1px solid rgba(159,63,70,.14);
+  background:#fffdf9;
+  color:var(--ink);
+  border-radius:999px;
+  padding:9px 12px;
+  font-weight:900;
+  font-size:13px;
+}
+.filterChip.on{
+  background:var(--red);
+  color:white;
+  border-color:var(--red);
+}
+.sortPanel{
+  display:none;
+  background:rgba(255,250,244,.9);
+  border:1px solid rgba(159,63,70,.12);
+  border-radius:24px;
+  padding:13px;
+  box-shadow:var(--soft);
+}
+.sortPanel.open{display:block}
+
 </style>
 </head>
 <body>
@@ -756,6 +848,10 @@ let S=loadState();
 let openAcc='percent';
 let currentScreen='home';
 let shelfSearch='';
+let shelfSort='recent';
+let shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
+let shelfFilterOpen=false;
+let shelfSortOpen=false;
 
 function loadState(){
   try{
@@ -1173,22 +1269,157 @@ function finishBook(){
 function renderShelf(){
   document.getElementById('shelf').innerHTML=topHtml()+`
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="pillBtn" onclick="startNewBook()">ספר חדש</button></div>
-    <div class="shelfSearch">
+    <div class="shelfTools">
       <input id="shelfSearchInput" class="input" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)">
+      <div class="toolRow">
+        <button class="toolBtn ${shelfSortOpen?'on':''}" onclick="toggleShelfSort()">מיון: ${sortLabel(shelfSort)}</button>
+        <button class="toolBtn ${shelfFilterOpen?'on':''}" onclick="toggleShelfFilters()">סינון</button>
+        <button class="toolBtn" onclick="resetShelfTools()">איפוס</button>
+      </div>
+      ${activeShelfFiltersHtml()}
+      <div id="sortPanel" class="sortPanel ${shelfSortOpen?'open':''}">${sortPanelHtml()}</div>
+      <div id="filterPanel" class="filterPanel ${shelfFilterOpen?'open':''}">${filterPanelHtml()}</div>
     </div>
     <div id="shelfResults">${shelfResultsHtml()}</div>
   `;
 }
 function updateShelfSearch(q){
   shelfSearch=q;
+  updateShelfResultsOnly();
+}
+function updateShelfResultsOnly(){
   const el=document.getElementById('shelfResults');
   if(el) el.innerHTML=shelfResultsHtml();
 }
+function toggleShelfSort(){
+  shelfSortOpen=!shelfSortOpen;
+  shelfFilterOpen=false;
+  renderShelf();
+}
+function toggleShelfFilters(){
+  shelfFilterOpen=!shelfFilterOpen;
+  shelfSortOpen=false;
+  renderShelf();
+}
+function sortLabel(k){
+  return {
+    recent:'הכי חדש',
+    love:'הכי אהבתי',
+    heat:'הכי לוהט',
+    cry:'הכי שבר אותי',
+    fast:'בלעתי הכי מהר',
+    slow:'הכי נמרח',
+    title:'א׳-ת׳ ספר',
+    author:'א׳-ת׳ סופרת'
+  }[k]||'הכי חדש';
+}
+function setShelfSort(k){
+  shelfSort=k;
+  shelfSortOpen=false;
+  renderShelf();
+}
+function sortPanelHtml(){
+  const opts=['recent','love','heat','cry','fast','slow','title','author'];
+  return `<div class="filterGroup"><div class="filterTitle">איך למיין?</div><div class="filterChips">${opts.map(k=>`<button class="filterChip ${shelfSort===k?'on':''}" onclick="setShelfSort('${k}')">${sortLabel(k)}</button>`).join('')}</div></div>`;
+}
+function filterPanelHtml(){
+  return `
+    <div class="filterGroup">
+      <div class="filterTitle">שורה תחתונה</div>
+      <div class="filterChips">${BOTTOM_LINES.map(x=>filterChip('bottomLine',x,x)).join('')}</div>
+    </div>
+    <div class="filterGroup">
+      <div class="filterTitle">דירוג</div>
+      <div class="filterChips">${[1,2,3,4,5].map(n=>filterChip('stars',n,`${n} לבבות`)).join('')}</div>
+    </div>
+    <div class="filterGroup">
+      <div class="filterTitle">כמה לוהט</div>
+      <div class="filterChips">${[1,2,3,4,5].map(n=>filterChip('heat',n,`${n} פלפלים`)).join('')}</div>
+    </div>
+    <div class="filterGroup">
+      <div class="filterTitle">כמה בכי</div>
+      <div class="filterChips">${[1,2,3,4,5].map(n=>filterChip('cry',n,`${n} לב שבור`)).join('')}</div>
+    </div>
+    <div class="filterGroup">
+      <div class="filterTitle">קצב קריאה</div>
+      <div class="filterChips">${SPEED.map((x,i)=>filterChip('speed',i+1,x)).join('')}</div>
+    </div>
+    <div class="filterGroup">
+      <div class="filterTitle">דמויות</div>
+      <div class="filterChips">
+        ${filterChip('char','redflag','יש דגל אדום')}
+        ${filterChip('char','bookbf','Book boyfriend/girlfriend')}
+        ${filterChip('char','stuck','נשאר/ה לי בראש')}
+      </div>
+    </div>
+  `;
+}
+function filterChip(key,val,label){
+  const on=shelfFilters[key]===val;
+  return `<button class="filterChip ${on?'on':''}" onclick="toggleShelfFilter('${key}','${jsEsc(String(val))}')">${esc(label)}</button>`;
+}
+function toggleShelfFilter(key,val){
+  if(['stars','heat','cry','speed'].includes(key)) val=Number(val);
+  shelfFilters[key]=shelfFilters[key]===val? (['stars','heat','cry','speed'].includes(key)?0:'') : val;
+  renderShelf();
+}
+function resetShelfTools(){
+  shelfSearch='';
+  shelfSort='recent';
+  shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
+  shelfFilterOpen=false;
+  shelfSortOpen=false;
+  renderShelf();
+}
+function activeShelfFiltersHtml(){
+  const tags=[];
+  if(shelfSearch.trim()) tags.push(`חיפוש: ${shelfSearch.trim()}`);
+  if(shelfSort!=='recent') tags.push(`מיון: ${sortLabel(shelfSort)}`);
+  if(shelfFilters.bottomLine) tags.push(shelfFilters.bottomLine);
+  if(shelfFilters.stars) tags.push(`${shelfFilters.stars} לבבות`);
+  if(shelfFilters.heat) tags.push(`${shelfFilters.heat} פלפלים`);
+  if(shelfFilters.cry) tags.push(`${shelfFilters.cry} לב שבור`);
+  if(shelfFilters.speed) tags.push(SPEED[shelfFilters.speed-1]);
+  if(shelfFilters.char==='redflag') tags.push('יש דגל אדום');
+  if(shelfFilters.char==='bookbf') tags.push('Book boyfriend/girlfriend');
+  if(shelfFilters.char==='stuck') tags.push('נשאר/ה לי בראש');
+  return tags.length?`<div class="activeFilters">${tags.map(t=>`<span class="filterTag">${esc(t)}</span>`).join('')}</div>`:'';
+}
+function matchesShelfFilters(b){
+  const f=shelfFilters;
+  if(f.bottomLine && b.bottomLine!==f.bottomLine) return false;
+  if(f.stars && (+b.stars||0)!==f.stars) return false;
+  if(f.heat && (+b.heat||0)!==f.heat) return false;
+  if(f.cry && (+b.cry||0)!==f.cry) return false;
+  if(f.speed && (+b.speed||0)!==f.speed) return false;
+  if(f.char){
+    const chars=b.characters||[];
+    if(f.char==='redflag' && !chars.some(c=>String(c.tag||'').includes('דגל אדום')||String(c.finalTag||'').includes('דגל אדום'))) return false;
+    if(f.char==='bookbf' && !chars.some(c=>String(c.tag||'').toLowerCase().includes('book boyfriend')||String(c.tag||'').toLowerCase().includes('book girlfriend'))) return false;
+    if(f.char==='stuck' && !chars.some(c=>String(c.finalTag||'').includes('נשאר'))) return false;
+  }
+  return true;
+}
+function sortShelfBooks(arr){
+  return [...arr].sort((a,b)=>{
+    if(shelfSort==='recent') return new Date(b.createdAt||0)-new Date(a.createdAt||0);
+    if(shelfSort==='love') return (+b.stars||0)-(+a.stars||0);
+    if(shelfSort==='heat') return (+b.heat||0)-(+a.heat||0);
+    if(shelfSort==='cry') return (+b.cry||0)-(+a.cry||0);
+    if(shelfSort==='fast') return (+b.speed||0)-(+a.speed||0);
+    if(shelfSort==='slow') return (+a.speed||9)-(+b.speed||9);
+    if(shelfSort==='title') return String(a.title||'').localeCompare(String(b.title||''),'he');
+    if(shelfSort==='author') return String(a.author||'').localeCompare(String(b.author||''),'he');
+    return 0;
+  });
+}
 function shelfResultsHtml(){
   const q=(shelfSearch||'').trim().toLowerCase();
-  const books=q?S.books.filter(b=>searchBookText(b).includes(q)):S.books;
+  let books=S.books.filter(b=>!q || searchBookText(b).includes(q));
+  books=books.filter(matchesShelfFilters);
+  books=sortShelfBooks(books);
   if(!S.books.length) return `<div class="card empty">עוד אין ספרים שסיימת.</div>`;
-  if(!books.length) return `<div class="card searchEmpty">לא מצאתי כלום במדף. הספר כנראה מתחבא מתחת לשמיכה.</div>`;
+  if(!books.length) return `<div class="card searchEmpty">לא מצאתי כלום במדף. המדף דרמטי אבל לא עד כדי כך.</div>`;
   return `<div class="momentList">${books.map(bookRow).join('')}</div>`;
 }
 

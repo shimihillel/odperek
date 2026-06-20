@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v8</title>
+<title>עוד פרק אחד v9</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -603,6 +603,51 @@ button{cursor:pointer}
   margin:7px 0 14px;
 }
 
+
+/* v9 — תיקוני אמת: סטטיסטיקה, דמויות, פרטי ספר ומחיקה */
+.statsGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.statTile{
+  background:rgba(255,250,244,.88);
+  border:1px solid rgba(159,63,70,.12);
+  border-radius:24px;
+  padding:15px;
+  box-shadow:var(--soft);
+  min-height:112px;
+}
+.statNum{
+  font-size:34px;
+  font-weight:950;
+  color:var(--red2);
+  line-height:1;
+}
+.statLbl{
+  color:var(--muted);
+  font-weight:900;
+  margin-top:7px;
+}
+.statHero{
+  background:radial-gradient(circle at left top,rgba(255,225,166,.62),transparent 32%),linear-gradient(145deg,#fffaf4,#f3d1c4);
+  border:1px solid rgba(159,63,70,.13);
+  border-radius:30px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.statHeroTitle{
+  font-size:30px;
+  font-weight:950;
+  line-height:1.05;
+}
+.statHeroSub{
+  color:var(--muted);
+  font-weight:850;
+  margin-top:7px;
+}
+
 </style>
 </head>
 <body>
@@ -633,6 +678,7 @@ const BOTTOM_LINES=['בלעתי','עדיין חושבת עליו','אהבתי א
 const SPEED=['🐢','🐌','🐇','⚡','🚀'];
 let S=loadState();
 let openAcc='percent';
+let currentScreen='home';
 
 function loadState(){
   try{
@@ -691,7 +737,12 @@ function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.screen===id));
-  render();
+  currentScreen=id;
+  if(id==='home')renderHome();
+  if(id==='field')renderField();
+  if(id==='summary')renderSummary();
+  if(id==='shelf')renderShelf();
+  if(id==='stats')renderStats();
   scrollTo(0,0);
 }
 function topHtml(){
@@ -825,19 +876,30 @@ function moodBody(){
 function textBody(type,ph){
   return `<textarea id="${type}Text" class="textarea" placeholder="${ph}"></textarea><div style="margin-top:9px"><button class="saveBtn" onclick="saveText('${type}')">שמרי לציר</button></div>`;
 }
+let pendingCharName='';
 function charactersBody(c){
-  return `<input id="charName" class="input" placeholder="שם הדמות">
+  const selectedM = pickedGender==='זכר'?'on':'';
+  const selectedF = pickedGender==='נקבה'?'on':'';
+  return `<input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
   <div class="help">זכר / נקבה</div>
-  <div class="chips"><button class="chip" id="gender-m" onclick="pickGender('זכר')">זכר</button><button class="chip" id="gender-f" onclick="pickGender('נקבה')">נקבה</button></div>
+  <div class="chips"><button class="chip ${selectedM}" onclick="pickGender('זכר')">זכר</button><button class="chip ${selectedF}" onclick="pickGender('נקבה')">נקבה</button></div>
   <div class="help">מה הסטטוס?</div>
   <div class="chips">${CHAR_TAGS.map(t=>`<button class="chip" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+  <div class="help">אפשר להוסיף כמה דמויות ברצף. אחרי שמירה השדה מתנקה ונשארים כאן.</div>
   <div class="charList">${c.characters.length?c.characters.map(charHtml).join(''):'<div class="empty" style="padding:14px">עוד לא נוספו דמויות.</div>'}</div>`;
 }
 function charHtml(ch){
   return `<div class="charRow"><div><div class="charName">${esc(ch.name)}</div><div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}</div></div><button class="miniBtn" onclick="deleteChar('${ch.id}')">מחקי</button></div>`;
 }
 let pickedGender='זכר';
-function pickGender(g){pickedGender=g;renderField();setTimeout(()=>{const id=g==='זכר'?'gender-m':'gender-f';document.getElementById(id)?.classList.add('on')},0)}
+function pickGender(g){
+  const el=document.getElementById('charName');
+  pendingCharName=el?el.value:pendingCharName;
+  pickedGender=g;
+  openAcc='character';
+  renderField();
+}
+
 function jsEsc(s){return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
 function addUpdate(type,label,text,extra={}){
   const c=S.current;if(!c)return;
@@ -864,12 +926,17 @@ function saveText(type){
 }
 function saveCharacter(tag){
   const c=S.current;if(!c)return;
-  const name=(document.getElementById('charName')?.value||'').trim();
+  const el=document.getElementById('charName');
+  const name=(el?.value||pendingCharName||'').trim();
   if(!name){toast('חסר שם דמות');return}
   const ch={id:id(),name,gender:pickedGender,tag,finalTag:'',ts:new Date().toISOString()};
   c.characters.push(ch);
+  pendingCharName='';
   addUpdate('character','על מי מדובר',`${name} · ${pickedGender} · ${tag}`,{characterId:ch.id});
-  openAcc='character';renderField();
+  openAcc='character';
+  save();
+  renderField();
+  toast('הדמות נוספה');
 }
 function deleteChar(cid){
   if(!S.current)return;
@@ -1005,8 +1072,12 @@ function bookRow(b){
 
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('shelf').classList.add('active');
+  document.querySelectorAll('.nav button').forEach(btn=>btn.classList.toggle('on',btn.dataset.screen==='shelf'));
+  currentScreen='bookDetail';
   document.getElementById('shelf').innerHTML=`
-    <div class="pageHead"><button class="iconBtn" onclick="renderShelf()">→</button><div class="pageTitle">${esc(b.title)}</div></div>
+    <div class="pageHead"><button class="iconBtn" onclick="show('shelf')">→</button><div class="pageTitle">${esc(b.title)}</div></div>
 
     <div class="detailHeroCard">
       <div class="detailGrid">
@@ -1019,7 +1090,7 @@ function openBook(bookId){
         </div>
       </div>
       <div class="detailActions">
-        <button class="secondaryAction" onclick="renderShelf()" style="margin-top:0">חזרה למדף</button>
+        <button class="secondaryAction" onclick="show('shelf')" style="margin-top:0">חזרה למדף</button>
         <button class="dangerBtn" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button>
       </div>
     </div>
@@ -1059,7 +1130,7 @@ function openBook(bookId){
       <div class="momentList">${b.readingLog.map(momentHtml).join('')}</div>
     </div>`:''}
   `;
-  show('shelf');
+  scrollTo(0,0);
 }
 function confirmDeleteBook(bookId){
   const b=S.books.find(x=>x.id===bookId); if(!b)return;
@@ -1081,10 +1152,55 @@ function deleteBook(bookId){
   S.books=S.books.filter(b=>b.id!==bookId);
   save();
   hideDeleteConfirm();
-  renderShelf();
-  renderStats();
   show('shelf');
   toast('הספר הוסר מהמדף');
+}
+
+
+function renderStats(){
+  const el=document.getElementById('stats');
+  if(!el)return;
+  const books=Array.isArray(S.books)?S.books:[];
+  const total=books.length;
+  const avg=(key)=>{
+    const vals=books.map(b=>+b[key]||0).filter(v=>v>0);
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
+  };
+  const maxBook=(key,min=false)=>{
+    const vals=books.filter(b=>(+b[key]||0)>0);
+    if(!vals.length)return null;
+    return vals.sort((a,b)=>min?(+a[key]||0)-(+b[key]||0):(+b[key]||0)-(+a[key]||0))[0];
+  };
+  const topLine=()=>{
+    if(!total)return 'המדף עוד מתחמם. תני לו ספר אחד והוא יתחיל לדבר.';
+    if((parseFloat(avg('heat'))||0)>=4)return 'השנה המדף שלך בחר דרמה, אש, ואפס התנצלות.';
+    if((parseFloat(avg('cry'))||0)>=4)return 'הרבה לב, הרבה דמעות, מעט מאוד שינה.';
+    return 'יש פה מדף עם אופי. וזה רק הולך ומסתבך.';
+  };
+  const heat=maxBook('heat'),cry=maxBook('cry'),stars=maxBook('stars'),fast=maxBook('speed'),slow=maxBook('speed',true);
+  el.innerHTML=topHtml()+`
+    <div class="statHero">
+      <div class="statHeroTitle">המצב במדף</div>
+      <div class="statHeroSub">${topLine()}</div>
+    </div>
+    <div class="statsGrid">
+      <div class="statTile"><div class="statNum">${total}</div><div class="statLbl">ספרים שסיימת</div></div>
+      <div class="statTile"><div class="statNum">${avg('stars')}</div><div class="statLbl">ממוצע כוכבים</div></div>
+      <div class="statTile"><div class="statNum">${avg('heat')}</div><div class="statLbl">ממוצע חריפות</div></div>
+      <div class="statTile"><div class="statNum">${avg('cry')}</div><div class="statLbl">ממוצע בכי</div></div>
+    </div>
+    <div class="sectionHead"><div class="sectionTitle">הזוכות של המדף</div></div>
+    <div class="momentList">
+      ${statLeader('הכי אהבתי ⭐',stars)}
+      ${statLeader('הכי לוהט 🔥',heat)}
+      ${statLeader('הכי בכי 😭',cry)}
+      ${statLeader('בלעתי הכי מהר 🚀',fast)}
+      ${statLeader('הכי נמרח 🐢',slow)}
+    </div>
+  `;
+}
+function statLeader(label,b){
+  return `<div class="moment"><div class="momentType">♡</div><div><div class="momentMeta">${label}</div><div class="momentText">${b?esc(b.title):'—'}</div></div></div>`;
 }
 
 render();

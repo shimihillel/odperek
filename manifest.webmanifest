@@ -1,8 +1,8 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק",
-  "description": "יומני התולעת — יומן קריאה רומנטי עם מדף וסיכומים.",
-  "start_url": "./index.html?v=8",
+  "description": "יומני התולעת — תיקוני מדף, סטטיסטיקה ודמויות.",
+  "start_url": "./index.html?v=9",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fff4eb",

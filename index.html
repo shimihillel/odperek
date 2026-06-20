@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v10</title>
+<title>עוד פרק אחד v11</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -649,84 +649,79 @@ button{cursor:pointer}
 }
 
 
-/* v10 — אייקוני דירוג מותאמים + חיפוש */
-.ratingIconRow{
+/* v11 — אייקונים סופיים + חיפוש יציב */
+.ratingLine{
   display:inline-flex;
-  gap:3px;
   align-items:center;
-  vertical-align:middle;
+  flex-wrap:wrap;
+  gap:7px;
 }
-.ri{
+.ratingStack{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+}
+.ratingSvg{
   width:18px;
   height:18px;
   display:inline-block;
-  position:relative;
-  color:var(--red2);
-  flex:0 0 auto;
+  vertical-align:middle;
 }
-.ri.star{
-  clip-path:polygon(50% 4%,61% 35%,95% 35%,67% 55%,78% 89%,50% 68%,22% 89%,33% 55%,5% 35%,39% 35%);
-  background:linear-gradient(145deg,#9f3f46,#d77766);
+.ratingSvg svg{
+  width:100%;
+  height:100%;
+  display:block;
 }
-.ri.flame{
-  border-radius:58% 42% 56% 44% / 58% 43% 57% 42%;
-  background:linear-gradient(160deg,#9f3f46,#d77766 72%,#f1b07e);
-  transform:rotate(-12deg);
-}
-.ri.drop{
-  border-radius:70% 70% 70% 0;
-  background:linear-gradient(145deg,#7b3850,#d99086);
-  transform:rotate(-45deg);
-}
-.ri.page{
-  border:2px solid currentColor;
-  border-radius:5px 8px 8px 5px;
-  background:rgba(255,250,244,.74);
-}
-.ri.page:before{
-  content:"";
-  position:absolute;
-  top:3px;
-  right:3px;
-  width:7px;
-  height:10px;
-  border-right:2px solid currentColor;
-  opacity:.65;
-}
-.rateBtn .ratingIconRow{
+.rateBtn .ratingStack{
   justify-content:center;
 }
-.rateBtn{
-  min-width:54px;
+.rateBtn.on .ratingSvg svg *{
+  fill:#fffaf4 !important;
+  stroke:#fffaf4 !important;
 }
-.rateBtn.on .ri.star,
-.rateBtn.on .ri.flame,
-.rateBtn.on .ri.drop{
-  background:#fff8ef;
+.speedBox{
+  display:grid;
+  gap:10px;
 }
-.rateBtn.on .ri.page{
-  color:#fff8ef;
-  background:transparent;
+.speedLabels{
+  display:flex;
+  justify-content:space-between;
+  gap:5px;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:900;
 }
-.ratingInline{
+.speedLabels span{
+  max-width:58px;
+  text-align:center;
+}
+.speedSlider{
+  width:100%;
+  accent-color:var(--red2);
+}
+.speedValue{
   display:inline-flex;
-  gap:7px;
   align-items:center;
-  flex-wrap:wrap;
-}
-.ratingUnit{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
+  justify-content:center;
+  padding:9px 13px;
+  border-radius:999px;
+  background:rgba(201,88,82,.12);
+  color:var(--red2);
+  font-weight:950;
+  width:max-content;
 }
 .shelfSearch{
-  margin:4px 0 14px;
+  margin:3px 0 14px;
 }
 .searchEmpty{
   text-align:center;
   color:var(--muted);
   font-weight:850;
   padding:22px 12px;
+}
+.statNum .ratingSvg{
+  width:16px;
+  height:16px;
 }
 
 </style>
@@ -756,7 +751,7 @@ const CHAR_TAGS=['אוהב/ת','חשוד/ה','מעצבן/ת','רוצה עוד מ
 const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהבתי','עצבן/ה אותי','דגל אדום','הייתי קוראת עליו/עליה ספר שלם','שכחתי ממנו/ממנה'];
 const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב'];
 const BOTTOM_LINES=['בלעתי','עדיין חושבת עליו','אהבתי אבל...','חמוד ותו לא','לא אמליץ'];
-const SPEED=['איטי','רגוע','זורם','מהיר','בלעתי'];
+const SPEED=['נמרח','לקח זמן','זרם','מהר','בלעתי'];
 let S=loadState();
 let openAcc='percent';
 let currentScreen='home';
@@ -901,24 +896,35 @@ function momentHtml(u){
 function bookSmall(b){
   return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;
 }
+function miniIcon(type){
+  if(type==='heart'){
+    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#b64b54" d="M12 20.2s-7.3-4.5-9.4-9C1.1 8 .9 4.4 4.2 3.2c2.2-.8 4.1.3 5.3 1.9.7.9 1.1.9 1.8 0 1.2-1.6 3.1-2.7 5.3-1.9 3.3 1.2 3.1 4.8 1.6 8-2.1 4.5-9.4 9-9.4 9z"/></svg></span>`;
+  }
+  if(type==='pepper'){
+    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#b64b54" d="M13.7 6.2c3.7 1.1 6.2 4.7 5.2 8.4-.8 3.1-3.6 5.4-7.1 5.7-2.7.2-5.2-.7-6.7-2.4-1.4-1.6-1.6-3.7-.4-5.1.9-1.1 2.2-1.3 3.7-1.2.7.1 1.2-.2 1.4-.9.6-2.2 1.8-3.8 3.9-4.5z"/><path fill="#6f7b4e" d="M13.3 6.8c-.4-2.3.6-3.9 2.8-4.7.6-.2 1.1.4.8 1-.5.8-.8 1.5-.7 2.4 1-.6 2-.5 3 .2.6.4.4 1.3-.3 1.4-1.9.3-3.5.3-5.6-.3z"/></svg></span>`;
+  }
+  if(type==='broken'){
+    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#b64b54" d="M11.3 20.2s-6.9-4.3-8.8-8.7C1 8.1 1.1 4.7 4.2 3.3c2-.9 3.8 0 5 1.4l1.7 2.3-2 2.4 2.5 2.1-1.7 3.2 3.2-3.5-2.3-2 2-2.8c.9-1.9 3-4.2 6.1-3 3.1 1.2 3.2 4.8 1.7 8.1-1.9 4.4-8.8 8.7-8.8 8.7l-.3-.2z"/></svg></span>`;
+  }
+  return '';
+}
 function iconStack(type,n){
   n=+n||0;
-  if(!n)return '';
-  return `<span class="ratingIconRow">${Array.from({length:n},()=>`<span class="ri ${type}"></span>`).join('')}</span>`;
-}
-function ratingUnit(type,n,label){
-  if(!n)return '';
-  return `<span class="ratingUnit">${iconStack(type,n)}<span>${label||''}</span></span>`;
+  return `<span class="ratingStack">${Array.from({length:n},()=>miniIcon(type)).join('')}</span>`;
 }
 function ratingsLine(b){
   const a=[];
-  if(b.stars)a.push(ratingUnit('star',b.stars,''));
-  if(b.heat)a.push(ratingUnit('flame',b.heat,''));
-  if(b.cry)a.push(ratingUnit('drop',b.cry,''));
-  return a.length?`<span class="ratingInline">${a.join('')}</span>`:'';
+  if(b.stars)a.push(iconStack('heart',b.stars));
+  if(b.heat)a.push(iconStack('pepper',b.heat));
+  if(b.cry)a.push(iconStack('broken',b.cry));
+  return a.length?`<span class="ratingLine">${a.join('')}</span>`:'';
 }
 function searchBookText(b){
-  return [b.title,b.author,b.bottomLine,b.about,b.madeMe,(b.characters||[]).map(c=>[c.name,c.tag,c.finalTag].join(' ')).join(' '),(b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')].join(' ').toLowerCase();
+  return [
+    b.title,b.author,b.bottomLine,b.about,b.madeMe,
+    (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag].join(' ')).join(' '),
+    (b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')
+  ].join(' ').toLowerCase();
 }
 
 function startNewBook(){
@@ -1054,10 +1060,10 @@ function renderSummary(){
     </div>
     <div class="stepCard">
       <div class="stepTitle">דירוגים</div>
-      ${rateGroup('stars','דירוג',5,'star')}
-      ${rateGroup('heat','כמה לוהט?',5,'flame')}
-      ${rateGroup('cry','כמה בכי?',5,'drop')}
-      ${rateGroup('speed','כמה מהר?',5,'speed')}
+      ${rateGroup('stars','דירוג',5,'heart')}
+      ${rateGroup('heat','כמה לוהט?',5,'pepper')}
+      ${rateGroup('cry','כמה בכי?',5,'broken')}
+      ${rateGroup('speed','כמה מהר?',5,'slider')}
     </div>
     <div class="stepCard">
       <div class="stepTitle">שורה תחתונה</div>
@@ -1084,7 +1090,20 @@ function renderSummary(){
 }
 function rateGroup(key,label,max,type){
   const d=S.summaryDraft||{};
-  return `<div class="rateGroup"><div class="rateLabel">${label}</div><div class="rateBtns">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${type==='speed'?iconStack('page',n):iconStack(type,n)}</button>`).join('')}</div></div>`;
+  if(key==='speed'){
+    const val=d.speed||3;
+    return `<div class="rateGroup">
+      <div class="rateLabel">כמה מהר?</div>
+      <div class="speedBox">
+        <input class="speedSlider" type="range" min="1" max="5" step="1" value="${val}" oninput="setDraft('speed',+this.value)">
+        <div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div>
+        <div class="speedValue">${SPEED[val-1]}</div>
+      </div>
+    </div>`;
+  }
+  const iconType = key==='stars'?'heart':key==='heat'?'pepper':'broken';
+  const finalLabel = key==='stars'?'דירוג':key==='heat'?'כמה לוהט?':'כמה בכי?';
+  return `<div class="rateGroup"><div class="rateLabel">${finalLabel}</div><div class="rateBtns">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${iconStack(iconType,n)}</button>`).join('')}</div></div>`;
 }
 
 function setDraft(k,v,rer=true){
@@ -1152,17 +1171,25 @@ function finishBook(){
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('נכנס למדף');
 }
 function renderShelf(){
-  const q=(shelfSearch||'').trim().toLowerCase();
-  const books=q?S.books.filter(b=>searchBookText(b).includes(q)):S.books;
   document.getElementById('shelf').innerHTML=topHtml()+`
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="pillBtn" onclick="startNewBook()">ספר חדש</button></div>
     <div class="shelfSearch">
-      <input class="input" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="shelfSearch=this.value;renderShelf()">
+      <input id="shelfSearchInput" class="input" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)">
     </div>
-    ${S.books.length?(
-      books.length?`<div class="momentList">${books.map(bookRow).join('')}</div>`:`<div class="card searchEmpty">לא מצאתי כלום במדף. הספר כנראה מתחבא מתחת לשמיכה.</div>`
-    ):`<div class="card empty">עוד אין ספרים שסיימת.</div>`}
+    <div id="shelfResults">${shelfResultsHtml()}</div>
   `;
+}
+function updateShelfSearch(q){
+  shelfSearch=q;
+  const el=document.getElementById('shelfResults');
+  if(el) el.innerHTML=shelfResultsHtml();
+}
+function shelfResultsHtml(){
+  const q=(shelfSearch||'').trim().toLowerCase();
+  const books=q?S.books.filter(b=>searchBookText(b).includes(q)):S.books;
+  if(!S.books.length) return `<div class="card empty">עוד אין ספרים שסיימת.</div>`;
+  if(!books.length) return `<div class="card searchEmpty">לא מצאתי כלום במדף. הספר כנראה מתחבא מתחת לשמיכה.</div>`;
+  return `<div class="momentList">${books.map(bookRow).join('')}</div>`;
 }
 
 function bookRow(b){
@@ -1210,10 +1237,10 @@ function openBook(bookId){
     <div class="fullSection">
       <div class="fullTitle">דירוגים</div>
       <div class="statsGrid">
-        <div class="statTile"><div class="statNum">${b.stars?iconStack('star',b.stars):'—'}</div><div class="statLbl">דירוג</div></div>
-        <div class="statTile"><div class="statNum">${b.heat?iconStack('flame',b.heat):'—'}</div><div class="statLbl">לוהט</div></div>
-        <div class="statTile"><div class="statNum">${b.cry?iconStack('drop',b.cry):'—'}</div><div class="statLbl">בכי</div></div>
-        <div class="statTile"><div class="statNum">${b.speed?iconStack('page',b.speed):'—'}</div><div class="statLbl">מהירות</div></div>
+        <div class="statTile"><div class="statNum">${b.stars?iconStack('heart',b.stars):'—'}</div><div class="statLbl">דירוג</div></div>
+        <div class="statTile"><div class="statNum">${b.heat?iconStack('pepper',b.heat):'—'}</div><div class="statLbl">לוהט</div></div>
+        <div class="statTile"><div class="statNum">${b.cry?iconStack('broken',b.cry):'—'}</div><div class="statLbl">בכי</div></div>
+        <div class="statTile"><div class="statNum">${b.speed?SPEED[b.speed-1]:'—'}</div><div class="statLbl">קצב</div></div>
       </div>
     </div>
 

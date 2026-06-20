@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v5</title>
+<title>עוד פרק אחד v8</title>
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
 :root{
   --bg:#fff4eb;
@@ -462,6 +463,146 @@ button{cursor:pointer}
   z-index:30;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* v7 — סטטיסטיקה + הוספת דמות בתוך מסכמת */
+.statsGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.statTile{
+  background:rgba(255,250,244,.88);
+  border:1px solid rgba(159,63,70,.12);
+  border-radius:24px;
+  padding:15px;
+  box-shadow:var(--soft);
+  min-height:112px;
+}
+.statNum{
+  font-size:34px;
+  font-weight:950;
+  color:var(--red2);
+  line-height:1;
+}
+.statLbl{
+  color:var(--muted);
+  font-weight:900;
+  margin-top:7px;
+}
+.statHero{
+  background:
+    radial-gradient(circle at left top,rgba(255,225,166,.62),transparent 32%),
+    linear-gradient(145deg,#fffaf4,#f3d1c4);
+  border:1px solid rgba(159,63,70,.13);
+  border-radius:30px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.statHeroTitle{
+  font-size:30px;
+  font-weight:950;
+  line-height:1.05;
+}
+.statHeroSub{
+  color:var(--muted);
+  font-weight:850;
+  margin-top:7px;
+}
+.summaryAddBox{
+  margin-top:10px;
+  padding:12px;
+  border-radius:20px;
+  background:#fffdf9;
+  border:1px dashed rgba(159,63,70,.25);
+}
+
+
+/* v8 — פרטי ספר מלאים + מחיקה */
+.detailHeroCard{
+  background:linear-gradient(145deg,#fffaf4,#f1d1c2);
+  border:1px solid rgba(159,63,70,.13);
+  border-radius:30px;
+  padding:16px;
+  box-shadow:var(--shadow);
+  margin-bottom:12px;
+}
+.detailGrid{
+  display:grid;
+  grid-template-columns:112px 1fr;
+  gap:14px;
+  align-items:center;
+}
+.detailActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px;
+}
+.dangerBtn{
+  border:1px solid rgba(159,63,70,.25);
+  color:#8b2635;
+  background:rgba(255,250,244,.82);
+  border-radius:20px;
+  padding:14px 16px;
+  font-weight:950;
+}
+.fullSection{
+  background:rgba(255,250,244,.9);
+  border:1px solid rgba(159,63,70,.12);
+  border-radius:24px;
+  padding:15px;
+  box-shadow:var(--soft);
+  margin-bottom:11px;
+}
+.fullTitle{
+  font-size:18px;
+  font-weight:950;
+  margin-bottom:10px;
+  color:var(--wine);
+}
+.infoLine{
+  display:grid;
+  gap:5px;
+  margin:10px 0;
+}
+.infoLbl{
+  color:var(--muted);
+  font-weight:900;
+  font-size:13px;
+}
+.infoTxt{
+  font-weight:850;
+  line-height:1.45;
+}
+.deleteConfirm{
+  position:fixed;
+  inset:0;
+  background:rgba(42,23,21,.38);
+  display:none;
+  place-items:end center;
+  z-index:50;
+  padding:16px;
+}
+.deleteConfirm.show{display:grid}
+.confirmBox{
+  width:min(430px,100%);
+  background:#fffaf4;
+  border:1px solid rgba(159,63,70,.16);
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 25px 70px rgba(42,23,21,.30);
+}
+.confirmTitle{
+  font-size:22px;
+  font-weight:950;
+}
+.confirmText{
+  color:var(--muted);
+  font-weight:800;
+  margin:7px 0 14px;
+}
+
 </style>
 </head>
 <body>
@@ -470,13 +611,15 @@ button{cursor:pointer}
   <section id="field" class="screen"></section>
   <section id="summary" class="screen"></section>
   <section id="shelf" class="screen"></section>
+  <section id="stats" class="screen"></section>
 </div>
 <div class="nav">
   <button data-screen="home" class="on" onclick="show('home')">בית</button>
   <button onclick="goField()">עדכון</button>
   <button data-screen="shelf" onclick="show('shelf')">מדף</button>
-  <button onclick="startNewBook()">ספר חדש</button>
+  <button data-screen="stats" onclick="show('stats')">סטטיסטיקה</button>
 </div>
+<div id="deleteConfirm" class="deleteConfirm"></div>
 <div id="toast" class="toast"></div>
 
 <script>
@@ -554,7 +697,7 @@ function show(id){
 function topHtml(){
   return `<div class="top">
     <button class="iconBtn">☰</button>
-    <div class="brandBlock"><h1 class="brand">עוד פרק אחד</h1><div class="sub">מה אנחנו קוראות ומה זה עושה לנו</div></div>
+    <div class="brandBlock"><h1 class="brand">עוד פרק אחד</h1><div class="sub">יומני התולעת</div></div>
     <button class="iconBtn">♡</button>
   </div>`;
 }
@@ -566,6 +709,7 @@ function render(){
   renderField();
   renderSummary();
   renderShelf();
+  renderStats();
 }
 function renderHome(){
   const c=S.current;
@@ -766,7 +910,8 @@ function renderSummary(){
     </div>
     <div class="stepCard">
       <div class="stepTitle">מה נסגר עם הדמויות?</div>
-      ${c.characters.length?c.characters.map(summaryChar).join(''):`<button class="secondaryAction" onclick="show('field');openAcc='character';renderField()">+ להוסיף דמות לסיכום</button>`}
+      ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="empty" style="padding:14px">לא נוספו דמויות בזמן הקריאה.</div>`}
+      ${summaryAddCharacterBox()}
     </div>
     <div class="stepCard">
       <div class="stepTitle">רגעים מהשטח</div>
@@ -805,6 +950,31 @@ function setMomentTag(mid,tag){
   S.summaryDraft=S.summaryDraft||{};S.summaryDraft.momentTags=S.summaryDraft.momentTags||{};
   S.summaryDraft.momentTags[mid]=tag;save();renderSummary();
 }
+
+function summaryAddCharacterBox(){
+  return `<div class="summaryAddBox">
+    <div class="stepTitle" style="font-size:16px;margin-bottom:8px">+ להוסיף דמות לסיכום</div>
+    <input id="sumCharName" class="input" placeholder="שם הדמות">
+    <div class="help">זכר / נקבה</div>
+    <div class="chips"><button class="chip" onclick="pickSummaryGender('זכר')">זכר</button><button class="chip" onclick="pickSummaryGender('נקבה')">נקבה</button></div>
+    <div class="help">סיכום סופי</div>
+    <div class="chips">${FINAL_CHAR_TAGS.map(t=>`<button class="chip" onclick="addSummaryCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+  </div>`;
+}
+let summaryGender='זכר';
+function pickSummaryGender(g){summaryGender=g;toast(g)}
+function addSummaryCharacter(finalTag){
+  const c=S.current;if(!c)return;
+  const name=(document.getElementById('sumCharName')?.value||'').trim();
+  if(!name){toast('חסר שם דמות');return}
+  const ch={id:id(),name,gender:summaryGender,tag:'נוספה בסיכום',finalTag,ts:new Date().toISOString()};
+  c.characters.push(ch);
+  S.summaryDraft=S.summaryDraft||{};
+  S.summaryDraft.charFinal=S.summaryDraft.charFinal||{};
+  S.summaryDraft.charFinal[ch.id]=finalTag;
+  save();renderSummary();toast('הדמות נוספה לסיכום');
+}
+
 function finishBook(){
   const c=S.current;if(!c)return;
   const d=S.summaryDraft||{};
@@ -832,23 +1002,91 @@ function bookRow(b){
     </div>
   </div>`;
 }
+
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   document.getElementById('shelf').innerHTML=`
     <div class="pageHead"><button class="iconBtn" onclick="renderShelf()">→</button><div class="pageTitle">${esc(b.title)}</div></div>
-    <div class="card">
-      <div style="display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center">
+
+    <div class="detailHeroCard">
+      <div class="detailGrid">
         ${coverHtml(b.title,b.author)}
-        <div><div class="nowBookTitle">${esc(b.title)}</div><div class="nowAuthor">${esc(b.author)}</div><div style="margin-top:8px">${ratingsLine(b)}</div>${b.bottomLine?`<div class="vibeRow">${esc(b.bottomLine)}</div>`:''}</div>
+        <div>
+          <div class="nowBookTitle">${esc(b.title)}</div>
+          <div class="nowAuthor">${esc(b.author)}</div>
+          <div style="margin-top:8px">${ratingsLine(b)}</div>
+          ${b.bottomLine?`<div class="vibeRow">${esc(b.bottomLine)}</div>`:''}
+        </div>
+      </div>
+      <div class="detailActions">
+        <button class="secondaryAction" onclick="renderShelf()" style="margin-top:0">חזרה למדף</button>
+        <button class="dangerBtn" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button>
       </div>
     </div>
-    ${b.about||b.madeMe?`<div class="stepCard"><div class="stepTitle">בשורה אחת</div>${b.about?`<div class="help">זה היה ספר על…</div><div class="momentText">${esc(b.about)}</div>`:''}${b.madeMe?`<div class="help">והוא גרם לי…</div><div class="momentText">${esc(b.madeMe)}</div>`:''}</div>`:''}
-    ${b.characters?.length?`<div class="stepCard"><div class="stepTitle">מה נסגר עם הדמויות?</div>${b.characters.map(ch=>`<div class="charRow"><div><div class="charName">${esc(ch.name)}</div><div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')} ${ch.finalTag?'· '+esc(ch.finalTag):''}</div></div></div>`).join('')}</div>`:''}
-    ${b.readingLog?.length?`<div class="stepCard"><div class="stepTitle">רגעים מהשטח</div>${b.readingLog.map(momentHtml).join('')}</div>`:''}
-    <button class="secondaryAction" onclick="renderShelf()">חזרה למדף</button>
+
+    <div class="fullSection">
+      <div class="fullTitle">הסיכום שלי</div>
+      ${b.bottomLine?`<div class="infoLine"><div class="infoLbl">שורה תחתונה</div><div class="infoTxt">${esc(b.bottomLine)}</div></div>`:''}
+      ${b.about?`<div class="infoLine"><div class="infoLbl">זה היה ספר על…</div><div class="infoTxt">${esc(b.about)}</div></div>`:''}
+      ${b.madeMe?`<div class="infoLine"><div class="infoLbl">והוא גרם לי…</div><div class="infoTxt">${esc(b.madeMe)}</div></div>`:''}
+      ${(!b.bottomLine&&!b.about&&!b.madeMe)?`<div class="empty" style="padding:12px">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}
+    </div>
+
+    <div class="fullSection">
+      <div class="fullTitle">דירוגים</div>
+      <div class="statsGrid">
+        <div class="statTile"><div class="statNum">${b.stars||'—'}</div><div class="statLbl">כוכבים ⭐</div></div>
+        <div class="statTile"><div class="statNum">${b.heat||'—'}</div><div class="statLbl">חריפות 🔥</div></div>
+        <div class="statTile"><div class="statNum">${b.cry||'—'}</div><div class="statLbl">בכי 😭</div></div>
+        <div class="statTile"><div class="statNum">${b.speed?SPEED[b.speed-1]:'—'}</div><div class="statLbl">מהירות</div></div>
+      </div>
+    </div>
+
+    ${b.characters?.length?`<div class="fullSection">
+      <div class="fullTitle">מה נסגר עם הדמויות?</div>
+      <div class="momentList">
+        ${b.characters.map(ch=>`<div class="charRow"><div><div class="charName">${esc(ch.name)}</div><div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}${ch.finalTag?' · '+esc(ch.finalTag):''}</div></div></div>`).join('')}
+      </div>
+    </div>`:''}
+
+    ${b.readingLog?.filter(u=>u.finalTag).length?`<div class="fullSection">
+      <div class="fullTitle">רגעים נבחרים מהשטח</div>
+      <div class="momentList">${b.readingLog.filter(u=>u.finalTag).map(momentHtml).join('')}</div>
+    </div>`:''}
+
+    ${b.readingLog?.length?`<div class="fullSection">
+      <div class="fullTitle">ציר מלא מהשטח</div>
+      <div class="momentList">${b.readingLog.map(momentHtml).join('')}</div>
+    </div>`:''}
   `;
   show('shelf');
 }
+function confirmDeleteBook(bookId){
+  const b=S.books.find(x=>x.id===bookId); if(!b)return;
+  const box=document.getElementById('deleteConfirm');
+  box.innerHTML=`<div class="confirmBox">
+    <div class="confirmTitle">להסיר את הספר מהמדף?</div>
+    <div class="confirmText">${esc(b.title)} יימחק מהמדף ומהסטטיסטיקה.</div>
+    <div class="detailActions">
+      <button class="dangerBtn" onclick="deleteBook('${b.id}')">כן, להסיר</button>
+      <button class="secondaryAction" onclick="hideDeleteConfirm()" style="margin-top:0">ביטול</button>
+    </div>
+  </div>`;
+  box.classList.add('show');
+}
+function hideDeleteConfirm(){
+  document.getElementById('deleteConfirm').classList.remove('show');
+}
+function deleteBook(bookId){
+  S.books=S.books.filter(b=>b.id!==bookId);
+  save();
+  hideDeleteConfirm();
+  renderShelf();
+  renderStats();
+  show('shelf');
+  toast('הספר הוסר מהמדף');
+}
+
 render();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>

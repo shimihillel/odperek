@@ -1,8 +1,8 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק",
-  "description": "יומני התולעת — תיקוני מדף, סטטיסטיקה ודמויות.",
-  "start_url": "./index.html?v=9",
+  "description": "יומני התולעת — אייקוני דירוג חדשים וחיפוש במדף.",
+  "start_url": "./index.html?v=10",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fff4eb",

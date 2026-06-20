@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v9</title>
+<title>עוד פרק אחד v10</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -648,6 +648,87 @@ button{cursor:pointer}
   margin-top:7px;
 }
 
+
+/* v10 — אייקוני דירוג מותאמים + חיפוש */
+.ratingIconRow{
+  display:inline-flex;
+  gap:3px;
+  align-items:center;
+  vertical-align:middle;
+}
+.ri{
+  width:18px;
+  height:18px;
+  display:inline-block;
+  position:relative;
+  color:var(--red2);
+  flex:0 0 auto;
+}
+.ri.star{
+  clip-path:polygon(50% 4%,61% 35%,95% 35%,67% 55%,78% 89%,50% 68%,22% 89%,33% 55%,5% 35%,39% 35%);
+  background:linear-gradient(145deg,#9f3f46,#d77766);
+}
+.ri.flame{
+  border-radius:58% 42% 56% 44% / 58% 43% 57% 42%;
+  background:linear-gradient(160deg,#9f3f46,#d77766 72%,#f1b07e);
+  transform:rotate(-12deg);
+}
+.ri.drop{
+  border-radius:70% 70% 70% 0;
+  background:linear-gradient(145deg,#7b3850,#d99086);
+  transform:rotate(-45deg);
+}
+.ri.page{
+  border:2px solid currentColor;
+  border-radius:5px 8px 8px 5px;
+  background:rgba(255,250,244,.74);
+}
+.ri.page:before{
+  content:"";
+  position:absolute;
+  top:3px;
+  right:3px;
+  width:7px;
+  height:10px;
+  border-right:2px solid currentColor;
+  opacity:.65;
+}
+.rateBtn .ratingIconRow{
+  justify-content:center;
+}
+.rateBtn{
+  min-width:54px;
+}
+.rateBtn.on .ri.star,
+.rateBtn.on .ri.flame,
+.rateBtn.on .ri.drop{
+  background:#fff8ef;
+}
+.rateBtn.on .ri.page{
+  color:#fff8ef;
+  background:transparent;
+}
+.ratingInline{
+  display:inline-flex;
+  gap:7px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.ratingUnit{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+.shelfSearch{
+  margin:4px 0 14px;
+}
+.searchEmpty{
+  text-align:center;
+  color:var(--muted);
+  font-weight:850;
+  padding:22px 12px;
+}
+
 </style>
 </head>
 <body>
@@ -675,10 +756,11 @@ const CHAR_TAGS=['אוהב/ת','חשוד/ה','מעצבן/ת','רוצה עוד מ
 const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהבתי','עצבן/ה אותי','דגל אדום','הייתי קוראת עליו/עליה ספר שלם','שכחתי ממנו/ממנה'];
 const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב'];
 const BOTTOM_LINES=['בלעתי','עדיין חושבת עליו','אהבתי אבל...','חמוד ותו לא','לא אמליץ'];
-const SPEED=['🐢','🐌','🐇','⚡','🚀'];
+const SPEED=['איטי','רגוע','זורם','מהיר','בלעתי'];
 let S=loadState();
 let openAcc='percent';
 let currentScreen='home';
+let shelfSearch='';
 
 function loadState(){
   try{
@@ -819,13 +901,26 @@ function momentHtml(u){
 function bookSmall(b){
   return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;
 }
+function iconStack(type,n){
+  n=+n||0;
+  if(!n)return '';
+  return `<span class="ratingIconRow">${Array.from({length:n},()=>`<span class="ri ${type}"></span>`).join('')}</span>`;
+}
+function ratingUnit(type,n,label){
+  if(!n)return '';
+  return `<span class="ratingUnit">${iconStack(type,n)}<span>${label||''}</span></span>`;
+}
 function ratingsLine(b){
   const a=[];
-  if(b.stars)a.push('⭐'.repeat(b.stars));
-  if(b.heat)a.push('🔥'.repeat(b.heat));
-  if(b.cry)a.push('😭'.repeat(b.cry));
-  return a.join(' ')||'';
+  if(b.stars)a.push(ratingUnit('star',b.stars,''));
+  if(b.heat)a.push(ratingUnit('flame',b.heat,''));
+  if(b.cry)a.push(ratingUnit('drop',b.cry,''));
+  return a.length?`<span class="ratingInline">${a.join('')}</span>`:'';
 }
+function searchBookText(b){
+  return [b.title,b.author,b.bottomLine,b.about,b.madeMe,(b.characters||[]).map(c=>[c.name,c.tag,c.finalTag].join(' ')).join(' '),(b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')].join(' ').toLowerCase();
+}
+
 function startNewBook(){
   const title=prompt('שם הספר?');
   if(!title)return;
@@ -959,10 +1054,10 @@ function renderSummary(){
     </div>
     <div class="stepCard">
       <div class="stepTitle">דירוגים</div>
-      ${rateGroup('stars','כמה כוכבים?',5,'⭐')}
-      ${rateGroup('heat','כמה חריפות?',5,'🔥')}
-      ${rateGroup('cry','כמה בכי?',5,'😭')}
-      ${rateGroup('speed','מהירות קריאה',5,'speed')}
+      ${rateGroup('stars','דירוג',5,'star')}
+      ${rateGroup('heat','כמה לוהט?',5,'flame')}
+      ${rateGroup('cry','כמה בכי?',5,'drop')}
+      ${rateGroup('speed','כמה מהר?',5,'speed')}
     </div>
     <div class="stepCard">
       <div class="stepTitle">שורה תחתונה</div>
@@ -987,10 +1082,11 @@ function renderSummary(){
     <button class="doneBtn" onclick="finishBook()">וזהו</button>
   `:'';
 }
-function rateGroup(key,label,max,icon){
+function rateGroup(key,label,max,type){
   const d=S.summaryDraft||{};
-  return `<div class="rateGroup"><div class="rateLabel">${label}</div><div class="rateBtns">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${icon==='speed'?SPEED[n-1]:icon.repeat(n)}</button>`).join('')}</div></div>`;
+  return `<div class="rateGroup"><div class="rateLabel">${label}</div><div class="rateBtns">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${type==='speed'?iconStack('page',n):iconStack(type,n)}</button>`).join('')}</div></div>`;
 }
+
 function setDraft(k,v,rer=true){
   S.summaryDraft=S.summaryDraft||{};
   S.summaryDraft[k]=v;
@@ -1056,11 +1152,19 @@ function finishBook(){
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('נכנס למדף');
 }
 function renderShelf(){
+  const q=(shelfSearch||'').trim().toLowerCase();
+  const books=q?S.books.filter(b=>searchBookText(b).includes(q)):S.books;
   document.getElementById('shelf').innerHTML=topHtml()+`
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="pillBtn" onclick="startNewBook()">ספר חדש</button></div>
-    ${S.books.length?`<div class="momentList">${S.books.map(bookRow).join('')}</div>`:`<div class="card empty">עוד אין ספרים שסיימת.</div>`}
+    <div class="shelfSearch">
+      <input class="input" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="shelfSearch=this.value;renderShelf()">
+    </div>
+    ${S.books.length?(
+      books.length?`<div class="momentList">${books.map(bookRow).join('')}</div>`:`<div class="card searchEmpty">לא מצאתי כלום במדף. הספר כנראה מתחבא מתחת לשמיכה.</div>`
+    ):`<div class="card empty">עוד אין ספרים שסיימת.</div>`}
   `;
 }
+
 function bookRow(b){
   return `<div class="card" onclick="openBook('${b.id}')" style="box-shadow:var(--soft);margin-bottom:10px">
     <div style="display:grid;grid-template-columns:74px 1fr;gap:12px;align-items:center">
@@ -1106,10 +1210,10 @@ function openBook(bookId){
     <div class="fullSection">
       <div class="fullTitle">דירוגים</div>
       <div class="statsGrid">
-        <div class="statTile"><div class="statNum">${b.stars||'—'}</div><div class="statLbl">כוכבים ⭐</div></div>
-        <div class="statTile"><div class="statNum">${b.heat||'—'}</div><div class="statLbl">חריפות 🔥</div></div>
-        <div class="statTile"><div class="statNum">${b.cry||'—'}</div><div class="statLbl">בכי 😭</div></div>
-        <div class="statTile"><div class="statNum">${b.speed?SPEED[b.speed-1]:'—'}</div><div class="statLbl">מהירות</div></div>
+        <div class="statTile"><div class="statNum">${b.stars?iconStack('star',b.stars):'—'}</div><div class="statLbl">דירוג</div></div>
+        <div class="statTile"><div class="statNum">${b.heat?iconStack('flame',b.heat):'—'}</div><div class="statLbl">לוהט</div></div>
+        <div class="statTile"><div class="statNum">${b.cry?iconStack('drop',b.cry):'—'}</div><div class="statLbl">בכי</div></div>
+        <div class="statTile"><div class="statNum">${b.speed?iconStack('page',b.speed):'—'}</div><div class="statLbl">מהירות</div></div>
       </div>
     </div>
 
@@ -1191,11 +1295,11 @@ function renderStats(){
     </div>
     <div class="sectionHead"><div class="sectionTitle">הזוכות של המדף</div></div>
     <div class="momentList">
-      ${statLeader('הכי אהבתי ⭐',stars)}
-      ${statLeader('הכי לוהט 🔥',heat)}
-      ${statLeader('הכי בכי 😭',cry)}
-      ${statLeader('בלעתי הכי מהר 🚀',fast)}
-      ${statLeader('הכי נמרח 🐢',slow)}
+      ${statLeader('הכי אהבתי',stars)}
+      ${statLeader('הכי לוהט',heat)}
+      ${statLeader('הכי בכי',cry)}
+      ${statLeader('בלעתי הכי מהר',fast)}
+      ${statLeader('הכי נמרח',slow)}
     </div>
   `;
 }

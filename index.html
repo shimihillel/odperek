@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v15</title>
+<title>עוד פרק אחד v16</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -888,6 +888,33 @@ body:before{
 .summaryAddBox .input::placeholder{color:rgba(255,255,255,.45)}
 .stepCard .empty{background:rgba(255,255,255,.04);border-radius:18px}
 
+
+/* v16 — neon cover polish + spacing */
+.dashMeta.single{grid-template-columns:1fr}
+.dashMetaItem.moodOnly{min-height:78px;justify-content:center;padding-block:14px}
+.dashMetaItem.moodOnly b{justify-content:center;margin-bottom:7px}
+.floatingBook{padding:48px 14px 18px;background:radial-gradient(circle at 50% 70%,rgba(255,79,161,.18),transparent 26%),radial-gradient(circle at 20% 8%,rgba(154,92,255,.30),transparent 34%),linear-gradient(150deg,#0b1028,#211446 58%,#6c244c)}
+.floatingBook:before{background:linear-gradient(90deg,rgba(255,255,255,.10),transparent 14%),repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.03) 7px 8px);opacity:.55}
+.bookGlowArt{min-height:142px;gap:0}
+.bookGlowMark,.coverMark{width:auto;height:auto;border-radius:0;background:none !important;border:0 !important;box-shadow:none !important}
+.bookGlowMark .neonIcon,.coverMark .neonIcon{font-size:78px;color:#ff86cb;filter:drop-shadow(0 0 18px rgba(255,79,161,.65)) drop-shadow(0 0 34px rgba(255,79,161,.28))}
+.bookGlowLine,.coverLine{width:98px;height:6px;border-radius:999px;background:radial-gradient(circle at 50% 50%,rgba(255,171,214,.95),rgba(255,171,214,.15) 58%,rgba(255,171,214,0) 72%);margin-top:6px;filter:blur(.2px)}
+.bookGlowDivider,.coverDivider{width:82px;margin-top:10px}
+.bookGlowTitle{font-size:34px;text-align:center}
+.bookGlowAuthor{text-align:center}
+.cover{gap:6px;background:radial-gradient(circle at 50% 70%,rgba(255,79,161,.20),transparent 28%),radial-gradient(circle at 20% 8%,rgba(154,92,255,.28),transparent 34%),linear-gradient(150deg,#0a1027,#1d1342 58%,#69244b)}
+.coverMark{margin:0 auto 6px}
+.coverMark .neonIcon{font-size:54px}
+.coverTitle,.coverAuthor{text-align:center}
+.coverLine{width:70px;height:5px;margin-top:2px}
+.bookSmall{background:radial-gradient(circle at 50% 78%,rgba(255,79,161,.20),transparent 28%),linear-gradient(150deg,#0b1028,#241444 64%,#7b2450);padding-top:48px}
+.bookSmallMark{width:auto;height:auto;top:14px;left:14px;background:none !important;border:0 !important}
+.bookSmallMark .neonIcon{font-size:22px;color:#ff8bc9;filter:drop-shadow(0 0 12px rgba(255,79,161,.6))}
+.percentEdit{display:grid;gap:16px;margin-top:6px}
+.percentRow{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.percentEdit .textarea{margin-top:2px;min-height:126px}
+.percentEdit .saveBtn{min-width:140px}
+
 </style>
 </head>
 <body>
@@ -1020,7 +1047,7 @@ function topHtml(){
   </div>`;
 }
 function coverHtml(title,author){
-  return `<div class="cover"><div class="coverMark">${uiIcon('heart')}</div><div class="coverDivider"></div><div class="coverTitle">${esc(title||'עוד פרק אחד')}</div><div class="coverAuthor">${esc(author||'')}</div></div>`;
+  return `<div class="cover"><div class="coverMark">${uiIcon('heart')}</div><div class="coverLine"></div><div class="coverDivider"></div><div class="coverTitle">${esc(title||'עוד פרק אחד')}</div><div class="coverAuthor">${esc(author||'')}</div></div>`;
 }
 function render(){
   renderHome();
@@ -1045,14 +1072,14 @@ function currentHome(c){
     <div class="dashStage">
       <div>
         <div class="progressOrb" style="--p:${pct(c.percent)}"><div class="orbInner"><div class="orbPercent">${pct(c.percent)}%</div></div></div>
-        <div class="dashMeta">
-          <div class="dashMetaItem"><b>${uiIcon('percent')}</b>התקדמות בקריאה</div>
-          <div class="dashMetaItem"><b>${uiIcon('heart')}</b>${c.lastMood?esc(c.lastMood):'מה הוייב?'}</div>
+        <div class="dashMeta single">
+          <div class="dashMetaItem moodOnly"><b>${uiIcon('heart')}</b>${c.lastMood?esc(c.lastMood):'מה הוייב?'}</div>
         </div>
       </div>
       <div class="floatingBook" onclick="goField('percent')">
         <div class="bookGlowArt">
           <div class="bookGlowMark">${uiIcon('heart')}</div>
+          <div class="bookGlowLine"></div>
           <div class="bookGlowDivider"></div>
         </div>
         <div class="bookGlowTitle">${esc(c.title)}</div>
@@ -1164,9 +1191,11 @@ function accCard(id,icon,title,body){
 }
 function toggleAcc(id){openAcc=openAcc===id?'':id;renderField()}
 function percentBody(c){
-  return `<div class="help">אפשר רק לעדכן אחוז, ואפשר להוסיף מחשבה קצרה אם יש.</div>
-  <div class="inline"><input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(c.percent)}"><button class="saveBtn" onclick="savePercent()">שמירה</button></div>
-  <textarea id="percentNote" class="textarea" placeholder="מחשבה קצרה? לא חובה"></textarea>`;
+  return `<div class="percentEdit">
+    <div class="help">אפשר רק לעדכן אחוז, ואפשר להוסיף מחשבה קצרה אם יש.</div>
+    <div class="percentRow"><input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(c.percent)}"><button class="saveBtn" onclick="savePercent()">שמירה</button></div>
+    <textarea id="percentNote" class="textarea" placeholder="מחשבה קצרה? לא חובה"></textarea>
+  </div>`;
 }
 function moodBody(){
   return `<div class="chips">${MOODS.map(m=>`<button class="chip" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>`;

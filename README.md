@@ -3,3 +3,6 @@
 גרסה עם עיצוב Dark Floating Dashboard, אייקון אפליקציה חדש, גיבוי ושחזור, אייקוני SVG ניאוניים אחידים וכריכות placeholder רומנטי־ניאוני.
 
 להעלאה: העלי את כל הקבצים לתיקיית האתר בגיטהאב/שרת, כולל index.html, manifest.webmanifest, sw.js וקבצי האייקונים.
+
+
+V15: refined inner UI, unified leftover icons, cleaner progress orb, improved placeholder covers, and better summary character contrast.

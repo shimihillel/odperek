@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#9f3f46">
-<title>עוד פרק אחד v12</title>
+<meta name="theme-color" content="#070b19">
+<title>עוד פרק אחד v13</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -816,6 +816,45 @@ button{cursor:pointer}
 }
 .sortPanel.open{display:block}
 
+
+/* v13 — Dark Floating Dashboard UI */
+:root{
+  --bg:#070b19;
+  --cream:rgba(16,20,44,.72);
+  --cream2:#141936;
+  --ink:#fff8fb;
+  --muted:#b9a8cf;
+  --line:rgba(255,255,255,.10);
+  --red:#ff4fa1;
+  --red2:#ff6b63;
+  --wine:#9a5cff;
+  --rose:#ff8bc9;
+  --sand:#ffbb6b;
+  --shadow:0 28px 70px rgba(0,0,0,.42),0 0 34px rgba(255,79,161,.10);
+  --soft:0 14px 34px rgba(0,0,0,.24);
+}
+html{background:#070b19}
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 78% 14%,rgba(255,79,161,.25),transparent 30%),
+    radial-gradient(circle at 12% 28%,rgba(74,126,255,.22),transparent 34%),
+    radial-gradient(circle at 90% 86%,rgba(255,120,76,.18),transparent 28%),
+    linear-gradient(155deg,#050814 0%,#090e22 45%,#15091d 100%);
+}
+body:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;opacity:.32;
+  background-image:radial-gradient(circle,rgba(255,255,255,.32) 0 1px,transparent 1.8px);
+  background-size:58px 58px;
+  mask-image:linear-gradient(#000,transparent 72%);
+}
+.app{padding:18px 18px 104px;}
+.top{margin:6px 0 14px}.brand{font-size:28px;color:#fff;font-weight:950;text-shadow:0 0 22px rgba(255,79,161,.24)}.sub{color:#ff8bc9;font-size:14px;font-weight:850}.iconBtn{background:rgba(10,14,32,.58);border-color:rgba(255,112,176,.32);color:#ff75bd;box-shadow:0 0 0 1px rgba(255,255,255,.03),0 12px 28px rgba(0,0,0,.22);border-radius:999px}.card,.accCard,.stepCard,.statTile,.fullSection,.detailHeroCard,.sortPanel,.filterPanel{background:linear-gradient(145deg,rgba(17,22,50,.82),rgba(20,12,35,.70));border:1px solid rgba(255,116,184,.18);box-shadow:var(--soft);backdrop-filter:blur(16px);color:var(--ink)}.input,.textarea{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13);color:#fff}.input::placeholder,.textarea::placeholder{color:rgba(255,255,255,.45)}.pageTitle,.sectionTitle,.fieldTitle,.summaryTitle,.nowBookTitle,.fieldBookName{color:#fff}.nowAuthor,.help,.statLbl,.momentMeta,.charMeta,.infoLbl,.fieldBookAuthor{color:var(--muted)}.nav{background:rgba(7,10,25,.74);border-color:rgba(255,116,184,.20);box-shadow:0 -14px 50px rgba(0,0,0,.40);backdrop-filter:blur(18px);border-radius:34px;gap:8px}.nav button{color:#b7a6ca;border-radius:999px}.nav button.on{background:radial-gradient(circle at 50% 20%,rgba(255,187,107,.38),rgba(255,79,161,.30));color:#fff;box-shadow:0 0 24px rgba(255,79,161,.35)}.toast{background:#fff;color:#11142a}.fieldHero,.summaryHero{background:linear-gradient(145deg,#0e1430,#301235);box-shadow:var(--shadow);border-bottom:1px solid rgba(255,116,184,.18)}.fieldBook{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.10)}.fieldPercent,.statNum,.fullTitle,.rateLabel,.filterTitle{color:#ff75bd}.saveBtn,.pillBtn,.doneBtn,.mainAction{background:linear-gradient(135deg,#ff3ea4 0%,#ff7b59 100%);box-shadow:0 18px 34px rgba(255,79,161,.24)}.secondaryAction,.dangerBtn,.toolBtn,.chip,.filterChip,.miniBtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#ffd7ed}.chip.on,.filterChip.on,.toolBtn.on,.rateBtn.on{background:linear-gradient(135deg,#ff3ea4,#ff7b59);color:#fff;border-color:transparent}.rateBtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#fff}.moment{background:linear-gradient(145deg,rgba(18,22,50,.86),rgba(26,15,43,.80));border-color:rgba(255,116,184,.16);box-shadow:var(--soft)}.momentType,.accIcon{background:rgba(255,79,161,.13);color:#ff79bf}.bookSmall,.cover{background:linear-gradient(150deg,#15183b,#60204e 58%,#ff5a86);box-shadow:0 20px 36px rgba(0,0,0,.34),0 0 22px rgba(255,79,161,.14)}.cover:after{color:#ff8bc9;text-shadow:0 0 16px rgba(255,79,161,.75)}.statHero{background:radial-gradient(circle at 80% 20%,rgba(255,79,161,.25),transparent 34%),linear-gradient(145deg,rgba(17,22,50,.90),rgba(31,15,45,.82));border-color:rgba(255,116,184,.20);box-shadow:var(--shadow)}.deleteConfirm{background:rgba(0,0,0,.62)}.confirmBox{background:#11162f;border-color:rgba(255,116,184,.22);color:#fff}.confirmText{color:var(--muted)}
+
+/* Home: broken out dashboard, not the old top card */
+.readingDashboard{position:relative;margin-top:6px;min-height:455px;padding:8px 0 2px;isolation:isolate}.readingDashboard:before{content:"";position:absolute;inset:38px -16px 40px;border-radius:44px;background:radial-gradient(circle at 72% 34%,rgba(255,79,161,.28),transparent 35%),radial-gradient(circle at 28% 45%,rgba(121,92,255,.20),transparent 36%);filter:blur(2px);z-index:-1}.dashStage{display:grid;grid-template-columns:1fr 1.02fr;gap:12px;align-items:center}.progressOrb{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(from 20deg,#ff4fa1 calc(var(--p)*1%),rgba(255,255,255,.08) 0);box-shadow:0 0 38px rgba(255,79,161,.18), inset 0 0 36px rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.10)}.progressOrb:before{content:"";position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.08),rgba(8,11,28,.94));border:1px solid rgba(255,255,255,.08)}.orbInner{position:relative;text-align:center}.orbLabel{font-weight:850;color:#cbbce0;font-size:13px}.orbPercent{font-size:52px;line-height:.95;font-weight:1000;color:#fff;text-shadow:0 0 24px rgba(255,79,161,.45)}.orbHeart{color:#ff69b4;font-size:24px;margin-top:4px}.floatingBook{min-height:260px;border-radius:28px;padding:16px 14px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;transform:perspective(650px) rotateY(-10deg) rotateZ(1deg);background:radial-gradient(circle at 28% 22%,rgba(255,129,191,.32),transparent 28%),linear-gradient(150deg,#111631,#251b4f 47%,#682349 100%);box-shadow:24px 25px 52px rgba(0,0,0,.46),0 0 34px rgba(255,79,161,.28);border:1px solid rgba(255,139,201,.28);overflow:hidden}.floatingBook:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.12),transparent 14%),repeating-linear-gradient(0deg,transparent 0 8px,rgba(255,255,255,.035) 8px 9px);opacity:.55}.floatingBook:after{content:"קוראת עכשיו";position:absolute;top:18px;left:12px;background:linear-gradient(135deg,#ff4fa1,#9a5cff);color:white;border-radius:14px;padding:8px 11px;font-weight:950;font-size:12px;box-shadow:0 10px 22px rgba(0,0,0,.26);transform:rotate(-4deg)}.bookGlowTitle,.bookGlowAuthor{position:relative;z-index:1}.bookGlowTitle{font-size:30px;line-height:1;font-weight:1000;color:#ffb4db;text-shadow:0 0 18px rgba(255,79,161,.50)}.bookGlowAuthor{font-weight:850;color:#ffd7ed;margin-top:8px}.dashMeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 4px 0}.dashMetaItem{border-inline-start:1px solid rgba(255,255,255,.13);padding-inline-start:10px;color:#d6cae6;font-weight:850}.dashMetaItem b{display:block;color:#fff;font-size:20px}.floatActions{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px;align-items:center;margin-top:18px}.bubbleAction{border:1px solid rgba(255,116,184,.20);background:radial-gradient(circle at 50% 0,rgba(255,255,255,.12),rgba(19,16,44,.78));color:#fff;border-radius:28px;min-height:86px;padding:12px 8px;font-weight:950;box-shadow:0 16px 34px rgba(0,0,0,.26)}.bubbleAction.primary{min-height:112px;border-radius:34px;background:linear-gradient(135deg,#ff3ea4,#ff7b59);font-size:20px;box-shadow:0 20px 45px rgba(255,79,161,.28)}.bubbleIcon{display:block;font-size:28px;margin-bottom:5px}.homeMoments{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}.homeMoments .moment{display:block;min-height:116px;border-radius:26px;padding:16px;transform:rotate(var(--r,0deg))}.homeMoments .moment:nth-child(1){grid-row:span 2;min-height:215px;--r:-2deg}.homeMoments .moment:nth-child(2){--r:2deg}.homeMoments .moment:nth-child(3){--r:-1deg}.homeMoments .momentType{width:42px;height:42px;border-radius:16px;margin-bottom:12px}.backupBox{margin-top:14px}.backupActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.backupBtn{border:0;border-radius:22px;padding:15px 12px;color:#fff;font-weight:950;background:linear-gradient(135deg,#9a5cff,#ff4fa1);box-shadow:0 18px 34px rgba(154,92,255,.22)}.backupBtn.restore{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);box-shadow:none}.backupNote{color:var(--muted);font-weight:850;line-height:1.35;margin-top:8px;font-size:13px}@media (max-width:380px){.orbPercent{font-size:42px}.floatingBook{min-height:230px}.bookGlowTitle{font-size:25px}.floatActions{gap:8px}.bubbleAction{min-height:78px;font-size:13px}.bubbleAction.primary{font-size:17px}}
+
 </style>
 </head>
 <body>
@@ -941,35 +980,38 @@ function renderHome(){
   document.getElementById('home').innerHTML=topHtml()+`
     ${c?currentHome(c):emptyHome()}
     <div class="sectionHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="goField('timeline')">הצג הכל</button>`:''}</div>
-    ${c&&c.updates.length?`<div class="momentList">${c.updates.slice(0,3).map(momentHtml).join('')}</div>`:`<div class="card empty">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
+    ${c&&c.updates.length?`<div class="homeMoments">${c.updates.slice(0,3).map(momentHtml).join('')}</div>`:`<div class="card empty">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="textBtn" onclick="show('shelf')">הכל</button></div>
     ${recent.length?`<div class="shelfRow">${recent.map(bookSmall).join('')}<button class="bookSmall" onclick="startNewBook()" style="background:#fffaf4;color:var(--red2);border:1px dashed rgba(159,63,70,.32)">+<br>הוסף ספר</button></div>`:`<div class="card empty">המדף מחכה לספר הראשון.</div>`}
   `;
 }
 function currentHome(c){
-  return `<div class="card nowCard"><div class="nowContent">
-    <span class="nowBadge">קוראת עכשיו</span>
-    <div class="nowGrid">
-      ${coverHtml(c.title,c.author)}
+  return `<div class="readingDashboard">
+    <div class="dashStage">
       <div>
-        <div class="nowBookTitle">${esc(c.title)}</div>
-        <div class="nowAuthor">${esc(c.author)}</div>
-        <div class="percentBig">${pct(c.percent)}%</div>
-        <div class="percentLbl">התקדמות בקריאה</div>
-        <div class="progressBar"><div class="progressFill" style="width:${pct(c.percent)}%"></div></div>
+        <div class="progressOrb" style="--p:${pct(c.percent)}"><div class="orbInner"><div class="orbLabel">מתקדמת ב</div><div class="orbPercent">${pct(c.percent)}%</div><div class="orbHeart">♡</div></div></div>
+        <div class="dashMeta">
+          <div class="dashMetaItem"><b>${pct(c.percent)}%</b>התקדמות</div>
+          <div class="dashMetaItem"><b>${c.lastMood?moodEmoji(c.lastMood):'—'}</b>${c.lastMood?esc(c.lastMood):'מה הוייב?'}</div>
+        </div>
+      </div>
+      <div class="floatingBook" onclick="goField('percent')">
+        <div class="bookGlowTitle">${esc(c.title)}</div>
+        <div class="bookGlowAuthor">${esc(c.author)}</div>
       </div>
     </div>
-    ${c.lastMood?`<div class="vibeRow"><span class="vibeEmoji">${moodEmoji(c.lastMood)}</span><span>${esc(c.lastMood)}</span><span style="margin-inline-start:auto;color:var(--muted)">מה הוייב?</span></div>`:''}
-    <button class="mainAction" onclick="goField()">עדכון מהשטח ✎</button>
-    <button class="secondaryAction" onclick="goSummary()">סיימתי</button>
-  </div></div>`;
+    <div class="floatActions">
+      <button class="bubbleAction" onclick="goField('mood')"><span class="bubbleIcon">💬</span>מה הוייב?</button>
+      <button class="bubbleAction primary" onclick="goField()"><span class="bubbleIcon">📖</span>עדכון מהשטח</button>
+      <button class="bubbleAction" onclick="goSummary()"><span class="bubbleIcon">🏁</span>סיימתי</button>
+    </div>
+  </div>`;
 }
 function emptyHome(){
-  return `<div class="card nowCard"><div class="nowContent">
-    <span class="nowBadge">קוראת עכשיו</span>
-    <div class="empty">אין ספר פעיל כרגע.<br>בואי נכניס אחד לזירה.</div>
-    <button class="mainAction" onclick="startNewBook()">להתחיל ספר</button>
-  </div></div>`;
+  return `<div class="readingDashboard">
+    <div class="card empty" style="border-radius:34px;padding:34px 18px">אין ספר פעיל כרגע.<br>בואי נכניס אחד לזירה.</div>
+    <button class="bubbleAction primary" onclick="startNewBook()" style="width:100%;margin-top:16px">להתחיל ספר</button>
+  </div>`;
 }
 function moodEmoji(m){
   if(m.includes('מכורה'))return '😍';
@@ -1559,10 +1601,68 @@ function renderStats(){
       ${statLeader('בלעתי הכי מהר',fast)}
       ${statLeader('הכי נמרח',slow)}
     </div>
+    <div class="fullSection backupBox">
+      <div class="fullTitle">גיבוי ושחזור</div>
+      <div class="backupNote">שומר קובץ JSON עם כל המדף, הספר הנוכחי, רגעים, דמויות, דירוגים וסטטיסטיקות. בשחזור — הנתונים הקיימים יוחלפו.</div>
+      <div class="backupActions">
+        <button class="backupBtn" onclick="exportBackup()">גיבוי הנתונים</button>
+        <button class="backupBtn restore" onclick="chooseRestoreFile()">שחזור מגיבוי</button>
+      </div>
+    </div>
   `;
 }
 function statLeader(label,b){
   return `<div class="moment"><div class="momentType">♡</div><div><div class="momentMeta">${label}</div><div class="momentText">${b?esc(b.title):'—'}</div></div></div>`;
+}
+
+
+function exportBackup(){
+  const payload={
+    app:'עוד פרק אחד',
+    version:13,
+    exportedAt:new Date().toISOString(),
+    data:S
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  const stamp=new Date().toISOString().slice(0,10);
+  a.href=URL.createObjectURL(blob);
+  a.download=`od-perek-ehad-backup-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('המדף נשמר 📚');
+}
+function chooseRestoreFile(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='application/json,.json';
+  input.onchange=()=>{
+    const file=input.files&&input.files[0];
+    if(file) restoreFromFile(file);
+  };
+  input.click();
+}
+function restoreFromFile(file){
+  if(!confirm('השחזור יחליף את הנתונים הקיימים באפליקציה. להמשיך?')) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const parsed=JSON.parse(String(reader.result||''));
+      const data=parsed && parsed.data ? parsed.data : parsed;
+      if(!data || !Array.isArray(data.books)) throw new Error('bad backup');
+      S=normalize(data);
+      localStorage.setItem(KEY,JSON.stringify(S));
+      render();
+      show('home');
+      toast('המדף חזר למקום 📚');
+    }catch(e){
+      toast('הקובץ לא תקין, לא הצלחתי לשחזר');
+    }
+  };
+  reader.onerror=()=>toast('לא הצלחתי לקרוא את הקובץ');
+  reader.readAsText(file);
 }
 
 render();

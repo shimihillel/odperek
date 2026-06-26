@@ -1,25 +1,17 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק",
-  "description": "יומני התולעת — מיון וסינון למדף.",
-  "start_url": "./index.html?v=12",
+  "description": "יומני התולעת — מדף קריאה, רגעים, סטטיסטיקה וגיבוי.",
+  "start_url": "./index.html?v=13",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#fff4eb",
-  "theme_color": "#9f3f46",
+  "background_color": "#070b19",
+  "theme_color": "#070b19",
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "he",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

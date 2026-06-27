@@ -15,3 +15,9 @@ V22: replaced the home progress ring with a large percent + thin progress line, 
 
 
 V23: softened the home progress emphasis and redesigned the summary/closing screen into a softer wrap-up ritual.
+
+
+V24: reduced the home progress emphasis even more and replaced the love-rating heart icon in the summary screen with a cleaner star icon.
+
+
+V25: redesigned the statistics screen into a richer personality-driven overview with diagnosis, reading habits, leaders, recurring patterns, and backup/restore retained.

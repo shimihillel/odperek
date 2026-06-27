@@ -1104,13 +1104,13 @@ body:before{
 
 
 /* v22 — replace ring with refined progress line, replace generic heart with spark */
-.heroStageV22{grid-template-columns:minmax(0,1.18fr) minmax(116px,.60fr);align-items:center}
+.heroStageV22{grid-template-columns:minmax(0,1.2fr) minmax(106px,.54fr);align-items:center}
 .progressStackV22{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;direction:rtl;padding:6px 2px 6px 0;opacity:1}
-.progressNumber{font-size:48px;line-height:.94;font-weight:860;letter-spacing:-1.1px;color:#fff;text-shadow:0 0 12px rgba(255,79,161,.10)}
-.progressLabel{font-size:12px;font-weight:820;color:#cdbbdd}
-.progressLine{width:100%;max-width:112px;height:8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}
+.progressNumber{font-size:42px;line-height:.98;font-weight:760;letter-spacing:-.7px;color:#fff;text-shadow:0 0 8px rgba(255,79,161,.06)}
+.progressLabel{font-size:11px;font-weight:780;color:#cdbbdd}
+.progressLine{width:100%;max-width:96px;height:7px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}
 .progressLine span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff5ab1,#ff8ea0 56%,#ffbf76);box-shadow:0 0 12px rgba(255,79,161,.22)}
-.v22Home .tinyAction{padding:8px 12px;font-size:11px;background:rgba(255,255,255,.028);border-color:rgba(255,255,255,.08);color:#d9c7e5;box-shadow:none}
+.v22Home .tinyAction{padding:7px 11px;font-size:10px;background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.08);color:#d9c7e5;box-shadow:none}
 .v22Home .moodStatus .neonIcon{color:#ff94d3}
 .neonIcon svg .spark{stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:380px){
@@ -1156,6 +1156,45 @@ body:before{
   .summaryOpenTitle{font-size:23px}
   .summaryCard .stepTitle{font-size:22px}
   .progressNumber{font-size:44px}
+}
+
+
+/* v25 — stats glow-up */
+.statsHeroV25{margin-top:12px;padding:22px 18px;border-radius:34px;background:radial-gradient(circle at 82% 18%,rgba(255,79,161,.23),transparent 30%),radial-gradient(circle at 16% 82%,rgba(154,92,255,.16),transparent 38%),linear-gradient(145deg,#0d1533,#23123d 62%,#39152f);border:1px solid rgba(255,143,202,.18);box-shadow:0 22px 46px rgba(0,0,0,.24)}
+.statsHeroV25.emptyMode{padding:24px 18px}
+.statsHeroTitle{font-size:33px;font-weight:1000;letter-spacing:-.7px;color:#fff}
+.statsHeroSub{margin-top:8px;color:#e8dff1;font-size:16px;line-height:1.45;font-weight:830}
+.statsDiagnosis{margin-top:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#ffdcec;font-size:12px;font-weight:920}
+.statsDiagnosis .neonIcon{width:16px;height:16px;color:#ff96d2}
+.statsSnapshotGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.statsMetricCard,.statsSectionCard{border-radius:30px;border:1px solid rgba(255,139,201,.16);background:radial-gradient(circle at 92% 6%,rgba(255,79,161,.10),transparent 24%),linear-gradient(145deg,rgba(17,22,50,.90),rgba(30,15,47,.80));box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.statsMetricCard{padding:16px 14px;display:grid;gap:6px;align-content:start;min-height:150px}
+.statsMetricIcon{display:grid;place-items:center;width:42px;height:42px;border-radius:16px;background:rgba(255,79,161,.10);color:#ff94d0}
+.statsMetricValue{font-size:36px;line-height:1;font-weight:1000;color:#fff;letter-spacing:-1px}
+.statsMetricLabel{font-size:15px;font-weight:950;color:#fff}
+.statsMetricSub{font-size:12px;line-height:1.4;color:#cdbbdd;font-weight:820}
+.statsSectionCard{margin-top:14px;padding:18px 16px}
+.statsSectionCard .stepTitle{font-size:26px;color:#fff;margin-bottom:5px}
+.statsFunGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.statsFunCard{padding:14px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)}
+.statsFunTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.statsFunIcon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(255,79,161,.10);color:#ff92d0}
+.statsFunValue{font-size:28px;font-weight:1000;color:#fff;line-height:1}
+.statsFunLabel{font-size:15px;font-weight:950;color:#fff}
+.statsFunSub{margin-top:5px;font-size:12px;line-height:1.4;color:#cdbbdd;font-weight:820}
+.statsLeaderList,.statsInsightsList{display:grid;gap:12px;margin-top:10px}
+.statsLeaderRow,.statsInsightRow{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;padding:13px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)}
+.statsLeaderIcon,.statsInsightIcon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(255,79,161,.10);color:#ff92d0}
+.statsLeaderLabel,.statsInsightLabel{font-size:12px;color:#cdbbdd;font-weight:900}
+.statsLeaderBook,.statsInsightValue{margin-top:4px;font-size:18px;color:#fff;font-weight:950;line-height:1.25}
+.statsLeaderMeta,.statsInsightSub{margin-top:5px;font-size:12px;line-height:1.4;color:#ffdbec;font-weight:850}
+.statsBackupV25{margin-top:14px}
+.statsEmptyCard{margin-top:14px;padding:18px}
+@media (max-width:380px){
+  .statsHeroTitle{font-size:30px}
+  .statsHeroSub{font-size:15px}
+  .statsSnapshotGrid,.statsFunGrid{grid-template-columns:1fr}
+  .statsMetricCard{min-height:auto}
 }
 
 </style>
@@ -1370,7 +1409,7 @@ function bookSmall(b){
 }
 function miniIcon(type){
   if(type==='heart'){
-    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 20.2s-7.3-4.5-9.4-9C1.1 8 .9 4.4 4.2 3.2c2.2-.8 4.1.3 5.3 1.9.7.9 1.1.9 1.8 0 1.2-1.6 3.1-2.7 5.3-1.9 3.3 1.2 3.1 4.8 1.6 8-2.1 4.5-9.4 9-9.4 9z"/></svg></span>`;
+    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.8l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.5l5.4-.8L12 3.8z"/></svg></span>`;
   }
   if(type==='pepper'){
     return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.7 6.2c3.7 1.1 6.2 4.7 5.2 8.4-.8 3.1-3.6 5.4-7.1 5.7-2.7.2-5.2-.7-6.7-2.4-1.4-1.6-1.6-3.7-.4-5.1.9-1.1 2.2-1.3 3.7-1.2.7.1 1.2-.2 1.4-.9.6-2.2 1.8-3.8 3.9-4.5z"/><path fill="#ffb45f" d="M13.3 6.8c-.4-2.3.6-3.9 2.8-4.7.6-.2 1.1.4.8 1-.5.8-.8 1.5-.7 2.4 1-.6 2-.5 3 .2.6.4.4 1.3-.3 1.4-1.9.3-3.5.3-5.6-.3z"/></svg></span>`;
@@ -2010,33 +2049,105 @@ function renderStats(){
     if(!vals.length)return null;
     return vals.sort((a,b)=>min?(+a[key]||0)-(+b[key]||0):(+b[key]||0)-(+a[key]||0))[0];
   };
+  const allLogs=books.flatMap(b=>b.readingLog||[]);
+  const allChars=books.flatMap(b=>b.characters||[]);
+  const textOf=(x)=>`${x?.text||''} ${x?.label||''}`;
+  const countLogs=(re)=>allLogs.filter(u=>re.test(textOf(u))).length;
+  const countBooks=(re)=>books.filter(b=>re.test(`${b.bottomLine||''} ${b.about||''} ${b.madeMe||''}`)).length;
+  const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length + countLogs(/דגל אדום|בעייתי/)+countBooks(/דגל אדום|בעייתי/);
+  const noTalk=countLogs(/לא לדבר איתי/)+countBooks(/לא לדבר איתי/);
+  const swallowed=books.filter(b=>(+b.speed||0)>=4).length;
+  const aftermath=books.filter(b=>/נשאר לי בראש|לא התאוששתי|הייתי עוברת לגור שם|צריכה ספר המשך עכשיו/.test(b.bottomLine||'')).length;
+  const commonText=(arr, pick)=>{
+    const map={};
+    arr.forEach(item=>{const k=(pick(item)||'').trim(); if(k) map[k]=(map[k]||0)+1;});
+    const entries=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    return entries[0]||null;
+  };
+  const topMood=commonText(allLogs.filter(u=>u.type==='mood'),u=>u.text||u.label);
+  const topStamp=commonText(books,b=>b.bottomLine);
+  const topCharacter=commonText(allChars,ch=>ch.name);
   const topLine=()=>{
     if(!total)return 'המדף עוד מתחמם. תני לו ספר אחד והוא יתחיל לדבר.';
-    if((parseFloat(avg('heat'))||0)>=4)return 'השנה המדף שלך בחר דרמה, אש, ואפס התנצלות.';
-    if((parseFloat(avg('cry'))||0)>=4)return 'הרבה לב, הרבה דמעות, מעט מאוד שינה.';
-    return 'יש פה מדף עם אופי. וזה רק הולך ומסתבך.';
+    if(redFlags>=4 && (parseFloat(avg('heat'))||0)>=4) return 'קוראת, נשרפת, ומתעלמת מדגלים אדומים במלוא האחריות.';
+    if((parseFloat(avg('cry'))||0)>=4) return 'הרבה לב, הרבה דמעות, מעט מאוד שינה. הספקת יפה.';
+    if(swallowed>=Math.max(2,Math.ceil(total*0.45))) return 'כשספר תופס אותך, את לא קוראת — את בולעת.';
+    if((parseFloat(avg('stars'))||0)>=4) return 'המדף שלך מפונק. לא כל ספר עובר את ועדת שימי.';
+    return 'יש פה מדף עם אישיות, טעם, וקצת ענייני התקשרות.';
+  };
+  const vibeDiagnosis=()=>{
+    if(!total) return 'עוד אין אבחון. חסר פה ספר ראשון.';
+    const parts=[];
+    if(swallowed) parts.push(`בלעת ${swallowed} ספר${swallowed>1?'ים':''}`);
+    if(noTalk) parts.push(`${noTalk} פעמים "לא לדבר איתי"`);
+    if(redFlags) parts.push(`${redFlags} דגלים אדומים נאספו בדרך`);
+    if(aftermath) parts.push(`${aftermath} ספרים נשארו לך בראש`);
+    return parts.slice(0,3).join(' · ') || 'הכול עוד מתבשל.';
   };
   const heat=maxBook('heat'),cry=maxBook('cry'),stars=maxBook('stars'),fast=maxBook('speed'),slow=maxBook('speed',true);
+  if(!total){
+    el.innerHTML=topHtml()+`
+      <div class="statsHeroV25 emptyMode">
+        <div class="statsHeroTitle">מצב הקריאה שלך</div>
+        <div class="statsHeroSub">${topLine()}</div>
+      </div>
+      <div class="statsSectionCard statsEmptyCard">
+        <div class="stepTitle">כשתסיימי ספר ראשון, המסך הזה יתחיל לרכל עלייך</div>
+        <div class="summaryHint">כרגע אין עדיין נתונים, אבחונים או ספרים שנשארו לך רגשית. ברגע שהמדף יתמלא — הכול יתחיל לדבר.</div>
+      </div>
+      <div class="fullSection backupBox">
+        <div class="fullTitle">גיבוי ושחזור</div>
+        <div class="backupNote">שומר קובץ JSON עם כל המדף, הספר הנוכחי, רגעים, דמויות, דירוגים וסטטיסטיקות. בשחזור — הנתונים הקיימים יוחלפו.</div>
+        <div class="backupActions">
+          <button class="backupBtn" onclick="exportBackup()">${uiIcon('backup')} גיבוי הנתונים</button>
+          <button class="backupBtn restore" onclick="chooseRestoreFile()">${uiIcon('restore')} שחזור מגיבוי</button>
+        </div>
+      </div>`;
+    return;
+  }
   el.innerHTML=topHtml()+`
-    <div class="statHero">
-      <div class="statHeroTitle">המצב במדף</div>
-      <div class="statHeroSub">${topLine()}</div>
+    <div class="statsHeroV25">
+      <div class="statsHeroTitle">מצב הקריאה שלך</div>
+      <div class="statsHeroSub">${topLine()}</div>
+      <div class="statsDiagnosis">${uiIcon('spark')} ${vibeDiagnosis()}</div>
     </div>
-    <div class="statsGrid">
-      <div class="statTile"><div class="statNum">${total}</div><div class="statLbl">ספרים שסיימת</div></div>
-      <div class="statTile"><div class="statNum">${avg('stars')}</div><div class="statLbl">ממוצע כוכבים</div></div>
-      <div class="statTile"><div class="statNum">${avg('heat')}</div><div class="statLbl">ממוצע חריפות</div></div>
-      <div class="statTile"><div class="statNum">${avg('cry')}</div><div class="statLbl">ממוצע בכי</div></div>
+    <div class="statsSnapshotGrid">
+      ${statsMetricCard(total,'ספרים שסיימת','המדף כבר מתמלא','book')}
+      ${statsMetricCard(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
+      ${statsMetricCard(avg('heat'),'ממוצע לוהט','כמה המדף בחר אש','percent')}
+      ${statsMetricCard(avg('cry'),'ממוצע שבר','כמה הספרים פירקו אותך','chat')}
     </div>
-    <div class="sectionHead"><div class="sectionTitle">הזוכות של המדף</div></div>
-    <div class="momentList">
-      ${statLeader('הכי אהבתי',stars)}
-      ${statLeader('הכי לוהט',heat)}
-      ${statLeader('הכי בכי',cry)}
-      ${statLeader('בלעתי הכי מהר',fast)}
-      ${statLeader('הכי נמרח',slow)}
+    <div class="statsSectionCard">
+      <div class="stepTitle">הרגלי הקריאה שלך</div>
+      <div class="summaryHint">פחות מספרים יבשים, יותר מי את כשאת בתוך ספר.</div>
+      <div class="statsFunGrid">
+        ${statsFunCard(noTalk,'לא לדבר איתי','כמה פעמים הספרים סידרו לך מצב רוח','spark')}
+        ${statsFunCard(redFlags,'דגלים אדומים','כמה פעמים אמרת “זה לא אידיאלי” והמשכת','users')}
+        ${statsFunCard(swallowed,'בלעתי בלי לנשום','ספרים שנטרפו בקצב מסוכן','book')}
+        ${statsFunCard(aftermath,'נשארו לי בראש','ספרים שלא ירדו ממך גם אחרי הסוף','chat')}
+      </div>
     </div>
-    <div class="fullSection backupBox">
+    <div class="statsSectionCard">
+      <div class="stepTitle">מי כיכבו במדף</div>
+      <div class="summaryHint">הזוכים והמצטיינים של חיי הקריאה שלך כרגע.</div>
+      <div class="statsLeaderList">
+        ${statLeader('הכי אהבתי',stars,'spark',stars?iconStack('heart',stars.stars):'—')}
+        ${statLeader('הכי לוהט',heat,'percent',heat?iconStack('pepper',heat.heat):'—')}
+        ${statLeader('הכי שבר אותי',cry,'chat',cry?iconStack('broken',cry.cry):'—')}
+        ${statLeader('בלעתי הכי מהר',fast,'book',fast?(SPEED[fast.speed-1]||'—'):'—')}
+        ${statLeader('הכי נמרח',slow,'book',slow?(SPEED[slow.speed-1]||'—'):'—')}
+      </div>
+    </div>
+    <div class="statsSectionCard">
+      <div class="stepTitle">מה חוזר אצלך שוב ושוב</div>
+      <div class="summaryHint">בואי, יש פה דפוסים. כולנו רואים את זה.</div>
+      <div class="statsInsightsList">
+        ${statsInsightRow('החותמת שחוזרת אצלך',topStamp?topStamp[0]:'עוד אין','הופיעה '+(topStamp?topStamp[1]:0)+' פעמים','spark')}
+        ${statsInsightRow('הוייב הכי שכיח',topMood?topMood[0]:'עוד אין','הופיע '+(topMood?topMood[1]:0)+' פעמים','chat')}
+        ${statsInsightRow('הדמות שהופיעה הכי הרבה',topCharacter?topCharacter[0]:'עוד אין','חזרה ב-'+(topCharacter?topCharacter[1]:0)+' ספרים/אזכורים','users')}
+      </div>
+    </div>
+    <div class="fullSection backupBox statsBackupV25">
       <div class="fullTitle">גיבוי ושחזור</div>
       <div class="backupNote">שומר קובץ JSON עם כל המדף, הספר הנוכחי, רגעים, דמויות, דירוגים וסטטיסטיקות. בשחזור — הנתונים הקיימים יוחלפו.</div>
       <div class="backupActions">
@@ -2046,8 +2157,17 @@ function renderStats(){
     </div>
   `;
 }
-function statLeader(label,b){
-  return `<div class="moment"><div class="momentType statLeaderIcon">${uiIcon('heart')}</div><div><div class="momentMeta">${label}</div><div class="momentText">${b?esc(b.title):'—'}</div></div></div>`;
+function statsMetricCard(value,label,sub,icon){
+  return `<div class="statsMetricCard"><div class="statsMetricIcon">${uiIcon(icon)}</div><div class="statsMetricValue">${value}</div><div class="statsMetricLabel">${label}</div><div class="statsMetricSub">${sub}</div></div>`;
+}
+function statsFunCard(value,label,sub,icon){
+  return `<div class="statsFunCard"><div class="statsFunTop"><span class="statsFunIcon">${uiIcon(icon)}</span><span class="statsFunValue">${value}</span></div><div class="statsFunLabel">${label}</div><div class="statsFunSub">${sub}</div></div>`;
+}
+function statsInsightRow(label,value,sub,icon){
+  return `<div class="statsInsightRow"><div class="statsInsightIcon">${uiIcon(icon)}</div><div class="statsInsightText"><div class="statsInsightLabel">${label}</div><div class="statsInsightValue">${esc(value)}</div><div class="statsInsightSub">${esc(sub)}</div></div></div>`;
+}
+function statLeader(label,b,icon,meta){
+  return `<div class="statsLeaderRow"><div class="statsLeaderIcon">${uiIcon(icon)}</div><div class="statsLeaderText"><div class="statsLeaderLabel">${label}</div><div class="statsLeaderBook">${b?esc(b.title):'—'}</div><div class="statsLeaderMeta">${meta}</div></div></div>`;
 }
 
 

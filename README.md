@@ -21,3 +21,6 @@ V24: reduced the home progress emphasis even more and replaced the love-rating h
 
 
 V25: redesigned the statistics screen into a richer personality-driven overview with diagnosis, reading habits, leaders, recurring patterns, and backup/restore retained.
+
+
+V26: redesigned the shelf screen with a richer hero, refined search/tools, and more expressive book cards while keeping sorting and filtering.

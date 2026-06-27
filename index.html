@@ -1197,6 +1197,54 @@ body:before{
   .statsMetricCard{min-height:auto}
 }
 
+
+/* v26 — shelf glow-up */
+.shelfHeroV26{margin-top:12px;padding:22px 18px;border-radius:34px;background:radial-gradient(circle at 82% 18%,rgba(255,79,161,.23),transparent 30%),radial-gradient(circle at 16% 82%,rgba(154,92,255,.15),transparent 38%),linear-gradient(145deg,#0d1533,#23123d 62%,#39152f);border:1px solid rgba(255,143,202,.18);box-shadow:0 22px 46px rgba(0,0,0,.24)}
+.shelfHeroHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.shelfHeroTitle{font-size:33px;font-weight:1000;letter-spacing:-.7px;color:#fff}
+.shelfHeroSub{margin-top:8px;color:#e8dff1;font-size:15px;line-height:1.45;font-weight:820;max-width:520px}
+.shelfAddBtn{white-space:nowrap}
+.shelfKpiRow{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.shelfKpi{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;padding:12px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.shelfKpiIcon{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:rgba(255,79,161,.10);color:#ff93d0}
+.shelfKpi b{display:block;color:#fff;font-size:16px;font-weight:950;line-height:1.2}
+.shelfKpi small{display:block;color:#cdbbdd;font-size:12px;font-weight:820;line-height:1.35}
+.shelfToolsV26{margin-top:14px;padding:16px;border-radius:28px;background:linear-gradient(145deg,rgba(17,22,50,.82),rgba(20,12,35,.70));border:1px solid rgba(255,116,184,.18);box-shadow:var(--soft)}
+.shelfSearchWrap{position:relative}
+.shelfSearchIcon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#ff90ce;display:grid;place-items:center}
+.shelfSearchIcon .neonIcon{font-size:18px}
+.shelfSearchInput{padding-right:42px;height:52px;border-radius:18px}
+.shelfToolRow{margin-top:12px}
+.shelfResultsGrid{display:grid;gap:12px;margin-top:14px}
+.shelfBookCard{width:100%;text-align:right;padding:16px;border-radius:30px;border:1px solid rgba(255,139,201,.16);background:radial-gradient(circle at 92% 6%,rgba(255,79,161,.10),transparent 24%),linear-gradient(145deg,rgba(17,22,50,.90),rgba(30,15,47,.80));box-shadow:0 18px 42px rgba(0,0,0,.22);color:#fff}
+.shelfBookTop{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:start}
+.shelfBookCover .cover{height:132px;border-radius:24px;padding:10px 9px;gap:6px;box-shadow:0 16px 28px rgba(0,0,0,.25),0 0 18px rgba(255,79,161,.11)}
+.shelfBookCover .coverTitle{font-size:18px}.shelfBookCover .coverAuthor{font-size:11px}.shelfBookCover .coverInitial{font-size:62px;bottom:12px}
+.shelfBookMeta{min-width:0}
+.shelfBookHeader{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.shelfBookTitle{font-size:24px;font-weight:1000;line-height:1.04;color:#fff}
+.shelfBookAuthor{margin-top:6px;font-size:13px;color:#d0c0df;font-weight:850}
+.shelfStamp{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:999px;background:rgba(255,79,161,.11);border:1px solid rgba(255,139,201,.18);color:#ffdcec;font-size:11px;font-weight:950;max-width:145px;text-align:center;line-height:1.25}
+.shelfRatingsRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.shelfRatePill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);color:#fff;font-size:13px;font-weight:900;white-space:nowrap}
+.shelfRatePill small{color:#cdbbdd;font-size:11px;font-weight:850}
+.shelfExcerpt{margin-top:12px;padding:12px 13px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#f5edf9;font-size:13px;line-height:1.45;font-weight:820}
+.shelfMetaRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.shelfMetaChip{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);color:#cfbfdf;font-size:11px;font-weight:900}
+.shelfMetaChip .neonIcon{font-size:15px;color:#ff8ccb}
+.shelfEmptyV26{margin-top:14px;padding:18px}
+@media (max-width:380px){
+  .shelfHeroTitle{font-size:30px}
+  .shelfHeroSub{font-size:14px}
+  .shelfHeroHead{flex-direction:column;align-items:stretch}
+  .shelfAddBtn{align-self:flex-start}
+  .shelfBookTop{grid-template-columns:78px 1fr;gap:12px}
+  .shelfBookCover .cover{height:114px}
+  .shelfBookTitle{font-size:21px}
+  .shelfBookHeader{flex-direction:column;align-items:flex-start}
+  .shelfStamp{max-width:none}
+}
+
 </style>
 </head>
 <body>
@@ -1783,13 +1831,37 @@ function finishBook(){
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
 function renderShelf(){
+  const books=Array.isArray(S.books)?S.books:[];
+  const total=books.length;
+  const common=(arr)=>{
+    const map={};
+    arr.forEach(x=>{const k=(x||'').trim(); if(k) map[k]=(map[k]||0)+1;});
+    const top=Object.entries(map).sort((a,b)=>b[1]-a[1])[0];
+    return top||null;
+  };
+  const topStamp=common(books.map(b=>b.bottomLine||''));
+  const topAuthor=common(books.map(b=>b.author||''));
+  const activeFiltersCount=[...shelfFilters.bottomLine,...shelfFilters.stars,...shelfFilters.heat,...shelfFilters.cry,...shelfFilters.speed,...shelfFilters.charTag].length;
   document.getElementById('shelf').innerHTML=topHtml()+`
-    <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="pillBtn" onclick="startNewBook()">ספר חדש</button></div>
-    <div class="shelfTools">
-      <input id="shelfSearchInput" class="input" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)">
-      <div class="toolRow">
+    <div class="shelfHeroV26">
+      <div class="shelfHeroHead">
+        <div>
+          <div class="shelfHeroTitle">המדף שלי</div>
+          <div class="shelfHeroSub">כל הספרים שסגרת, כל השריטות שהם השאירו, וכל מה שנשאר אצלך בראש.</div>
+        </div>
+        <button class="pillBtn shelfAddBtn" onclick="startNewBook()">ספר חדש</button>
+      </div>
+      <div class="shelfKpiRow">
+        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('book')}</span><div><b>${total}</b><small>ספרים במדף</small></div></div>
+        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('spark')}</span><div><b>${topStamp?esc(topStamp[0]):'עוד נבנה'}</b><small>${topStamp?'החותמת שחוזרת הכי הרבה':'עוד אין חותמת חוזרת'}</small></div></div>
+        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('users')}</span><div><b>${topAuthor?esc(topAuthor[0]):'—'}</b><small>${topAuthor?'הסופרת שמופיעה הכי הרבה':'עדיין מוקדם לקבוע'}</small></div></div>
+      </div>
+    </div>
+    <div class="shelfTools shelfToolsV26">
+      <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
+      <div class="toolRow shelfToolRow">
         <button class="toolBtn ${shelfSortOpen?'on':''}" onclick="toggleShelfSort()">מיון: ${sortLabel(shelfSort)}</button>
-        <button class="toolBtn ${shelfFilterOpen?'on':''}" onclick="toggleShelfFilters()">סינון</button>
+        <button class="toolBtn ${shelfFilterOpen?'on':''}" onclick="toggleShelfFilters()">סינון${activeFiltersCount?` (${activeFiltersCount})`:''}</button>
         <button class="toolBtn" onclick="resetShelfTools()">איפוס</button>
       </div>
       ${activeShelfFiltersHtml()}
@@ -1934,18 +2006,39 @@ function shelfResultsHtml(){
   let books=S.books.filter(b=>!q || searchBookText(b).includes(q));
   books=books.filter(matchesShelfFilters);
   books=sortShelfBooks(books);
-  if(!S.books.length) return `<div class="card empty">עוד אין ספרים שסיימת.</div>`;
-  if(!books.length) return `<div class="card searchEmpty">לא מצאתי כלום במדף. המדף דרמטי אבל לא עד כדי כך.</div>`;
-  return `<div class="momentList">${books.map(bookRow).join('')}</div>`;
+  if(!S.books.length) return `<div class="card empty shelfEmptyV26">עוד אין ספרים שסיימת. הספר הראשון שלך מחכה להיכנס למדף.</div>`;
+  if(!books.length) return `<div class="card searchEmpty shelfEmptyV26">לא מצאתי כלום במדף. המדף דרמטי, אבל לא עד כדי כך.</div>`;
+  return `<div class="shelfResultsGrid">${books.map(bookRow).join('')}</div>`;
 }
 
 function bookRow(b){
-  return `<div class="card" onclick="openBook('${b.id}')" style="box-shadow:var(--soft);margin-bottom:10px">
-    <div style="display:grid;grid-template-columns:74px 1fr;gap:12px;align-items:center">
-      ${coverHtml(b.title,b.author)}
-      <div><div class="nowBookTitle" style="font-size:21px">${esc(b.title)}</div><div class="nowAuthor">${esc(b.author)}</div><div style="margin-top:7px">${ratingsLine(b)} ${b.bottomLine?`<span class="tagSmall">${esc(b.bottomLine)}</span>`:''}</div></div>
+  const topChar=(b.characters||[]).find(ch=>ch.finalTag)||(b.characters||[])[0]||null;
+  const excerpt=b.madeMe || b.about || '';
+  return `<button class="shelfBookCard" onclick="openBook('${b.id}')">
+    <div class="shelfBookTop">
+      <div class="shelfBookCover">${coverHtml(b.title,b.author)}</div>
+      <div class="shelfBookMeta">
+        <div class="shelfBookHeader">
+          <div>
+            <div class="shelfBookTitle">${esc(b.title)}</div>
+            <div class="shelfBookAuthor">${esc(b.author)}</div>
+          </div>
+          ${b.bottomLine?`<span class="shelfStamp">${esc(b.bottomLine)}</span>`:''}
+        </div>
+        <div class="shelfRatingsRow">
+          <span class="shelfRatePill">${b.stars?iconStack('heart',b.stars):'—'}<small>אהבתי</small></span>
+          <span class="shelfRatePill">${b.heat?iconStack('pepper',b.heat):'—'}<small>לוהט</small></span>
+          <span class="shelfRatePill">${b.cry?iconStack('broken',b.cry):'—'}<small>שבר</small></span>
+          <span class="shelfRatePill">${b.speed?SPEED[b.speed-1]:'—'}<small>קצב</small></span>
+        </div>
+        ${excerpt?`<div class="shelfExcerpt">${esc(excerpt)}</div>`:''}
+        <div class="shelfMetaRow">
+          ${topChar?`<span class="shelfMetaChip">${uiIcon('users')} ${esc(topChar.name)}${topChar.finalTag?` · ${esc(topChar.finalTag)}`:''}</span>`:''}
+          ${(b.readingLog||[]).length?`<span class="shelfMetaChip">${uiIcon('chat')} ${(b.readingLog||[]).length} רגעים מהשטח</span>`:''}
+        </div>
+      </div>
     </div>
-  </div>`;
+  </button>`;
 }
 
 function openBook(bookId){

@@ -24,3 +24,6 @@ V25: redesigned the statistics screen into a richer personality-driven overview 
 
 
 V26: redesigned the shelf screen with a richer hero, refined search/tools, and more expressive book cards while keeping sorting and filtering.
+
+
+V27: replaced app icons with the selected full-square neon book icon.

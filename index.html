@@ -1102,6 +1102,23 @@ body:before{
   .fieldPrimaryTitle,.fieldActiveTitle{font-size:22px}
 }
 
+
+/* v22 — replace ring with refined progress line, replace generic heart with spark */
+.heroStageV22{grid-template-columns:minmax(0,1.18fr) minmax(112px,.60fr);align-items:center}
+.progressStackV22{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;direction:rtl;padding:6px 2px 6px 0;opacity:1}
+.progressNumber{font-size:56px;line-height:.92;font-weight:1000;letter-spacing:-1.8px;color:#fff;text-shadow:0 0 16px rgba(255,79,161,.16)}
+.progressLabel{font-size:12px;font-weight:850;color:#cdbbdd}
+.progressLine{width:100%;max-width:112px;height:8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}
+.progressLine span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff5ab1,#ff8ea0 56%,#ffbf76);box-shadow:0 0 12px rgba(255,79,161,.22)}
+.v22Home .tinyAction{padding:8px 12px;font-size:11px;background:rgba(255,255,255,.032);border-color:rgba(255,255,255,.08);color:#d9c7e5;box-shadow:none}
+.v22Home .moodStatus .neonIcon{color:#ff94d3}
+.neonIcon svg .spark{stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:380px){
+  .heroStageV22{grid-template-columns:minmax(0,1.16fr) minmax(96px,.54fr)}
+  .progressNumber{font-size:46px}
+  .progressLine{max-width:96px}
+}
+
 </style>
 </head>
 <body>
@@ -1208,7 +1225,7 @@ function show(id){
 function uiIcon(name,extra=''){
   const icons={
     menu:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/><path class="spark" d="M19.5 4.5v2M18.5 5.5h2"/></svg>`,
-    heart:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.3-4.5-9.4-9C1.1 8 .9 4.4 4.2 3.2c2.2-.8 4.1.3 5.3 1.9.7.9 1.1.9 1.8 0 1.2-1.6 3.1-2.7 5.3-1.9 3.3 1.2 3.1 4.8 1.6 8-2.1 4.5-9.4 9-9.4 9z"/><path class="spark" d="M18.3 4.5v1.8M17.4 5.4h1.8"/></svg>`,
+    heart:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.4s-7.6-4.7-9.5-9.2C1.1 8 .9 4.6 4 3.3c2.2-.9 4.2.2 5.4 2 1-1.4 2.9-2.8 5.4-2 3.1 1.3 2.9 4.7 1.5 7.9-1.9 4.5-9.3 9.2-9.3 9.2z"/></svg>`,
     chat:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5h14a2 2 0 0 1 2 2v6.2a2 2 0 0 1-2 2H10l-5 3v-3H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2z"/><path class="spark" d="M8 11h.1M12 11h.1M16 11h.1"/></svg>`,
     book:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.6-.9 5.4-.6 8 1.2v13c-2.6-1.8-5.4-2.1-8-1.2z"/><path d="M20 5.5c-2.6-.9-5.4-.6-8 1.2v13c2.6-1.8 5.4-2.1 8-1.2z"/><path class="spark" d="M12 6.7v13"/></svg>`,
     check:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>`,
@@ -1230,7 +1247,7 @@ function topHtml(){
   return `<div class="top">
     <button class="iconBtn" aria-label="תפריט">${uiIcon('menu')}</button>
     <div class="brandBlock"><h1 class="brand">עוד פרק אחד</h1><div class="sub">יומני התולעת</div></div>
-    <button class="iconBtn" aria-label="אהובות">${uiIcon('heart')}</button>
+    <button class="iconBtn" aria-label="וייב">${uiIcon('spark')}</button>
   </div>`;
 }
 function coverHtml(title,author){
@@ -1258,8 +1275,8 @@ function renderHome(){
 }
 function currentHome(c){
   const mood=c.lastMood||'מה הוייב?';
-  return `<div class="readingDashboard v19Home">
-    <div class="dashStage heroStage">
+  return `<div class="readingDashboard v19Home v22Home">
+    <div class="dashStage heroStage heroStageV22">
       <div class="floatingBook heroBook" onclick="goField('percent')">
         <div class="bookInitial">${esc(firstLetter(c.title))}</div>
         <div class="bookNowBadge">קוראת עכשיו</div>
@@ -1267,12 +1284,14 @@ function currentHome(c){
         <div class="bookGlowDivider"></div>
         <div class="bookGlowAuthor">${esc(c.author)}</div>
       </div>
-      <div class="progressStack">
-        <div class="progressOrb heroOrb" style="--p:${pct(c.percent)}"><div class="orbInner"><div class="orbPercent">${pct(c.percent)}%</div></div></div>
+      <div class="progressStack progressStackV22">
+        <div class="progressNumber">${pct(c.percent)}%</div>
+        <div class="progressLabel">התקדמות בקריאה</div>
+        <div class="progressLine"><span style="width:${pct(c.percent)}%"></span></div>
         <button class="tinyAction" onclick="goField('percent')">לעדכן אחוז</button>
       </div>
     </div>
-    <div class="moodStatus" onclick="goField('mood')"><span>${uiIcon('heart')}</span><b>כרגע:</b> ${esc(mood)}</div>
+    <div class="moodStatus" onclick="goField('mood')"><span>${uiIcon('spark')}</span><b>כרגע:</b> ${esc(mood)}</div>
     <div class="floatActions heroActions">
       <button class="bubbleAction" onclick="goField('mood')"><span class="bubbleIcon">${uiIcon('chat')}</span>מה הוייב?</button>
       <button class="bubbleAction primary" onclick="goField()"><span class="bubbleIcon">${uiIcon('book')}</span>עדכון מהשטח</button>
@@ -1296,7 +1315,7 @@ function moodEmoji(m){
   return '💘';
 }
 function momentIcon(type){
-  return {progress:uiIcon('percent'),mood:uiIcon('heart'),note:uiIcon('chat'),quote:uiIcon('quote'),character:uiIcon('users')}[type]||uiIcon('spark');
+  return {progress:uiIcon('percent'),mood:uiIcon('spark'),note:uiIcon('chat'),quote:uiIcon('quote'),character:uiIcon('users')}[type]||uiIcon('spark');
 }
 function momentLabel(type){
   return {progress:'איפה אני',mood:'מה הוייב?',note:'מה בתכלס קורה',quote:'לגזור ולשמור',character:'על מי מדובר'}[type]||'עדכון';
@@ -1308,7 +1327,7 @@ function timelineMomentHtml(u){
   return `<div class="timelineMoment"><div class="timelineDot">${momentIcon(u.type)}</div><div class="timelineContent"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div></div>`;
 }
 function bookSmall(b){
-  return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallMark">${uiIcon('heart')}</div><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;
+  return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallMark">${uiIcon('spark')}</div><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;
 }
 function miniIcon(type){
   if(type==='heart'){
@@ -1373,7 +1392,7 @@ function renderField(){
       ${percentBody(c)}
     </div>
     <div class="fieldQuickGrid">
-      ${fieldQuickCard('mood',uiIcon('heart'),'מה הוייב?',c.lastMood||'עוד לא בחרת וייב')}
+      ${fieldQuickCard('mood',uiIcon('spark'),'מה הוייב?',c.lastMood||'עוד לא בחרת וייב')}
       ${fieldQuickCard('note',uiIcon('chat'),'מה בתכלס קורה',latestOf('note')||'מה עבר עלייך עכשיו?')}
       ${fieldQuickCard('quote',uiIcon('quote'),'לגזור ולשמור',latestOf('quote')||'ציטוט, משפט או רגע')}
       ${fieldQuickCard('character',uiIcon('users'),'על מי מדובר',characterSummary(c))}

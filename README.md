@@ -9,3 +9,6 @@
 
 
 V21: redesigned “עדכון מהשטח” as a command center with quick cards and timeline, refined progress ring, and replaced the heart icon.
+
+
+V22: replaced the home progress ring with a large percent + thin progress line, swapped generic heart usage to spark, and simplified the top/home vibe icons.

@@ -1104,19 +1104,58 @@ body:before{
 
 
 /* v22 — replace ring with refined progress line, replace generic heart with spark */
-.heroStageV22{grid-template-columns:minmax(0,1.18fr) minmax(112px,.60fr);align-items:center}
+.heroStageV22{grid-template-columns:minmax(0,1.18fr) minmax(116px,.60fr);align-items:center}
 .progressStackV22{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;direction:rtl;padding:6px 2px 6px 0;opacity:1}
-.progressNumber{font-size:56px;line-height:.92;font-weight:1000;letter-spacing:-1.8px;color:#fff;text-shadow:0 0 16px rgba(255,79,161,.16)}
-.progressLabel{font-size:12px;font-weight:850;color:#cdbbdd}
+.progressNumber{font-size:48px;line-height:.94;font-weight:860;letter-spacing:-1.1px;color:#fff;text-shadow:0 0 12px rgba(255,79,161,.10)}
+.progressLabel{font-size:12px;font-weight:820;color:#cdbbdd}
 .progressLine{width:100%;max-width:112px;height:8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}
 .progressLine span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff5ab1,#ff8ea0 56%,#ffbf76);box-shadow:0 0 12px rgba(255,79,161,.22)}
-.v22Home .tinyAction{padding:8px 12px;font-size:11px;background:rgba(255,255,255,.032);border-color:rgba(255,255,255,.08);color:#d9c7e5;box-shadow:none}
+.v22Home .tinyAction{padding:8px 12px;font-size:11px;background:rgba(255,255,255,.028);border-color:rgba(255,255,255,.08);color:#d9c7e5;box-shadow:none}
 .v22Home .moodStatus .neonIcon{color:#ff94d3}
 .neonIcon svg .spark{stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:380px){
   .heroStageV22{grid-template-columns:minmax(0,1.16fr) minmax(96px,.54fr)}
   .progressNumber{font-size:46px}
   .progressLine{max-width:96px}
+}
+
+
+/* v23 — softer home progress emphasis + refined summary closing ritual */
+.summaryHeroV23{padding-bottom:18px;background:radial-gradient(circle at 78% 20%,rgba(255,79,161,.22),transparent 34%),radial-gradient(circle at 10% 80%,rgba(154,92,255,.16),transparent 38%),linear-gradient(145deg,#0d1430,#2b1234 68%,#3b1433)}
+.summaryHeroV23 .summaryTitle{font-size:32px;letter-spacing:-.6px;color:#fff;text-shadow:0 0 18px rgba(255,79,161,.16)}
+.summaryHeroV23 .summaryBookLine{margin-top:12px;color:#ffdcec;font-weight:900;font-size:14px}
+.summaryHeroV23 .summaryIntro{margin-top:6px;color:#cfbfdf;font-weight:820;line-height:1.38;font-size:14px}
+.summaryOpenCard{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;margin-top:15px;padding:14px;border-radius:28px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);box-shadow:0 18px 34px rgba(0,0,0,.18)}
+.summaryMiniCover .cover{height:122px;border-radius:22px;padding:10px 9px;gap:6px;box-shadow:0 16px 28px rgba(0,0,0,.25),0 0 18px rgba(255,79,161,.11)}
+.summaryMiniCover .coverTitle{font-size:18px}.summaryMiniCover .coverAuthor{font-size:11px}.summaryMiniCover .coverInitial{font-size:62px;bottom:13px}
+.summaryOpenTop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.summaryOpenBadge,.summaryOpenPercent{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:950}
+.summaryOpenBadge{background:linear-gradient(135deg,rgba(255,79,161,.18),rgba(255,159,104,.14));color:#ffdcec;border:1px solid rgba(255,155,213,.18)}
+.summaryOpenPercent{background:rgba(255,255,255,.06);color:#cdbbdd;border:1px solid rgba(255,255,255,.10)}
+.summaryOpenTitle{margin-top:10px;font-size:26px;font-weight:1000;color:#fff;line-height:1.04}
+.summaryOpenAuthor{margin-top:5px;font-size:14px;color:#d0c0df;font-weight:850}
+.summaryOpenPrompt{margin-top:10px;color:#c9b8d9;font-size:13px;line-height:1.35;font-weight:820}
+.summaryRitualV23{margin-top:14px;display:grid;gap:15px}
+.summaryCard{padding:18px 16px;border-radius:30px;background:radial-gradient(circle at 90% 8%,rgba(255,79,161,.10),transparent 24%),linear-gradient(145deg,rgba(17,22,50,.90),rgba(30,15,47,.80));border:1px solid rgba(255,139,201,.16);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.summaryCard .stepTitle{font-size:24px;margin-bottom:5px;color:#fff;text-shadow:none}
+.summaryHint{color:#cbb8de;font-size:13px;font-weight:820;margin-bottom:13px;line-height:1.4}
+.ratingCard .rateGroup{margin:14px 0 16px}.ratingCard .rateGroup:last-child{margin-bottom:4px}
+.rateLabel{font-size:16px;color:#ff8ccb;margin-bottom:9px}
+.rateBtns{gap:8px}.rateBtn{min-width:50px;padding:10px 11px;border-radius:16px}
+.aftertasteCard .textarea{min-height:118px;margin-bottom:10px}
+.aftertasteCard .softPrompt{margin:4px 0 8px;font-weight:950;color:#ffdcec}
+.charactersCard .charRow,.momentsCard .moment,.charactersCard .summaryAddBox{background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.09)!important;border-radius:24px;box-shadow:none!important}
+.charactersCard .summaryAddBox{padding:14px;margin-top:12px}
+.stampChips{gap:10px}.stampChips .chip{padding:11px 14px;border-radius:999px}
+.momentsCard .moment{padding:13px}
+.summaryFooterAction{margin-top:16px;padding-bottom:8px}
+.summaryFooterNote{margin-top:9px;text-align:center;color:#cab8da;font-size:12px;font-weight:820}
+@media (max-width:380px){
+  .summaryOpenCard{grid-template-columns:76px 1fr;gap:10px;padding:12px}
+  .summaryMiniCover .cover{height:106px}
+  .summaryOpenTitle{font-size:23px}
+  .summaryCard .stepTitle{font-size:22px}
+  .progressNumber{font-size:44px}
 }
 
 </style>
@@ -1143,9 +1182,9 @@ const KEY='od-perek-ehad-v5';
 const OLD_KEYS=['od-perek-ehad-v1'];
 const MOODS=['נמרח','זורם','מתחיל לקרות משהו','מכורה','לא לדבר איתי','עצבנית עליו','הלב שלי לא בנוי לזה','וואו וואו וואו','חמוד בינתיים','לא סגורה עליו','מחכה שיתפוצץ','יש דגל אדום ואני מתעלמת','הוא בעייתי ואני בעייתית','רוצה לנער את כולם','אני לא נושמת','זה מתחיל לשרוף','זקוקה להפסקה','אוקיי עכשיו הבנתי'];
 const CHAR_TAGS=['אוהב/ת','חשוד/ה','מעצבן/ת','רוצה עוד ממנו/ממנה','דגל אדום','Book boyfriend / Book girlfriend','צריכ/ה טיפול','לא סגורה עליו/עליה'];
-const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהבתי','עצבן/ה אותי','דגל אדום','הייתי קוראת עליו/עליה ספר שלם','שכחתי ממנו/ממנה'];
-const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב'];
-const BOTTOM_LINES=['בלעתי','עדיין חושבת עליו','אהבתי אבל...','חמוד ותו לא','לא אמליץ'];
+const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהוב/ה עליי','בעייתי/ת אבל מה לעשות','דגל אדום מפואר','בלתי נסבל/ת','הייתי צריכה יותר ממנו/ה'];
+const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב','לא יצא לי מהראש'];
+const BOTTOM_LINES=['נשאר לי בראש','בלעתי בלי לנשום','לא לדבר איתי','אהבתי אבל יש לי תלונות','חמוד ותו לא','הייתי עוברת לגור שם','לא התאוששתי','צריכה ספר המשך עכשיו'];
 const SPEED=['נמרח','לקח זמן','זרם','מהר','בלעתי'];
 let S=loadState();
 let openAcc='percent';
@@ -1571,43 +1610,55 @@ function goSummary(){
 function renderSummary(){
   const c=S.current,d=S.summaryDraft||{};
   document.getElementById('summary').innerHTML=c?`
-    <div class="summaryHero summaryHeroV20">
+    <div class="summaryHero summaryHeroV23">
       <div class="fieldTopRow"><button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button><div class="summaryTitle">סוגרת ספר</div></div>
-      <div class="summaryBookLine">${esc(c.title)} · ${pct(c.percent)}%</div>
-      <div class="summaryIntro">מה נשאר ממנו אחרי שסגרת את העמוד האחרון?</div>
+      <div class="summaryBookLine">${esc(c.title)} · ${esc(c.author)}</div>
+      <div class="summaryIntro">אוקיי, סגרת. מה נשאר לך ממנו?</div>
+      <div class="summaryOpenCard">
+        <div class="summaryMiniCover">${coverHtml(c.title,c.author)}</div>
+        <div class="summaryOpenText">
+          <div class="summaryOpenTop"><span class="summaryOpenBadge">סיימתי</span><span class="summaryOpenPercent">${pct(c.percent)}%</span></div>
+          <div class="summaryOpenTitle">${esc(c.title)}</div>
+          <div class="summaryOpenAuthor">${esc(c.author)}</div>
+          <div class="summaryOpenPrompt">רגע לפני שהוא נכנס למדף — תני לו את הסגירה שלו.</div>
+        </div>
+      </div>
     </div>
-    <div class="summaryRitual">
+    <div class="summaryRitual summaryRitualV23">
       <div class="stepCard summaryCard ratingCard">
         <div class="stepTitle">המדדים</div>
-        <div class="summaryHint">בלי חקירות. רק איך זה הרגיש באמת.</div>
+        <div class="summaryHint">לא מספרים יבשים — רק איך הספר הזה פגע בך באמת.</div>
         ${rateGroup('stars','כמה אהבתי?',5,'heart')}
-        ${rateGroup('heat','כמה זה בער?',5,'pepper')}
-        ${rateGroup('cry','כמה זה שבר אותי?',5,'broken')}
-        ${rateGroup('speed','איך זה נקרא?',5,'slider')}
-      </div>
-      <div class="stepCard summaryCard stampCard">
-        <div class="stepTitle">החותמת שלי</div>
-        <div class="summaryHint">התיוג שיישב על הספר במדף.</div>
-        <div class="chips stampChips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
+        ${rateGroup('heat','כמה לוהט?',5,'pepper')}
+        ${rateGroup('cry','כמה בכיתי?',5,'broken')}
+        ${rateGroup('speed','כמה מהר בלעתי?',5,'slider')}
       </div>
       <div class="stepCard summaryCard aftertasteCard">
         <div class="stepTitle">מה נשאר לי ממנו?</div>
+        <div class="summaryHint">לא חייב להיות עמוק. גם "אני צריכה דקה" נחשב.</div>
         <div class="softPrompt">זה היה ספר על…</div>
         <textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea>
-        <div class="softPrompt">והוא גרם לי…</div>
+        <div class="softPrompt">והוא השאיר אותי…</div>
         <textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea>
       </div>
       <div class="stepCard summaryCard charactersCard">
-        <div class="stepTitle">הדמויות שנשארו לי בראש</div>
-        ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="empty" style="padding:14px">לא נוספו דמויות בזמן הקריאה.</div>`}
+        <div class="stepTitle">מי נשארו לי בראש?</div>
+        <div class="summaryHint">מי לא יצאו איתך מהספר גם אחרי שסגרת אותו.</div>
+        ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="empty" style="padding:14px">אף אחד לא נשאר לך בראש? חשוד.</div>`}
         ${summaryAddCharacterBox()}
       </div>
+      <div class="stepCard summaryCard stampCard">
+        <div class="stepTitle">החותמת שלי</div>
+        <div class="summaryHint">המשפט הקטן שיישב על הספר במדף.</div>
+        <div class="chips stampChips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
+      </div>
       <div class="stepCard summaryCard momentsCard">
-        <div class="stepTitle">רגעים שסימנתי בדרך</div>
-        ${c.updates.length?c.updates.map(summaryMoment).join(''):`<div class="empty">אין רגעים לסמן.</div>`}
+        <div class="stepTitle">רגעים שנשארו בדרך</div>
+        <div class="summaryHint">כמה רגעים קצרים מהציר, רק כדי להיזכר במסע.</div>
+        ${c.updates.length?c.updates.slice(0,3).map(summaryMoment).join(''):`<div class="empty">אין רגעים לסמן.</div>`}
       </div>
     </div>
-    <button class="doneBtn finishSoft" onclick="finishBook()">להכניס למדף</button>
+    <div class="summaryFooterAction"><button class="doneBtn finishSoft" onclick="finishBook()">להכניס למדף</button><div class="summaryFooterNote">הספר יישמר במדף ותמיד אפשר יהיה לחזור אליו.</div></div>
   `:'';
 }
 function rateGroup(key,label,max,type){
@@ -1615,7 +1666,7 @@ function rateGroup(key,label,max,type){
   if(key==='speed'){
     const val=d.speed||3;
     return `<div class="rateGroup">
-      <div class="rateLabel">איך זה נקרא?</div>
+      <div class="rateLabel">כמה מהר בלעתי?</div>
       <div class="speedBox">
         <input class="speedSlider" type="range" min="1" max="5" step="1" value="${val}" oninput="setDraft('speed',+this.value)">
         <div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div>
@@ -1657,11 +1708,11 @@ function setMomentTag(mid,tag){
 
 function summaryAddCharacterBox(){
   return `<div class="summaryAddBox">
-    <div class="stepTitle" style="font-size:16px;margin-bottom:8px">+ להוסיף דמות לסיכום</div>
+    <div class="stepTitle" style="font-size:16px;margin-bottom:8px">+ להוסיף דמות לסיכום</div><div class="summaryHint" style="margin-bottom:10px">אם יש מישהו שלא הוספת תוך כדי הקריאה — זה המקום.</div>
     <input id="sumCharName" class="input" placeholder="שם הדמות">
     <div class="help">זכר / נקבה</div>
     <div class="chips"><button class="chip" onclick="pickSummaryGender('זכר')">זכר</button><button class="chip" onclick="pickSummaryGender('נקבה')">נקבה</button></div>
-    <div class="help">סיכום סופי</div>
+    <div class="help">איך היא/הוא נשארו אצלך?</div>
     <div class="chips">${FINAL_CHAR_TAGS.map(t=>`<button class="chip" onclick="addSummaryCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   </div>`;
 }

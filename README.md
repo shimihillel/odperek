@@ -6,3 +6,6 @@
 
 
 V15: refined inner UI, unified leftover icons, cleaner progress orb, improved placeholder covers, and better summary character contrast.
+
+
+V18: home screen hero polish — book card as protagonist, cleaner progress orb, mood status line, mini timeline, quieter nav.

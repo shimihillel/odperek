@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v17</title>
+<title>עוד פרק אחד v18</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -939,6 +939,34 @@ body:before{
 .ratingSvg{width:20px;height:20px}
 .speedValue{background:rgba(255,91,145,.18);color:#ff896d}
 
+
+/* v18 — home hero polish: book first, clean status, mini timeline */
+.app{padding-top:14px}
+.top{margin:2px 0 10px;align-items:center}
+.brand{font-size:23px;letter-spacing:-.4px;text-shadow:0 0 16px rgba(255,79,161,.18)}
+.sub{font-size:12px;margin-top:4px;color:#d9b3df}
+.iconBtn{width:38px;height:38px;border-radius:999px;opacity:.86}
+.v18Home{min-height:auto;margin-top:2px;padding:8px 0 4px}
+.v18Home:before{inset:26px -18px 48px;border-radius:48px;background:radial-gradient(circle at 62% 36%,rgba(255,79,161,.22),transparent 38%),radial-gradient(circle at 22% 58%,rgba(154,92,255,.22),transparent 40%);filter:blur(6px)}
+.heroStage{grid-template-columns:minmax(0,1.18fr) minmax(108px,.72fr);gap:16px;align-items:center;direction:rtl}
+.heroBook{min-height:292px;padding:20px 16px 22px !important;transform:perspective(800px) rotateY(-7deg) rotateZ(.7deg);align-items:center;justify-content:center;gap:11px;background:radial-gradient(circle at 50% 54%,rgba(255,79,161,.14),transparent 36%),radial-gradient(circle at 20% 8%,rgba(154,92,255,.22),transparent 34%),linear-gradient(155deg,#070d25,#181243 58%,#4f1c43);box-shadow:22px 26px 56px rgba(0,0,0,.44),0 0 36px rgba(255,79,161,.18);border-color:rgba(255,148,209,.24)}
+.heroBook:before{opacity:.40;background:linear-gradient(90deg,rgba(255,255,255,.12),transparent 16%),repeating-linear-gradient(0deg,transparent 0 9px,rgba(255,255,255,.020) 9px 10px)}
+.heroBook:after{display:none}
+.bookNowBadge{position:relative;z-index:2;border:1px solid rgba(255,173,219,.28);background:rgba(255,255,255,.06);color:#ffd8ee;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:950;box-shadow:0 0 18px rgba(255,79,161,.10)}
+.bookInitial{position:absolute;inset:auto auto 40px 50%;transform:translateX(-50%);font-size:164px;line-height:1;font-weight:1000;color:rgba(255,255,255,.055);text-shadow:0 0 40px rgba(255,79,161,.12);z-index:0;pointer-events:none}
+.bookGlowTitle{font-size:38px !important;line-height:.95;color:#ffd4ec;text-align:center;max-width:100%;margin:0 !important;text-shadow:0 0 18px rgba(255,79,161,.45);z-index:2}
+.bookGlowAuthor{font-size:15px;color:#ead5ea;text-align:center;z-index:2;margin:0}
+.bookGlowDivider{width:104px !important;height:3px !important;margin:0 auto !important;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,155,213,.95),rgba(255,187,107,.75),rgba(255,255,255,0));box-shadow:0 0 18px rgba(255,79,161,.35);z-index:2}
+.progressStack{display:grid;gap:14px;align-content:center;justify-items:center;direction:rtl}.heroOrb{width:134px;max-width:100%;box-shadow:0 0 28px rgba(255,79,161,.16),inset 0 0 32px rgba(0,0,0,.42)}.heroOrb:before{inset:12px}.heroOrb .orbPercent{font-size:43px;text-shadow:0 0 20px rgba(255,79,161,.35)}
+.tinyAction{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);color:#ffd9ee;border-radius:999px;padding:10px 12px;font-size:12px;font-weight:950;box-shadow:0 12px 26px rgba(0,0,0,.18)}
+.moodStatus{margin:14px 4px 0;border:1px solid rgba(255,139,201,.19);background:linear-gradient(90deg,rgba(255,79,161,.11),rgba(154,92,255,.08));border-radius:22px;padding:12px 15px;color:#f8e8f3;font-weight:850;box-shadow:0 12px 28px rgba(0,0,0,.18);display:flex;align-items:center;gap:8px;justify-content:center;text-align:center}.moodStatus .neonIcon{font-size:20px;color:#ff82c9}.moodStatus b{color:#ff9ed4}
+.heroActions{margin-top:14px;grid-template-columns:.9fr 1.34fr .9fr}.heroActions .bubbleAction{min-height:74px;border-radius:24px;padding:10px 7px;font-size:13px;background:rgba(255,255,255,.052);box-shadow:0 12px 28px rgba(0,0,0,.20)}.heroActions .bubbleAction.primary{min-height:96px;border-radius:30px;font-size:18px}.heroActions .bubbleIcon{font-size:25px;margin-bottom:5px}
+.timelineHead{margin-top:20px}.homeTimeline{position:relative;display:grid;gap:10px;margin:2px 0 2px;padding:5px 0 5px 15px}.homeTimeline:before{content:"";position:absolute;top:16px;bottom:16px;right:18px;width:2px;border-radius:999px;background:linear-gradient(180deg,rgba(255,79,161,.60),rgba(154,92,255,.18));box-shadow:0 0 12px rgba(255,79,161,.22)}.timelineMoment{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start;position:relative}.timelineDot{width:38px;height:38px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(255,79,161,.18),rgba(154,92,255,.10));border:1px solid rgba(255,139,201,.20);box-shadow:0 0 16px rgba(255,79,161,.13);z-index:1}.timelineDot .neonIcon{font-size:20px;color:#ff8acb}.timelineContent{background:linear-gradient(145deg,rgba(18,22,50,.76),rgba(26,15,43,.66));border:1px solid rgba(255,116,184,.14);border-radius:20px;padding:11px 13px;box-shadow:0 12px 26px rgba(0,0,0,.18)}.timelineContent .momentText{font-size:14px;line-height:1.38}.timelineContent .momentMeta{font-size:11px;color:#cdbbdd}.homeEmptyMoment{border-radius:22px;padding:22px 16px}
+.nav{padding:6px;border-radius:28px;width:min(382px,calc(100% - 34px));bottom:12px}.nav button{min-height:50px;font-size:11px;gap:2px}.navIcon{font-size:21px}.nav button.on{box-shadow:0 0 18px rgba(255,79,161,.24);background:rgba(255,79,161,.14)}
+.addBookSmall{background:rgba(255,255,255,.055) !important;color:#ffd8ee !important;border:1px dashed rgba(255,139,201,.30) !important;box-shadow:none !important}
+.coverInitial{position:absolute;inset:auto auto 18px 50%;transform:translateX(-50%);font-size:74px;line-height:1;color:rgba(255,255,255,.055);font-weight:1000;z-index:0}.coverTitle,.coverAuthor,.coverDivider{position:relative;z-index:1}
+@media (max-width:380px){.heroStage{gap:11px;grid-template-columns:minmax(0,1.08fr) minmax(96px,.72fr)}.heroBook{min-height:260px}.bookGlowTitle{font-size:32px !important}.bookInitial{font-size:138px}.heroOrb .orbPercent{font-size:37px}.heroActions .bubbleAction{font-size:12px}.heroActions .bubbleAction.primary{font-size:16px}}
+
 </style>
 </head>
 <body>
@@ -1071,8 +1099,10 @@ function topHtml(){
   </div>`;
 }
 function coverHtml(title,author){
-  return `<div class="cover"><div class="coverTitle">${esc(title||'עוד פרק אחד')}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>`;
+  const t=title||'עוד פרק אחד';
+  return `<div class="cover"><div class="coverInitial">${esc(firstLetter(t))}</div><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>`;
 }
+function firstLetter(s){return String(s||'ע').trim().charAt(0)||'ע'}
 function render(){
   renderHome();
   renderField();
@@ -1085,28 +1115,30 @@ function renderHome(){
   const recent=S.books.slice(0,8);
   document.getElementById('home').innerHTML=topHtml()+`
     ${c?currentHome(c):emptyHome()}
-    <div class="sectionHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="goField('timeline')">הצג הכל</button>`:''}</div>
-    ${c&&c.updates.length?`<div class="homeMoments">${c.updates.slice(0,3).map(momentHtml).join('')}</div>`:`<div class="card empty">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
+    <div class="sectionHead timelineHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="goField('timeline')">הצג הכל</button>`:''}</div>
+    ${c&&c.updates.length?`<div class="homeTimeline">${c.updates.slice(0,3).map(timelineMomentHtml).join('')}</div>`:`<div class="card empty homeEmptyMoment">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="textBtn" onclick="show('shelf')">הכל</button></div>
-    ${recent.length?`<div class="shelfRow">${recent.map(bookSmall).join('')}<button class="bookSmall" onclick="startNewBook()" style="background:#fffaf4;color:var(--red2);border:1px dashed rgba(159,63,70,.32)">+<br>הוסף ספר</button></div>`:`<div class="card empty">המדף מחכה לספר הראשון.</div>`}
+    ${recent.length?`<div class="shelfRow">${recent.map(bookSmall).join('')}<button class="bookSmall addBookSmall" onclick="startNewBook()">+<br>הוסף ספר</button></div>`:`<div class="card empty">המדף מחכה לספר הראשון.</div>`}
   `;
 }
 function currentHome(c){
-  return `<div class="readingDashboard">
-    <div class="dashStage">
-      <div>
-        <div class="progressOrb" style="--p:${pct(c.percent)}"><div class="orbInner"><div class="orbPercent">${pct(c.percent)}%</div></div></div>
-        <div class="dashMeta single">
-          <div class="dashMetaItem moodOnly"><b>${uiIcon('heart')}</b>${c.lastMood?esc(c.lastMood):'מה הוייב?'}</div>
-        </div>
-      </div>
-      <div class="floatingBook" onclick="goField('percent')">
+  const mood=c.lastMood||'מה הוייב?';
+  return `<div class="readingDashboard v18Home">
+    <div class="dashStage heroStage">
+      <div class="floatingBook heroBook" onclick="goField('percent')">
+        <div class="bookInitial">${esc(firstLetter(c.title))}</div>
+        <div class="bookNowBadge">קוראת עכשיו</div>
         <div class="bookGlowTitle">${esc(c.title)}</div>
         <div class="bookGlowDivider"></div>
         <div class="bookGlowAuthor">${esc(c.author)}</div>
       </div>
+      <div class="progressStack">
+        <div class="progressOrb heroOrb" style="--p:${pct(c.percent)}"><div class="orbInner"><div class="orbPercent">${pct(c.percent)}%</div></div></div>
+        <button class="tinyAction" onclick="goField('percent')">לעדכן אחוז</button>
+      </div>
     </div>
-    <div class="floatActions">
+    <div class="moodStatus" onclick="goField('mood')"><span>${uiIcon('heart')}</span><b>כרגע:</b> ${esc(mood)}</div>
+    <div class="floatActions heroActions">
       <button class="bubbleAction" onclick="goField('mood')"><span class="bubbleIcon">${uiIcon('chat')}</span>מה הוייב?</button>
       <button class="bubbleAction primary" onclick="goField()"><span class="bubbleIcon">${uiIcon('book')}</span>עדכון מהשטח</button>
       <button class="bubbleAction" onclick="goSummary()"><span class="bubbleIcon">${uiIcon('check')}</span>סיימתי</button>
@@ -1136,6 +1168,9 @@ function momentLabel(type){
 }
 function momentHtml(u){
   return `<div class="moment"><div class="momentType">${momentIcon(u.type)}</div><div><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div></div>`;
+}
+function timelineMomentHtml(u){
+  return `<div class="timelineMoment"><div class="timelineDot">${momentIcon(u.type)}</div><div class="timelineContent"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div></div>`;
 }
 function bookSmall(b){
   return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallMark">${uiIcon('heart')}</div><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;

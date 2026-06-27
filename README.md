@@ -1,11 +1,8 @@
-# עוד פרק אחד — v14 neon icons
+# עוד פרק אחד — v20
 
-גרסה עם עיצוב Dark Floating Dashboard, אייקון אפליקציה חדש, גיבוי ושחזור, אייקוני SVG ניאוניים אחידים וכריכות placeholder רומנטי־ניאוני.
-
-להעלאה: העלי את כל הקבצים לתיקיית האתר בגיטהאב/שרת, כולל index.html, manifest.webmanifest, sw.js וקבצי האייקונים.
-
-
-V15: refined inner UI, unified leftover icons, cleaner progress orb, improved placeholder covers, and better summary character contrast.
-
-
-V18: home screen hero polish — book card as protagonist, cleaner progress orb, mood status line, mini timeline, quieter nav.
+עדכון עיצובי ממוקד:
+- עיגול ההתקדמות עודן והפך למד מצב קטן ושקט יותר.
+- מסך סיימתי ספר עודכן לשפה רכה יותר: “סוגרת ספר”, “החותמת שלי”, “מה נשאר לי ממנו”.
+- בלי שפת גזר דין / פסק דין.
+- נשמרו פיצ׳רי v19: עוד וייבים ועדכון דמויות מתוך עדכון מהשטח.
+- גיבוי ושחזור נשארו במסך הסטטיסטיקה.

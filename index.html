@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v18</title>
+<title>עוד פרק אחד v19</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -940,14 +940,14 @@ body:before{
 .speedValue{background:rgba(255,91,145,.18);color:#ff896d}
 
 
-/* v18 — home hero polish: book first, clean status, mini timeline */
+/* v20 — softer progress + summary ritual: book first, clean status, mini timeline */
 .app{padding-top:14px}
 .top{margin:2px 0 10px;align-items:center}
 .brand{font-size:23px;letter-spacing:-.4px;text-shadow:0 0 16px rgba(255,79,161,.18)}
 .sub{font-size:12px;margin-top:4px;color:#d9b3df}
 .iconBtn{width:38px;height:38px;border-radius:999px;opacity:.86}
-.v18Home{min-height:auto;margin-top:2px;padding:8px 0 4px}
-.v18Home:before{inset:26px -18px 48px;border-radius:48px;background:radial-gradient(circle at 62% 36%,rgba(255,79,161,.22),transparent 38%),radial-gradient(circle at 22% 58%,rgba(154,92,255,.22),transparent 40%);filter:blur(6px)}
+.v19Home{min-height:auto;margin-top:2px;padding:8px 0 4px}
+.v19Home:before{inset:26px -18px 48px;border-radius:48px;background:radial-gradient(circle at 62% 36%,rgba(255,79,161,.22),transparent 38%),radial-gradient(circle at 22% 58%,rgba(154,92,255,.22),transparent 40%);filter:blur(6px)}
 .heroStage{grid-template-columns:minmax(0,1.18fr) minmax(108px,.72fr);gap:16px;align-items:center;direction:rtl}
 .heroBook{min-height:292px;padding:20px 16px 22px !important;transform:perspective(800px) rotateY(-7deg) rotateZ(.7deg);align-items:center;justify-content:center;gap:11px;background:radial-gradient(circle at 50% 54%,rgba(255,79,161,.14),transparent 36%),radial-gradient(circle at 20% 8%,rgba(154,92,255,.22),transparent 34%),linear-gradient(155deg,#070d25,#181243 58%,#4f1c43);box-shadow:22px 26px 56px rgba(0,0,0,.44),0 0 36px rgba(255,79,161,.18);border-color:rgba(255,148,209,.24)}
 .heroBook:before{opacity:.40;background:linear-gradient(90deg,rgba(255,255,255,.12),transparent 16%),repeating-linear-gradient(0deg,transparent 0 9px,rgba(255,255,255,.020) 9px 10px)}
@@ -966,6 +966,73 @@ body:before{
 .addBookSmall{background:rgba(255,255,255,.055) !important;color:#ffd8ee !important;border:1px dashed rgba(255,139,201,.30) !important;box-shadow:none !important}
 .coverInitial{position:absolute;inset:auto auto 18px 50%;transform:translateX(-50%);font-size:74px;line-height:1;color:rgba(255,255,255,.055);font-weight:1000;z-index:0}.coverTitle,.coverAuthor,.coverDivider{position:relative;z-index:1}
 @media (max-width:380px){.heroStage{gap:11px;grid-template-columns:minmax(0,1.08fr) minmax(96px,.72fr)}.heroBook{min-height:260px}.bookGlowTitle{font-size:32px !important}.bookInitial{font-size:138px}.heroOrb .orbPercent{font-size:37px}.heroActions .bubbleAction{font-size:12px}.heroActions .bubbleAction.primary{font-size:16px}}
+
+
+.charRowTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.charOpen{border:0;background:transparent;color:inherit;padding:0;text-align:right;flex:1;font-family:inherit;cursor:pointer}
+.charRow.editing{border-color:rgba(255,116,184,.35)!important;box-shadow:0 0 24px rgba(255,79,161,.12)}
+.charEditPanel{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.10);display:grid;gap:8px}
+
+
+/* v20 — progress becomes a quiet status jewel, not a loud widget */
+.heroStage{grid-template-columns:minmax(0,1.24fr) minmax(96px,.58fr)}
+.progressStack{gap:10px;align-self:center;opacity:.96}
+.heroOrb{
+  width:104px;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.045),rgba(7,10,25,.54) 62%,rgba(7,10,25,.14)),
+    conic-gradient(from 12deg,rgba(255,126,197,.95) calc(var(--p)*1%),rgba(255,255,255,.075) 0);
+  border:1px solid rgba(255,170,220,.18);
+  box-shadow:0 0 18px rgba(255,79,161,.11), inset 0 0 18px rgba(0,0,0,.34);
+}
+.heroOrb:before{
+  inset:8px;
+  background:rgba(7,10,25,.86);
+  border:1px solid rgba(255,255,255,.055);
+  box-shadow:inset 0 0 18px rgba(255,79,161,.055);
+}
+.heroOrb .orbPercent{font-size:34px;letter-spacing:-1px;text-shadow:0 0 14px rgba(255,79,161,.26)}
+.tinyAction{padding:8px 11px;font-size:11px;background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.09);color:#d9c7e5;box-shadow:none}
+@media (max-width:380px){.heroOrb{width:92px}.heroOrb .orbPercent{font-size:30px}.heroStage{grid-template-columns:minmax(0,1.14fr) minmax(86px,.56fr)}}
+
+/* v20 — summary page as a soft closing ritual, no court-room language */
+.summaryHeroV20{
+  padding-bottom:22px;
+  background:
+    radial-gradient(circle at 78% 18%,rgba(255,79,161,.24),transparent 36%),
+    radial-gradient(circle at 18% 72%,rgba(154,92,255,.18),transparent 38%),
+    linear-gradient(145deg,#080d24,#211142 58%,#351633);
+}
+.summaryHeroV20 .summaryTitle{font-size:34px;letter-spacing:-.7px;color:#fff;text-shadow:0 0 22px rgba(255,79,161,.25)}
+.summaryBookLine{margin-top:12px;color:#ffd9ee;font-weight:950;font-size:15px}
+.summaryIntro{margin-top:7px;color:#cbb8de;font-weight:800;line-height:1.35}
+.summaryRitual{display:grid;gap:15px;margin-top:15px}
+.summaryCard{
+  border-radius:30px;
+  padding:18px 16px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(255,79,161,.13),transparent 34%),
+    linear-gradient(145deg,rgba(17,22,50,.90),rgba(28,16,47,.78));
+  border:1px solid rgba(255,139,201,.18);
+  box-shadow:0 18px 42px rgba(0,0,0,.24);
+}
+.summaryCard .stepTitle{font-size:21px;color:#fff;margin-bottom:5px;text-shadow:0 0 14px rgba(255,79,161,.18)}
+.summaryHint{color:#cbb8de;font-size:13px;font-weight:800;margin-bottom:13px;line-height:1.35}
+.ratingCard{display:grid;gap:10px}
+.ratingCard .rateGroup{margin:0;padding:13px;border-radius:23px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.075)}
+.ratingCard .rateLabel{margin-bottom:10px;color:#ffd4ec;font-size:14px;text-shadow:none}
+.ratingCard .rateBtns{gap:8px}
+.ratingCard .rateBtn{min-width:48px;min-height:46px;border-radius:18px;background:rgba(255,255,255,.052);border-color:rgba(255,255,255,.12);color:#ff8fc9}
+.ratingCard .rateBtn.on{background:linear-gradient(135deg,#ff3ea4,#ff7b59);box-shadow:0 0 18px rgba(255,79,161,.24),0 10px 24px rgba(0,0,0,.18)}
+.ratingCard .speedBox{background:transparent;border:0;padding:2px 0 0}
+.ratingCard .speedValue{display:inline-grid;margin-top:8px;padding:8px 12px;border-radius:999px;background:rgba(255,79,161,.13);color:#ffd8ee;font-weight:950}
+.stampCard{background:radial-gradient(circle at 50% 0%,rgba(255,187,107,.10),transparent 38%),linear-gradient(145deg,rgba(17,22,50,.92),rgba(33,14,44,.80))}
+.stampChips .chip{border-radius:999px;padding:11px 13px}
+.softPrompt{margin:14px 0 7px;color:#ff9ed4;font-weight:950}
+.aftertasteCard .textarea{min-height:92px;border-radius:22px}
+.charactersCard .charRow,.momentsCard .moment{border-radius:22px;background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.10)!important;box-shadow:none!important}
+.charactersCard .summaryAddBox{border-radius:24px;margin-top:12px;background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.10)!important}
+.finishSoft{margin-top:16px;border-radius:28px;background:linear-gradient(135deg,#ff3ea4,#ff7b59);box-shadow:0 20px 38px rgba(255,79,161,.25)}
 
 </style>
 </head>
@@ -989,7 +1056,7 @@ body:before{
 <script>
 const KEY='od-perek-ehad-v5';
 const OLD_KEYS=['od-perek-ehad-v1'];
-const MOODS=['נמרח','זורם','מתחיל לקרות משהו','מכורה','לא לדבר איתי','עצבנית עליו','הלב שלי לא בנוי לזה','וואו וואו וואו'];
+const MOODS=['נמרח','זורם','מתחיל לקרות משהו','מכורה','לא לדבר איתי','עצבנית עליו','הלב שלי לא בנוי לזה','וואו וואו וואו','חמוד בינתיים','לא סגורה עליו','מחכה שיתפוצץ','יש דגל אדום ואני מתעלמת','הוא בעייתי ואני בעייתית','רוצה לנער את כולם','אני לא נושמת','זה מתחיל לשרוף','זקוקה להפסקה','אוקיי עכשיו הבנתי'];
 const CHAR_TAGS=['אוהב/ת','חשוד/ה','מעצבן/ת','רוצה עוד ממנו/ממנה','דגל אדום','Book boyfriend / Book girlfriend','צריכ/ה טיפול','לא סגורה עליו/עליה'];
 const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהבתי','עצבן/ה אותי','דגל אדום','הייתי קוראת עליו/עליה ספר שלם','שכחתי ממנו/ממנה'];
 const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב'];
@@ -1123,7 +1190,7 @@ function renderHome(){
 }
 function currentHome(c){
   const mood=c.lastMood||'מה הוייב?';
-  return `<div class="readingDashboard v18Home">
+  return `<div class="readingDashboard v19Home">
     <div class="dashStage heroStage">
       <div class="floatingBook heroBook" onclick="goField('percent')">
         <div class="bookInitial">${esc(firstLetter(c.title))}</div>
@@ -1259,25 +1326,70 @@ function textBody(type,ph){
   return `<textarea id="${type}Text" class="textarea" placeholder="${ph}"></textarea><div style="margin-top:9px"><button class="saveBtn" onclick="saveText('${type}')">שמרי לציר</button></div>`;
 }
 let pendingCharName='';
+let editingCharId='';
 function charactersBody(c){
   const selectedM = pickedGender==='זכר'?'on':'';
   const selectedF = pickedGender==='נקבה'?'on':'';
   return `<input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
   <div class="help">זכר / נקבה</div>
   <div class="chips"><button class="chip ${selectedM}" onclick="pickGender('זכר')">זכר</button><button class="chip ${selectedF}" onclick="pickGender('נקבה')">נקבה</button></div>
-  <div class="help">מה הסטטוס?</div>
+  <div class="help">מה אני חושבת עליו/עליה עכשיו?</div>
   <div class="chips">${CHAR_TAGS.map(t=>`<button class="chip" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
-  <div class="help">אפשר להוסיף כמה דמויות ברצף. אחרי שמירה השדה מתנקה ונשארים כאן.</div>
+  <div class="help">אפשר להוסיף דמות חדשה, או לפתוח דמות קיימת ולעדכן את הסטטוס שלה.</div>
   <div class="charList">${c.characters.length?c.characters.map(charHtml).join(''):'<div class="empty" style="padding:14px">עוד לא נוספו דמויות.</div>'}</div>`;
 }
 function charHtml(ch){
-  return `<div class="charRow"><div><div class="charName">${esc(ch.name)}</div><div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}</div></div><button class="miniBtn" onclick="deleteChar('${ch.id}')">מחקי</button></div>`;
+  const isEdit=editingCharId===ch.id;
+  return `<div class="charRow ${isEdit?'editing':''}" style="display:block">
+    <div class="charRowTop">
+      <button class="charOpen" onclick="toggleCharEdit('${ch.id}')">
+        <div class="charName">${esc(ch.name)}</div>
+        <div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}</div>
+      </button>
+      <button class="miniBtn" onclick="deleteChar('${ch.id}')">מחקי</button>
+    </div>
+    ${isEdit?charEditHtml(ch):''}
+  </div>`;
+}
+function charEditHtml(ch){
+  return `<div class="charEditPanel">
+    <div class="help">לעדכן מה אני חושבת עליו/עליה עכשיו</div>
+    <div class="chips">${CHAR_TAGS.map(t=>`<button class="chip ${ch.tag===t?'on':''}" onclick="updateCharacterTag('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+    <div class="help">מין הדמות</div>
+    <div class="chips"><button class="chip ${ch.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${ch.id}','זכר')">זכר</button><button class="chip ${ch.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${ch.id}','נקבה')">נקבה</button></div>
+  </div>`;
 }
 let pickedGender='זכר';
 function pickGender(g){
   const el=document.getElementById('charName');
   pendingCharName=el?el.value:pendingCharName;
   pickedGender=g;
+  openAcc='character';
+  renderField();
+}
+
+function toggleCharEdit(cid){
+  editingCharId=editingCharId===cid?'':cid;
+  openAcc='character';
+  renderField();
+}
+function updateCharacterTag(cid,tag){
+  const c=S.current;if(!c)return;
+  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
+  ch.tag=tag;
+  addUpdate('character','על מי מדובר',`${ch.name} · ${ch.gender||''} · ${tag}`,{characterId:ch.id});
+  editingCharId=cid;
+  openAcc='character';
+  save();
+  renderField();
+  toast('עודכן בציר');
+}
+function updateCharacterGender(cid,gender){
+  const c=S.current;if(!c)return;
+  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
+  ch.gender=gender;
+  save();
+  editingCharId=cid;
   openAcc='character';
   renderField();
 }
@@ -1323,6 +1435,7 @@ function saveCharacter(tag){
 function deleteChar(cid){
   if(!S.current)return;
   S.current.characters=S.current.characters.filter(c=>c.id!==cid);
+  if(editingCharId===cid)editingCharId='';
   save();renderField();toast('נמחק');
 }
 function goSummary(){
@@ -1335,38 +1448,43 @@ function goSummary(){
 function renderSummary(){
   const c=S.current,d=S.summaryDraft||{};
   document.getElementById('summary').innerHTML=c?`
-    <div class="summaryHero">
-      <div class="fieldTopRow"><button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button><div class="summaryTitle">מסכמת</div></div>
-      <div style="margin-top:10px;font-weight:800">${esc(c.title)} · ${pct(c.percent)}%</div>
+    <div class="summaryHero summaryHeroV20">
+      <div class="fieldTopRow"><button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button><div class="summaryTitle">סוגרת ספר</div></div>
+      <div class="summaryBookLine">${esc(c.title)} · ${pct(c.percent)}%</div>
+      <div class="summaryIntro">מה נשאר ממנו אחרי שסגרת את העמוד האחרון?</div>
     </div>
-    <div class="stepCard">
-      <div class="stepTitle">דירוגים</div>
-      ${rateGroup('stars','דירוג',5,'heart')}
-      ${rateGroup('heat','כמה לוהט?',5,'pepper')}
-      ${rateGroup('cry','כמה בכי?',5,'broken')}
-      ${rateGroup('speed','כמה מהר?',5,'slider')}
+    <div class="summaryRitual">
+      <div class="stepCard summaryCard ratingCard">
+        <div class="stepTitle">המדדים</div>
+        <div class="summaryHint">בלי חקירות. רק איך זה הרגיש באמת.</div>
+        ${rateGroup('stars','כמה אהבתי?',5,'heart')}
+        ${rateGroup('heat','כמה זה בער?',5,'pepper')}
+        ${rateGroup('cry','כמה זה שבר אותי?',5,'broken')}
+        ${rateGroup('speed','איך זה נקרא?',5,'slider')}
+      </div>
+      <div class="stepCard summaryCard stampCard">
+        <div class="stepTitle">החותמת שלי</div>
+        <div class="summaryHint">התיוג שיישב על הספר במדף.</div>
+        <div class="chips stampChips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
+      </div>
+      <div class="stepCard summaryCard aftertasteCard">
+        <div class="stepTitle">מה נשאר לי ממנו?</div>
+        <div class="softPrompt">זה היה ספר על…</div>
+        <textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea>
+        <div class="softPrompt">והוא גרם לי…</div>
+        <textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea>
+      </div>
+      <div class="stepCard summaryCard charactersCard">
+        <div class="stepTitle">הדמויות שנשארו לי בראש</div>
+        ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="empty" style="padding:14px">לא נוספו דמויות בזמן הקריאה.</div>`}
+        ${summaryAddCharacterBox()}
+      </div>
+      <div class="stepCard summaryCard momentsCard">
+        <div class="stepTitle">רגעים שסימנתי בדרך</div>
+        ${c.updates.length?c.updates.map(summaryMoment).join(''):`<div class="empty">אין רגעים לסמן.</div>`}
+      </div>
     </div>
-    <div class="stepCard">
-      <div class="stepTitle">שורה תחתונה</div>
-      <div class="chips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
-    </div>
-    <div class="stepCard">
-      <div class="stepTitle">בשורה אחת</div>
-      <div class="help">זה היה ספר על…</div>
-      <textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea>
-      <div class="help">והוא גרם לי…</div>
-      <textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea>
-    </div>
-    <div class="stepCard">
-      <div class="stepTitle">מה נסגר עם הדמויות?</div>
-      ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="empty" style="padding:14px">לא נוספו דמויות בזמן הקריאה.</div>`}
-      ${summaryAddCharacterBox()}
-    </div>
-    <div class="stepCard">
-      <div class="stepTitle">רגעים מהשטח</div>
-      ${c.updates.length?c.updates.map(summaryMoment).join(''):`<div class="empty">אין רגעים לסמן.</div>`}
-    </div>
-    <button class="doneBtn" onclick="finishBook()">וזהו</button>
+    <button class="doneBtn finishSoft" onclick="finishBook()">להכניס למדף</button>
   `:'';
 }
 function rateGroup(key,label,max,type){
@@ -1374,7 +1492,7 @@ function rateGroup(key,label,max,type){
   if(key==='speed'){
     const val=d.speed||3;
     return `<div class="rateGroup">
-      <div class="rateLabel">כמה מהר?</div>
+      <div class="rateLabel">איך זה נקרא?</div>
       <div class="speedBox">
         <input class="speedSlider" type="range" min="1" max="5" step="1" value="${val}" oninput="setDraft('speed',+this.value)">
         <div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div>
@@ -1383,7 +1501,7 @@ function rateGroup(key,label,max,type){
     </div>`;
   }
   const iconType = key==='stars'?'heart':key==='heat'?'pepper':'broken';
-  const finalLabel = key==='stars'?'דירוג':key==='heat'?'כמה לוהט?':'כמה בכי?';
+  const finalLabel = key==='stars'?'כמה אהבתי?':key==='heat'?'כמה זה בער?':'כמה זה שבר אותי?';
   return `<div class="rateGroup"><div class="rateLabel">${finalLabel}</div><div class="rateBtns">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${iconStack(iconType,n)}</button>`).join('')}</div></div>`;
 }
 
@@ -1449,7 +1567,7 @@ function finishBook(){
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
     characters:chars,readingLog:log,percent:c.percent
   });
-  S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('נכנס למדף');
+  S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
 function renderShelf(){
   document.getElementById('shelf').innerHTML=topHtml()+`

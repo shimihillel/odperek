@@ -1,8 +1,8 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק",
-  "description": "יומני התולעת — מדף קריאה, רגעים, פסק דין, סטטיסטיקה וגיבוי.",
-  "start_url": "./index.html?v=18",
+  "description": "יומני התולעת — מדף קריאה, רגעים, סיכום ספר, סטטיסטיקה וגיבוי.",
+  "start_url": "./index.html?v=20",
   "scope": "./",
   "display": "standalone",
   "background_color": "#070b19",

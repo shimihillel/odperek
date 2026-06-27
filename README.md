@@ -6,3 +6,6 @@
 - בלי שפת גזר דין / פסק דין.
 - נשמרו פיצ׳רי v19: עוד וייבים ועדכון דמויות מתוך עדכון מהשטח.
 - גיבוי ושחזור נשארו במסך הסטטיסטיקה.
+
+
+V21: redesigned “עדכון מהשטח” as a command center with quick cards and timeline, refined progress ring, and replaced the heart icon.

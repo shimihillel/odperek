@@ -1034,6 +1034,74 @@ body:before{
 .charactersCard .summaryAddBox{border-radius:24px;margin-top:12px;background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.10)!important}
 .finishSoft{margin-top:16px;border-radius:28px;background:linear-gradient(135deg,#ff3ea4,#ff7b59);box-shadow:0 20px 38px rgba(255,79,161,.25)}
 
+
+/* v21 — field command center + subtler progress */
+.heroOrb{
+  width:94px;
+  background:conic-gradient(from 10deg,rgba(255,126,197,.86) calc(var(--p)*1%),rgba(255,255,255,.055) 0);
+  border:1px solid rgba(255,177,223,.14);
+  box-shadow:0 0 10px rgba(255,79,161,.08);
+}
+.heroOrb:before{inset:6px;background:rgba(7,10,25,.92);border:1px solid rgba(255,255,255,.045);box-shadow:none}
+.heroOrb .orbPercent{font-size:32px;text-shadow:none}
+.progressStack{gap:8px}
+.tinyAction{padding:7px 10px;font-size:10px;color:#cab7d7;background:rgba(255,255,255,.03)}
+.moodStatus .neonIcon{color:#ff97d2}
+.top .iconBtn .neonIcon{color:#ff8ecc}
+.fieldHeroV21{padding-bottom:12px;background:radial-gradient(circle at 80% 18%,rgba(255,79,161,.18),transparent 32%),radial-gradient(circle at 12% 78%,rgba(154,92,255,.16),transparent 38%),linear-gradient(145deg,#080d24,#1b133c 60%,#26122c)}
+.fieldCurrentCard{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:14px;border-radius:26px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);box-shadow:0 16px 34px rgba(0,0,0,.18)}
+.fieldCurrentMeta{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.fieldMiniCover{width:72px;min-width:72px}
+.fieldMiniCover .cover{height:98px;border-radius:18px;padding:8px 7px;gap:5px;box-shadow:0 10px 22px rgba(0,0,0,.22),0 0 16px rgba(255,79,161,.10)}
+.fieldMiniCover .coverInitial{font-size:46px;bottom:10px}
+.fieldMiniCover .coverTitle{font-size:14px}
+.fieldMiniCover .coverAuthor{font-size:10px}
+.fieldCurrentText{min-width:0}
+.fieldCurrentText .fieldBookName{font-size:22px;line-height:1.05}
+.fieldCurrentText .fieldBookAuthor{font-size:13px;margin-top:6px}
+.fieldCurrentPercent{display:grid;place-items:center;width:84px;height:84px;border-radius:24px;background:linear-gradient(145deg,rgba(255,79,161,.10),rgba(154,92,255,.06));border:1px solid rgba(255,155,213,.16);box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+.fieldCurrentPercentNum{font-size:24px;font-weight:1000;color:#fff;line-height:1}
+.fieldCurrentPercentLbl{font-size:11px;color:#cbb8de;font-weight:850;margin-top:4px}
+.fieldPrimaryCard,.fieldActivePanel,.fieldTimelineSection{margin-top:14px;border-radius:30px;padding:18px 16px;background:radial-gradient(circle at 92% 6%,rgba(255,79,161,.10),transparent 26%),linear-gradient(145deg,rgba(17,22,50,.90),rgba(28,16,47,.78));border:1px solid rgba(255,139,201,.16);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.fieldPrimaryHead,.fieldActiveHead{margin-bottom:14px}
+.fieldPrimaryTitle,.fieldActiveTitle{font-size:24px;font-weight:1000;color:#fff;letter-spacing:-.4px}
+.fieldPrimarySub,.fieldActiveSub{margin-top:5px;font-size:13px;line-height:1.4;color:#cbb8de;font-weight:800}
+.fieldQuickGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.fieldQuickCard{border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(17,22,50,.82),rgba(24,16,40,.74));border-radius:24px;padding:14px 13px;display:grid;gap:7px;text-align:right;color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.fieldQuickCard.on{border-color:rgba(255,134,206,.34);box-shadow:0 0 0 1px rgba(255,132,202,.08),0 14px 34px rgba(0,0,0,.20),0 0 22px rgba(255,79,161,.12)}
+.fieldQuickIcon{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:15px;background:rgba(255,79,161,.10);color:#ff92d0}
+.fieldQuickTitle{font-size:16px;font-weight:950}
+.fieldQuickSummary{font-size:12px;line-height:1.35;color:#cdbbdd;font-weight:800;min-height:32px}
+.fieldActiveBody .chips{display:flex;flex-wrap:wrap;gap:8px}
+.fieldActiveBody .chip{padding:10px 12px}
+.fieldActiveBody .textarea{min-height:112px}
+.fieldActiveBody .saveBtn{margin-top:10px}
+.fieldTimelineSection{padding-top:16px}
+.fieldTimeline{position:relative;display:grid;gap:12px;padding:4px 0 4px 14px}
+.fieldTimeline:before{content:"";position:absolute;top:12px;bottom:12px;right:18px;width:2px;border-radius:999px;background:linear-gradient(180deg,rgba(255,79,161,.48),rgba(154,92,255,.12));box-shadow:0 0 10px rgba(255,79,161,.12)}
+.fieldTimeline .timelineMoment{grid-template-columns:40px 1fr;gap:10px}
+.fieldTimeline .timelineDot{width:38px;height:38px;border-radius:14px;background:linear-gradient(145deg,rgba(255,79,161,.14),rgba(154,92,255,.08));border-color:rgba(255,139,201,.18);box-shadow:none}
+.fieldTimeline .timelineContent{padding:12px 13px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.fieldTimelineEmpty{border-radius:22px;padding:18px}
+.percentEdit{display:grid;gap:14px}
+.percentRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.percentEdit .textarea{min-height:118px}
+.percentEdit .saveBtn{min-width:124px}
+.fieldActiveBody .charList{display:grid;gap:10px;margin-top:10px}
+.fieldActiveBody .charRow{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.10)!important;border-radius:22px;box-shadow:none!important;padding:12px}
+.fieldActiveBody .charEditPanel{border-top-color:rgba(255,255,255,.08);display:grid;gap:10px}
+.fieldActiveBody .input{margin-bottom:10px}
+.fieldActiveBody .help{margin:6px 0 8px}
+@media (max-width:380px){
+  .fieldCurrentCard{padding:12px;gap:10px}
+  .fieldCurrentText .fieldBookName{font-size:19px}
+  .fieldCurrentPercent{width:76px;height:76px}
+  .fieldQuickGrid{grid-template-columns:1fr}
+  .fieldMiniCover{width:64px;min-width:64px}
+  .fieldMiniCover .cover{height:88px}
+  .fieldPrimaryTitle,.fieldActiveTitle{font-size:22px}
+}
+
 </style>
 </head>
 <body>
@@ -1140,7 +1208,7 @@ function show(id){
 function uiIcon(name,extra=''){
   const icons={
     menu:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/><path class="spark" d="M19.5 4.5v2M18.5 5.5h2"/></svg>`,
-    heart:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.2-9-9c-1.4-3.4.2-6 3.1-6 1.8 0 3.2 1 4 2.2.8-1.2 2.2-2.2 4-2.2 2.9 0 4.5 2.6 3.1 6-2 4.8-9 9-9 9z"/></svg>`,
+    heart:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2s-7.3-4.5-9.4-9C1.1 8 .9 4.4 4.2 3.2c2.2-.8 4.1.3 5.3 1.9.7.9 1.1.9 1.8 0 1.2-1.6 3.1-2.7 5.3-1.9 3.3 1.2 3.1 4.8 1.6 8-2.1 4.5-9.4 9-9.4 9z"/><path class="spark" d="M18.3 4.5v1.8M17.4 5.4h1.8"/></svg>`,
     chat:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5h14a2 2 0 0 1 2 2v6.2a2 2 0 0 1-2 2H10l-5 3v-3H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2z"/><path class="spark" d="M8 11h.1M12 11h.1M16 11h.1"/></svg>`,
     book:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.6-.9 5.4-.6 8 1.2v13c-2.6-1.8-5.4-2.1-8-1.2z"/><path d="M20 5.5c-2.6-.9-5.4-.6-8 1.2v13c2.6-1.8 5.4-2.1 8-1.2z"/><path class="spark" d="M12 6.7v13"/></svg>`,
     check:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>`,
@@ -1182,7 +1250,7 @@ function renderHome(){
   const recent=S.books.slice(0,8);
   document.getElementById('home').innerHTML=topHtml()+`
     ${c?currentHome(c):emptyHome()}
-    <div class="sectionHead timelineHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="goField('timeline')">הצג הכל</button>`:''}</div>
+    <div class="sectionHead timelineHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
     ${c&&c.updates.length?`<div class="homeTimeline">${c.updates.slice(0,3).map(timelineMomentHtml).join('')}</div>`:`<div class="card empty homeEmptyMoment">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
     <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="textBtn" onclick="show('shelf')">הכל</button></div>
     ${recent.length?`<div class="shelfRow">${recent.map(bookSmall).join('')}<button class="bookSmall addBookSmall" onclick="startNewBook()">+<br>הוסף ספר</button></div>`:`<div class="card empty">המדף מחכה לספר הראשון.</div>`}
@@ -1287,23 +1355,59 @@ function goField(acc='percent'){
 }
 function renderField(){
   const c=S.current;
-  document.getElementById('field').innerHTML=c?`
-    <div class="fieldHero">
+  if(!c){document.getElementById('field').innerHTML='';return}
+  if(!openAcc)openAcc='percent';
+  document.getElementById('field').innerHTML=`
+    <div class="fieldHero fieldHeroV21">
       <div class="fieldTopRow"><button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button><div class="fieldTitle">עדכון מהשטח</div></div>
-      <div class="fieldBook"><div><div class="fieldBookName">${esc(c.title)}</div><div class="fieldBookAuthor">${esc(c.author)}</div></div><div class="fieldPercent">${pct(c.percent)}%</div></div>
+      <div class="fieldCurrentCard">
+        <div class="fieldCurrentMeta">
+          <div class="fieldMiniCover">${coverHtml(c.title,c.author)}</div>
+          <div class="fieldCurrentText"><div class="fieldBookName">${esc(c.title)}</div><div class="fieldBookAuthor">${esc(c.author)}</div></div>
+        </div>
+        <div class="fieldCurrentPercent"><div class="fieldCurrentPercentNum">${pct(c.percent)}%</div><div class="fieldCurrentPercentLbl">איפה אני</div></div>
+      </div>
     </div>
-    <div class="accordion">
-      ${accCard('percent',uiIcon('pin'),'איפה אני',percentBody(c))}
-      ${accCard('mood',uiIcon('heart'),'מה הוייב?',moodBody())}
-      ${accCard('note',uiIcon('chat'),'מה בתכלס קורה',textBody('note','מה קרה עכשיו בספר? מי עצבן? מי ריגש? מה חייב להישמר?'))}
-      ${accCard('quote',uiIcon('quote'),'לגזור ולשמור',textBody('quote','משפט, ציטוט או רגע קטן שלא בא לך לשכוח'))}
-      ${accCard('character',uiIcon('users'),'על מי מדובר',charactersBody(c))}
+    <div class="fieldPrimaryCard">
+      <div class="fieldPrimaryHead"><div class="fieldPrimaryTitle">איפה אני עכשיו?</div><div class="fieldPrimarySub">עדכון מהיר של אחוז ומחשבה קצרה מהזירה.</div></div>
+      ${percentBody(c)}
     </div>
-    <div class="bottomMoments">
+    <div class="fieldQuickGrid">
+      ${fieldQuickCard('mood',uiIcon('heart'),'מה הוייב?',c.lastMood||'עוד לא בחרת וייב')}
+      ${fieldQuickCard('note',uiIcon('chat'),'מה בתכלס קורה',latestOf('note')||'מה עבר עלייך עכשיו?')}
+      ${fieldQuickCard('quote',uiIcon('quote'),'לגזור ולשמור',latestOf('quote')||'ציטוט, משפט או רגע')}
+      ${fieldQuickCard('character',uiIcon('users'),'על מי מדובר',characterSummary(c))}
+    </div>
+    ${fieldActivePanel(c)}
+    <div class="bottomMoments fieldTimelineSection">
       <div class="sectionHead"><div class="sectionTitle">ציר מהשטח</div></div>
-      ${c.updates.length?`<div class="momentList">${c.updates.slice(0,6).map(momentHtml).join('')}</div>`:`<div class="card empty">עוד אין רגעים שמורים.</div>`}
+      ${c.updates.length?`<div class="fieldTimeline">${c.updates.slice(0,8).map(timelineMomentHtml).join('')}</div>`:`<div class="card empty fieldTimelineEmpty">עוד אין רגעים שמורים. כשהדרמה תתחיל — היא תופיע פה.</div>`}
     </div>
-  `:``
+  `;
+}
+function fieldQuickCard(id,icon,title,summary){
+  const active=openAcc===id;
+  return `<button class="fieldQuickCard ${active?'on':''}" onclick="toggleAcc('${id}')"><span class="fieldQuickIcon">${icon}</span><span class="fieldQuickTitle">${title}</span><span class="fieldQuickSummary">${esc(summary||'')}</span></button>`;
+}
+function latestOf(type){
+  const c=S.current;if(!c||!c.updates)return '';
+  const u=c.updates.find(x=>x.type===type);
+  return u?(u.text||u.label||''):'';
+}
+function characterSummary(c){
+  if(!c.characters || !c.characters.length) return 'עוד לא נוספו דמויות';
+  const last=c.characters[c.characters.length-1];
+  return `${last.name}${last.tag?' · '+last.tag:''}`;
+}
+function fieldActivePanel(c){
+  const map={
+    mood:['בחרי את הוייב הנוכחי','מה מצב הלב כרגע?',moodBody()],
+    note:['מה בתכלס קורה','רגע קצר לשמור מהעלילה.',textBody('note','מה קרה עכשיו בספר? מי עצבן? מי ריגש? מה חייב להישמר?')],
+    quote:['לגזור ולשמור','משפט, ציטוט או רגע קטן שלא בא לך לשכוח.',textBody('quote','משפט, ציטוט או רגע קטן שלא בא לך לשכוח')],
+    character:['על מי מדובר','להוסיף דמות חדשה או לעדכן דמות קיימת.',charactersBody(c)]
+  };
+  const chosen=map[openAcc]||map.mood;
+  return `<div class="fieldActivePanel"><div class="fieldActiveHead"><div class="fieldActiveTitle">${chosen[0]}</div><div class="fieldActiveSub">${chosen[1]}</div></div><div class="fieldActiveBody">${chosen[2]}</div></div>`;
 }
 function accCard(id,icon,title,body){
   return `<div class="accCard ${openAcc===id?'open':''}">

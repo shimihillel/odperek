@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v31</title>
+<title>עוד פרק אחד v19</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -1257,135 +1257,162 @@ body:before{
 
 
 
-/* v30 — editorial home prototype */
-body.homeEditorialMode{
-  background:#f3efe8;
-  color:#211c18;
+/* ===== v32 rebuild editorial ===== */
+:root{
+  --paper:#f6f1e8;
+  --paper-2:#fbf8f2;
+  --card:#fffdf8;
+  --card-soft:#f1ebe1;
+  --line:#ddd3c6;
+  --line-strong:#cfc2b2;
+  --ink:#2d2b26;
+  --muted:#8f8578;
+  --sage:#a4af97;
+  --sage-deep:#667456;
+  --accent:#df9367;
+  --accent-soft:#efd0b9;
+  --gold:#c6a24a;
 }
-body.homeEditorialMode:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 14% 16%,rgba(177,199,223,.28),transparent 24%),radial-gradient(circle at 84% 12%,rgba(225,196,155,.18),transparent 20%),linear-gradient(180deg,#f6f2ec 0%,#efe7dc 100%);z-index:-1}
-body.homeEditorialMode .app{padding-top:8px}
-body.homeEditorialMode .nav{
-  background:rgba(250,247,242,.92);
-  border:1px solid #dcd2c6;
-  box-shadow:0 -10px 30px rgba(36,31,27,.08);
-  backdrop-filter:blur(14px);
-}
-body.homeEditorialMode .nav button{color:#7f766d}
-body.homeEditorialMode .nav .navIcon{color:#8a7f75;opacity:1;filter:none}
-body.homeEditorialMode .nav .navIcon .spark{stroke:#c59c55}
-body.homeEditorialMode .nav button.on{background:#fff;color:#201b17;box-shadow:0 10px 20px rgba(36,31,27,.07)}
-body.homeEditorialMode .nav button.on .navIcon{color:#26211d;filter:none}
-body.homeEditorialMode .nav button.on .navIcon .spark{stroke:#c59c55}
-.homeEditorial{padding-bottom:12px}
-.homeEditorialTop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:6px 0 24px}
-.homeRoundBtn{width:42px;height:42px;border-radius:999px;border:1px solid #ddd2c5;background:rgba(255,252,247,.96);display:grid;place-items:center;box-shadow:0 8px 18px rgba(50,42,34,.05)}
-.homeRoundBtn .neonIcon{font-size:20px;color:#6f6458;filter:none}
-.homeRoundBtn .neonIcon .spark{stroke:#c59c55}
-.homeTitleBlock{flex:1;text-align:center;padding-top:4px}
-.homeKicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9a9085;font-weight:800}
-.homeDisplay{margin:8px 0 0;font-size:36px;line-height:1.02;font-weight:700;font-family:Georgia,"Times New Roman",serif;color:#1f1a16}
-.homeLead{margin:8px auto 0;max-width:270px;color:#8a8176;font-size:14px;line-height:1.45}
-.editorHeroCard,.editorSectionCard,.editorStatCard,.editorShelfCard{background:rgba(255,253,249,.98);border:1px solid #e5ddd2;border-radius:30px;box-shadow:0 14px 36px rgba(37,31,27,.07)}
-.editorHeroCard{padding:18px}
-.editorHeroGrid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:14px;align-items:stretch}
-.editorNowCard{padding:16px 16px 14px;border:1px solid #ebe2d6;border-radius:24px;background:linear-gradient(180deg,#fffdfa 0%,#f7f0e6 100%)}
-.editorEyebrow{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#f2ebe2;color:#6e655c;font-size:12px;font-weight:900;margin-bottom:12px}
-.editorNowGrid{display:grid;grid-template-columns:98px minmax(0,1fr);gap:14px;align-items:center}
-.homeEditorial .cover{min-height:148px;border-radius:18px;background:linear-gradient(180deg,#e8dccb 0%,#d8c1a6 100%);border:1px solid #d9cbb8;box-shadow:0 12px 26px rgba(60,50,38,.11);justify-content:flex-end;align-items:center;text-align:center;overflow:hidden;padding:12px 10px;color:#2b241e;isolation:isolate}
-.homeEditorial .cover:before{display:none}
-.homeEditorial .cover:after{display:none}
-.homeEditorial .coverInitial{color:rgba(73,58,45,.08);font-size:68px;bottom:14px}
-.homeEditorial .coverTitle{color:#221c17;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:19px;line-height:1.08;text-shadow:none}
-.homeEditorial .coverAuthor{color:#7b7269;font-weight:700;font-size:11px;line-height:1.2}
-.homeEditorial .coverDivider{width:58px;height:2px;background:linear-gradient(90deg,transparent,#bda58a,transparent);box-shadow:none;margin:4px auto}
-.editorBookMeta{min-width:0}
-.editorBookTitle{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.02;font-weight:700;color:#211b17;margin:0 0 6px}
-.editorBookAuthor{color:#7d7368;font-size:14px;font-weight:700}
-.editorProgressSummary{display:flex;align-items:end;gap:10px;margin-top:14px}
-.editorProgressValue{font-size:34px;line-height:.95;font-weight:600;color:#201b17;letter-spacing:-.03em}
-.editorProgressMeta{color:#8a7f74;font-size:13px;font-weight:800;margin-bottom:4px}
-.editorProgressBar{height:8px;border-radius:999px;background:#ebe6df;overflow:hidden;margin-top:12px}
-.editorProgressBar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#85add5,#6e95c0)}
-.editorMoodChip{margin-top:12px;display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:#fbf7f1;border:1px solid #e7ddd0;color:#655a50;font-size:13px;font-weight:800}
-.editorMoodChip .neonIcon{font-size:16px;color:#8e7a64;filter:none}
-.editorMoodChip .spark{stroke:#c59c55}
-.editorGoalCard{padding:16px;border-radius:24px;border:1px solid #ebe2d6;background:linear-gradient(180deg,#fbf8f4 0%,#f2ece4 100%);display:flex;flex-direction:column;justify-content:space-between}
-.editorGoalHeading{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:700;color:#26211c;margin:0}
-.editorGoalText{margin:6px 0 0;color:#8a8177;font-size:13px;line-height:1.4}
-.editorArcBox{position:relative;max-width:240px;margin:14px auto 8px;height:142px}
-.editorArcTrack{position:absolute;inset:0;border-radius:999px 999px 0 0;background:conic-gradient(from 180deg at 50% 100%, #6ea0cf 0deg var(--deg), #ece8e1 var(--deg) 180deg);-webkit-mask:radial-gradient(140% 160% at 50% 100%,transparent 59%,#000 60%);mask:radial-gradient(140% 160% at 50% 100%,transparent 59%,#000 60%)}
-.editorArcCenter{position:absolute;inset:auto 0 12px;text-align:center}
-.editorArcLabel{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:700;color:#26211c}
-.editorArcValue{font-size:58px;line-height:.9;font-weight:500;letter-spacing:-.05em;color:#181512;margin-top:6px}
-.editorArcSub{margin-top:5px;color:#8b8176;font-size:12px;font-weight:700}
-.editorContinueBtn{margin-top:auto;border:0;border-radius:18px;padding:14px 14px;background:#1f1a16;color:#fff;font-weight:900;font-size:18px;box-shadow:0 10px 20px rgba(31,26,22,.18)}
-.editorContinueBtn small{display:block;color:rgba(255,255,255,.72);font-size:12px;font-weight:700;margin-top:4px}
-.editorQuickGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-.editorQuickBtn{border:1px solid #e5ddd2;background:rgba(255,253,249,.98);border-radius:22px;padding:14px 10px 16px;text-align:center;box-shadow:0 10px 24px rgba(37,31,27,.05);font-weight:800;color:#2f2823;min-height:98px}
-.editorQuickBtn.primary{background:#ede3d2}
-.editorQuickIcon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;margin:0 auto 10px;background:#f3ece2;color:#6e655c}
-.editorQuickIcon .neonIcon{font-size:20px;filter:none;color:#6e655c}
-.editorQuickIcon .spark{stroke:#c59c55}
-.editorSectionHead{display:flex;align-items:center;justify-content:space-between;margin:26px 2px 12px}
-.editorSectionTitle{font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:700;color:#221c17}
-.editorTextBtn{border:0;background:transparent;color:#7e7266;font-weight:800;padding:4px 0}
-.editorTimeline{display:grid;gap:12px}
-.editorMomentCard{padding:16px 18px;display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
-.editorMomentIcon{width:44px;height:44px;border-radius:14px;background:#f3ece2;display:grid;place-items:center;color:#6f6459}
-.editorMomentIcon .neonIcon{font-size:21px;filter:none;color:#6f6459}
-.editorMomentIcon .spark{stroke:#c59c55}
-.editorMomentMeta{color:#958b81;font-size:12px;font-weight:800;margin-bottom:5px}
-.editorMomentText{color:#2b241f;font-weight:700;line-height:1.45}
-.editorShelfRow{display:flex;gap:12px;overflow:auto;padding-bottom:6px}
-.editorShelfCard{flex:0 0 164px;padding:12px;cursor:pointer}
-.editorShelfCard .editorShelfMiniCover{margin-bottom:11px}
-.editorShelfCard .editorShelfMiniCover .cover{min-height:116px;border-radius:16px}
-.editorShelfTitle{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.06;font-weight:700;color:#211b17;margin:0 0 4px}
-.editorShelfMeta{color:#7c7268;font-size:12px;font-weight:700;line-height:1.35}
-.editorShelfPill{margin-top:8px;display:inline-flex;padding:6px 10px;border-radius:999px;background:#f3ece2;color:#695e53;font-size:11px;font-weight:800}
-.editorAddBook{display:grid;place-items:center;min-height:220px;border:1.5px dashed #d9cec0;background:rgba(255,251,245,.7);color:#6f665c}
-.editorAddBook strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:22px;color:#29231e;margin-top:6px}
-.editorEmptyState{padding:28px 20px;text-align:center}
-.editorEmptyState h3{margin:0 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:30px;color:#1f1a16;font-weight:700}
-.editorEmptyState p{margin:0;color:#857c71;line-height:1.6}
-.editorEmptyState .editorContinueBtn{margin-top:18px;width:100%;max-width:280px}
-@media (max-width:380px){
-  .homeDisplay{font-size:32px}
-  .editorHeroGrid{grid-template-columns:1fr}
-  .editorNowGrid{grid-template-columns:90px 1fr}
-  .editorQuickGrid{grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .editorArcValue{font-size:52px}
-  .editorSectionTitle{font-size:26px}
-}
-
-
-/* v31 — home mobile hotfix: no side-by-side crush */
-.editorHeroCardV31{padding:0;background:transparent;border:0;box-shadow:none}
-.editorNowCardV31{padding:18px;border-radius:30px;background:rgba(255,253,249,.98);border:1px solid #e5ddd2;box-shadow:0 14px 36px rgba(37,31,27,.07)}
-.editorNowGridV31{grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center}
-.editorNowGridV31 .editorCover .cover{min-height:156px}
-.editorContinueBtnV31{width:100%;margin-top:16px;border-radius:20px}
-.editorQuickGridV31{margin-top:14px}
-.editorQuickGridV31 .editorQuickBtn{min-height:88px;padding:12px 8px}
-.editorQuickGridV31 .editorQuickBtn.primary{background:#e7dccb}
-.homeEditorial .editorProgressValue{font-size:32px}
-.homeEditorial .editorProgressMeta{font-size:12px;line-height:1.25}
-.homeEditorial .editorMoodChip{max-width:100%;white-space:normal;text-align:right}
-@media (max-width:390px){
-  .editorNowGridV31{grid-template-columns:96px minmax(0,1fr);gap:13px}
-  .editorBookTitle{font-size:26px}
-  .editorProgressValue{font-size:30px!important}
-  .editorNowGridV31 .editorCover .cover{min-height:136px}
-  .editorQuickGridV31{gap:9px}
-  .editorQuickGridV31 .editorQuickBtn{font-size:13px;min-height:82px}
-}
-@media (max-width:345px){
-  .editorNowGridV31{grid-template-columns:1fr}
-  .editorNowGridV31 .editorCover{max-width:140px;margin:0 auto}
-  .editorBookMeta{text-align:center}
-  .editorProgressSummary{justify-content:center}
-  .editorMoodChip{margin-left:auto;margin-right:auto}
-}
+html,body{background:var(--paper)!important;color:var(--ink)!important}
+body,.phone{background:var(--paper)!important;color:var(--ink)!important}
+.screen{background:transparent!important}
+.top,.editorialTop{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 2px 16px}
+.brandBlock,.editorialBrand{flex:1;text-align:center}
+.brand,.editorialBrand h1{margin:0;font-size:28px;line-height:1.1;color:#324534;font-weight:900;letter-spacing:.01em}
+.sub,.editorialBrand .sub{color:var(--muted);font-size:15px;margin-top:6px;font-weight:700}
+.brandEyebrow,.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#aba092;font-weight:900}
+.iconBtn{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.65)!important;box-shadow:0 8px 18px rgba(99,84,67,.08);color:#7e7263!important}
+.iconBtn .neonIcon,.navIcon,.bubbleIcon,.momentType .neonIcon,.accIcon .neonIcon,.shelfKpiIcon .neonIcon,.statLeaderIcon .neonIcon,.backupBtn .neonIcon,.fieldQuickIcon .neonIcon,.orbHeart .neonIcon{color:#8c8376!important;filter:none!important}
+.iconBtn .neonIcon .spark,.nav button.on .navIcon .spark,.neonIcon .spark{stroke:var(--gold)!important}
+.pageTitle,.fieldTitle,.summaryTitle,.sectionTitle,.fullTitle,.stepTitle,.summaryOpenTitle,.fieldBookName,.shelfHeroTitle,.pageHead .pageTitle{color:#334735!important}
+.sectionTitle,.fullTitle,.stepTitle{font-size:16px!important}
+.textBtn{color:#8f8578!important;font-weight:800}
+.nav{background:rgba(253,250,244,.96)!important;border:1px solid var(--line)!important;box-shadow:0 14px 34px rgba(85,73,57,.10)!important}
+.nav button{color:#8d8274!important}
+.nav button.on{background:rgba(255,255,255,.8)!important;color:#233624!important;box-shadow:inset 0 0 0 1px rgba(205,196,182,.55)}
+.nav button.on .navIcon{color:var(--accent)!important;filter:none!important}
+.card,.fullSection,.stepCard,.fieldPrimaryCard,.fieldActivePanel,.fieldQuickCard,.shelfBookCard,.detailHeroCard,.accCard,.moment,.timelineMoment,.charRow,.summaryAddBox,.filterPanel,.sortPanel,.confirmBox,.fieldCurrentCard,.statsHeroV25,.statsPanel,.statsCard,.backupBox,.searchEmpty{background:var(--card)!important;border:1px solid var(--line)!important;box-shadow:0 10px 26px rgba(85,73,57,.07)!important;color:var(--ink)!important}
+.input,.textarea,.shelfSearchInput{background:#fffdfa!important;border:1px solid var(--line)!important;color:var(--ink)!important;box-shadow:none!important}
+.input::placeholder,.textarea::placeholder{color:#b1a699}
+.saveBtn,.doneBtn,.bubbleAction.primary,.backupBtn,.primaryPill,.primaryHeroBtn,.shelfAddBtn,.pillBtn{background:linear-gradient(135deg,#de956c,#e7a57b)!important;border:0!important;color:white!important;box-shadow:0 12px 26px rgba(223,147,103,.25)!important}
+.secondaryAction,.secondaryPill,.toolBtn,.tinyAction,.backupBtn.restore{background:var(--card-soft)!important;border:1px solid var(--line)!important;color:#6a6258!important;box-shadow:none!important}
+.chip,.filterChip,.toolBtn,.pillBtn,.tinyAction{border-radius:999px!important;font-weight:800!important}
+.chip,.filterChip{background:#fbf7f0!important;border:1px solid var(--line)!important;color:#6f675d!important}
+.chip.on,.filterChip.on,.fieldQuickCard.on,.charToken.on,.genderPill.on{background:#eef0e8!important;border-color:#b7c0ab!important;color:#3f5240!important;box-shadow:none!important}
+.rateBtn.on{background:linear-gradient(135deg,#e0a071,#e9b58b)!important}
+.ratingStack .ratingSvg{color:#d78d62!important}
+.momentMeta,.charMeta,.summaryHint,.help,.statsInsightSub,.statsLeaderMeta,.fieldQuickSummary,.shelfBookAuthor,.shelfExcerpt,.shelfMetaChip,.backupNote{color:var(--muted)!important}
+.deleteConfirm{background:rgba(35,29,24,.25)!important}
+.filterTag,.shelfStamp,.bookNowBadge,.moodBadgeNew,.softPill{display:inline-flex;align-items:center;gap:6px;background:#f0ece5;border:1px solid var(--line);color:#6d655a;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900}
+.cover,.editorialCoverCard{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;min-height:170px;border-radius:24px;padding:14px;background:linear-gradient(180deg,#f8f5ef,#efe7dc 44%,#e8dccd 100%)!important;border:1px solid #d6cab9!important;box-shadow:0 14px 28px rgba(117,101,81,.10)!important;overflow:hidden;gap:6px}
+.cover:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 18%,rgba(221,187,153,.28),transparent 22%),linear-gradient(180deg,rgba(255,255,255,.4),transparent 28%);opacity:1}
+.cover:after{content:"";position:absolute;left:-10%;right:-10%;bottom:18%;height:28%;background:#b2bea8;border-radius:52% 48% 0 0/100% 100% 0 0;transform:rotate(-4deg)}
+.coverInitial{position:absolute;inset:auto 14px 18px auto;font-size:84px;line-height:1;color:rgba(123,114,99,.12);font-weight:900;z-index:0}
+.coverDivider{width:66px;height:2px;background:#ccb49d;border-radius:99px;position:relative;z-index:2}
+.coverTitle{font-size:20px;line-height:1.04;color:#27241f;font-weight:900;position:relative;z-index:2;max-width:90%}
+.coverAuthor{font-size:12px;color:#71675c;font-weight:800;position:relative;z-index:2;max-width:88%}
+.homePageNew,.fieldPageNew,.shelfPageNew{display:flex;flex-direction:column;gap:18px}
+.homeHeroNew{display:flex;flex-direction:column;gap:16px}
+.homeHeroCard{background:var(--card);border:1px solid var(--line);border-radius:34px;padding:18px;box-shadow:0 14px 32px rgba(85,73,57,.08)}
+.homeHeroTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.homeNowTitle{font-size:34px;line-height:1.02;color:#2f4031;font-weight:900;margin-top:6px}
+.homeNowSub{color:var(--muted);font-size:16px;font-weight:700;margin-top:5px}
+.homeHeroBody{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:14px;align-items:stretch}
+.goalPanelNew,.heroBookPanel{background:#fcfaf5;border:1px solid var(--line);border-radius:28px;padding:16px;min-height:100%}
+.goalPanelTitle{font-family:Georgia,serif;font-size:20px;color:#312c26;font-weight:700;margin-bottom:10px}
+.goalPanelCopy{color:var(--muted);font-size:15px;line-height:1.45;margin-bottom:16px}
+.goalArc{position:relative;max-width:220px;aspect-ratio:1;margin:0 auto 14px;border-radius:50%;background:conic-gradient(from 220deg,#98a78a calc(var(--p)*1%),#ebe4da 0);display:grid;place-items:center}
+.goalArc:before{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--card)}
+.goalArcInner{position:relative;text-align:center;padding:0 14px}
+.goalSmall{font-family:Georgia,serif;font-size:19px;font-weight:700;color:#312c26;line-height:1.15}
+.goalPercent{font-size:44px;line-height:1;font-weight:700;color:#2a2a26;margin:8px 0 2px}
+.goalTiny{color:var(--muted);font-size:14px;font-weight:700}
+.primaryHeroBtn{width:100%;margin-top:4px;border-radius:18px;padding:16px;font-size:18px;font-weight:900}
+.heroBookPanel{display:flex;flex-direction:column;gap:14px}
+.heroBookPanel .cover{min-height:250px}
+.heroStatsRow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.heroStat{background:#f4eee4;border:1px solid var(--line);border-radius:18px;padding:12px}
+.heroStat span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:4px}
+.heroStat b{font-size:22px;color:#2c3d2f}
+.homeActionsNew{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.quickCardNew{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px 10px;min-height:114px;text-align:center;box-shadow:0 10px 24px rgba(85,73,57,.06)}
+.quickCardNew.primary{background:#ede8dc}
+.quickCardNew .quickIcon{width:44px;height:44px;border-radius:14px;background:#f1ebe2;border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 10px}
+.quickCardNew .quickLabel{display:block;font-size:18px;line-height:1.18;font-weight:900;color:#2d2a25}
+.quickCardNew .quickSub{display:block;font-size:13px;line-height:1.35;color:var(--muted);margin-top:8px}
+.editorialSectionBlock{display:flex;flex-direction:column;gap:12px}
+.editorialSectionHead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.editorialSectionHead h3{margin:0;font-size:22px;color:#2f4331;font-weight:900}
+.momentColumnNew{display:flex;flex-direction:column;gap:12px}
+.momentCardNew{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:16px;display:grid;grid-template-columns:50px 1fr;gap:14px;align-items:start;box-shadow:0 10px 24px rgba(85,73,57,.05)}
+.momentCardNew .momentType{width:50px;height:50px;border-radius:16px;background:#f3ede3;border:1px solid var(--line);display:grid;place-items:center}
+.momentCardNew .momentType .neonIcon{font-size:24px}
+.miniShelfGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.miniShelfBook{background:transparent;border:0;padding:0;text-align:inherit}
+.miniShelfBook .cover{min-height:190px}
+.miniShelfMetaNew{padding:10px 6px 0}
+.miniShelfMetaNew .title{font-size:18px;line-height:1.15;color:#2c2a25;font-weight:900}
+.miniShelfMetaNew .author{font-size:14px;color:var(--muted);font-weight:700;margin-top:5px}
+.miniShelfMetaNew .stamp{margin-top:8px}
+.emptyNew{background:var(--card);border:1px dashed var(--line-strong);border-radius:28px;padding:28px 20px;text-align:center;color:var(--muted)}
+.fieldHeaderNew{display:grid;grid-template-columns:auto 1fr 92px;gap:14px;align-items:start}
+.fieldHeaderText h2{margin:4px 0 0;font-size:31px;line-height:1.08;color:#304131;font-weight:900}
+.fieldHeaderText p{margin:6px 0 0;color:var(--muted);font-weight:700}
+.fieldHeaderCover .cover{min-height:126px;border-radius:22px;padding:10px}
+.fieldHeaderCover .coverTitle{font-size:16px}
+.editorPanelGrid{display:grid;grid-template-columns:1fr;gap:16px}
+.editorCard{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.editorCard.wide{padding:20px}
+.editorCardHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.editorCardHead h3{margin:0;color:#2f4331;font-size:22px;font-weight:900}
+.editorCardHead p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.editorCardHead strong{font-size:34px;color:#2d2b26;font-weight:800}
+.editorPercentRow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.editorTextArea{min-height:116px;margin-top:10px}
+.tagsWrap{display:flex;flex-wrap:wrap;gap:10px}
+.tagChipNew{background:#fbf7f0;border:1px solid var(--line);border-radius:999px;padding:11px 14px;color:#70685d;font-weight:850;font-size:14px}
+.tagChipNew.on{background:#edf0e8;border-color:#b9c2ac;color:#3f5240}
+.tagAddBtn{margin-top:12px}
+.editorActionsRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.genderRow{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 12px}
+.genderPill{background:#fbf7f0;border:1px solid var(--line);border-radius:999px;padding:10px 16px;color:#6d655a;font-weight:850}
+.characterStrip{display:flex;gap:10px;overflow:auto;padding-bottom:4px;margin-bottom:14px}
+.charToken{min-width:88px;background:#fbf7f0;border:1px solid var(--line);border-radius:20px;padding:12px;text-align:center;color:#5d554a}
+.charToken b{display:block;font-size:16px;color:#2d2a25;margin-bottom:4px}
+.charToken small{display:block;font-size:12px;color:var(--muted)}
+.characterEditBox{margin-bottom:16px;padding:14px;border-radius:22px;background:#f7f2e8;border:1px solid var(--line)}
+.sectionDivider{height:1px;background:var(--line);margin:16px 0}
+.editorHelper{color:var(--muted);font-size:13px;line-height:1.45}
+.shelfIntroCard{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.shelfIntroCard h2{margin:0;color:#304131;font-size:31px;font-weight:900}
+.shelfIntroCard p{margin:6px 0 0;color:var(--muted);max-width:520px;line-height:1.5}
+.searchPanelNew{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:14px}
+.sortBarNew{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.shelfGridEditorial{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.shelfCardNew{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:12px;text-align:inherit;box-shadow:0 10px 24px rgba(85,73,57,.06)}
+.shelfCardNew .cover{min-height:236px}
+.shelfCardMeta{padding:12px 6px 2px}
+.shelfCardTitle{font-size:19px;line-height:1.15;color:#2c2a25;font-weight:900}
+.shelfCardAuthor{font-size:14px;color:var(--muted);font-weight:700;margin-top:5px}
+.shelfCardTags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.shelfCardSnippet{font-size:14px;line-height:1.45;color:#635b52;margin-top:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.detailPageNew{display:flex;flex-direction:column;gap:16px}
+.detailHeroNew{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:18px;box-shadow:0 14px 28px rgba(85,73,57,.07)}
+.detailHeroNew .cover{min-height:260px}
+.detailInfo h2{margin:0;font-size:33px;line-height:1.05;color:#304131}
+.detailInfo p{margin:6px 0 10px;color:var(--muted);font-weight:700}
+.detailGridNew{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detailStat{background:#f6f1e7;border:1px solid var(--line);border-radius:18px;padding:12px}
+.detailStat small{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:4px}
+.detailStat b{font-size:18px;color:#2d2a25}
+.detailSectionNew{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:0 10px 24px rgba(85,73,57,.06)}
+.detailSectionNew h3{margin:0 0 12px;color:#304131;font-size:22px}
+.rowListNew{display:flex;flex-direction:column;gap:10px}
+.rowItemNew{background:#fbf7f0;border:1px solid var(--line);border-radius:20px;padding:14px}
+.rowItemNew .title{font-weight:900;color:#2e2b26}
+.rowItemNew .sub{margin-top:4px;font-size:14px;color:var(--muted)}
+@media (max-width:720px){.homeHeroBody,.detailHeroNew{grid-template-columns:1fr}.fieldHeaderNew{grid-template-columns:auto 1fr}.fieldHeaderCover{grid-column:1/-1;max-width:110px}}
+@media (max-width:420px){.brand,.editorialBrand h1{font-size:24px}.homeNowTitle{font-size:30px}.goalPercent{font-size:38px}.homeActionsNew{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.quickCardNew{min-height:104px;padding:16px 8px}.quickCardNew .quickLabel{font-size:16px}.miniShelfGrid,.shelfGridEditorial{gap:12px}.detailHeroNew{padding:14px}}
 
 </style>
 </head>
@@ -1424,6 +1451,32 @@ let shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
 let shelfFilterOpen=false;
 let shelfSortOpen=false;
 
+function uniqueList(arr){
+  return [...new Set((arr||[]).map(x=>String(x||'').trim()).filter(Boolean))];
+}
+function allMoodTags(){
+  return uniqueList([...(MOODS||[]), ...((S&&S.customMoodTags)||[])]);
+}
+function allCharTags(){
+  return uniqueList([...(CHAR_TAGS||[]), ...((S&&S.customCharTags)||[])]);
+}
+function addCustomMoodTag(){
+  const tag=(prompt('איזו תגית וייב תרצי להוסיף?')||'').trim();
+  if(!tag) return;
+  S.customMoodTags=uniqueList([...(S.customMoodTags||[]), tag]);
+  save();
+  renderField();
+  toast('תגית הוייב נשמרה');
+}
+function addCustomCharTag(){
+  const tag=(prompt('איזו תגית דמות תרצי להוסיף?')||'').trim();
+  if(!tag) return;
+  S.customCharTags=uniqueList([...(S.customCharTags||[]), tag]);
+  save();
+  renderField();
+  toast('תגית הדמות נשמרה');
+}
+
 function loadState(){
   try{
     const cur=localStorage.getItem(KEY);
@@ -1438,9 +1491,12 @@ function loadState(){
   }catch(e){}
   return normalize({books:[],current:null});
 }
+
 function normalize(s){
   s.books=Array.isArray(s.books)?s.books:[];
   s.current=s.current||null;
+  s.customMoodTags=uniqueList(s.customMoodTags||[]);
+  s.customCharTags=uniqueList(s.customCharTags||[]);
   s.books=s.books.map(normalizeBook);
   if(s.current) s.current=normalizeCurrent(s.current);
   return s;
@@ -1477,12 +1533,10 @@ function id(){return Date.now()+'-'+Math.random().toString(36).slice(2)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function pct(n){return Math.max(0,Math.min(100,parseInt(n)||0))}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),1400)}
-
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.screen===id));
-  document.body.classList.toggle('homeEditorialMode', id==='home');
   currentScreen=id;
   if(id==='home')renderHome();
   if(id==='field')renderField();
@@ -1491,7 +1545,6 @@ function show(id){
   if(id==='stats')renderStats();
   scrollTo(0,0);
 }
-
 
 function uiIcon(name,extra=''){
   const icons={
@@ -1514,18 +1567,20 @@ function uiIcon(name,extra=''){
   return `<span class="neonIcon ${extra}">${icons[name]||icons.spark}</span>`;
 }
 
+
 function topHtml(){
-  return `<div class="top">
+  return `<div class="editorialTop">
     <button class="iconBtn" aria-label="תפריט">${uiIcon('menu')}</button>
-    <div class="brandBlock"><h1 class="brand">עוד פרק אחד</h1><div class="sub">יומני התולעת</div></div>
+    <div class="editorialBrand"><div class="brandEyebrow">Reading now</div><h1>עוד פרק אחד</h1><div class="sub">יומן הקריאה האישי שלך</div></div>
     <button class="iconBtn" aria-label="וייב">${uiIcon('spark')}</button>
   </div>`;
 }
 function coverHtml(title,author){
   const t=title||'עוד פרק אחד';
-  return `<div class="cover"><div class="coverInitial">${esc(firstLetter(t))}</div><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>`;
+  return `<div class="cover editorialCoverCard"><div class="coverInitial">${esc(firstLetter(t))}</div><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>`;
 }
 function firstLetter(s){return String(s||'ע').trim().charAt(0)||'ע'}
+
 function render(){
   renderHome();
   renderField();
@@ -1533,68 +1588,66 @@ function render(){
   renderShelf();
   renderStats();
 }
-
-function homeTopHtml(){
-  return `<div class="homeEditorialTop">
-    <button class="homeRoundBtn" aria-label="וייב">${uiIcon('spark')}</button>
-    <div class="homeTitleBlock">
-      <div class="homeKicker">Reading now</div>
-      <h1 class="homeDisplay">הספריה שלי</h1>
-      <p class="homeLead">לעקוב אחרי הספר הפעיל, לעדכן רגעים בזמן אמת, ולשמור הכול במקום אחד.</p>
-    </div>
-    <button class="homeRoundBtn" aria-label="תפריט">${uiIcon('menu')}</button>
-  </div>`;
-}
 function renderHome(){
   const c=S.current;
-  const recent=S.books.slice(0,8);
-  document.getElementById('home').innerHTML=`<div class="homeEditorial">${homeTopHtml()}
-    ${c?currentHome(c):emptyHome()}
-    <div class="editorSectionHead"><div class="editorSectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="editorTextBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
-    ${c&&c.updates.length?`<div class="editorTimeline">${c.updates.slice(0,3).map(timelineMomentHtmlEditorial).join('')}</div>`:`<div class="editorSectionCard editorEmptyState"><p>עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</p></div>`}
-    <div class="editorSectionHead"><div class="editorSectionTitle">המדף שלי</div><button class="editorTextBtn" onclick="show('shelf')">הכל</button></div>
-    ${recent.length?`<div class="editorShelfRow">${recent.map(bookSmallEditorial).join('')}<button class="editorShelfCard editorAddBook" onclick="startNewBook()"><div>＋<strong>להוסיף ספר</strong><div style="margin-top:6px;font-size:12px">למדף או לקריאה עכשיו</div></div></button></div>`:`<div class="editorSectionCard editorEmptyState"><h3>המדף מחכה</h3><p>נתחיל מספר אחד ונבנה ממנו ספרייה קטנה עם כל הרגעים, ההערות והסיכומים שלך.</p><button class="editorContinueBtn" onclick="startNewBook()">להתחיל ספר</button></div>`}
-  </div>`;
+  const recent=S.books.slice(0,4);
+  document.getElementById('home').innerHTML=`${topHtml()}
+    <div class="homePageNew">
+      ${c?currentHome(c):emptyHome()}
+      <div class="editorialSectionBlock">
+        <div class="editorialSectionHead"><h3>רגעים אחרונים מהשטח</h3>${c?`<button class="textBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
+        ${c&&c.updates.length?`<div class="momentColumnNew">${c.updates.slice(0,3).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שנשמרו מהספר הזה. ברגע שהדרמה מתחילה — היא תגיע לכאן.</div>`}
+      </div>
+      <div class="editorialSectionBlock">
+        <div class="editorialSectionHead"><h3>המדף שלי</h3><button class="textBtn" onclick="show('shelf')">לכל המדף</button></div>
+        ${recent.length?`<div class="miniShelfGrid">${recent.map(bookSmall).join('')}</div>`:`<div class="emptyNew">המדף שלך עוד ריק. כשתסיימי ספר — הוא ייכנס ישר לכאן.</div>`}
+      </div>
+    </div>`;
 }
 function currentHome(c){
-  const progress=pct(c.percent);
-  const mood=esc(c.lastMood||'מה הוייב?');
-  return `<div class="editorHeroCard editorHeroCardV31">
-    <div class="editorNowCard editorNowCardV31">
-      <div class="editorEyebrow">קוראת עכשיו</div>
-      <div class="editorNowGrid editorNowGridV31">
-        <div class="editorCover">${coverHtml(c.title,c.author)}</div>
-        <div class="editorBookMeta">
-          <div class="editorBookTitle">${esc(c.title)}</div>
-          <div class="editorBookAuthor">${esc(c.author||'')}</div>
-          <div class="editorProgressSummary"><div class="editorProgressValue">${progress}%</div><div class="editorProgressMeta">התקדמות בקריאה</div></div>
-          <div class="editorProgressBar"><span style="width:${progress}%"></span></div>
-          <button class="editorMoodChip" onclick="goField('mood')">${uiIcon('spark')} כרגע: ${mood}</button>
+  const mood=c.lastMood||'עוד לא בחרת וייב';
+  return `<div class="homeHeroNew">
+    <div class="homeHeroCard">
+      <div class="homeHeroTop">
+        <div>
+          <div class="eyebrow">Reading now</div>
+          <div class="homeNowTitle">${esc(c.title)}</div>
+          <div class="homeNowSub">${esc(c.author)}</div>
+        </div>
+        <span class="moodBadgeNew">${uiIcon('spark')} ${esc(mood)}</span>
+      </div>
+      <div class="homeHeroBody">
+        <div class="goalPanelNew">
+          <div class="goalPanelTitle">Reading goals</div>
+          <div class="goalPanelCopy">כל מה שחשוב בספר הפעיל שלך — במקום אחד, בלי לחפש בין מסכים.</div>
+          <div class="goalArc" style="--p:${pct(c.percent)}">
+            <div class="goalArcInner">
+              <div class="goalSmall">Today’s Reading</div>
+              <div class="goalPercent">${pct(c.percent)}%</div>
+              <div class="goalTiny">התקדמות</div>
+            </div>
+          </div>
+          <button class="primaryHeroBtn" onclick="goField('percent')">להמשיך לקרוא</button>
+        </div>
+        <div class="heroBookPanel">
+          ${coverHtml(c.title,c.author)}
+          <div class="heroStatsRow">
+            <div class="heroStat"><span>עדכונים מהשטח</span><b>${(c.updates||[]).length}</b></div>
+            <div class="heroStat"><span>דמויות ששמרת</span><b>${(c.characters||[]).length}</b></div>
+          </div>
         </div>
       </div>
-      <button class="editorContinueBtn editorContinueBtnV31" onclick="goField('percent')">להמשיך לקרוא<small>${esc(c.title)} · ${esc(c.author||'')}</small></button>
     </div>
-    <div class="editorQuickGrid editorQuickGridV31">
-      <button class="editorQuickBtn" onclick="goSummary()"><div class="editorQuickIcon">${uiIcon('check')}</div>סיימתי</button>
-      <button class="editorQuickBtn primary" onclick="goField()"><div class="editorQuickIcon">${uiIcon('book')}</div>עדכון מהשטח</button>
-      <button class="editorQuickBtn" onclick="goField('mood')"><div class="editorQuickIcon">${uiIcon('chat')}</div>מה הוייב?</button>
+    <div class="homeActionsNew">
+      <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
+      <button class="quickCardNew primary" onclick="goField()"><span class="quickIcon">${uiIcon('book')}</span><span class="quickLabel">עדכון מהשטח</span><span class="quickSub">כל הרגעים של הספר במקום אחד</span></button>
+      <button class="quickCardNew" onclick="goSummary()"><span class="quickIcon">${uiIcon('check')}</span><span class="quickLabel">סיימתי</span><span class="quickSub">לסכם, לדרג ולהכניס למדף</span></button>
     </div>
   </div>`;
 }
 function emptyHome(){
-  return `<div class="editorHeroCard editorEmptyState">
-    <h3>ברוכה הבאה למדף הקריאה שלך</h3>
-    <p>האפליקציה מוכנה לקבל ספר חדש. ברגע שמכניסים אותו — אפשר להתחיל לעדכן אחוזים, רגעים, דמויות וכל הדרמה תוך כדי הקריאה.</p>
-    <button class="editorContinueBtn" onclick="startNewBook()">להתחיל ספר ראשון</button>
-  </div>`;
+  return `<div class="emptyNew"><div style="font-size:28px;color:#324534;font-weight:900;margin-bottom:10px">אין ספר פעיל כרגע</div><div style="line-height:1.6;margin-bottom:18px">בואי נתחיל ספר חדש ונבנה סביבו את כל הקריאה.</div><button class="primaryHeroBtn" style="max-width:280px" onclick="startNewBook()">להתחיל ספר</button></div>`;
 }
-function timelineMomentHtmlEditorial(u){
-  return `<div class="editorSectionCard editorMomentCard"><div class="editorMomentIcon">${momentIcon(u.type)}</div><div><div class="editorMomentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="editorMomentText">${esc(u.text||u.label||'')}</div></div></div>`;
-}
-function bookSmallEditorial(b){
-  return `<div class="editorShelfCard" onclick="openBook('${b.id}')"><div class="editorShelfMiniCover">${coverHtml(b.title,b.author)}</div><div class="editorShelfTitle">${esc(b.title)}</div><div class="editorShelfMeta">${esc(b.author||'')}</div>${b.bottomLine?`<div class="editorShelfPill">${esc(b.bottomLine)}</div>`:''}</div>`;
-}
-
 function moodEmoji(m){
   if(m.includes('מכורה'))return '😍';
   if(m.includes('עצבנית'))return '😤';
@@ -1616,8 +1669,9 @@ function momentHtml(u){
 function timelineMomentHtml(u){
   return `<div class="timelineMoment"><div class="timelineDot">${momentIcon(u.type)}</div><div class="timelineContent"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div></div>`;
 }
+
 function bookSmall(b){
-  return `<div class="bookSmall" onclick="openBook('${b.id}')"><div class="bookSmallMark">${uiIcon('spark')}</div><div class="bookSmallTitle">${esc(b.title)}</div><div class="bookSmallMeta">${esc(b.author)}<br>${ratingsLine(b)}</div></div>`;
+  return `<button class="miniShelfBook" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="miniShelfMetaNew"><div class="title">${esc(b.title)}</div><div class="author">${esc(b.author)}</div>${b.bottomLine?`<div class="stamp"><span class="softPill">${esc(b.bottomLine)}</span></div>`:''}</div></button>`;
 }
 function miniIcon(type){
   if(type==='heart'){
@@ -1662,37 +1716,56 @@ function goField(acc='percent'){
   openAcc=acc;
   show('field');
 }
+
 function renderField(){
   const c=S.current;
   if(!c){document.getElementById('field').innerHTML='';return}
-  if(!openAcc)openAcc='percent';
+  const selectedChar=(c.characters||[]).find(x=>x.id===editingCharId)||null;
   document.getElementById('field').innerHTML=`
-    <div class="fieldHero fieldHeroV21">
-      <div class="fieldTopRow"><button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button><div class="fieldTitle">עדכון מהשטח</div></div>
-      <div class="fieldCurrentCard">
-        <div class="fieldCurrentMeta">
-          <div class="fieldMiniCover">${coverHtml(c.title,c.author)}</div>
-          <div class="fieldCurrentText"><div class="fieldBookName">${esc(c.title)}</div><div class="fieldBookAuthor">${esc(c.author)}</div></div>
-        </div>
-        <div class="fieldCurrentPercent"><div class="fieldCurrentPercentNum">${pct(c.percent)}%</div><div class="fieldCurrentPercentLbl">איפה אני</div></div>
+    <div class="fieldPageNew">
+      <div class="fieldHeaderNew">
+        <button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button>
+        <div class="fieldHeaderText"><div class="eyebrow">עדכון מהשטח</div><h2>${esc(c.title)}</h2><p>${esc(c.author)}</p></div>
+        <div class="fieldHeaderCover">${coverHtml(c.title,c.author)}</div>
       </div>
-    </div>
-    <div class="fieldPrimaryCard">
-      <div class="fieldPrimaryHead"><div class="fieldPrimaryTitle">איפה אני עכשיו?</div><div class="fieldPrimarySub">עדכון מהיר של אחוז ומחשבה קצרה מהזירה.</div></div>
-      ${percentBody(c)}
-    </div>
-    <div class="fieldQuickGrid">
-      ${fieldQuickCard('mood',uiIcon('spark'),'מה הוייב?',c.lastMood||'עוד לא בחרת וייב')}
-      ${fieldQuickCard('note',uiIcon('chat'),'מה בתכלס קורה',latestOf('note')||'מה עבר עלייך עכשיו?')}
-      ${fieldQuickCard('quote',uiIcon('quote'),'לגזור ולשמור',latestOf('quote')||'ציטוט, משפט או רגע')}
-      ${fieldQuickCard('character',uiIcon('users'),'על מי מדובר',characterSummary(c))}
-    </div>
-    ${fieldActivePanel(c)}
-    <div class="bottomMoments fieldTimelineSection">
-      <div class="sectionHead"><div class="sectionTitle">ציר מהשטח</div></div>
-      ${c.updates.length?`<div class="fieldTimeline">${c.updates.slice(0,8).map(timelineMomentHtml).join('')}</div>`:`<div class="card empty fieldTimelineEmpty">עוד אין רגעים שמורים. כשהדרמה תתחיל — היא תופיע פה.</div>`}
-    </div>
-  `;
+      <div class="editorPanelGrid">
+        <section class="editorCard wide">
+          <div class="editorCardHead"><div><h3>איפה אני עכשיו?</h3><p>עדכון מהיר של אחוז ומחשבה קצרה מהקטע האחרון.</p></div><strong>${pct(c.percent)}%</strong></div>
+          <div class="editorPercentRow"><input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(c.percent)}"><button class="saveBtn" onclick="savePercent()">שמירה</button></div>
+          <textarea id="percentNote" class="textarea editorTextArea" placeholder="מחשבה קצרה? לא חובה"></textarea>
+        </section>
+        <section class="editorCard">
+          <div class="editorCardHead"><div><h3>מה הוייב?</h3><p>אפשר לבחור תגית מהרשימה, או להוסיף תגית משלך שתישמר גם לספרים הבאים.</p></div></div>
+          <div class="tagsWrap">${allMoodTags().map(m=>`<button class="tagChipNew ${c.lastMood===m?'on':''}" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>
+          <div class="editorActionsRow"><button class="secondaryPill tagAddBtn" onclick="addCustomMoodTag()">+ תגית וייב משלי</button></div>
+        </section>
+        <section class="editorCard">
+          <div class="editorCardHead"><div><h3>מה קורה עכשיו?</h3><p>רגע קצר לשמור מהעלילה, בלי לסבך אותך.</p></div></div>
+          <textarea id="noteText" class="textarea editorTextArea" placeholder="מה קרה עכשיו בספר? מי עצבן? מי ריגש? מה חייב להישמר?"></textarea>
+          <div class="editorActionsRow"><button class="primaryPill" onclick="saveText('note')">שומרת רגע</button></div>
+        </section>
+        <section class="editorCard">
+          <div class="editorCardHead"><div><h3>לגזור ולשמור</h3><p>ציטוט, משפט, או שורה שלא בא לך לאבד.</p></div></div>
+          <textarea id="quoteText" class="textarea editorTextArea" placeholder="משפט, ציטוט או רגע קטן שלא בא לך לשכוח"></textarea>
+          <div class="editorActionsRow"><button class="primaryPill" onclick="saveText('quote')">שומרת ציטוט</button></div>
+        </section>
+        <section class="editorCard wide">
+          <div class="editorCardHead"><div><h3>דמויות</h3><p>כאן את יכולה לעדכן מה את חושבת עליהן, וגם להוסיף תגיות משלך לשימוש קבוע.</p></div></div>
+          ${(c.characters||[]).length?`<div class="characterStrip">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
+          ${selectedChar?`<div class="characterEditBox"><div style="font-weight:900;color:#2d2a25;margin-bottom:8px">${esc(selectedChar.name)}</div><div class="editorHelper" style="margin-bottom:10px">לעדכן מה את חושבת עליה עכשיו</div><div class="tagsWrap">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
+          <div class="sectionDivider"></div>
+          <div style="font-weight:900;color:#2f4331;margin-bottom:8px">להוסיף דמות חדשה</div>
+          <input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
+          <div class="genderRow"><button class="genderPill ${pickedGender==='זכר'?'on':''}" onclick="pickGender('זכר')">זכר</button><button class="genderPill ${pickedGender==='נקבה'?'on':''}" onclick="pickGender('נקבה')">נקבה</button></div>
+          <div class="tagsWrap">${allCharTags().map(t=>`<button class="tagChipNew" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+          <div class="editorActionsRow"><button class="secondaryPill" onclick="addCustomCharTag()">+ תגית דמות משלי</button></div>
+        </section>
+        <section class="editorCard wide">
+          <div class="editorCardHead"><div><h3>רגעים אחרונים מהשטח</h3><p>הציר נשמר כדי שתוכלי לחזור אליו גם בסיכום.</p></div></div>
+          ${c.updates.length?`<div class="momentColumnNew">${c.updates.slice(0,6).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
+        </section>
+      </div>
+    </div>`;
 }
 function fieldQuickCard(id,icon,title,summary){
   const active=openAcc===id;
@@ -1733,7 +1806,7 @@ function percentBody(c){
   </div>`;
 }
 function moodBody(){
-  return `<div class="chips">${MOODS.map(m=>`<button class="chip" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>`;
+  return `<div class="chips">${allMoodTags().map(m=>`<button class="chip" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>`;
 }
 function textBody(type,ph){
   return `<textarea id="${type}Text" class="textarea" placeholder="${ph}"></textarea><div style="margin-top:9px"><button class="saveBtn" onclick="saveText('${type}')">שמרי לציר</button></div>`;
@@ -1747,7 +1820,7 @@ function charactersBody(c){
   <div class="help">זכר / נקבה</div>
   <div class="chips"><button class="chip ${selectedM}" onclick="pickGender('זכר')">זכר</button><button class="chip ${selectedF}" onclick="pickGender('נקבה')">נקבה</button></div>
   <div class="help">מה אני חושבת עליו/עליה עכשיו?</div>
-  <div class="chips">${CHAR_TAGS.map(t=>`<button class="chip" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+  <div class="chips">${allCharTags().map(t=>`<button class="chip" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   <div class="help">אפשר להוסיף דמות חדשה, או לפתוח דמות קיימת ולעדכן את הסטטוס שלה.</div>
   <div class="charList">${c.characters.length?c.characters.map(charHtml).join(''):'<div class="empty" style="padding:14px">עוד לא נוספו דמויות.</div>'}</div>`;
 }
@@ -1767,7 +1840,7 @@ function charHtml(ch){
 function charEditHtml(ch){
   return `<div class="charEditPanel">
     <div class="help">לעדכן מה אני חושבת עליו/עליה עכשיו</div>
-    <div class="chips">${CHAR_TAGS.map(t=>`<button class="chip ${ch.tag===t?'on':''}" onclick="updateCharacterTag('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+    <div class="chips">${allCharTags().map(t=>`<button class="chip ${ch.tag===t?'on':''}" onclick="updateCharacterTag('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
     <div class="help">מין הדמות</div>
     <div class="chips"><button class="chip ${ch.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${ch.id}','זכר')">זכר</button><button class="chip ${ch.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${ch.id}','נקבה')">נקבה</button></div>
   </div>`;
@@ -1994,46 +2067,28 @@ function finishBook(){
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
+
 function renderShelf(){
-  const books=Array.isArray(S.books)?S.books:[];
-  const total=books.length;
-  const common=(arr)=>{
-    const map={};
-    arr.forEach(x=>{const k=(x||'').trim(); if(k) map[k]=(map[k]||0)+1;});
-    const top=Object.entries(map).sort((a,b)=>b[1]-a[1])[0];
-    return top||null;
-  };
-  const topStamp=common(books.map(b=>b.bottomLine||''));
-  const topAuthor=common(books.map(b=>b.author||''));
-  const activeFiltersCount=[shelfFilters.bottomLine,shelfFilters.stars,shelfFilters.heat,shelfFilters.cry,shelfFilters.speed,shelfFilters.char].filter(Boolean).length;
-  document.getElementById('shelf').innerHTML=topHtml()+`
-    <div class="shelfHeroV26">
-      <div class="shelfHeroHead">
-        <div>
-          <div class="shelfHeroTitle">המדף שלי</div>
-          <div class="shelfHeroSub">כל הספרים שסגרת, כל השריטות שהם השאירו, וכל מה שנשאר אצלך בראש.</div>
+  document.getElementById('shelf').innerHTML=`${topHtml()}
+    <div class="shelfPageNew">
+      <div class="shelfIntroCard">
+        <div><h2>המדף שלי</h2><p>כל הספרים שסיימת, עם הסיכומים, הדמויות והרגעים שנשארו איתך.</p></div>
+        <button class="pillBtn shelfAddBtn" onclick="startNewBook()">+ ספר חדש</button>
+      </div>
+      <div class="searchPanelNew">
+        <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
+        <div class="sortBarNew">
+          <button class="toolBtn ${shelfSort==='recent'?'on':''}" onclick="setShelfSort('recent')">הכי חדש</button>
+          <button class="toolBtn ${shelfSort==='love'?'on':''}" onclick="setShelfSort('love')">הכי אהבתי</button>
+          <button class="toolBtn ${shelfSort==='title'?'on':''}" onclick="setShelfSort('title')">א׳-ת׳</button>
+          <button class="toolBtn ${shelfFilterOpen?'on':''}" onclick="toggleShelfFilters()">סינון${[shelfFilters.bottomLine,shelfFilters.stars,shelfFilters.heat,shelfFilters.cry,shelfFilters.speed,shelfFilters.char].filter(Boolean).length?` (${[shelfFilters.bottomLine,shelfFilters.stars,shelfFilters.heat,shelfFilters.cry,shelfFilters.speed,shelfFilters.char].filter(Boolean).length})`:''}</button>
+          <button class="toolBtn" onclick="resetShelfTools()">איפוס</button>
         </div>
-        <button class="pillBtn shelfAddBtn" onclick="startNewBook()">ספר חדש</button>
+        ${activeShelfFiltersHtml()}
+        <div id="filterPanel" class="filterPanel ${shelfFilterOpen?'open':''}">${filterPanelHtml()}</div>
       </div>
-      <div class="shelfKpiRow">
-        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('book')}</span><div><b>${total}</b><small>ספרים במדף</small></div></div>
-        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('spark')}</span><div><b>${topStamp?esc(topStamp[0]):'עוד נבנה'}</b><small>${topStamp?'החותמת שחוזרת הכי הרבה':'עוד אין חותמת חוזרת'}</small></div></div>
-        <div class="shelfKpi"><span class="shelfKpiIcon">${uiIcon('users')}</span><div><b>${topAuthor?esc(topAuthor[0]):'—'}</b><small>${topAuthor?'הסופרת שמופיעה הכי הרבה':'עדיין מוקדם לקבוע'}</small></div></div>
-      </div>
-    </div>
-    <div class="shelfTools shelfToolsV26">
-      <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
-      <div class="toolRow shelfToolRow">
-        <button class="toolBtn ${shelfSortOpen?'on':''}" onclick="toggleShelfSort()">מיון: ${sortLabel(shelfSort)}</button>
-        <button class="toolBtn ${shelfFilterOpen?'on':''}" onclick="toggleShelfFilters()">סינון${activeFiltersCount?` (${activeFiltersCount})`:''}</button>
-        <button class="toolBtn" onclick="resetShelfTools()">איפוס</button>
-      </div>
-      ${activeShelfFiltersHtml()}
-      <div id="sortPanel" class="sortPanel ${shelfSortOpen?'open':''}">${sortPanelHtml()}</div>
-      <div id="filterPanel" class="filterPanel ${shelfFilterOpen?'open':''}">${filterPanelHtml()}</div>
-    </div>
-    <div id="shelfResults">${shelfResultsHtml()}</div>
-  `;
+      <div id="shelfResults">${shelfResultsHtml()}</div>
+    </div>`;
 }
 function updateShelfSearch(q){
   shelfSearch=q;
@@ -2165,46 +2220,21 @@ function sortShelfBooks(arr){
     return 0;
   });
 }
+
 function shelfResultsHtml(){
   const q=(shelfSearch||'').trim().toLowerCase();
   let books=S.books.filter(b=>!q || searchBookText(b).includes(q));
   books=books.filter(matchesShelfFilters);
   books=sortShelfBooks(books);
-  if(!S.books.length) return `<div class="card empty shelfEmptyV26">עוד אין ספרים שסיימת. הספר הראשון שלך מחכה להיכנס למדף.</div>`;
-  if(!books.length) return `<div class="card searchEmpty shelfEmptyV26">לא מצאתי כלום במדף. המדף דרמטי, אבל לא עד כדי כך.</div>`;
-  return `<div class="shelfResultsGrid">${books.map(bookRow).join('')}</div>`;
+  if(!S.books.length) return `<div class="emptyNew">עוד אין ספרים שסיימת. כשהראשון ייכנס למדף — הכל יתמלא כאן.</div>`;
+  if(!books.length) return `<div class="emptyNew">לא מצאתי שום דבר שמתאים לחיפוש או לסינון שבחרת.</div>`;
+  return `<div class="shelfGridEditorial">${books.map(bookRow).join('')}</div>`;
 }
-
 function bookRow(b){
   const topChar=(b.characters||[]).find(ch=>ch.finalTag)||(b.characters||[])[0]||null;
   const excerpt=b.madeMe || b.about || '';
-  return `<button class="shelfBookCard" onclick="openBook('${b.id}')">
-    <div class="shelfBookTop">
-      <div class="shelfBookCover">${coverHtml(b.title,b.author)}</div>
-      <div class="shelfBookMeta">
-        <div class="shelfBookHeader">
-          <div>
-            <div class="shelfBookTitle">${esc(b.title)}</div>
-            <div class="shelfBookAuthor">${esc(b.author)}</div>
-          </div>
-          ${b.bottomLine?`<span class="shelfStamp">${esc(b.bottomLine)}</span>`:''}
-        </div>
-        <div class="shelfRatingsRow">
-          <span class="shelfRatePill">${b.stars?iconStack('heart',b.stars):'—'}<small>אהבתי</small></span>
-          <span class="shelfRatePill">${b.heat?iconStack('pepper',b.heat):'—'}<small>לוהט</small></span>
-          <span class="shelfRatePill">${b.cry?iconStack('broken',b.cry):'—'}<small>שבר</small></span>
-          <span class="shelfRatePill">${b.speed?SPEED[b.speed-1]:'—'}<small>קצב</small></span>
-        </div>
-        ${excerpt?`<div class="shelfExcerpt">${esc(excerpt)}</div>`:''}
-        <div class="shelfMetaRow">
-          ${topChar?`<span class="shelfMetaChip">${uiIcon('users')} ${esc(topChar.name)}${topChar.finalTag?` · ${esc(topChar.finalTag)}`:''}</span>`:''}
-          ${(b.readingLog||[]).length?`<span class="shelfMetaChip">${uiIcon('chat')} ${(b.readingLog||[]).length} רגעים מהשטח</span>`:''}
-        </div>
-      </div>
-    </div>
-  </button>`;
+  return `<button class="shelfCardNew" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${b.bottomLine?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
 }
-
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2212,59 +2242,31 @@ function openBook(bookId){
   document.querySelectorAll('.nav button').forEach(btn=>btn.classList.toggle('on',btn.dataset.screen==='shelf'));
   currentScreen='bookDetail';
   document.getElementById('shelf').innerHTML=`
-    <div class="pageHead"><button class="iconBtn" onclick="show('shelf')">${uiIcon('arrow')}</button><div class="pageTitle">${esc(b.title)}</div></div>
-
-    <div class="detailHeroCard">
-      <div class="detailGrid">
+    <div class="detailPageNew">
+      <div class="editorialTop">
+        <button class="iconBtn" onclick="show('shelf')">${uiIcon('arrow')}</button>
+        <div class="editorialBrand"><div class="brandEyebrow">Book details</div><h1 style="font-size:24px">${esc(b.title)}</h1><div class="sub">${esc(b.author)}</div></div>
+        <button class="iconBtn" onclick="show('shelf')">${uiIcon('book')}</button>
+      </div>
+      <div class="detailHeroNew">
         ${coverHtml(b.title,b.author)}
-        <div>
-          <div class="nowBookTitle">${esc(b.title)}</div>
-          <div class="nowAuthor">${esc(b.author)}</div>
-          <div style="margin-top:8px">${ratingsLine(b)}</div>
-          ${b.bottomLine?`<div class="vibeRow">${esc(b.bottomLine)}</div>`:''}
+        <div class="detailInfo">
+          <h2>${esc(b.title)}</h2>
+          <p>${esc(b.author)}</p>
+          ${b.bottomLine?`<div class="softPill" style="margin-bottom:12px">${esc(b.bottomLine)}</div>`:''}
+          <div class="detailGridNew">
+            <div class="detailStat"><small>אהבתי</small><b>${b.stars?iconStack('heart',b.stars):'—'}</b></div>
+            <div class="detailStat"><small>לוהט</small><b>${b.heat?iconStack('pepper',b.heat):'—'}</b></div>
+            <div class="detailStat"><small>שבר אותי</small><b>${b.cry?iconStack('broken',b.cry):'—'}</b></div>
+            <div class="detailStat"><small>קצב</small><b>${b.speed?SPEED[b.speed-1]:'—'}</b></div>
+          </div>
+          <div class="editorActionsRow" style="margin-top:16px"><button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
         </div>
       </div>
-      <div class="detailActions">
-        <button class="secondaryAction" onclick="show('shelf')" style="margin-top:0">חזרה למדף</button>
-        <button class="dangerBtn" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button>
-      </div>
-    </div>
-
-    <div class="fullSection">
-      <div class="fullTitle">הסיכום שלי</div>
-      ${b.bottomLine?`<div class="infoLine"><div class="infoLbl">שורה תחתונה</div><div class="infoTxt">${esc(b.bottomLine)}</div></div>`:''}
-      ${b.about?`<div class="infoLine"><div class="infoLbl">זה היה ספר על…</div><div class="infoTxt">${esc(b.about)}</div></div>`:''}
-      ${b.madeMe?`<div class="infoLine"><div class="infoLbl">והוא גרם לי…</div><div class="infoTxt">${esc(b.madeMe)}</div></div>`:''}
-      ${(!b.bottomLine&&!b.about&&!b.madeMe)?`<div class="empty" style="padding:12px">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}
-    </div>
-
-    <div class="fullSection">
-      <div class="fullTitle">דירוגים</div>
-      <div class="statsGrid">
-        <div class="statTile"><div class="statNum">${b.stars?iconStack('heart',b.stars):'—'}</div><div class="statLbl">דירוג</div></div>
-        <div class="statTile"><div class="statNum">${b.heat?iconStack('pepper',b.heat):'—'}</div><div class="statLbl">לוהט</div></div>
-        <div class="statTile"><div class="statNum">${b.cry?iconStack('broken',b.cry):'—'}</div><div class="statLbl">בכי</div></div>
-        <div class="statTile"><div class="statNum">${b.speed?SPEED[b.speed-1]:'—'}</div><div class="statLbl">קצב</div></div>
-      </div>
-    </div>
-
-    ${b.characters?.length?`<div class="fullSection">
-      <div class="fullTitle">מה נסגר עם הדמויות?</div>
-      <div class="momentList">
-        ${b.characters.map(ch=>`<div class="charRow"><div><div class="charName">${esc(ch.name)}</div><div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}${ch.finalTag?' · '+esc(ch.finalTag):''}</div></div></div>`).join('')}
-      </div>
-    </div>`:''}
-
-    ${b.readingLog?.filter(u=>u.finalTag).length?`<div class="fullSection">
-      <div class="fullTitle">רגעים נבחרים מהשטח</div>
-      <div class="momentList">${b.readingLog.filter(u=>u.finalTag).map(momentHtml).join('')}</div>
-    </div>`:''}
-
-    ${b.readingLog?.length?`<div class="fullSection">
-      <div class="fullTitle">ציר מלא מהשטח</div>
-      <div class="momentList">${b.readingLog.map(momentHtml).join('')}</div>
-    </div>`:''}
-  `;
+      <div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
+      ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>`<div class="rowItemNew"><div class="title">${esc(momentLabel(u.type))} · ${u.percent||0}%</div><div class="sub">${esc(u.text||u.label||'')}${u.finalTag?` · ${esc(u.finalTag)}`:''}</div></div>`).join('')}</div></div>`:''}
+    </div>`;
   scrollTo(0,0);
 }
 function confirmDeleteBook(bookId){
@@ -2431,7 +2433,7 @@ function statLeader(label,b,icon,meta){
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:14,
+    version:32,
     exportedAt:new Date().toISOString(),
     data:S
   };
@@ -2478,7 +2480,6 @@ function restoreFromFile(file){
 }
 
 render();
-show(currentScreen);
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>
 </body>

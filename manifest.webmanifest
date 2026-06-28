@@ -1,23 +1,25 @@
 {
   "name": "עוד פרק אחד",
   "short_name": "עוד פרק אחד",
-  "description": "יומן קריאה רגשי עם רגעים מהשטח, מדף וסטטיסטיקות.",
-  "start_url": "./index.html?v=28",
-  "display": "standalone",
-  "background_color": "#070a19",
-  "theme_color": "#0b1028",
-  "dir": "rtl",
   "lang": "he",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f1ea",
+  "theme_color": "#f5f1ea",
+  "description": "יומן קריאה אישי למעקב תוך כדי קריאה, עדכונים מהשטח, מדף וסטטיסטיקה.",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "apple-touch-icon.png",

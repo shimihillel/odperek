@@ -1462,6 +1462,62 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
   .backupActionsNew{grid-template-columns:1fr}
 }
 
+
+
+/* ===== v35 field refresh ===== */
+.fieldPageV35{gap:20px}
+.fieldHeroV35New{background:var(--card);border:1px solid var(--line);border-radius:34px;padding:18px;box-shadow:0 14px 32px rgba(85,73,57,.08)}
+.fieldHeroTopV35{display:grid;grid-template-columns:auto minmax(0,1fr) 112px;gap:14px;align-items:start}
+.fieldHeroTextV35 h2{margin:4px 0 0;font-size:33px;line-height:1.04;color:#304131;font-weight:950}
+.fieldHeroAuthorV35{margin-top:6px;color:var(--muted);font-size:16px;font-weight:750}
+.fieldHeroTextV35 p{margin:12px 0 0;color:var(--muted);font-size:15px;line-height:1.55;max-width:42ch}
+.fieldHeroCoverV35 .cover{min-height:146px;border-radius:24px;padding:12px}
+.fieldHeroCoverV35 .coverTitle{font-size:22px}
+.fieldHeroChipsV35{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.fieldInfoChipV35{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;background:#f4efe6;border:1px solid var(--line);color:#6b6357;font-size:13px;font-weight:850}
+.fieldInfoChipV35 b{font-size:14px;color:#304131}
+.fieldSnapshotGridV35{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.fieldSnapshotV35{background:#fcfaf5;border:1px solid var(--line);border-radius:22px;padding:14px 15px;display:grid;gap:6px;min-height:110px}
+.fieldSnapshotV35 span{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#aba092}
+.fieldSnapshotV35 strong{font-size:24px;line-height:1.1;color:#2f4331;font-weight:900}
+.fieldSnapshotV35 small{font-size:13px;line-height:1.45;color:var(--muted);font-weight:700}
+.fieldGridV35{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.fieldCardV35{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.fieldCardV35.span2{grid-column:1/-1}
+.fieldCardHeadV35{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.fieldCardHeadV35 h3{margin:0;color:#2f4331;font-size:23px;font-weight:900}
+.fieldCardHeadV35 p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.fieldCardHeadV35.split{align-items:center}
+.fieldLeadValueV35{font-size:46px;line-height:1;color:#2d2b26;font-weight:800;white-space:nowrap}
+.progressCardV35 .editorPercentRow.compact{grid-template-columns:94px 1fr;align-items:center}
+.fieldProgressSplitV35{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:14px}
+.fieldProgressColumnV35{display:grid;gap:10px}
+.fieldProgressColumnV35 label{font-size:13px;font-weight:900;color:#6f675c}
+.fieldTinyNoteV35,.fieldTipV35{color:var(--muted);font-size:13px;line-height:1.45}
+.editorTextArea.tall{min-height:150px}
+.fieldMoodCurrentV35{margin-bottom:12px;padding:12px 14px;border-radius:18px;background:#f6f1e7;border:1px solid var(--line);font-size:14px;color:#6d6559;font-weight:800}
+.fieldMoodCurrentV35 b{color:#304131}
+.fieldTagsV35{gap:10px}
+.fieldCardFooterV35{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}
+.fieldCharacterStripV35{margin-bottom:14px}
+.fieldSelectedCharV35{background:#f7f2e8;border:1px solid var(--line)}
+.fieldSelectedCharTopV35{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.fieldSelectedCharNameV35{font-size:19px;font-weight:900;color:#2d2a25}
+.fieldSelectedCharMetaV35{padding:8px 12px;border-radius:999px;background:#fbf7f0;border:1px solid var(--line);font-size:13px;color:#6b6357;font-weight:800}
+.fieldSubSectionTitleV35{font-size:18px;font-weight:900;color:#2f4331;margin-bottom:10px}
+.fieldMomentsListV35{gap:12px}
+.fieldMomentsListV35 .momentCardNew{background:#fcfaf5}
+@media (max-width:720px){
+  .fieldHeroTopV35{grid-template-columns:auto 1fr}
+  .fieldHeroCoverV35{grid-column:1/-1;max-width:120px}
+  .fieldGridV35,.fieldProgressSplitV35{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .fieldHeroTextV35 h2{font-size:29px}
+  .fieldLeadValueV35{font-size:40px}
+  .fieldSnapshotGridV35{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1726,7 +1782,7 @@ function miniIcon(type){
     return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.8l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.5l5.4-.8L12 3.8z"/></svg></span>`;
   }
   if(type==='pepper'){
-    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.7 6.2c3.7 1.1 6.2 4.7 5.2 8.4-.8 3.1-3.6 5.4-7.1 5.7-2.7.2-5.2-.7-6.7-2.4-1.4-1.6-1.6-3.7-.4-5.1.9-1.1 2.2-1.3 3.7-1.2.7.1 1.2-.2 1.4-.9.6-2.2 1.8-3.8 3.9-4.5z"/><path fill="#ffb45f" d="M13.3 6.8c-.4-2.3.6-3.9 2.8-4.7.6-.2 1.1.4.8 1-.5.8-.8 1.5-.7 2.4 1-.6 2-.5 3 .2.6.4.4 1.3-.3 1.4-1.9.3-3.5.3-5.6-.3z"/></svg></span>`;
+    return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.7 2.7c2.3 3 .9 5.2-.2 6.7 2.6-.2 5 1 6.4 3.1 1.8 2.7 1.6 6.4-.5 8.9-1.6 2-4 3.1-6.6 3.1-2.2 0-4.4-.9-6-2.4-3.1-2.9-3.1-8-.1-11.3 1-1 2.1-1.7 3.4-2.1-.2-1.8.4-3.9 2.4-6 .3-.3.9-.3 1.2 0z"/><path fill="#ffb45f" d="M12.4 6.1c.8 1.6.5 3.3-.6 4.8-.5.7-.1 1.6.8 1.6 1.9-.1 3.6.7 4.5 2.1 1.2 1.8 1 4.4-.5 6-1 1.2-2.5 1.8-4.1 1.8-1.4 0-2.9-.5-3.9-1.5-2-1.8-2-5.2 0-7.4 1-1.1 2.3-1.7 3.8-1.8-.7-1.6-.7-3.4 0-5.6z"/></svg></span>`;
   }
   if(type==='broken'){
     return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.3 20.2s-6.9-4.3-8.8-8.7C1 8.1 1.1 4.7 4.2 3.3c2-.9 3.8 0 5 1.4l1.7 2.3-2 2.4 2.5 2.1-1.7 3.2 3.2-3.5-2.3-2 2-2.8c.9-1.9 3-4.2 6.1-3 3.1 1.2 3.2 4.8 1.7 8.1-1.9 4.4-8.8 8.7-8.8 8.7l-.3-.2z"/></svg></span>`;
@@ -1769,48 +1825,135 @@ function renderField(){
   const c=S.current;
   if(!c){document.getElementById('field').innerHTML='';return}
   const selectedChar=(c.characters||[]).find(x=>x.id===editingCharId)||null;
+  const updatesCount=(c.updates||[]).length;
+  const quoteCount=(c.updates||[]).filter(u=>u.type==='quote').length;
+  const noteCount=(c.updates||[]).filter(u=>u.type==='note').length;
+  const mood=c.lastMood||'עוד לא נשמר וייב';
+  const charCount=(c.characters||[]).length;
   document.getElementById('field').innerHTML=`
-    <div class="fieldPageNew">
-      <div class="fieldHeaderNew">
-        <button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button>
-        <div class="fieldHeaderText"><div class="eyebrow">עדכון מהשטח</div><h2>${esc(c.title)}</h2><p>${esc(c.author)}</p></div>
-        <div class="fieldHeaderCover">${coverHtml(c.title,c.author)}</div>
-      </div>
-      <div class="editorPanelGrid">
-        <section class="editorCard wide">
-          <div class="editorCardHead"><div><h3>איפה אני עכשיו?</h3><p>עדכון מהיר של אחוז ומחשבה קצרה מהקטע האחרון.</p></div><strong>${pct(c.percent)}%</strong></div>
-          <div class="editorPercentRow"><input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(c.percent)}"><button class="saveBtn" onclick="savePercent()">שמירה</button></div>
-          <textarea id="percentNote" class="textarea editorTextArea" placeholder="מחשבה קצרה? לא חובה"></textarea>
+    <div class="fieldPageNew fieldPageV35">
+      <section class="fieldHeroV35New">
+        <div class="fieldHeroTopV35">
+          <button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button>
+          <div class="fieldHeroTextV35">
+            <div class="eyebrow">עדכון מהשטח</div>
+            <h2>${esc(c.title)}</h2>
+            <div class="fieldHeroAuthorV35">${esc(c.author)}</div>
+            <p>כאן את שומרת את כל מה שקורה תוך כדי קריאה — בלי לפזר את זה בין מסכים.</p>
+            <div class="fieldHeroChipsV35">
+              <span class="fieldInfoChipV35"><b>${pct(c.percent)}%</b> התקדמות</span>
+              <span class="fieldInfoChipV35">${esc(mood)}</span>
+              <span class="fieldInfoChipV35">${updatesCount} רגעים שמורים</span>
+            </div>
+          </div>
+          <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author)}</div>
+        </div>
+        <div class="fieldSnapshotGridV35">
+          <div class="fieldSnapshotV35"><span>אחוז נוכחי</span><strong>${pct(c.percent)}%</strong><small>עדכון אחד קטן והכול נשמר בציר.</small></div>
+          <div class="fieldSnapshotV35"><span>מה הוייב</span><strong>${esc(mood)}</strong><small>אפשר לבחור תגית קיימת או להוסיף משלך.</small></div>
+          <div class="fieldSnapshotV35"><span>דמויות</span><strong>${charCount}</strong><small>${charCount?`כרגע יש ${charCount} דמויות שמורות.`:'עוד לא נוספו דמויות.'}</small></div>
+          <div class="fieldSnapshotV35"><span>רגעים שמורים</span><strong>${updatesCount}</strong><small>${quoteCount} ציטוטים · ${noteCount} רגעי עלילה</small></div>
+        </div>
+      </section>
+
+      <div class="fieldGridV35">
+        <section class="fieldCardV35 span2 progressCardV35">
+          <div class="fieldCardHeadV35 split">
+            <div>
+              <h3>איפה אני עכשיו?</h3>
+              <p>עדכון מהיר של האחוז יחד עם מחשבה קטנה מהקטע האחרון.</p>
+            </div>
+            <div class="fieldLeadValueV35">${pct(c.percent)}%</div>
+          </div>
+          <div class="fieldProgressSplitV35">
+            <div class="fieldProgressColumnV35">
+              <label>אחוז נוכחי</label>
+              <div class="editorPercentRow compact">
+                <input id="percentInput" class="input" type="number" min="0" max="100" value="${pct(c.percent)}">
+                <button class="saveBtn" onclick="savePercent()">שומרת</button>
+              </div>
+              <div class="fieldTinyNoteV35">אפשר לעדכן רק אחוז, ואפשר להוסיף גם מחשבה קטנה.</div>
+            </div>
+            <div class="fieldProgressColumnV35">
+              <label>מה נשאר לי מהקטע האחרון?</label>
+              <textarea id="percentNote" class="textarea editorTextArea" placeholder="מחשבה קצרה? משפט אחד גם מספיק"></textarea>
+            </div>
+          </div>
         </section>
-        <section class="editorCard">
-          <div class="editorCardHead"><div><h3>מה הוייב?</h3><p>אפשר לבחור תגית מהרשימה, או להוסיף תגית משלך שתישמר גם לספרים הבאים.</p></div></div>
-          <div class="tagsWrap">${allMoodTags().map(m=>`<button class="tagChipNew ${c.lastMood===m?'on':''}" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>
-          <div class="editorActionsRow"><button class="secondaryPill tagAddBtn" onclick="addCustomMoodTag()">+ תגית וייב משלי</button></div>
+
+        <section class="fieldCardV35">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>מה הוייב?</h3>
+              <p>בחרי תגית אחת שמסכמת את ההרגשה כרגע.</p>
+            </div>
+          </div>
+          <div class="fieldMoodCurrentV35">כרגע: <b>${esc(mood)}</b></div>
+          <div class="tagsWrap fieldTagsV35">${allMoodTags().map(m=>`<button class="tagChipNew ${c.lastMood===m?'on':''}" onclick="saveMood('${jsEsc(m)}')">${esc(m)}</button>`).join('')}</div>
+          <div class="fieldCardFooterV35">
+            <div class="fieldTipV35">תגיות וייב שתוסיפי יישמרו גם לספרים הבאים.</div>
+            <button class="secondaryPill tagAddBtn" onclick="addCustomMoodTag()">+ תגית וייב משלי</button>
+          </div>
         </section>
-        <section class="editorCard">
-          <div class="editorCardHead"><div><h3>מה קורה עכשיו?</h3><p>רגע קצר לשמור מהעלילה, בלי לסבך אותך.</p></div></div>
-          <textarea id="noteText" class="textarea editorTextArea" placeholder="מה קרה עכשיו בספר? מי עצבן? מי ריגש? מה חייב להישמר?"></textarea>
-          <div class="editorActionsRow"><button class="primaryPill" onclick="saveText('note')">שומרת רגע</button></div>
+
+        <section class="fieldCardV35">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>מה קורה עכשיו?</h3>
+              <p>רגע קצר לשמור מהעלילה, בלי לכתוב מגילה.</p>
+            </div>
+          </div>
+          <textarea id="noteText" class="textarea editorTextArea tall" placeholder="מה קרה עכשיו בספר? מי עצבן? מי ריגש? מה חייב להישמר?"></textarea>
+          <div class="fieldCardFooterV35">
+            <div class="fieldTipV35">מה שתשמרי כאן ייכנס ישר לציר הרגעים.</div>
+            <button class="primaryPill" onclick="saveText('note')">שומרת רגע</button>
+          </div>
         </section>
-        <section class="editorCard">
-          <div class="editorCardHead"><div><h3>לגזור ולשמור</h3><p>ציטוט, משפט, או שורה שלא בא לך לאבד.</p></div></div>
-          <textarea id="quoteText" class="textarea editorTextArea" placeholder="משפט, ציטוט או רגע קטן שלא בא לך לשכוח"></textarea>
-          <div class="editorActionsRow"><button class="primaryPill" onclick="saveText('quote')">שומרת ציטוט</button></div>
+
+        <section class="fieldCardV35">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>לגזור ולשמור</h3>
+              <p>ציטוט, שורה, או משפט קטן שלא בא לך לאבד.</p>
+            </div>
+          </div>
+          <textarea id="quoteText" class="textarea editorTextArea tall" placeholder="משפט, ציטוט או קטע קטן שלא בא לך לשכוח"></textarea>
+          <div class="fieldCardFooterV35">
+            <div class="fieldTipV35">הציטוטים יופיעו גם אחר כך בסיכום ובמדף.</div>
+            <button class="primaryPill" onclick="saveText('quote')">שומרת ציטוט</button>
+          </div>
         </section>
-        <section class="editorCard wide">
-          <div class="editorCardHead"><div><h3>דמויות</h3><p>כאן את יכולה לעדכן מה את חושבת עליהן, וגם להוסיף תגיות משלך לשימוש קבוע.</p></div></div>
-          ${(c.characters||[]).length?`<div class="characterStrip">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
-          ${selectedChar?`<div class="characterEditBox"><div style="font-weight:900;color:#2d2a25;margin-bottom:8px">${esc(selectedChar.name)}</div><div class="editorHelper" style="margin-bottom:10px">לעדכן מה את חושבת עליה עכשיו</div><div class="tagsWrap">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
+
+        <section class="fieldCardV35 span2">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>דמויות</h3>
+              <p>לעדכן מה את חושבת עליהן עכשיו, ולהוסיף תגיות משלך שיישמרו הלאה.</p>
+            </div>
+          </div>
+          ${(c.characters||[]).length?`<div class="characterStrip fieldCharacterStripV35">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
+          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
           <div class="sectionDivider"></div>
-          <div style="font-weight:900;color:#2f4331;margin-bottom:8px">להוסיף דמות חדשה</div>
-          <input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
-          <div class="genderRow"><button class="genderPill ${pickedGender==='זכר'?'on':''}" onclick="pickGender('זכר')">זכר</button><button class="genderPill ${pickedGender==='נקבה'?'on':''}" onclick="pickGender('נקבה')">נקבה</button></div>
-          <div class="tagsWrap">${allCharTags().map(t=>`<button class="tagChipNew" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
-          <div class="editorActionsRow"><button class="secondaryPill" onclick="addCustomCharTag()">+ תגית דמות משלי</button></div>
+          <div class="fieldAddCharacterV35">
+            <div class="fieldSubSectionTitleV35">להוסיף דמות חדשה</div>
+            <input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
+            <div class="genderRow"><button class="genderPill ${pickedGender==='זכר'?'on':''}" onclick="pickGender('זכר')">זכר</button><button class="genderPill ${pickedGender==='נקבה'?'on':''}" onclick="pickGender('נקבה')">נקבה</button></div>
+            <div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
+            <div class="fieldCardFooterV35">
+              <div class="fieldTipV35">גם תגיות דמות חדשות שתוסיפי יישמרו לשימוש קבוע.</div>
+              <button class="secondaryPill" onclick="addCustomCharTag()">+ תגית דמות משלי</button>
+            </div>
+          </div>
         </section>
-        <section class="editorCard wide">
-          <div class="editorCardHead"><div><h3>רגעים אחרונים מהשטח</h3><p>הציר נשמר כדי שתוכלי לחזור אליו גם בסיכום.</p></div></div>
-          ${c.updates.length?`<div class="momentColumnNew">${c.updates.slice(0,6).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
+
+        <section class="fieldCardV35 span2">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>רגעים אחרונים מהשטח</h3>
+              <p>הציר נשמר כדי שתוכלי לחזור אליו גם בסיכום וגם במדף.</p>
+            </div>
+          </div>
+          ${c.updates.length?`<div class="momentColumnNew fieldMomentsListV35">${c.updates.slice(0,8).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
         </section>
       </div>
     </div>`;

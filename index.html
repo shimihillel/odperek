@@ -1418,6 +1418,50 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
 @media (max-width:720px){.homeHeroBody,.detailHeroNew{grid-template-columns:1fr}.fieldHeaderNew{grid-template-columns:auto 1fr}.fieldHeaderCover{grid-column:1/-1;max-width:110px}}
 @media (max-width:420px){.brand,.editorialBrand h1{font-size:24px}.homeNowTitle{font-size:30px}.goalPercent{font-size:38px}.homeActionsNew{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.quickCardNew{min-height:104px;padding:16px 8px}.quickCardNew .quickLabel{font-size:16px}.miniShelfGrid,.shelfGridEditorial{gap:12px}.detailHeroNew{padding:14px}}
 
+
+/* ===== v34 stats + backup + icon polish ===== */
+.statsPageNew{display:flex;flex-direction:column;gap:18px}
+.statsHeroNew{background:var(--card);border:1px solid var(--line);border-radius:34px;padding:22px 18px;box-shadow:0 14px 32px rgba(85,73,57,.08)}
+.statsHeroNew h2{margin:0;color:#304131;font-size:32px;line-height:1.08;font-weight:950}
+.statsHeroNew p{margin:8px 0 0;color:var(--muted);font-size:15px;line-height:1.55;font-weight:700}
+.statsHeroNote{margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:#f0ece5;border:1px solid var(--line);color:#6d655a;padding:10px 13px;border-radius:999px;font-size:13px;font-weight:900}
+.statsHeroNote .neonIcon{color:var(--gold)!important;filter:none!important}
+.statsGridNew{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.statCardNew{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:16px;box-shadow:0 10px 24px rgba(85,73,57,.06);min-height:128px}
+.statCardTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.statCardIcon{width:44px;height:44px;border-radius:16px;background:#f1ebe2;border:1px solid var(--line);display:grid;place-items:center;color:#8a8074}
+.statCardIcon .neonIcon{font-size:22px;color:#8a8074!important;filter:none!important}
+.statCardValue{font-size:34px;line-height:1;font-weight:900;color:#304131}
+.statCardLabel{margin-top:12px;font-size:15px;font-weight:950;color:#2f2b26}
+.statCardSub{margin-top:5px;font-size:12px;line-height:1.4;color:var(--muted);font-weight:750}
+.statsSectionNew{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.statsSectionHeadNew{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.statsSectionHeadNew h3{margin:0;color:#304131;font-size:23px;line-height:1.12;font-weight:950}
+.statsSectionHeadNew p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.45;font-weight:750}
+.statsListNew{display:flex;flex-direction:column;gap:10px}
+.statRowNew{background:#fbf7f0;border:1px solid var(--line);border-radius:22px;padding:14px;display:grid;grid-template-columns:1fr 46px;gap:12px;align-items:center}
+.statRowText{min-width:0}
+.statRowLabel{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:4px}
+.statRowValue{font-size:17px;line-height:1.35;color:#2e2a25;font-weight:900;word-break:normal;overflow-wrap:anywhere}
+.statRowSub{font-size:12px;color:var(--muted);font-weight:750;margin-top:5px;line-height:1.35}
+.statRowIcon{width:46px;height:46px;border-radius:16px;background:#f1ebe2;border:1px solid var(--line);display:grid;place-items:center;color:#8a8074}
+.statRowIcon .neonIcon{font-size:22px;color:#8a8074!important;filter:none!important}
+.backupPanelNew{background:linear-gradient(180deg,#fffdf8,#f7f1e7);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.backupPanelNew h3{margin:0;color:#304131;font-size:24px;font-weight:950}
+.backupPanelNew p{margin:8px 0 14px;color:var(--muted);font-size:14px;line-height:1.5;font-weight:750}
+.backupActionsNew{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.backupActionsNew button{border-radius:20px;padding:15px 12px;font-size:15px;font-weight:950}
+.backupPrimaryNew{background:linear-gradient(135deg,#de956c,#e7a57b);border:0;color:white;box-shadow:0 12px 26px rgba(223,147,103,.23)}
+.backupSecondaryNew{background:#f1ebe2;border:1px solid var(--line);color:#645b50}
+.statsEmptyNew{background:var(--card);border:1px dashed var(--line-strong);border-radius:28px;padding:28px 20px;text-align:center;color:var(--muted);line-height:1.55}
+@media(max-width:420px){
+  .statsHeroNew h2{font-size:29px}
+  .statCardValue{font-size:30px}
+  .statsGridNew{gap:10px}
+  .statCardNew{padding:14px}
+  .backupActionsNew{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -2298,6 +2342,7 @@ function deleteBook(bookId){
 }
 
 
+
 function renderStats(){
   const el=document.getElementById('stats');
   if(!el)return;
@@ -2314,130 +2359,98 @@ function renderStats(){
   };
   const allLogs=books.flatMap(b=>b.readingLog||[]);
   const allChars=books.flatMap(b=>b.characters||[]);
-  const textOf=(x)=>`${x?.text||''} ${x?.label||''}`;
-  const countLogs=(re)=>allLogs.filter(u=>re.test(textOf(u))).length;
-  const countBooks=(re)=>books.filter(b=>re.test(`${b.bottomLine||''} ${b.about||''} ${b.madeMe||''}`)).length;
-  const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length + countLogs(/דגל אדום|בעייתי/)+countBooks(/דגל אדום|בעייתי/);
-  const noTalk=countLogs(/לא לדבר איתי/)+countBooks(/לא לדבר איתי/);
-  const swallowed=books.filter(b=>(+b.speed||0)>=4).length;
-  const aftermath=books.filter(b=>/נשאר לי בראש|לא התאוששתי|הייתי עוברת לגור שם|צריכה ספר המשך עכשיו/.test(b.bottomLine||'')).length;
-  const commonText=(arr, pick)=>{
+  const common=(arr)=>{
     const map={};
-    arr.forEach(item=>{const k=(pick(item)||'').trim(); if(k) map[k]=(map[k]||0)+1;});
-    const entries=Object.entries(map).sort((a,b)=>b[1]-a[1]);
-    return entries[0]||null;
+    arr.forEach(x=>{const k=String(x||'').trim(); if(k)map[k]=(map[k]||0)+1;});
+    return Object.entries(map).sort((a,b)=>b[1]-a[1])[0]||null;
   };
-  const topMood=commonText(allLogs.filter(u=>u.type==='mood'),u=>u.text||u.label);
-  const topStamp=commonText(books,b=>b.bottomLine);
-  const topCharacter=commonText(allChars,ch=>ch.name);
-  const topLine=()=>{
-    if(!total)return 'המדף עוד מתחמם. תני לו ספר אחד והוא יתחיל לדבר.';
-    if(redFlags>=4 && (parseFloat(avg('heat'))||0)>=4) return 'קוראת, נשרפת, ומתעלמת מדגלים אדומים במלוא האחריות.';
-    if((parseFloat(avg('cry'))||0)>=4) return 'הרבה לב, הרבה דמעות, מעט מאוד שינה. הספקת יפה.';
-    if(swallowed>=Math.max(2,Math.ceil(total*0.45))) return 'כשספר תופס אותך, את לא קוראת — את בולעת.';
-    if((parseFloat(avg('stars'))||0)>=4) return 'המדף שלך מפונק. לא כל ספר עובר את ועדת שימי.';
-    return 'יש פה מדף עם אישיות, טעם, וקצת ענייני התקשרות.';
+  const topMood=common(allLogs.filter(u=>u.type==='mood').map(u=>u.text||u.label));
+  const topStamp=common(books.map(b=>b.bottomLine));
+  const topAuthor=common(books.map(b=>b.author));
+  const topChar=common(allChars.map(c=>c.name));
+  const heat=maxBook('heat'), cry=maxBook('cry'), stars=maxBook('stars'), fast=maxBook('speed'), slow=maxBook('speed',true);
+  const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length;
+  const noTalk=allLogs.filter(u=>/לא לדבר איתי/.test(`${u.text||''} ${u.label||''}`)).length + books.filter(b=>/לא לדבר איתי/.test(`${b.bottomLine||''} ${b.madeMe||''}`)).length;
+  const swallowed=books.filter(b=>(+b.speed||0)>=4).length;
+  const diagnosis=()=>{
+    if(!total)return 'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים.';
+    if(redFlags>=3)return 'יש לך יכולת מרשימה לזהות דגלים אדומים ועדיין להמשיך לקרוא. מחקרית: חשוד.';
+    if((parseFloat(avg('cry'))||0)>=4)return 'המדף שלך רגשי מאוד. לא סתם ספרים, יותר אירועי לב.';
+    if(swallowed>=Math.max(1,Math.ceil(total*0.4)))return 'כשספר תופס אותך — את לא קוראת, את נעלמת אליו.';
+    if((parseFloat(avg('stars'))||0)>=4)return 'המדף שלך מפונק, ובצדק. לא כל ספר מקבל מקום של כבוד.';
+    return 'יש פה מדף עם טעם, מצב רוח, וקצת דרמה בריאה.';
   };
-  const vibeDiagnosis=()=>{
-    if(!total) return 'עוד אין אבחון. חסר פה ספר ראשון.';
-    const parts=[];
-    if(swallowed) parts.push(`בלעת ${swallowed} ספר${swallowed>1?'ים':''}`);
-    if(noTalk) parts.push(`${noTalk} פעמים "לא לדבר איתי"`);
-    if(redFlags) parts.push(`${redFlags} דגלים אדומים נאספו בדרך`);
-    if(aftermath) parts.push(`${aftermath} ספרים נשארו לך בראש`);
-    return parts.slice(0,3).join(' · ') || 'הכול עוד מתבשל.';
-  };
-  const heat=maxBook('heat'),cry=maxBook('cry'),stars=maxBook('stars'),fast=maxBook('speed'),slow=maxBook('speed',true);
-  if(!total){
-    el.innerHTML=topHtml()+`
-      <div class="statsHeroV25 emptyMode">
-        <div class="statsHeroTitle">מצב הקריאה שלך</div>
-        <div class="statsHeroSub">${topLine()}</div>
-      </div>
-      <div class="statsSectionCard statsEmptyCard">
-        <div class="stepTitle">כשתסיימי ספר ראשון, המסך הזה יתחיל לרכל עלייך</div>
-        <div class="summaryHint">כרגע אין עדיין נתונים, אבחונים או ספרים שנשארו לך רגשית. ברגע שהמדף יתמלא — הכול יתחיל לדבר.</div>
-      </div>
-      <div class="fullSection backupBox">
-        <div class="fullTitle">גיבוי ושחזור</div>
-        <div class="backupNote">שומר קובץ JSON עם כל המדף, הספר הנוכחי, רגעים, דמויות, דירוגים וסטטיסטיקות. בשחזור — הנתונים הקיימים יוחלפו.</div>
-        <div class="backupActions">
-          <button class="backupBtn" onclick="exportBackup()">${uiIcon('backup')} גיבוי הנתונים</button>
-          <button class="backupBtn restore" onclick="chooseRestoreFile()">${uiIcon('restore')} שחזור מגיבוי</button>
-        </div>
-      </div>`;
-    return;
-  }
   el.innerHTML=topHtml()+`
-    <div class="statsHeroV25">
-      <div class="statsHeroTitle">מצב הקריאה שלך</div>
-      <div class="statsHeroSub">${topLine()}</div>
-      <div class="statsDiagnosis">${uiIcon('spark')} ${vibeDiagnosis()}</div>
-    </div>
-    <div class="statsSnapshotGrid">
-      ${statsMetricCard(total,'ספרים שסיימת','המדף כבר מתמלא','book')}
-      ${statsMetricCard(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
-      ${statsMetricCard(avg('heat'),'ממוצע לוהט','כמה המדף בחר אש','percent')}
-      ${statsMetricCard(avg('cry'),'ממוצע שבר','כמה הספרים פירקו אותך','chat')}
-    </div>
-    <div class="statsSectionCard">
-      <div class="stepTitle">הרגלי הקריאה שלך</div>
-      <div class="summaryHint">פחות מספרים יבשים, יותר מי את כשאת בתוך ספר.</div>
-      <div class="statsFunGrid">
-        ${statsFunCard(noTalk,'לא לדבר איתי','כמה פעמים הספרים סידרו לך מצב רוח','spark')}
-        ${statsFunCard(redFlags,'דגלים אדומים','כמה פעמים אמרת “זה לא אידיאלי” והמשכת','users')}
-        ${statsFunCard(swallowed,'בלעתי בלי לנשום','ספרים שנטרפו בקצב מסוכן','book')}
-        ${statsFunCard(aftermath,'נשארו לי בראש','ספרים שלא ירדו ממך גם אחרי הסוף','chat')}
-      </div>
-    </div>
-    <div class="statsSectionCard">
-      <div class="stepTitle">מי כיכבו במדף</div>
-      <div class="summaryHint">הזוכים והמצטיינים של חיי הקריאה שלך כרגע.</div>
-      <div class="statsLeaderList">
-        ${statLeader('הכי אהבתי',stars,'spark',stars?iconStack('heart',stars.stars):'—')}
-        ${statLeader('הכי לוהט',heat,'percent',heat?iconStack('pepper',heat.heat):'—')}
-        ${statLeader('הכי שבר אותי',cry,'chat',cry?iconStack('broken',cry.cry):'—')}
-        ${statLeader('בלעתי הכי מהר',fast,'book',fast?(SPEED[fast.speed-1]||'—'):'—')}
-        ${statLeader('הכי נמרח',slow,'book',slow?(SPEED[slow.speed-1]||'—'):'—')}
-      </div>
-    </div>
-    <div class="statsSectionCard">
-      <div class="stepTitle">מה חוזר אצלך שוב ושוב</div>
-      <div class="summaryHint">בואי, יש פה דפוסים. כולנו רואים את זה.</div>
-      <div class="statsInsightsList">
-        ${statsInsightRow('החותמת שחוזרת אצלך',topStamp?topStamp[0]:'עוד אין','הופיעה '+(topStamp?topStamp[1]:0)+' פעמים','spark')}
-        ${statsInsightRow('הוייב הכי שכיח',topMood?topMood[0]:'עוד אין','הופיע '+(topMood?topMood[1]:0)+' פעמים','chat')}
-        ${statsInsightRow('הדמות שהופיעה הכי הרבה',topCharacter?topCharacter[0]:'עוד אין','חזרה ב-'+(topCharacter?topCharacter[1]:0)+' ספרים/אזכורים','users')}
-      </div>
-    </div>
-    <div class="fullSection backupBox statsBackupV25">
-      <div class="fullTitle">גיבוי ושחזור</div>
-      <div class="backupNote">שומר קובץ JSON עם כל המדף, הספר הנוכחי, רגעים, דמויות, דירוגים וסטטיסטיקות. בשחזור — הנתונים הקיימים יוחלפו.</div>
-      <div class="backupActions">
-        <button class="backupBtn" onclick="exportBackup()">${uiIcon('backup')} גיבוי הנתונים</button>
-        <button class="backupBtn restore" onclick="chooseRestoreFile()">${uiIcon('restore')} שחזור מגיבוי</button>
-      </div>
+    <div class="statsPageNew">
+      <section class="statsHeroNew">
+        <div class="eyebrow">Reading stats</div>
+        <h2>סטטיסטיקה</h2>
+        <p>לא רק מספרים — תמונת מצב של מה את קוראת, מה נשאר איתך, ומה הספרים עושים לך בדרך.</p>
+        <div class="statsHeroNote">${uiIcon('spark')} ${diagnosis()}</div>
+      </section>
+
+      ${total?`
+      <section class="statsGridNew">
+        ${statCardNew(total,'ספרים במדף','כמה ספרים כבר קיבלו מקום קבוע','book')}
+        ${statCardNew(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
+        ${statCardNew(avg('heat'),'ממוצע לוהט','כמה אש יש במדף','percent')}
+        ${statCardNew(avg('cry'),'ממוצע שבר','כמה הלב שילם בדרך','chat')}
+      </section>
+
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>מי כיכבו</h3><p>המצטיינים של המדף כרגע.</p></div></div>
+        <div class="statsListNew">
+          ${statRowNew('הכי אהבתי',stars?stars.title:'עוד אין',stars?iconStack('heart',stars.stars):'—','spark')}
+          ${statRowNew('הכי לוהט',heat?heat.title:'עוד אין',heat?iconStack('pepper',heat.heat):'—','percent')}
+          ${statRowNew('הכי שבר אותי',cry?cry.title:'עוד אין',cry?iconStack('broken',cry.cry):'—','chat')}
+          ${statRowNew('בלעתי הכי מהר',fast?fast.title:'עוד אין',fast?(SPEED[fast.speed-1]||'—'):'—','book')}
+          ${statRowNew('הכי נמרח',slow?slow.title:'עוד אין',slow?(SPEED[slow.speed-1]||'—'):'—','book')}
+        </div>
+      </section>
+
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>דפוסים שחוזרים</h3><p>הדברים שהאפליקציה כבר מתחילה לזהות אצלך.</p></div></div>
+        <div class="statsListNew">
+          ${statRowNew('חותמת שחוזרת',topStamp?topStamp[0]:'עוד אין',topStamp?`הופיעה ${topStamp[1]} פעמים`:'יתמלא כשיהיו עוד ספרים','spark')}
+          ${statRowNew('וייב שכיח',topMood?topMood[0]:'עוד אין',topMood?`הופיע ${topMood[1]} פעמים`:'עדכוני וייב יופיעו כאן','chat')}
+          ${statRowNew('סופרת שחוזרת',topAuthor?topAuthor[0]:'עוד אין',topAuthor?`מופיעה ${topAuthor[1]} פעמים`:'עוד מוקדם לקבוע','book')}
+          ${statRowNew('דמות שחזרה הכי הרבה',topChar?topChar[0]:'עוד אין',topChar?`חזרה ${topChar[1]} פעמים`:'כשתוסיפי דמויות זה יתמלא','users')}
+        </div>
+      </section>
+
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>הרגלי קריאה</h3><p>קצת רכילות שימושית על המדף.</p></div></div>
+        <div class="statsGridNew">
+          ${statCardNew(noTalk,'לא לדבר איתי','כמה פעמים הספר סידר לך מצב רוח','spark')}
+          ${statCardNew(redFlags,'דגלים אדומים','דמויות שזוהו כעניין בעייתי','users')}
+          ${statCardNew(swallowed,'בלעתי בלי לנשום','ספרים שנקראו בקצב גבוה','book')}
+          ${statCardNew(allLogs.length,'רגעים מהשטח','כל העדכונים ששמרת בדרך','chat')}
+        </div>
+      </section>
+      `:`<div class="statsEmptyNew">עוד אין מספיק נתונים לסטטיסטיקה. ברגע שתסיימי ספר ראשון, המסך הזה יתחיל לספר לך על המדף שלך.</div>`}
+
+      <section class="backupPanelNew">
+        <h3>גיבוי ושחזור</h3>
+        <p>שומר קובץ JSON עם כל הספרים, הספר הפעיל, רגעים מהשטח, דמויות, תגיות אישיות, דירוגים וסטטיסטיקות. שחזור מחליף את הנתונים הקיימים.</p>
+        <div class="backupActionsNew">
+          <button class="backupPrimaryNew" onclick="exportBackup()">${uiIcon('backup')} גיבוי הנתונים</button>
+          <button class="backupSecondaryNew" onclick="chooseRestoreFile()">${uiIcon('restore')} שחזור מגיבוי</button>
+        </div>
+      </section>
     </div>
   `;
 }
-function statsMetricCard(value,label,sub,icon){
-  return `<div class="statsMetricCard"><div class="statsMetricIcon">${uiIcon(icon)}</div><div class="statsMetricValue">${value}</div><div class="statsMetricLabel">${label}</div><div class="statsMetricSub">${sub}</div></div>`;
+function statCardNew(value,label,sub,icon){
+  return `<div class="statCardNew"><div class="statCardTop"><div><div class="statCardValue">${value}</div></div><div class="statCardIcon">${uiIcon(icon)}</div></div><div class="statCardLabel">${label}</div><div class="statCardSub">${sub}</div></div>`;
 }
-function statsFunCard(value,label,sub,icon){
-  return `<div class="statsFunCard"><div class="statsFunTop"><span class="statsFunIcon">${uiIcon(icon)}</span><span class="statsFunValue">${value}</span></div><div class="statsFunLabel">${label}</div><div class="statsFunSub">${sub}</div></div>`;
+function statRowNew(label,value,sub,icon){
+  return `<div class="statRowNew"><div class="statRowText"><div class="statRowLabel">${esc(label)}</div><div class="statRowValue">${esc(value)}</div><div class="statRowSub">${sub}</div></div><div class="statRowIcon">${uiIcon(icon)}</div></div>`;
 }
-function statsInsightRow(label,value,sub,icon){
-  return `<div class="statsInsightRow"><div class="statsInsightIcon">${uiIcon(icon)}</div><div class="statsInsightText"><div class="statsInsightLabel">${label}</div><div class="statsInsightValue">${esc(value)}</div><div class="statsInsightSub">${esc(sub)}</div></div></div>`;
-}
-function statLeader(label,b,icon,meta){
-  return `<div class="statsLeaderRow"><div class="statsLeaderIcon">${uiIcon(icon)}</div><div class="statsLeaderText"><div class="statsLeaderLabel">${label}</div><div class="statsLeaderBook">${b?esc(b.title):'—'}</div><div class="statsLeaderMeta">${meta}</div></div></div>`;
-}
-
 
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:32,
+    version:34,
     exportedAt:new Date().toISOString(),
     data:S
   };

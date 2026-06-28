@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v19</title>
+<title>עוד פרק אחד v41</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -1760,6 +1760,104 @@ body{background:
   .summaryBookTitleV38{font-size:25px!important}
   .summaryMetricControlV38{grid-template-columns:44px 1fr!important}
   .summaryScaleV38 .rateBtn{min-width:42px!important;min-height:40px!important;padding:7px!important}
+}
+
+
+
+/* ===== v41 HOTFIX — shelf search + home shelf cards ===== */
+.shelfSearchWrap{
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  direction:ltr!important;
+  padding:0 14px!important;
+  min-height:54px!important;
+}
+.shelfSearchWrap .shelfSearchIcon{
+  grid-column:1!important;
+  width:28px!important;
+  height:28px!important;
+  display:grid!important;
+  place-items:center!important;
+  pointer-events:none!important;
+  color:#9e9485!important;
+}
+.shelfSearchWrap .shelfSearchIcon .neonIcon{
+  width:20px!important;
+  height:20px!important;
+}
+.shelfSearchWrap .shelfSearchInput{
+  grid-column:2!important;
+  width:100%!important;
+  min-width:0!important;
+  direction:rtl!important;
+  text-align:right!important;
+  padding:14px 0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  line-height:1.35!important;
+}
+.shelfSearchWrap .shelfSearchInput::placeholder{color:#aaa095!important;opacity:1!important}
+
+.homePageNew .miniShelfGrid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+}
+.homePageNew .miniShelfBook{
+  background:var(--card)!important;
+  border:1px solid var(--line)!important;
+  border-radius:28px!important;
+  padding:10px!important;
+  box-shadow:var(--shadow-soft)!important;
+  text-align:right!important;
+  overflow:hidden!important;
+  color:var(--ink)!important;
+}
+.homePageNew .miniShelfBook .cover{
+  min-height:168px!important;
+  border-radius:22px!important;
+  padding:12px!important;
+  box-shadow:0 8px 18px rgba(85,73,57,.07)!important;
+}
+.homePageNew .miniShelfBook .coverTitle{font-size:20px!important;line-height:1.08!important}
+.homePageNew .miniShelfBook .coverAuthor{font-size:12px!important}
+.homePageNew .miniShelfMetaNew{padding:10px 3px 2px!important}
+.homePageNew .miniShelfMetaNew .title{
+  font-size:17px!important;
+  line-height:1.18!important;
+  color:var(--ink)!important;
+  font-weight:950!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
+}
+.homePageNew .miniShelfMetaNew .author{
+  font-size:13px!important;
+  line-height:1.25!important;
+  color:var(--muted)!important;
+  margin-top:5px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.homePageNew .miniShelfMetaNew .stamp{margin-top:8px!important}
+.homePageNew .miniShelfMetaNew .softPill{
+  font-size:11px!important;
+  padding:6px 9px!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+@media(max-width:380px){
+  .homePageNew .miniShelfGrid{gap:10px!important}
+  .homePageNew .miniShelfBook{padding:8px!important;border-radius:24px!important}
+  .homePageNew .miniShelfBook .cover{min-height:150px!important}
+  .homePageNew .miniShelfBook .coverTitle{font-size:18px!important}
 }
 
 </style>

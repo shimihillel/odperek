@@ -1607,6 +1607,10 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
   .summaryScaleV38 .rateBtn{min-width:44px;min-height:42px;padding:8px}
 }
 
+
+.summaryStampActionsV39{display:flex;justify-content:flex-start;margin-top:12px}
+.summaryStampActionsV39 .secondaryPill{border-radius:999px}
+
 </style>
 </head>
 <body>
@@ -1653,6 +1657,9 @@ function allMoodTags(){
 function allCharTags(){
   return uniqueList([...(CHAR_TAGS||[]), ...((S&&S.customCharTags)||[])]);
 }
+function allStampTags(){
+  return uniqueList([...(BOTTOM_LINES||[]), ...((S&&S.customStampTags)||[])]);
+}
 function addCustomMoodTag(){
   const tag=(prompt('איזו תגית וייב תרצי להוסיף?')||'').trim();
   if(!tag) return;
@@ -1668,6 +1675,14 @@ function addCustomCharTag(){
   save();
   renderField();
   toast('תגית הדמות נשמרה');
+}
+function addCustomStampTag(){
+  const tag=(prompt('איזו חותמת תרצי להוסיף?')||'').trim();
+  if(!tag) return;
+  S.customStampTags=uniqueList([...(S.customStampTags||[]), tag]);
+  save();
+  renderSummary();
+  toast('החותמת נשמרה');
 }
 
 function loadState(){
@@ -1690,6 +1705,7 @@ function normalize(s){
   s.current=s.current||null;
   s.customMoodTags=uniqueList(s.customMoodTags||[]);
   s.customCharTags=uniqueList(s.customCharTags||[]);
+  s.customStampTags=uniqueList(s.customStampTags||[]);
   s.books=s.books.map(normalizeBook);
   if(s.current) s.current=normalizeCurrent(s.current);
   return s;
@@ -2263,8 +2279,9 @@ function renderSummary(){
       </section>
 
       <section class="summaryPanelV38">
-        <div class="summaryPanelHeadV38"><h3>החותמת שלי</h3><p>המשפט הקטן שיישב על הספר במדף.</p></div>
-        <div class="chips stampChips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
+        <div class="summaryPanelHeadV38"><h3>החותמת שלי</h3><p>המשפט או התגית הקטנה שיישבו על הספר במדף.</p></div>
+        <div class="chips stampChips">${allStampTags().map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
+        <div class="summaryStampActionsV39"><button class="secondaryPill tagAddBtn" onclick="addCustomStampTag()">+ חותמת משלי</button></div>
       </section>
 
       <section class="summaryPanelV38">

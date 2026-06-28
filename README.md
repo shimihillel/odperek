@@ -27,3 +27,6 @@ V26: redesigned the shelf screen with a richer hero, refined search/tools, and m
 
 
 V27: replaced app icons with the selected full-square neon book icon.
+
+
+V28: expanded character tags for in-progress updates and final summary, improved chip spacing, and restored manifest/service worker files for PWA install/update.

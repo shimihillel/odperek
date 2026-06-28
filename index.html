@@ -1548,6 +1548,65 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
 .summaryPanelHeadV37{margin-bottom:14px}.summaryPanelHeadV37 h3{margin:0;color:#304131;font-size:24px;font-weight:950;line-height:1.1}.summaryPanelHeadV37 p{margin:7px 0 0;color:var(--muted);font-size:14px;line-height:1.45;font-weight:750}
 .summaryMetricGridV37{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.summaryMetricCardV37{background:#fcfaf5;border:1px solid var(--line);border-radius:25px;padding:15px;min-height:150px}.summaryMetricHeadV37{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}.summaryMetricTitleV37{font-size:17px;color:#2f4331;font-weight:950}.summaryMetricSubV37{font-size:12px;color:var(--muted);font-weight:750;margin-top:3px;line-height:1.35}.summaryMetricIconV37{width:42px;height:42px;border-radius:15px;background:#f1ebe2;border:1px solid var(--line);display:grid;place-items:center}.summaryMetricIconV37 .ratingSvg{width:22px;height:22px}.summaryScaleV37{display:flex;gap:7px;flex-wrap:wrap}.summaryScaleV37 .rateBtn{min-width:44px;min-height:42px;border-radius:15px;background:#fbf7f0!important;border:1px solid var(--line)!important;color:#b58461!important;box-shadow:none!important;padding:8px 9px}.summaryScaleV37 .rateBtn.on{background:#efe1d2!important;border-color:#d6b899!important;color:#b96f43!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)!important}.summaryScaleV37 .ratingStack{display:flex;gap:2px}.summaryScaleV37 .ratingSvg{width:16px;height:16px}.summaryMetricSpeedV37{background:#fcfaf5;border:1px solid var(--line);border-radius:25px;padding:15px;grid-column:1/-1}.summaryMetricSpeedV37 .speedBox{background:#f7f1e8;border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:10px}.summaryMetricSpeedV37 .speedValue{color:#304131;font-weight:950}.summaryTextGridV37{display:grid;grid-template-columns:1fr;gap:13px}.summaryFieldV37 label{display:block;font-size:14px;color:#2f4331;font-weight:950;margin-bottom:7px}.summaryPageV37 .textarea{min-height:118px}.summaryPageV37 .charRow{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:22px!important;box-shadow:none!important;color:var(--ink)!important}.summaryPageV37 .summaryAddBox{background:#fbf7f0!important;border:1px dashed var(--line-strong)!important;border-radius:24px!important;box-shadow:none!important;color:var(--ink)!important;padding:15px}.summaryPageV37 .moment{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:22px!important;box-shadow:none!important;color:var(--ink)!important}.summaryFooterV37{position:sticky;bottom:88px;background:rgba(246,241,232,.86);backdrop-filter:blur(12px);padding:8px 0 2px}.summaryFooterV37 .doneBtn{width:100%;border-radius:22px;font-size:18px;padding:16px}.summaryFooterNoteV37{text-align:center;margin-top:8px;color:var(--muted);font-size:12px;font-weight:760}
 @media(max-width:420px){.summaryHeroGridV37{grid-template-columns:104px 1fr;gap:13px}.summaryBookTitleV37{font-size:26px}.summaryMetricGridV37{grid-template-columns:1fr}.summaryHeroTopV37 h2{font-size:30px}.summaryCoverV37 .cover{min-height:160px}.summaryScaleV37 .rateBtn{min-width:41px}}
+
+/* v38 — cleaner summary rebuild + shelf search icon tidy */
+.summaryPageV38{display:flex;flex-direction:column;gap:18px;padding-bottom:8px}
+.summaryHeroV38,.summaryPanelV38{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:32px;box-shadow:0 12px 28px rgba(85,73,57,.07)!important;padding:18px}
+.summaryHeroTopV38{display:grid;grid-template-columns:50px 1fr 60px;gap:12px;align-items:start}
+.summaryHeroCenterV38{text-align:center}
+.summaryHeroCenterV38 h2{margin:4px 0 6px;font-size:34px;line-height:1;color:#304131;font-weight:950}
+.summaryHeroCenterV38 p{margin:0;color:var(--muted);font-size:14px;line-height:1.45;font-weight:760}
+.summaryKickerV38{text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:#aea292;font-weight:900}
+.summaryChipV38,.summarySoftPillV38,.summaryNowBadgeV38{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--line);background:#f8f2ea;color:#665c4f;font-weight:850}
+.summaryChipV38{padding:10px 12px;min-width:58px;font-size:14px;justify-self:end}
+.summaryBookBoxV38{display:grid;grid-template-columns:116px minmax(0,1fr);gap:15px;align-items:center;margin-top:14px}
+.summaryCoverV38 .cover{min-height:170px;border-radius:24px;padding:12px;box-shadow:0 10px 26px rgba(85,73,57,.09)!important}
+.summaryCoverV38 .coverTitle{font-size:23px}
+.summaryCoverV38 .coverAuthor{font-size:12px}
+.summaryNowBadgeV38{padding:8px 12px;font-size:12px;width:max-content;margin-bottom:10px}
+.summaryBookTitleV38{font-size:31px;line-height:1.02;color:#304131;font-weight:1000}
+.summaryBookAuthorV38{margin-top:7px;font-size:15px;color:var(--muted);font-weight:820}
+.summaryStatPillsV38{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.summarySoftPillV38{padding:7px 11px;font-size:12px}
+.summaryPanelHeadV38{margin-bottom:14px}
+.summaryPanelHeadV38 h3{margin:0 0 4px;color:#304131;font-size:28px;line-height:1.06;font-weight:950}
+.summaryPanelHeadV38 p{margin:0;color:var(--muted);font-size:14px;line-height:1.45;font-weight:760}
+.summaryRatingStackV38{display:grid;gap:12px}
+.summaryMetricRowV38{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:16px;border-radius:24px;background:#fbf7f0;border:1px solid var(--line)}
+.summaryMetricInfoV38{display:flex;align-items:start;justify-content:space-between;gap:10px}
+.summaryMetricTitleV38{font-size:18px;color:#304131;font-weight:950}
+.summaryMetricSubV38{font-size:13px;color:var(--muted);line-height:1.35;font-weight:760;margin-top:4px}
+.summaryMetricControlV38{display:grid;grid-template-columns:50px minmax(0,1fr);gap:12px;align-items:center}
+.summaryMetricIconV38{width:50px;height:50px;border-radius:17px;border:1px solid var(--line);background:#f2eadf;display:grid;place-items:center;color:#d68b5b}
+.summaryMetricIconV38 .ratingSvg,.summaryMetricIconV38 .neonIcon{width:22px;height:22px;color:#d68b5b}
+.summaryScaleV38{display:flex;flex-wrap:wrap;gap:8px}
+.summaryScaleV38 .rateBtn{min-width:48px;min-height:46px;padding:8px 10px;border-radius:16px;background:#fffdfa!important;border:1px solid var(--line)!important;box-shadow:none!important;color:#c98b63!important}
+.summaryScaleV38 .rateBtn.on{background:#efe2d4!important;border-color:#d9bb9e!important;color:#b56d43!important}
+.summaryScaleV38 .ratingStack{display:flex;gap:3px;justify-content:center}
+.summaryScaleV38 .ratingSvg{width:16px;height:16px}
+.summaryMetricRowWideV38 .summaryMetricControlWideV38{grid-template-columns:50px minmax(0,1fr)}
+.speedBoxV38{background:#fffdfa;border:1px solid var(--line);border-radius:18px;padding:14px}
+.summaryTextGridV38{display:grid;gap:14px}
+.summaryFieldV38 label{display:block;margin-bottom:8px;font-size:14px;color:#304131;font-weight:900}
+.summaryPageV38 .textarea{min-height:120px}
+.summaryItemsStackV38{display:grid;gap:12px}
+.summaryPageV38 .charRow,.summaryPageV38 .moment{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:24px!important;box-shadow:none!important;padding:14px}
+.summaryPageV38 .summaryAddBox{background:#fbf7f0!important;border:1px dashed var(--line-strong)!important;border-radius:24px!important;box-shadow:none!important;padding:15px;margin-top:12px}
+.summaryFooterV38{position:sticky;bottom:88px;background:rgba(246,241,232,.92);backdrop-filter:blur(12px);padding-top:6px}
+.summaryFooterV38 .doneBtn{width:100%;border-radius:22px;font-size:18px;padding:16px}
+.summaryFooterNoteV38{text-align:center;margin-top:8px;color:var(--muted);font-size:12px;font-weight:760}
+.shelfSearchWrap .neonIcon{width:20px;height:20px;color:#9e9485}
+.shelfSearchWrap .neonIcon svg{stroke-width:1.8}
+@media(max-width:420px){
+  .summaryHeroTopV38{grid-template-columns:46px 1fr 54px}
+  .summaryHeroCenterV38 h2{font-size:30px}
+  .summaryBookBoxV38{grid-template-columns:104px 1fr;gap:12px}
+  .summaryBookTitleV38{font-size:27px}
+  .summaryMetricControlV38{grid-template-columns:44px 1fr;gap:10px}
+  .summaryMetricIconV38{width:44px;height:44px}
+  .summaryScaleV38 .rateBtn{min-width:44px;min-height:42px;padding:8px}
+}
+
 </style>
 </head>
 <body>
@@ -1693,7 +1752,7 @@ function uiIcon(name,extra=''){
     users:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.8 19c.5-3.1 2.3-5 5.2-5s4.7 1.9 5.2 5"/><circle cx="17" cy="9" r="2.3"/><path d="M15.3 14.2c2.6.2 4.2 1.8 4.7 4.8"/></svg>`,
     percent:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5"/><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/></svg>`,
     spark:`<svg viewBox="0 0 24 24" aria-hidden="true"><path class="spark" d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16v3M17.5 17.5h3"/></svg>`,
-    search:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 4.5 4.5"/><path class="spark" d="M16.5 5.5v2M15.5 6.5h2"/></svg>`,
+    search:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m15.8 15.8 3.7 3.7"/></svg>`,
     backup:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10"/><path d="m8 10 4 4 4-4"/><path d="M5 17.5h14"/><path class="spark" d="M18 5v2M17 6h2"/></svg>`,
     restore:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a7 7 0 1 1-.2 8"/><path d="M6 8V4M6 8h4"/><path class="spark" d="m10 13 2 2 4-4"/></svg>`,
     arrow:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/></svg>`
@@ -1811,7 +1870,7 @@ function miniIcon(type){
     return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.8l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 9.5l5.4-.8L12 3.8z"/></svg></span>`;
   }
   if(type==='pepper'){
-    return `<span class="ratingSvg heatIconSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 4.8a3 3 0 0 1 6 0v8.1a6 6 0 1 1-6 0V4.8z"/><path fill="#fff4e8" d="M12 4.9a1 1 0 1 1 2 0v9.2l.5.3a3.6 3.6 0 1 1-3 0l.5-.3V4.9z"/><path fill="currentColor" d="M13 8h2.8v1.4H13V8zm0 3h2.8v1.4H13V11z"/></svg></span>`;
+    return `<span class="ratingSvg heatIconSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.8a3 3 0 0 1 3 3v6.2a5.6 5.6 0 1 1-6 0V6.8a3 3 0 0 1 3-3z"/><path fill="#fffaf3" d="M12 5.6a1.2 1.2 0 0 1 1.2 1.2v7l.9.6a3.4 3.4 0 1 1-4.2 0l.9-.6v-7A1.2 1.2 0 0 1 12 5.6z"/><path fill="currentColor" d="M12 10.2a.9.9 0 0 1 .9.9v4.2a2.3 2.3 0 1 1-1.8 0v-4.2a.9.9 0 0 1 .9-.9z"/></svg></span>`;
   }
   if(type==='broken'){
     return `<span class="ratingSvg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.3 20.2s-6.9-4.3-8.8-8.7C1 8.1 1.1 4.7 4.2 3.3c2-.9 3.8 0 5 1.4l1.7 2.3-2 2.4 2.5 2.1-1.7 3.2 3.2-3.5-2.3-2 2-2.8c.9-1.9 3-4.2 6.1-3 3.1 1.2 3.2 4.8 1.7 8.1-1.9 4.4-8.8 8.7-8.8 8.7l-.3-.2z"/></svg></span>`;
@@ -2154,71 +2213,77 @@ function goSummary(){
 function renderSummary(){
   const c=S.current,d=S.summaryDraft||{};
   document.getElementById('summary').innerHTML=c?`
-    <div class="summaryPageV37">
-      <section class="summaryHeroV37">
-        <div class="summaryHeroTopV37">
+    <div class="summaryPageV38">
+      <section class="summaryHeroV38">
+        <div class="summaryHeroTopV38">
           <button class="iconBtn" onclick="show('home')">${uiIcon('arrow')}</button>
-          <h2>סיימתי</h2>
-          <span class="summaryChipV37">${pct(c.percent)}%</span>
+          <div class="summaryHeroCenterV38">
+            <div class="summaryKickerV38">Book wrap</div>
+            <h2>סיימתי</h2>
+            <p>רגע לפני שהספר נכנס למדף — נסגור איך הוא באמת הרגיש לך.</p>
+          </div>
+          <span class="summaryChipV38">${pct(c.percent)}%</span>
         </div>
-        <div class="summaryHeroGridV37">
-          <div class="summaryCoverV37">${coverHtml(c.title,c.author)}</div>
-          <div class="summaryHeroTextV37">
-            <div class="summaryKickerV37">closing notes</div>
-            <div class="summaryBookTitleV37">${esc(c.title)}</div>
-            <div class="summaryBookAuthorV37">${esc(c.author)}</div>
-            <div class="summaryPromptV37">רגע לפני שהוא נכנס למדף, נסגור מה הוא עשה לך באמת.</div>
-            <div class="summaryChipsV37"><span class="summaryChipV37">${(c.updates||[]).length} רגעים מהשטח</span><span class="summaryChipV37">${(c.characters||[]).length} דמויות</span></div>
+        <div class="summaryBookBoxV38">
+          <div class="summaryCoverV38">${coverHtml(c.title,c.author)}</div>
+          <div class="summaryBookMetaV38">
+            <div class="summaryNowBadgeV38">הספר שסגרת עכשיו</div>
+            <div class="summaryBookTitleV38">${esc(c.title)}</div>
+            <div class="summaryBookAuthorV38">${esc(c.author)}</div>
+            <div class="summaryStatPillsV38">
+              <span class="summarySoftPillV38">${(c.updates||[]).length} רגעים מהשטח</span>
+              <span class="summarySoftPillV38">${(c.characters||[]).length} דמויות</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="summaryPanelV37">
-        <div class="summaryPanelHeadV37"><h3>המדדים</h3><p>לא מספרים יבשים — רק סימון מהיר של איך הספר הזה פגע בך.</p></div>
-        <div class="summaryMetricGridV37">
-          ${summaryMetricV37('stars','כמה אהבתי?','כמה מקום הוא מקבל בלב','heart')}
-          ${summaryMetricV37('heat','מד חום','כמה זה בער','pepper')}
-          ${summaryMetricV37('cry','כמה זה שבר אותי?','רמת נזק רגשי','broken')}
-          ${summarySpeedV37()}
+      <section class="summaryPanelV38">
+        <div class="summaryPanelHeadV38"><h3>המדדים שלי</h3><p>סימון מהיר, ברור ונעים — בלי בלגן.</p></div>
+        <div class="summaryRatingStackV38">
+          ${summaryMetricRowV38('stars','כמה אהבתי?','כמה מקום הוא קיבל בלב','heart')}
+          ${summaryMetricRowV38('heat','מד חום','כמה הספר בער לך','pepper')}
+          ${summaryMetricRowV38('cry','כמה זה שבר אותי?','רמת נזק רגשי','broken')}
+          ${summarySpeedRowV38()}
         </div>
       </section>
 
-      <section class="summaryPanelV37">
-        <div class="summaryPanelHeadV37"><h3>מה נשאר לי ממנו?</h3><p>לא חייב להיות עמוק. גם “אני צריכה דקה” נחשב לגמרי.</p></div>
-        <div class="summaryTextGridV37">
-          <div class="summaryFieldV37"><label>זה היה ספר על…</label><textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea></div>
-          <div class="summaryFieldV37"><label>והוא השאיר אותי…</label><textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea></div>
+      <section class="summaryPanelV38">
+        <div class="summaryPanelHeadV38"><h3>מה נשאר לי ממנו?</h3><p>שתי עצירות קטנות לפני שהספר נכנס למדף.</p></div>
+        <div class="summaryTextGridV38">
+          <div class="summaryFieldV38"><label>זה היה ספר על…</label><textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea></div>
+          <div class="summaryFieldV38"><label>והוא השאיר אותי…</label><textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea></div>
         </div>
       </section>
 
-      <section class="summaryPanelV37">
-        <div class="summaryPanelHeadV37"><h3>מי נשארו לי בראש?</h3><p>הדמויות שלא יצאו איתך מהספר גם אחרי שסגרת אותו.</p></div>
-        ${c.characters.length?c.characters.map(summaryChar).join(''):`<div class="emptyNew">אף אחד לא נשאר לך בראש? חשוד.</div>`}
+      <section class="summaryPanelV38">
+        <div class="summaryPanelHeadV38"><h3>מי נשארו לי בראש?</h3><p>הדמויות שנשארו איתך גם אחרי העמוד האחרון.</p></div>
+        ${c.characters.length?`<div class="summaryItemsStackV38">${c.characters.map(summaryChar).join('')}</div>`:`<div class="emptyNew">עוד לא נשמרו דמויות לסיכום.</div>`}
         ${summaryAddCharacterBox()}
       </section>
 
-      <section class="summaryPanelV37">
-        <div class="summaryPanelHeadV37"><h3>החותמת שלי</h3><p>המשפט הקטן שיישב על הספר במדף.</p></div>
+      <section class="summaryPanelV38">
+        <div class="summaryPanelHeadV38"><h3>החותמת שלי</h3><p>המשפט הקטן שיישב על הספר במדף.</p></div>
         <div class="chips stampChips">${BOTTOM_LINES.map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>
       </section>
 
-      <section class="summaryPanelV37">
-        <div class="summaryPanelHeadV37"><h3>רגעים שנשארו בדרך</h3><p>כמה רגעים קצרים מהציר, רק כדי להיזכר במסע.</p></div>
-        ${c.updates.length?c.updates.slice(0,4).map(summaryMoment).join(''):`<div class="emptyNew">אין רגעים לסמן.</div>`}
+      <section class="summaryPanelV38">
+        <div class="summaryPanelHeadV38"><h3>רגעים שנשארו בדרך</h3><p>רק כמה רגעים בולטים, כדי לזכור את המסע.</p></div>
+        ${c.updates.length?`<div class="summaryItemsStackV38">${c.updates.slice(0,4).map(summaryMoment).join('')}</div>`:`<div class="emptyNew">אין רגעים לסמן.</div>`}
       </section>
 
-      <div class="summaryFooterV37"><button class="doneBtn" onclick="finishBook()">להכניס למדף</button><div class="summaryFooterNoteV37">הספר יישמר במדף ותמיד אפשר יהיה לחזור אליו.</div></div>
+      <div class="summaryFooterV38"><button class="doneBtn" onclick="finishBook()">להכניס למדף</button><div class="summaryFooterNoteV38">הספר יישמר במדף ותמיד אפשר יהיה לחזור אליו.</div></div>
     </div>
   `:'';
 }
-function summaryMetricV37(key,title,sub,iconType){
+function summaryMetricRowV38(key,title,sub,iconType){
   const d=S.summaryDraft||{};
-  return `<div class="summaryMetricCardV37"><div class="summaryMetricHeadV37"><div><div class="summaryMetricTitleV37">${title}</div><div class="summaryMetricSubV37">${sub}</div></div><div class="summaryMetricIconV37">${miniIcon(iconType)}</div></div><div class="summaryScaleV37">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${iconStack(iconType,n)}</button>`).join('')}</div></div>`;
+  return `<div class="summaryMetricRowV38"><div class="summaryMetricInfoV38"><div class="summaryMetricTitleV38">${title}</div><div class="summaryMetricSubV38">${sub}</div></div><div class="summaryMetricControlV38"><div class="summaryMetricIconV38">${miniIcon(iconType)}</div><div class="summaryScaleV38">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${d[key]===n?'on':''}" onclick="setDraft('${key}',${n})">${iconStack(iconType,n)}</button>`).join('')}</div></div></div>`;
 }
-function summarySpeedV37(){
+function summarySpeedRowV38(){
   const d=S.summaryDraft||{};
   const val=d.speed||3;
-  return `<div class="summaryMetricSpeedV37"><div class="summaryMetricHeadV37"><div><div class="summaryMetricTitleV37">כמה מהר בלעתי?</div><div class="summaryMetricSubV37">הקצב של הספר, לא של החיים</div></div><div class="summaryMetricIconV37">${uiIcon('book')}</div></div><div class="speedBox"><input class="speedSlider" type="range" min="1" max="5" step="1" value="${val}" oninput="setDraft('speed',+this.value)"><div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div><div class="speedValue">${SPEED[val-1]}</div></div></div>`;
+  return `<div class="summaryMetricRowV38 summaryMetricRowWideV38"><div class="summaryMetricInfoV38"><div class="summaryMetricTitleV38">כמה מהר בלעתי?</div><div class="summaryMetricSubV38">הקצב של הספר, לא של החיים</div></div><div class="summaryMetricControlV38 summaryMetricControlWideV38"><div class="summaryMetricIconV38">${uiIcon('book')}</div><div class="speedBox speedBoxV38"><input class="speedSlider" type="range" min="1" max="5" step="1" value="${val}" oninput="setDraft('speed',+this.value)"><div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div><div class="speedValue">${SPEED[val-1]}</div></div></div></div>`;
 }
 
 function rateGroup(key,label,max,type){

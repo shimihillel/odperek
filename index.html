@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v30</title>
+<title>עוד פרק אחד v31</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -1358,6 +1358,35 @@ body.homeEditorialMode .nav button.on .navIcon .spark{stroke:#c59c55}
   .editorSectionTitle{font-size:26px}
 }
 
+
+/* v31 — home mobile hotfix: no side-by-side crush */
+.editorHeroCardV31{padding:0;background:transparent;border:0;box-shadow:none}
+.editorNowCardV31{padding:18px;border-radius:30px;background:rgba(255,253,249,.98);border:1px solid #e5ddd2;box-shadow:0 14px 36px rgba(37,31,27,.07)}
+.editorNowGridV31{grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center}
+.editorNowGridV31 .editorCover .cover{min-height:156px}
+.editorContinueBtnV31{width:100%;margin-top:16px;border-radius:20px}
+.editorQuickGridV31{margin-top:14px}
+.editorQuickGridV31 .editorQuickBtn{min-height:88px;padding:12px 8px}
+.editorQuickGridV31 .editorQuickBtn.primary{background:#e7dccb}
+.homeEditorial .editorProgressValue{font-size:32px}
+.homeEditorial .editorProgressMeta{font-size:12px;line-height:1.25}
+.homeEditorial .editorMoodChip{max-width:100%;white-space:normal;text-align:right}
+@media (max-width:390px){
+  .editorNowGridV31{grid-template-columns:96px minmax(0,1fr);gap:13px}
+  .editorBookTitle{font-size:26px}
+  .editorProgressValue{font-size:30px!important}
+  .editorNowGridV31 .editorCover .cover{min-height:136px}
+  .editorQuickGridV31{gap:9px}
+  .editorQuickGridV31 .editorQuickBtn{font-size:13px;min-height:82px}
+}
+@media (max-width:345px){
+  .editorNowGridV31{grid-template-columns:1fr}
+  .editorNowGridV31 .editorCover{max-width:140px;margin:0 auto}
+  .editorBookMeta{text-align:center}
+  .editorProgressSummary{justify-content:center}
+  .editorMoodChip{margin-left:auto;margin-right:auto}
+}
+
 </style>
 </head>
 <body>
@@ -1530,40 +1559,22 @@ function renderHome(){
 function currentHome(c){
   const progress=pct(c.percent);
   const mood=esc(c.lastMood||'מה הוייב?');
-  const totalBooks=Math.max(S.books.length,1);
-  const remaining=Math.max(0,100-progress);
-  return `<div class="editorHeroCard">
-    <div class="editorHeroGrid">
-      <div class="editorNowCard">
-        <div class="editorEyebrow">קוראת עכשיו</div>
-        <div class="editorNowGrid">
-          <div class="editorCover">${coverHtml(c.title,c.author)}</div>
-          <div class="editorBookMeta">
-            <div class="editorBookTitle">${esc(c.title)}</div>
-            <div class="editorBookAuthor">${esc(c.author||'')}</div>
-            <div class="editorProgressSummary"><div class="editorProgressValue">${progress}%</div><div class="editorProgressMeta">התקדמות בקריאה<br>נשארו בערך ${remaining}%</div></div>
-            <div class="editorProgressBar"><span style="width:${progress}%"></span></div>
-            <button class="editorMoodChip" onclick="goField('mood')">${uiIcon('spark')} כרגע: ${mood}</button>
-          </div>
+  return `<div class="editorHeroCard editorHeroCardV31">
+    <div class="editorNowCard editorNowCardV31">
+      <div class="editorEyebrow">קוראת עכשיו</div>
+      <div class="editorNowGrid editorNowGridV31">
+        <div class="editorCover">${coverHtml(c.title,c.author)}</div>
+        <div class="editorBookMeta">
+          <div class="editorBookTitle">${esc(c.title)}</div>
+          <div class="editorBookAuthor">${esc(c.author||'')}</div>
+          <div class="editorProgressSummary"><div class="editorProgressValue">${progress}%</div><div class="editorProgressMeta">התקדמות בקריאה</div></div>
+          <div class="editorProgressBar"><span style="width:${progress}%"></span></div>
+          <button class="editorMoodChip" onclick="goField('mood')">${uiIcon('spark')} כרגע: ${mood}</button>
         </div>
       </div>
-      <div class="editorGoalCard">
-        <div>
-          <p class="editorGoalHeading">Reading goals</p>
-          <p class="editorGoalText">כל מה שחשוב בספר הפעיל שלך — במקום אחד, בלי לחפש בין מסכים.</p>
-          <div class="editorArcBox">
-            <div class="editorArcTrack" style="--deg:${progress*1.8}deg"></div>
-            <div class="editorArcCenter">
-              <div class="editorArcLabel">Today’s Reading</div>
-              <div class="editorArcValue">${progress}%</div>
-              <div class="editorArcSub">${totalBooks} ספרים נשמרו במדף שלך</div>
-            </div>
-          </div>
-        </div>
-        <button class="editorContinueBtn" onclick="goField('percent')">להמשיך לקרוא<small>${esc(c.title)} · ${esc(c.author||'')}</small></button>
-      </div>
+      <button class="editorContinueBtn editorContinueBtnV31" onclick="goField('percent')">להמשיך לקרוא<small>${esc(c.title)} · ${esc(c.author||'')}</small></button>
     </div>
-    <div class="editorQuickGrid">
+    <div class="editorQuickGrid editorQuickGridV31">
       <button class="editorQuickBtn" onclick="goSummary()"><div class="editorQuickIcon">${uiIcon('check')}</div>סיימתי</button>
       <button class="editorQuickBtn primary" onclick="goField()"><div class="editorQuickIcon">${uiIcon('book')}</div>עדכון מהשטח</button>
       <button class="editorQuickBtn" onclick="goField('mood')"><div class="editorQuickIcon">${uiIcon('chat')}</div>מה הוייב?</button>

@@ -33,3 +33,6 @@ V28: expanded character tags for in-progress updates and final summary, improved
 
 
 V29: hotfix for shelf render crash caused by active filter count calculation.
+
+
+V31: fixed the editorial home prototype for real mobile width. Removed the cramped side-by-side Reading Goals card and made the current-book area mobile-first.

@@ -5,8 +5,8 @@
   "dir": "rtl",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f5f1ea",
-  "theme_color": "#f5f1ea",
+  "background_color": "#f6f1e8",
+  "theme_color": "#f6f1e8",
   "description": "יומן קריאה אישי למעקב תוך כדי קריאה, עדכונים מהשטח, מדף וסטטיסטיקה.",
   "icons": [
     {

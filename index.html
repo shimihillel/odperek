@@ -1549,7 +1549,7 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
 .summaryMetricGridV37{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.summaryMetricCardV37{background:#fcfaf5;border:1px solid var(--line);border-radius:25px;padding:15px;min-height:150px}.summaryMetricHeadV37{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}.summaryMetricTitleV37{font-size:17px;color:#2f4331;font-weight:950}.summaryMetricSubV37{font-size:12px;color:var(--muted);font-weight:750;margin-top:3px;line-height:1.35}.summaryMetricIconV37{width:42px;height:42px;border-radius:15px;background:#f1ebe2;border:1px solid var(--line);display:grid;place-items:center}.summaryMetricIconV37 .ratingSvg{width:22px;height:22px}.summaryScaleV37{display:flex;gap:7px;flex-wrap:wrap}.summaryScaleV37 .rateBtn{min-width:44px;min-height:42px;border-radius:15px;background:#fbf7f0!important;border:1px solid var(--line)!important;color:#b58461!important;box-shadow:none!important;padding:8px 9px}.summaryScaleV37 .rateBtn.on{background:#efe1d2!important;border-color:#d6b899!important;color:#b96f43!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)!important}.summaryScaleV37 .ratingStack{display:flex;gap:2px}.summaryScaleV37 .ratingSvg{width:16px;height:16px}.summaryMetricSpeedV37{background:#fcfaf5;border:1px solid var(--line);border-radius:25px;padding:15px;grid-column:1/-1}.summaryMetricSpeedV37 .speedBox{background:#f7f1e8;border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:10px}.summaryMetricSpeedV37 .speedValue{color:#304131;font-weight:950}.summaryTextGridV37{display:grid;grid-template-columns:1fr;gap:13px}.summaryFieldV37 label{display:block;font-size:14px;color:#2f4331;font-weight:950;margin-bottom:7px}.summaryPageV37 .textarea{min-height:118px}.summaryPageV37 .charRow{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:22px!important;box-shadow:none!important;color:var(--ink)!important}.summaryPageV37 .summaryAddBox{background:#fbf7f0!important;border:1px dashed var(--line-strong)!important;border-radius:24px!important;box-shadow:none!important;color:var(--ink)!important;padding:15px}.summaryPageV37 .moment{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:22px!important;box-shadow:none!important;color:var(--ink)!important}.summaryFooterV37{position:sticky;bottom:88px;background:rgba(246,241,232,.86);backdrop-filter:blur(12px);padding:8px 0 2px}.summaryFooterV37 .doneBtn{width:100%;border-radius:22px;font-size:18px;padding:16px}.summaryFooterNoteV37{text-align:center;margin-top:8px;color:var(--muted);font-size:12px;font-weight:760}
 @media(max-width:420px){.summaryHeroGridV37{grid-template-columns:104px 1fr;gap:13px}.summaryBookTitleV37{font-size:26px}.summaryMetricGridV37{grid-template-columns:1fr}.summaryHeroTopV37 h2{font-size:30px}.summaryCoverV37 .cover{min-height:160px}.summaryScaleV37 .rateBtn{min-width:41px}}
 
-/* v38 — cleaner summary rebuild + shelf search icon tidy */
+/* v40 — clean unified visual system */
 .summaryPageV38{display:flex;flex-direction:column;gap:18px;padding-bottom:8px}
 .summaryHeroV38,.summaryPanelV38{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:32px;box-shadow:0 12px 28px rgba(85,73,57,.07)!important;padding:18px}
 .summaryHeroTopV38{display:grid;grid-template-columns:50px 1fr 60px;gap:12px;align-items:start}
@@ -1610,6 +1610,157 @@ body,.phone{background:var(--paper)!important;color:var(--ink)!important}
 
 .summaryStampActionsV39{display:flex;justify-content:flex-start;margin-top:12px}
 .summaryStampActionsV39 .secondaryPill{border-radius:999px}
+
+
+
+/* ===== v40 CLEAN UNIFIED SYSTEM — final override layer ===== */
+:root{
+  --paper:#f6f1e8;
+  --paper-warm:#fbf7ef;
+  --card:#fffdf8;
+  --card-soft:#f4eee5;
+  --ink:#2e2a25;
+  --muted:#8b8275;
+  --line:#ded3c4;
+  --line-strong:#cfc1af;
+  --sage:#a4af97;
+  --sage-deep:#304131;
+  --accent:#df9367;
+  --accent-deep:#b86f46;
+  --gold:#c6a24a;
+  --shadow-clean:0 12px 30px rgba(85,73,57,.075);
+  --shadow-soft:0 8px 20px rgba(85,73,57,.055);
+}
+html,body{background:var(--paper)!important;color:var(--ink)!important}
+body{background:
+  radial-gradient(circle at 12% 8%,rgba(255,255,255,.48),transparent 28%),
+  radial-gradient(circle at 86% 18%,rgba(223,147,103,.14),transparent 30%),
+  linear-gradient(180deg,#fbf7ef 0%,#f6f1e8 100%)!important;
+}
+.app{max-width:430px;margin:0 auto;padding:18px 16px 104px;background:transparent!important}
+.screen{background:transparent!important}
+.screen *{text-shadow:none!important}
+
+/* base surfaces */
+.card,.fullSection,.stepCard,.fieldPrimaryCard,.fieldActivePanel,.fieldQuickCard,.shelfBookCard,.detailHeroCard,.accCard,.moment,.timelineMoment,.charRow,.summaryAddBox,.filterPanel,.sortPanel,.confirmBox,.fieldCurrentCard,.statsHeroV25,.statsPanel,.statsCard,.backupBox,.searchEmpty,
+.homeHeroCard,.goalPanelNew,.heroBookPanel,.editorialSectionBlock,.quickCardNew,.editorCard,.fieldCardV35,.fieldHeroV35New,.summaryHeroV38,.summaryPanelV38,.statCardNew,.statsSectionNew,.backupPanelNew,.shelfIntroCard,.searchPanelNew,.shelfCardNew,.detailSectionNew,.detailHeroNew{
+  background:var(--card)!important;
+  border:1px solid var(--line)!important;
+  color:var(--ink)!important;
+  box-shadow:var(--shadow-clean)!important;
+}
+.card,.fullSection,.stepCard,.editorCard,.fieldCardV35,.summaryHeroV38,.summaryPanelV38,.statsSectionNew,.backupPanelNew{border-radius:30px!important}
+
+/* typography */
+.brand,.editorialBrand h1,.homeNowTitle,.fieldHeaderText h2,.fieldHeroTextV35 h2,.summaryHeroCenterV38 h2,.summaryBookTitleV38,.summaryPanelHeadV38 h3,.statsHeroNew h2,.shelfIntroCard h2,.detailInfo h2,
+.pageTitle,.fieldTitle,.summaryTitle,.sectionTitle,.fullTitle,.stepTitle,.summaryOpenTitle,.fieldBookName,.shelfHeroTitle,.pageHead .pageTitle{
+  color:var(--sage-deep)!important;
+  letter-spacing:normal!important;
+}
+.brandEyebrow,.eyebrow,.summaryKickerV38,.summaryMetricSubV38,.summaryPanelHeadV38 p,.fieldHeroTextV35 p,.fieldCardHeadV35 p,.editorCardHead p,.statsHeroNew p,.summaryHeroCenterV38 p,.detailInfo p,
+.sub,.muted,.help,.summaryHint,.momentMeta,.charMeta,.shelfBookAuthor,.shelfExcerpt,.backupNote,.fieldTipV35,.fieldTinyNoteV35{
+  color:var(--muted)!important;
+}
+.summaryKickerV38,.brandEyebrow,.eyebrow{letter-spacing:.18em!important;text-transform:uppercase!important;font-size:12px!important;font-weight:900!important}
+
+/* inputs */
+.input,.textarea,.shelfSearchInput,select{
+  background:#fffdfa!important;
+  border:1px solid var(--line)!important;
+  color:var(--ink)!important;
+  box-shadow:none!important;
+  border-radius:20px!important;
+}
+.input::placeholder,.textarea::placeholder{color:#aaa095!important}
+.textarea{line-height:1.5!important}
+
+/* icons */
+.neonIcon,.navIcon,.bubbleIcon,.momentType .neonIcon,.accIcon .neonIcon,.fieldQuickIcon .neonIcon,.statRowIcon .neonIcon,.statCardIcon .neonIcon,.summaryMetricIconV38 .neonIcon,.shelfSearchWrap .neonIcon{
+  color:#8c8376!important;
+  filter:none!important;
+}
+.neonIcon svg *{stroke-width:1.75!important}
+.neonIcon .spark{stroke:var(--gold)!important}
+.iconBtn{background:rgba(255,253,248,.86)!important;border:1px solid var(--line)!important;color:#8c8376!important;box-shadow:var(--shadow-soft)!important;border-radius:50%!important}
+
+/* buttons & chips */
+.saveBtn,.doneBtn,.primaryPill,.primaryHeroBtn,.shelfAddBtn,.backupPrimaryNew,.pillBtn,.mainAction{
+  background:linear-gradient(135deg,#de956c,#e5a678)!important;
+  color:white!important;
+  border:0!important;
+  box-shadow:0 12px 24px rgba(223,147,103,.22)!important;
+}
+.secondaryPill,.secondaryAction,.toolBtn,.tinyAction,.backupSecondaryNew,.backupBtn.restore{
+  background:var(--card-soft)!important;
+  border:1px solid var(--line)!important;
+  color:#6a6258!important;
+  box-shadow:none!important;
+}
+.chip,.filterChip,.tagChipNew,.genderPill,.charToken,.softPill,.summarySoftPillV38,.summaryChipV38,.summaryNowBadgeV38,.fieldInfoChipV35,.moodBadgeNew{
+  background:#f7f1e8!important;
+  border:1px solid var(--line)!important;
+  color:#6f675d!important;
+  box-shadow:none!important;
+}
+.chip.on,.filterChip.on,.tagChipNew.on,.genderPill.on,.charToken.on,.toolBtn.on,.rateBtn.on{
+  background:#edf0e8!important;
+  border-color:#b9c2ac!important;
+  color:#304131!important;
+  box-shadow:none!important;
+}
+
+/* navigation */
+.nav{background:rgba(253,250,244,.96)!important;border:1px solid var(--line)!important;box-shadow:0 -10px 30px rgba(85,73,57,.10)!important;backdrop-filter:blur(16px)!important}
+.nav button{color:#8d8274!important;background:transparent!important}
+.nav button.on{background:rgba(255,255,255,.82)!important;color:#304131!important;box-shadow:inset 0 0 0 1px rgba(205,196,182,.62)!important}
+.nav button.on .navIcon{color:var(--accent)!important;filter:none!important}
+
+/* book covers */
+.cover,.editorialCoverCard{background:linear-gradient(180deg,#f8f5ef,#efe7dc 45%,#e8dccd 100%)!important;border:1px solid #d6cab9!important;box-shadow:0 12px 24px rgba(117,101,81,.10)!important;color:var(--ink)!important}
+.coverTitle{color:#27241f!important}.coverAuthor{color:#71675c!important}
+
+/* home progress */
+.goalArc{background:conic-gradient(from 220deg,#98a78a calc(var(--p)*1%),#ebe4da 0)!important;box-shadow:none!important;border:0!important}
+.goalArc:before{background:var(--card)!important}
+.goalPercent{color:var(--ink)!important;text-shadow:none!important;font-weight:720!important}
+.goalTiny{color:var(--muted)!important}
+.goalSmall{display:none!important}
+
+/* summary v40 refinement */
+.summaryPageV38{gap:16px!important;padding-bottom:10px!important}
+.summaryHeroV38{padding:18px!important;border-radius:34px!important}
+.summaryHeroTopV38{grid-template-columns:50px 1fr 58px!important;align-items:start!important}
+.summaryHeroCenterV38 h2{font-size:32px!important;line-height:1!important;margin:3px 0 7px!important}
+.summaryBookBoxV38{grid-template-columns:112px minmax(0,1fr)!important;gap:14px!important;align-items:center!important}
+.summaryCoverV38 .cover{min-height:166px!important;border-radius:24px!important}.summaryCoverV38 .coverTitle{font-size:22px!important}
+.summaryBookTitleV38{font-size:29px!important;line-height:1.04!important}
+.summaryPanelHeadV38 h3{font-size:25px!important;line-height:1.08!important}
+.summaryMetricRowV38{background:#fbf7f0!important;border:1px solid var(--line)!important;border-radius:24px!important;padding:15px!important;box-shadow:none!important}
+.summaryMetricControlV38{grid-template-columns:48px 1fr!important;gap:11px!important}
+.summaryMetricIconV38{background:#f2eadf!important;border:1px solid var(--line)!important;color:var(--accent-deep)!important;box-shadow:none!important}
+.summaryScaleV38 .rateBtn{background:#fffdfa!important;border:1px solid var(--line)!important;color:#c98b63!important;box-shadow:none!important;filter:none!important}
+.summaryScaleV38 .rateBtn.on{background:#edf0e8!important;border-color:#b9c2ac!important;color:#304131!important}
+.summaryScaleV38 .ratingSvg{filter:none!important;color:currentColor!important}
+.summaryPageV38 .charRow,.summaryPageV38 .moment,.summaryPageV38 .summaryAddBox{background:#fbf7f0!important;border-color:var(--line)!important;box-shadow:none!important}
+.summaryStampActionsV39{margin-top:12px!important}
+.summaryFooterV38{background:rgba(246,241,232,.92)!important;box-shadow:none!important}
+
+/* shelf search */
+.shelfSearchWrap{position:relative!important;display:flex!important;align-items:center!important;gap:10px!important;background:#fffdfa!important;border:1px solid var(--line)!important;border-radius:22px!important;padding:0 12px!important;box-shadow:none!important}
+.shelfSearchWrap .shelfSearchIcon{display:grid!important;place-items:center!important;color:#9e9485!important;flex:0 0 22px!important}
+.shelfSearchWrap .shelfSearchInput{border:0!important;background:transparent!important;padding-inline:0!important}
+
+/* stats backup */
+.backupPanelNew{background:linear-gradient(180deg,#fffdf8,#f7f1e8)!important}
+.backupPanelNew h3,.statsSectionHeadNew h3,.statsHeroNew h2{color:var(--sage-deep)!important}
+
+@media(max-width:420px){
+  .summaryHeroTopV38{grid-template-columns:46px 1fr 52px!important}
+  .summaryBookBoxV38{grid-template-columns:100px minmax(0,1fr)!important}
+  .summaryBookTitleV38{font-size:25px!important}
+  .summaryMetricControlV38{grid-template-columns:44px 1fr!important}
+  .summaryScaleV38 .rateBtn{min-width:42px!important;min-height:40px!important;padding:7px!important}
+}
 
 </style>
 </head>

@@ -30,3 +30,6 @@ V27: replaced app icons with the selected full-square neon book icon.
 
 
 V28: expanded character tags for in-progress updates and final summary, improved chip spacing, and restored manifest/service worker files for PWA install/update.
+
+
+V29: hotfix for shelf render crash caused by active filter count calculation.

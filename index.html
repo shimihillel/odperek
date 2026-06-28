@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b19">
-<title>עוד פרק אחד v19</title>
+<title>עוד פרק אחד v30</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
@@ -1255,6 +1255,109 @@ body:before{
 .charactersCard .chip,
 .summaryAddBox .chip{line-height:1.2;padding:10px 12px}
 
+
+
+/* v30 — editorial home prototype */
+body.homeEditorialMode{
+  background:#f3efe8;
+  color:#211c18;
+}
+body.homeEditorialMode:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 14% 16%,rgba(177,199,223,.28),transparent 24%),radial-gradient(circle at 84% 12%,rgba(225,196,155,.18),transparent 20%),linear-gradient(180deg,#f6f2ec 0%,#efe7dc 100%);z-index:-1}
+body.homeEditorialMode .app{padding-top:8px}
+body.homeEditorialMode .nav{
+  background:rgba(250,247,242,.92);
+  border:1px solid #dcd2c6;
+  box-shadow:0 -10px 30px rgba(36,31,27,.08);
+  backdrop-filter:blur(14px);
+}
+body.homeEditorialMode .nav button{color:#7f766d}
+body.homeEditorialMode .nav .navIcon{color:#8a7f75;opacity:1;filter:none}
+body.homeEditorialMode .nav .navIcon .spark{stroke:#c59c55}
+body.homeEditorialMode .nav button.on{background:#fff;color:#201b17;box-shadow:0 10px 20px rgba(36,31,27,.07)}
+body.homeEditorialMode .nav button.on .navIcon{color:#26211d;filter:none}
+body.homeEditorialMode .nav button.on .navIcon .spark{stroke:#c59c55}
+.homeEditorial{padding-bottom:12px}
+.homeEditorialTop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:6px 0 24px}
+.homeRoundBtn{width:42px;height:42px;border-radius:999px;border:1px solid #ddd2c5;background:rgba(255,252,247,.96);display:grid;place-items:center;box-shadow:0 8px 18px rgba(50,42,34,.05)}
+.homeRoundBtn .neonIcon{font-size:20px;color:#6f6458;filter:none}
+.homeRoundBtn .neonIcon .spark{stroke:#c59c55}
+.homeTitleBlock{flex:1;text-align:center;padding-top:4px}
+.homeKicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9a9085;font-weight:800}
+.homeDisplay{margin:8px 0 0;font-size:36px;line-height:1.02;font-weight:700;font-family:Georgia,"Times New Roman",serif;color:#1f1a16}
+.homeLead{margin:8px auto 0;max-width:270px;color:#8a8176;font-size:14px;line-height:1.45}
+.editorHeroCard,.editorSectionCard,.editorStatCard,.editorShelfCard{background:rgba(255,253,249,.98);border:1px solid #e5ddd2;border-radius:30px;box-shadow:0 14px 36px rgba(37,31,27,.07)}
+.editorHeroCard{padding:18px}
+.editorHeroGrid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:14px;align-items:stretch}
+.editorNowCard{padding:16px 16px 14px;border:1px solid #ebe2d6;border-radius:24px;background:linear-gradient(180deg,#fffdfa 0%,#f7f0e6 100%)}
+.editorEyebrow{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#f2ebe2;color:#6e655c;font-size:12px;font-weight:900;margin-bottom:12px}
+.editorNowGrid{display:grid;grid-template-columns:98px minmax(0,1fr);gap:14px;align-items:center}
+.homeEditorial .cover{min-height:148px;border-radius:18px;background:linear-gradient(180deg,#e8dccb 0%,#d8c1a6 100%);border:1px solid #d9cbb8;box-shadow:0 12px 26px rgba(60,50,38,.11);justify-content:flex-end;align-items:center;text-align:center;overflow:hidden;padding:12px 10px;color:#2b241e;isolation:isolate}
+.homeEditorial .cover:before{display:none}
+.homeEditorial .cover:after{display:none}
+.homeEditorial .coverInitial{color:rgba(73,58,45,.08);font-size:68px;bottom:14px}
+.homeEditorial .coverTitle{color:#221c17;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:19px;line-height:1.08;text-shadow:none}
+.homeEditorial .coverAuthor{color:#7b7269;font-weight:700;font-size:11px;line-height:1.2}
+.homeEditorial .coverDivider{width:58px;height:2px;background:linear-gradient(90deg,transparent,#bda58a,transparent);box-shadow:none;margin:4px auto}
+.editorBookMeta{min-width:0}
+.editorBookTitle{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.02;font-weight:700;color:#211b17;margin:0 0 6px}
+.editorBookAuthor{color:#7d7368;font-size:14px;font-weight:700}
+.editorProgressSummary{display:flex;align-items:end;gap:10px;margin-top:14px}
+.editorProgressValue{font-size:34px;line-height:.95;font-weight:600;color:#201b17;letter-spacing:-.03em}
+.editorProgressMeta{color:#8a7f74;font-size:13px;font-weight:800;margin-bottom:4px}
+.editorProgressBar{height:8px;border-radius:999px;background:#ebe6df;overflow:hidden;margin-top:12px}
+.editorProgressBar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#85add5,#6e95c0)}
+.editorMoodChip{margin-top:12px;display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:#fbf7f1;border:1px solid #e7ddd0;color:#655a50;font-size:13px;font-weight:800}
+.editorMoodChip .neonIcon{font-size:16px;color:#8e7a64;filter:none}
+.editorMoodChip .spark{stroke:#c59c55}
+.editorGoalCard{padding:16px;border-radius:24px;border:1px solid #ebe2d6;background:linear-gradient(180deg,#fbf8f4 0%,#f2ece4 100%);display:flex;flex-direction:column;justify-content:space-between}
+.editorGoalHeading{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:700;color:#26211c;margin:0}
+.editorGoalText{margin:6px 0 0;color:#8a8177;font-size:13px;line-height:1.4}
+.editorArcBox{position:relative;max-width:240px;margin:14px auto 8px;height:142px}
+.editorArcTrack{position:absolute;inset:0;border-radius:999px 999px 0 0;background:conic-gradient(from 180deg at 50% 100%, #6ea0cf 0deg var(--deg), #ece8e1 var(--deg) 180deg);-webkit-mask:radial-gradient(140% 160% at 50% 100%,transparent 59%,#000 60%);mask:radial-gradient(140% 160% at 50% 100%,transparent 59%,#000 60%)}
+.editorArcCenter{position:absolute;inset:auto 0 12px;text-align:center}
+.editorArcLabel{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:700;color:#26211c}
+.editorArcValue{font-size:58px;line-height:.9;font-weight:500;letter-spacing:-.05em;color:#181512;margin-top:6px}
+.editorArcSub{margin-top:5px;color:#8b8176;font-size:12px;font-weight:700}
+.editorContinueBtn{margin-top:auto;border:0;border-radius:18px;padding:14px 14px;background:#1f1a16;color:#fff;font-weight:900;font-size:18px;box-shadow:0 10px 20px rgba(31,26,22,.18)}
+.editorContinueBtn small{display:block;color:rgba(255,255,255,.72);font-size:12px;font-weight:700;margin-top:4px}
+.editorQuickGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.editorQuickBtn{border:1px solid #e5ddd2;background:rgba(255,253,249,.98);border-radius:22px;padding:14px 10px 16px;text-align:center;box-shadow:0 10px 24px rgba(37,31,27,.05);font-weight:800;color:#2f2823;min-height:98px}
+.editorQuickBtn.primary{background:#ede3d2}
+.editorQuickIcon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;margin:0 auto 10px;background:#f3ece2;color:#6e655c}
+.editorQuickIcon .neonIcon{font-size:20px;filter:none;color:#6e655c}
+.editorQuickIcon .spark{stroke:#c59c55}
+.editorSectionHead{display:flex;align-items:center;justify-content:space-between;margin:26px 2px 12px}
+.editorSectionTitle{font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:700;color:#221c17}
+.editorTextBtn{border:0;background:transparent;color:#7e7266;font-weight:800;padding:4px 0}
+.editorTimeline{display:grid;gap:12px}
+.editorMomentCard{padding:16px 18px;display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.editorMomentIcon{width:44px;height:44px;border-radius:14px;background:#f3ece2;display:grid;place-items:center;color:#6f6459}
+.editorMomentIcon .neonIcon{font-size:21px;filter:none;color:#6f6459}
+.editorMomentIcon .spark{stroke:#c59c55}
+.editorMomentMeta{color:#958b81;font-size:12px;font-weight:800;margin-bottom:5px}
+.editorMomentText{color:#2b241f;font-weight:700;line-height:1.45}
+.editorShelfRow{display:flex;gap:12px;overflow:auto;padding-bottom:6px}
+.editorShelfCard{flex:0 0 164px;padding:12px;cursor:pointer}
+.editorShelfCard .editorShelfMiniCover{margin-bottom:11px}
+.editorShelfCard .editorShelfMiniCover .cover{min-height:116px;border-radius:16px}
+.editorShelfTitle{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.06;font-weight:700;color:#211b17;margin:0 0 4px}
+.editorShelfMeta{color:#7c7268;font-size:12px;font-weight:700;line-height:1.35}
+.editorShelfPill{margin-top:8px;display:inline-flex;padding:6px 10px;border-radius:999px;background:#f3ece2;color:#695e53;font-size:11px;font-weight:800}
+.editorAddBook{display:grid;place-items:center;min-height:220px;border:1.5px dashed #d9cec0;background:rgba(255,251,245,.7);color:#6f665c}
+.editorAddBook strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:22px;color:#29231e;margin-top:6px}
+.editorEmptyState{padding:28px 20px;text-align:center}
+.editorEmptyState h3{margin:0 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:30px;color:#1f1a16;font-weight:700}
+.editorEmptyState p{margin:0;color:#857c71;line-height:1.6}
+.editorEmptyState .editorContinueBtn{margin-top:18px;width:100%;max-width:280px}
+@media (max-width:380px){
+  .homeDisplay{font-size:32px}
+  .editorHeroGrid{grid-template-columns:1fr}
+  .editorNowGrid{grid-template-columns:90px 1fr}
+  .editorQuickGrid{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .editorArcValue{font-size:52px}
+  .editorSectionTitle{font-size:26px}
+}
+
 </style>
 </head>
 <body>
@@ -1345,10 +1448,12 @@ function id(){return Date.now()+'-'+Math.random().toString(36).slice(2)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function pct(n){return Math.max(0,Math.min(100,parseInt(n)||0))}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),1400)}
+
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.screen===id));
+  document.body.classList.toggle('homeEditorialMode', id==='home');
   currentScreen=id;
   if(id==='home')renderHome();
   if(id==='field')renderField();
@@ -1357,6 +1462,7 @@ function show(id){
   if(id==='stats')renderStats();
   scrollTo(0,0);
 }
+
 
 function uiIcon(name,extra=''){
   const icons={
@@ -1398,49 +1504,86 @@ function render(){
   renderShelf();
   renderStats();
 }
+
+function homeTopHtml(){
+  return `<div class="homeEditorialTop">
+    <button class="homeRoundBtn" aria-label="וייב">${uiIcon('spark')}</button>
+    <div class="homeTitleBlock">
+      <div class="homeKicker">Reading now</div>
+      <h1 class="homeDisplay">הספריה שלי</h1>
+      <p class="homeLead">לעקוב אחרי הספר הפעיל, לעדכן רגעים בזמן אמת, ולשמור הכול במקום אחד.</p>
+    </div>
+    <button class="homeRoundBtn" aria-label="תפריט">${uiIcon('menu')}</button>
+  </div>`;
+}
 function renderHome(){
   const c=S.current;
   const recent=S.books.slice(0,8);
-  document.getElementById('home').innerHTML=topHtml()+`
+  document.getElementById('home').innerHTML=`<div class="homeEditorial">${homeTopHtml()}
     ${c?currentHome(c):emptyHome()}
-    <div class="sectionHead timelineHead"><div class="sectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="textBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
-    ${c&&c.updates.length?`<div class="homeTimeline">${c.updates.slice(0,3).map(timelineMomentHtml).join('')}</div>`:`<div class="card empty homeEmptyMoment">עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</div>`}
-    <div class="sectionHead"><div class="sectionTitle">המדף שלי</div><button class="textBtn" onclick="show('shelf')">הכל</button></div>
-    ${recent.length?`<div class="shelfRow">${recent.map(bookSmall).join('')}<button class="bookSmall addBookSmall" onclick="startNewBook()">+<br>הוסף ספר</button></div>`:`<div class="card empty">המדף מחכה לספר הראשון.</div>`}
-  `;
+    <div class="editorSectionHead"><div class="editorSectionTitle">רגעים אחרונים מהשטח</div>${c?`<button class="editorTextBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
+    ${c&&c.updates.length?`<div class="editorTimeline">${c.updates.slice(0,3).map(timelineMomentHtmlEditorial).join('')}</div>`:`<div class="editorSectionCard editorEmptyState"><p>עוד אין עדכונים מהשטח. כשהדרמה תתחיל — היא תופיע פה.</p></div>`}
+    <div class="editorSectionHead"><div class="editorSectionTitle">המדף שלי</div><button class="editorTextBtn" onclick="show('shelf')">הכל</button></div>
+    ${recent.length?`<div class="editorShelfRow">${recent.map(bookSmallEditorial).join('')}<button class="editorShelfCard editorAddBook" onclick="startNewBook()"><div>＋<strong>להוסיף ספר</strong><div style="margin-top:6px;font-size:12px">למדף או לקריאה עכשיו</div></div></button></div>`:`<div class="editorSectionCard editorEmptyState"><h3>המדף מחכה</h3><p>נתחיל מספר אחד ונבנה ממנו ספרייה קטנה עם כל הרגעים, ההערות והסיכומים שלך.</p><button class="editorContinueBtn" onclick="startNewBook()">להתחיל ספר</button></div>`}
+  </div>`;
 }
 function currentHome(c){
-  const mood=c.lastMood||'מה הוייב?';
-  return `<div class="readingDashboard v19Home v22Home">
-    <div class="dashStage heroStage heroStageV22">
-      <div class="floatingBook heroBook" onclick="goField('percent')">
-        <div class="bookInitial">${esc(firstLetter(c.title))}</div>
-        <div class="bookNowBadge">קוראת עכשיו</div>
-        <div class="bookGlowTitle">${esc(c.title)}</div>
-        <div class="bookGlowDivider"></div>
-        <div class="bookGlowAuthor">${esc(c.author)}</div>
+  const progress=pct(c.percent);
+  const mood=esc(c.lastMood||'מה הוייב?');
+  const totalBooks=Math.max(S.books.length,1);
+  const remaining=Math.max(0,100-progress);
+  return `<div class="editorHeroCard">
+    <div class="editorHeroGrid">
+      <div class="editorNowCard">
+        <div class="editorEyebrow">קוראת עכשיו</div>
+        <div class="editorNowGrid">
+          <div class="editorCover">${coverHtml(c.title,c.author)}</div>
+          <div class="editorBookMeta">
+            <div class="editorBookTitle">${esc(c.title)}</div>
+            <div class="editorBookAuthor">${esc(c.author||'')}</div>
+            <div class="editorProgressSummary"><div class="editorProgressValue">${progress}%</div><div class="editorProgressMeta">התקדמות בקריאה<br>נשארו בערך ${remaining}%</div></div>
+            <div class="editorProgressBar"><span style="width:${progress}%"></span></div>
+            <button class="editorMoodChip" onclick="goField('mood')">${uiIcon('spark')} כרגע: ${mood}</button>
+          </div>
+        </div>
       </div>
-      <div class="progressStack progressStackV22">
-        <div class="progressNumber">${pct(c.percent)}%</div>
-        <div class="progressLabel">התקדמות בקריאה</div>
-        <div class="progressLine"><span style="width:${pct(c.percent)}%"></span></div>
-        <button class="tinyAction" onclick="goField('percent')">לעדכן אחוז</button>
+      <div class="editorGoalCard">
+        <div>
+          <p class="editorGoalHeading">Reading goals</p>
+          <p class="editorGoalText">כל מה שחשוב בספר הפעיל שלך — במקום אחד, בלי לחפש בין מסכים.</p>
+          <div class="editorArcBox">
+            <div class="editorArcTrack" style="--deg:${progress*1.8}deg"></div>
+            <div class="editorArcCenter">
+              <div class="editorArcLabel">Today’s Reading</div>
+              <div class="editorArcValue">${progress}%</div>
+              <div class="editorArcSub">${totalBooks} ספרים נשמרו במדף שלך</div>
+            </div>
+          </div>
+        </div>
+        <button class="editorContinueBtn" onclick="goField('percent')">להמשיך לקרוא<small>${esc(c.title)} · ${esc(c.author||'')}</small></button>
       </div>
     </div>
-    <div class="moodStatus" onclick="goField('mood')"><span>${uiIcon('spark')}</span><b>כרגע:</b> ${esc(mood)}</div>
-    <div class="floatActions heroActions">
-      <button class="bubbleAction" onclick="goField('mood')"><span class="bubbleIcon">${uiIcon('chat')}</span>מה הוייב?</button>
-      <button class="bubbleAction primary" onclick="goField()"><span class="bubbleIcon">${uiIcon('book')}</span>עדכון מהשטח</button>
-      <button class="bubbleAction" onclick="goSummary()"><span class="bubbleIcon">${uiIcon('check')}</span>סיימתי</button>
+    <div class="editorQuickGrid">
+      <button class="editorQuickBtn" onclick="goSummary()"><div class="editorQuickIcon">${uiIcon('check')}</div>סיימתי</button>
+      <button class="editorQuickBtn primary" onclick="goField()"><div class="editorQuickIcon">${uiIcon('book')}</div>עדכון מהשטח</button>
+      <button class="editorQuickBtn" onclick="goField('mood')"><div class="editorQuickIcon">${uiIcon('chat')}</div>מה הוייב?</button>
     </div>
   </div>`;
 }
 function emptyHome(){
-  return `<div class="readingDashboard">
-    <div class="card empty" style="border-radius:34px;padding:34px 18px">אין ספר פעיל כרגע.<br>בואי נכניס אחד לזירה.</div>
-    <button class="bubbleAction primary" onclick="startNewBook()" style="width:100%;margin-top:16px">להתחיל ספר</button>
+  return `<div class="editorHeroCard editorEmptyState">
+    <h3>ברוכה הבאה למדף הקריאה שלך</h3>
+    <p>האפליקציה מוכנה לקבל ספר חדש. ברגע שמכניסים אותו — אפשר להתחיל לעדכן אחוזים, רגעים, דמויות וכל הדרמה תוך כדי הקריאה.</p>
+    <button class="editorContinueBtn" onclick="startNewBook()">להתחיל ספר ראשון</button>
   </div>`;
 }
+function timelineMomentHtmlEditorial(u){
+  return `<div class="editorSectionCard editorMomentCard"><div class="editorMomentIcon">${momentIcon(u.type)}</div><div><div class="editorMomentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="editorMomentText">${esc(u.text||u.label||'')}</div></div></div>`;
+}
+function bookSmallEditorial(b){
+  return `<div class="editorShelfCard" onclick="openBook('${b.id}')"><div class="editorShelfMiniCover">${coverHtml(b.title,b.author)}</div><div class="editorShelfTitle">${esc(b.title)}</div><div class="editorShelfMeta">${esc(b.author||'')}</div>${b.bottomLine?`<div class="editorShelfPill">${esc(b.bottomLine)}</div>`:''}</div>`;
+}
+
 function moodEmoji(m){
   if(m.includes('מכורה'))return '😍';
   if(m.includes('עצבנית'))return '😤';
@@ -1851,7 +1994,7 @@ function renderShelf(){
   };
   const topStamp=common(books.map(b=>b.bottomLine||''));
   const topAuthor=common(books.map(b=>b.author||''));
-  const activeFiltersCount=[...shelfFilters.bottomLine,...shelfFilters.stars,...shelfFilters.heat,...shelfFilters.cry,...shelfFilters.speed,...shelfFilters.charTag].length;
+  const activeFiltersCount=[shelfFilters.bottomLine,shelfFilters.stars,shelfFilters.heat,shelfFilters.cry,shelfFilters.speed,shelfFilters.char].filter(Boolean).length;
   document.getElementById('shelf').innerHTML=topHtml()+`
     <div class="shelfHeroV26">
       <div class="shelfHeroHead">
@@ -2324,6 +2467,7 @@ function restoreFromFile(file){
 }
 
 render();
+show(currentScreen);
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>
 </body>

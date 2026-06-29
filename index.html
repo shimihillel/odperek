@@ -2141,6 +2141,46 @@ body{background:
 .coverTinyBtnV49{border:1px solid #dccfbe;background:#fffaf3;color:#6a6258;border-radius:999px;padding:12px 16px;font-weight:900;box-shadow:none}.homeSecondaryActionsV46{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}.fieldCoverActionsV49{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 8px}.fieldCoverActionsV49 button{border:1px solid #dccfbe;background:#fffaf3;color:#6a6258;border-radius:999px;padding:9px 12px;font-weight:900}.coverEditGridV49{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:16px;align-items:center}.coverEditPreviewV49 .genericCoverV49{min-height:300px!important}.coverEditActionsV49{display:grid;gap:10px}.goalTinyInside{display:none!important}.goalArc{width:138px!important;height:138px!important;margin:16px auto!important}.goalPercent{font-size:48px!important;line-height:1!important}.fieldAbandonBtnV45{display:inline-flex!important;align-items:center;justify-content:center;min-height:0!important;width:auto!important;max-width:max-content!important;border-radius:999px!important;padding:9px 13px!important;font-size:13px!important;background:#f7f0e6!important;color:#6a6258!important;border:1px solid #dccfbe!important;box-shadow:none!important}
 @media(max-width:430px){.genericCoverV49.cover{min-height:210px!important}.heroBookPanel .genericCoverV49{min-height:260px!important}.detailHeroNew .genericCoverV49{min-height:280px!important}.coverEditGridV49{grid-template-columns:1fr}.coverEditPreviewV49{max-width:210px;margin:0 auto}.goalArc{width:128px!important;height:128px!important}.goalPercent{font-size:42px!important}}
 
+
+/* v50 — real gallery covers only */
+.realCoverV50.cover{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:2/3!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  padding:0!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  background:#f4eadf!important;
+  border:1px solid #d8c9b7!important;
+  box-shadow:0 14px 28px rgba(89,72,52,.12)!important;
+  display:grid!important;
+  place-items:center!important;
+}
+.realCoverV50.cover:before,.realCoverV50.cover:after{display:none!important;content:none!important}
+.realCoverV50 .coverTextV49,.realCoverV50 .coverTitle,.realCoverV50 .coverAuthor,.realCoverV50 .coverDivider,.realCoverV50 .coverInitial,.realCoverV50 .coverArtV49{display:none!important}
+.coverPhotoV50{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:1!important;filter:none!important}
+.hasPhotoV50:before{display:none!important;content:none!important;background:none!important}
+.coverPlaceholderV50{width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:12px;color:#8a7f72;background:linear-gradient(180deg,#fffaf3,#f2e7d8);font-weight:900;text-align:center;padding:18px;line-height:1.25}
+.coverPlaceholderIconV50{font-size:34px;color:#b99761;opacity:.92}
+.coverPlaceholderIconV50 .neonIcon{filter:none!important}
+.heroBookPanel .realCoverV50{width:min(58vw,232px)!important;margin:0 auto!important;border-radius:24px!important}
+.miniShelfBook .realCoverV50{width:min(30vw,124px)!important;margin:0 auto!important;border-radius:18px!important}
+.shelfCardNew .realCoverV50{width:100%!important;border-radius:20px!important}
+.detailHeroNew .realCoverV50{width:min(54vw,238px)!important;margin:0 auto!important;border-radius:24px!important}
+.fieldHeaderCover .realCoverV50,.fieldHeroCoverV35 .realCoverV50{width:110px!important;margin:0 auto!important;border-radius:18px!important}
+.summaryCoverV38 .realCoverV50,.summaryCoverV37 .realCoverV50{width:132px!important;margin:0 auto!important;border-radius:18px!important}
+.coverEditPreviewV49 .realCoverV50{width:min(70vw,230px)!important;margin:0 auto!important;border-radius:24px!important}
+.coverTinyBtnV49{font-size:14px!important;padding:10px 14px!important}
+@media(max-width:430px){
+  .heroBookPanel .realCoverV50{width:min(54vw,210px)!important}
+  .miniShelfBook .realCoverV50{width:min(32vw,112px)!important}
+  .detailHeroNew .realCoverV50{width:min(58vw,220px)!important}
+  .coverEditPreviewV49 .realCoverV50{width:min(62vw,210px)!important}
+}
+
 </style>
 </head>
 <body>
@@ -2408,12 +2448,9 @@ function coverVariantFrom(title='',author='',seed=''){
   return h%4;
 }
 function coverHtml(title,author,item={}){
-  const t=title||'עוד פרק אחד';
-  const variant=(item&&(item.coverVariant===0||item.coverVariant))?Math.max(0,Math.min(3,parseInt(item.coverVariant)||0)):coverVariantFrom(t,author,item&&item.id);
   const img=item&&item.coverImage?String(item.coverImage):'';
-  return `<div class="cover editorialCoverCard genericCoverV49 coverVar${variant} ${img?'customPhotoCoverV49':''}">
-    ${img?`<img class="coverPhotoV49" src="${esc(img)}" alt="">`:`<div class="coverArtV49" aria-hidden="true"><span class="artSunV49"></span><span class="artPathV49"></span><span class="artBookV49"></span><span class="artBranchV49"><i></i><i></i><i></i><i></i></span><span class="artMoonV49"></span><span class="artSparkV49 s1"></span><span class="artSparkV49 s2"></span><span class="artSparkV49 s3"></span></div>`}
-    <div class="coverTextV49"><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>
+  return `<div class="cover editorialCoverCard realCoverV50 ${img?'hasPhotoV50':'emptyCoverV50'}" aria-label="כריכת ספר">
+    ${img?`<img class="coverPhotoV49 coverPhotoV50" src="${esc(img)}" alt="">`:`<div class="coverPlaceholderV50" aria-hidden="true"><span class="coverPlaceholderIconV50">${uiIcon('book')}</span><span>להוספת כריכה</span></div>`}
   </div>`;
 }
 function firstLetter(s){return String(s||'ע').trim().charAt(0)||'ע'}
@@ -2487,7 +2524,8 @@ function currentHome(c){
       <button class="quickCardNew" onclick="goField('character')"><span class="quickIcon">${uiIcon('users')}</span><span class="quickLabel">דמות/רגע</span><span class="quickSub">לשמור משהו שקפץ</span></button>
     </div>
     <div class="homeSecondaryActionsV46">
-      <button class="coverTinyBtnV49" onclick="cycleCurrentCover()">החלפת איור כריכה</button><button class="coverTinyBtnV49" onclick="chooseCoverImageForCurrent()">תמונה מהגלריה</button><button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
+      ${c.coverImage?`<button class="coverTinyBtnV49" onclick="chooseCoverImageForCurrent()">החלפת כריכה</button><button class="coverTinyBtnV49" onclick="clearCoverImageForCurrent()">הסרת כריכה</button>`:`<button class="coverTinyBtnV49" onclick="chooseCoverImageForCurrent()">הוספת כריכה מהגלריה</button>`}
+      <button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
     </div>
   </div>`;
 }
@@ -2619,7 +2657,7 @@ function renderField(){
               <span class="fieldInfoChipV35">${esc(mood)}</span>
               <span class="fieldInfoChipV35">${updatesCount} רגעים שמורים</span>
             </div>
-            <div class="fieldCoverActionsV49"><button onclick="cycleCurrentCover()">החלפת איור</button><button onclick="chooseCoverImageForCurrent()">תמונה מהגלריה</button></div><button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
+            <div class="fieldCoverActionsV49">${c.coverImage?`<button onclick="chooseCoverImageForCurrent()">החלפת כריכה</button><button onclick="clearCoverImageForCurrent()">הסרת כריכה</button>`:`<button onclick="chooseCoverImageForCurrent()">הוספת כריכה מהגלריה</button>`}</div><button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
           </div>
           <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author,c)}</div>
         </div>
@@ -3358,10 +3396,10 @@ function renderBookEdit(bookId){
         </div>
       </section>
       <section class="editPanelV42 coverEditPanelV49">
-        <div class="summaryPanelHeadV38"><h3>כריכה</h3><p>ברירת המחדל היא כריכה מעוצבת, ואפשר להחליף וריאציה או להעלות תמונה מהגלריה.</p></div>
+        <div class="summaryPanelHeadV38"><h3>כריכה</h3><p>כריכה אמיתית מהגלריה. שם הספר והסופרת נשארים מחוץ לכריכה, כדי שהתמונה תישאר נקייה.</p></div>
         <div class="coverEditGridV49">
           <div class="coverEditPreviewV49">${coverHtml(d.title||b.title,d.author||b.author,d)}</div>
-          <div class="coverEditActionsV49"><button class="secondaryAction" onclick="cycleEditBookCover('${bookId}')">החלפת איור אוטומטי</button><button class="secondaryAction" onclick="chooseCoverImageForEdit('${bookId}')">תמונה מהגלריה</button><button class="secondaryAction" onclick="clearEditBookCover('${bookId}')">חזרה לכריכה מעוצבת</button></div>
+          <div class="coverEditActionsV49"><button class="secondaryAction" onclick="chooseCoverImageForEdit('${bookId}')">בחירת תמונה מהגלריה</button><button class="secondaryAction" onclick="clearEditBookCover('${bookId}')">הסרת כריכה</button></div>
         </div>
       </section>
       <section class="editPanelV42">
@@ -3455,7 +3493,12 @@ function cycleCurrentCover(){
 }
 function chooseCoverImageForCurrent(){
   if(!S.current)return;
-  pickCoverImage(data=>{S.current.coverImage=data;save();render();toast('התמונה נשמרה ככריכה');});
+  pickCoverImage(data=>{S.current.coverImage=data;save();render();toast('הכריכה נשמרה');});
+}
+function clearCoverImageForCurrent(){
+  if(!S.current)return;
+  S.current.coverImage='';
+  save();render();toast('הכריכה הוסרה');
 }
 function cycleEditBookCover(bookId){
   editBookDraft=editBookDraft||{};
@@ -3465,13 +3508,13 @@ function cycleEditBookCover(bookId){
 }
 function chooseCoverImageForEdit(bookId){
   editBookDraft=editBookDraft||{};
-  pickCoverImage(data=>{editBookDraft.coverImage=data;renderBookEdit(bookId);toast('התמונה נוספה לכריכה');});
+  pickCoverImage(data=>{editBookDraft.coverImage=data;renderBookEdit(bookId);toast('הכריכה נוספה');});
 }
 function clearEditBookCover(bookId){
   editBookDraft=editBookDraft||{};
   editBookDraft.coverImage='';
-  editBookDraft.coverVariant=editBookDraft.coverVariant||0;
   renderBookEdit(bookId);
+  toast('הכריכה הוסרה');
 }
 
 function confirmDeleteBook(bookId){

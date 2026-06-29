@@ -2196,6 +2196,114 @@ body{background:
 .shelfCardNew .coverPlaceholderV50,.miniShelfBook .coverPlaceholderV50{gap:8px;padding:12px}
 @media(max-width:430px){.bookCoverActionsV51{justify-content:center}.detailHeroNew .bookCoverActionsV51{justify-content:center}}
 
+
+
+/* v52 — summary cover + home action balance hotfix */
+/* "סיימתי" במסך הבית חוזר לאותו משקל כמו שאר הכרטיסים */
+.actionsV48 .quickCardNew.primary,
+.quickCardNew.primary{
+  background:var(--card)!important;
+  border-color:var(--line)!important;
+  box-shadow:0 10px 24px rgba(85,73,57,.06)!important;
+}
+.actionsV48 .quickCardNew.primary .quickIcon,
+.quickCardNew.primary .quickIcon{
+  background:#f1ebe2!important;
+  border-color:var(--line)!important;
+}
+
+/* מסך סיימתי: הכריכה היא תמונה נקייה, קטנה ומסודרת — לא נכנסת לתוך הטקסט */
+.summaryHeroV38{
+  overflow:hidden!important;
+  padding-bottom:22px!important;
+}
+.summaryHeroTopV38{
+  align-items:start!important;
+  gap:10px!important;
+}
+.summaryHeroCenterV38{
+  min-width:0!important;
+}
+.summaryHeroCenterV38 h2{
+  margin-bottom:4px!important;
+}
+.summaryHeroCenterV38 p{
+  max-width:440px!important;
+  margin-inline:auto!important;
+  line-height:1.38!important;
+}
+.summaryBookBoxV38{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:14px!important;
+  align-items:center!important;
+  justify-items:center!important;
+  text-align:center!important;
+  margin-top:18px!important;
+  direction:rtl!important;
+}
+.summaryBookMetaV38{
+  order:1!important;
+  min-width:0!important;
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:5px!important;
+}
+.summaryCoverV38{
+  order:2!important;
+  width:100%!important;
+  display:flex!important;
+  justify-content:center!important;
+}
+.summaryCoverV38 .realCoverV50,
+.summaryCoverV37 .realCoverV50{
+  width:min(42vw,148px)!important;
+  max-width:148px!important;
+  border-radius:18px!important;
+  margin:0 auto!important;
+  box-shadow:0 12px 26px rgba(64,50,33,.14)!important;
+}
+.summaryBookTitleV38{
+  font-size:clamp(25px,7vw,36px)!important;
+  line-height:1.04!important;
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+}
+.summaryBookAuthorV38{
+  font-size:16px!important;
+  line-height:1.2!important;
+}
+.summaryNowBadgeV38{
+  margin-bottom:3px!important;
+  max-width:100%!important;
+}
+.summaryStatPillsV38{
+  justify-content:center!important;
+  gap:8px!important;
+  max-width:100%!important;
+}
+.summaryChipV38{
+  min-width:50px!important;
+  text-align:center!important;
+}
+.summaryFooterV38{
+  bottom:88px!important;
+  padding:8px 0 4px!important;
+}
+@media(max-width:430px){
+  .summaryHeroV38{padding:18px 14px 20px!important;border-radius:28px!important;}
+  .summaryHeroTopV38{grid-template-columns:44px minmax(0,1fr) 48px!important;}
+  .summaryHeroCenterV38 h2{font-size:34px!important;}
+  .summaryHeroCenterV38 p{font-size:15px!important;}
+  .summaryCoverV38 .realCoverV50,.summaryCoverV37 .realCoverV50{width:min(40vw,132px)!important;max-width:132px!important;}
+  .summaryBookTitleV38{font-size:29px!important;}
+  .summaryBookBoxV38{gap:12px!important;margin-top:14px!important;}
+  .summaryStatPillsV38{gap:7px!important;}
+  .summarySoftPillV38{font-size:11px!important;padding:6px 9px!important;}
+}
+
 </style>
 </head>
 <body>

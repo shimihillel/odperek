@@ -1860,6 +1860,70 @@ body{background:
   .homePageNew .miniShelfBook .coverTitle{font-size:18px!important}
 }
 
+
+
+/* ===== v42 — shelf search real fix + edit book ===== */
+.shelfSearchWrap{
+  position:relative!important;
+  display:block!important;
+  direction:rtl!important;
+  min-height:58px!important;
+  padding:0!important;
+  background:#fffdfa!important;
+  border:1px solid var(--line)!important;
+  border-radius:22px!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.shelfSearchWrap .shelfSearchIcon{
+  position:absolute!important;
+  left:18px!important;
+  right:auto!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:24px!important;
+  height:24px!important;
+  display:grid!important;
+  place-items:center!important;
+  pointer-events:none!important;
+  color:#9e9485!important;
+  z-index:2!important;
+}
+.shelfSearchWrap .shelfSearchIcon .neonIcon{width:20px!important;height:20px!important;color:#9e9485!important}
+.shelfSearchWrap .shelfSearchInput{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:58px!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:16px 18px 16px 56px!important;
+  margin:0!important;
+  direction:rtl!important;
+  text-align:right!important;
+  line-height:1.35!important;
+  font-size:16px!important;
+  color:var(--ink)!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.shelfSearchWrap .shelfSearchInput::placeholder{color:#aaa095!important;opacity:1!important;font-size:15px!important}
+.homePageNew .miniShelfGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;align-items:start!important}
+.homePageNew .miniShelfBook{min-width:0!important;display:block!important}
+.shelfGridEditorial{align-items:start!important}
+.shelfCardNew{min-width:0!important;overflow:hidden!important}
+.editBookPageV42{display:flex;flex-direction:column;gap:16px;padding-bottom:10px}
+.editHeroV42,.editPanelV42{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.07)}
+.editHeroTopV42{display:grid;grid-template-columns:52px 1fr 52px;align-items:start;gap:12px}
+.editHeroCenterV42{text-align:center}.editHeroCenterV42 h2{margin:2px 0 6px;font-size:30px;line-height:1;color:#304131;font-weight:950}.editHeroCenterV42 p{margin:0;color:var(--muted);font-size:14px;line-height:1.4;font-weight:760}
+.editFormGridV42{display:grid;gap:14px}.editFieldV42 label{display:block;font-size:14px;font-weight:950;color:#304131;margin-bottom:7px}.editFieldV42 .input,.editFieldV42 .textarea{width:100%;border-radius:18px!important}.editFieldV42 .textarea{min-height:105px}
+.editStampBoxV42{display:flex;flex-wrap:wrap;gap:9px}.editStampActionsV42{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}.editRatingsGridV42{display:grid;gap:12px}.editRatingRowV42{background:#fbf7f0;border:1px solid var(--line);border-radius:22px;padding:14px}.editRatingTitleV42{font-size:16px;font-weight:950;color:#304131;margin-bottom:10px}.editRatingBtnsV42{display:flex;gap:8px;flex-wrap:wrap}.editRatingBtnsV42 .rateBtn{background:#fffdfa!important;border:1px solid var(--line)!important;border-radius:15px!important;color:#c98b63!important;box-shadow:none!important;min-width:46px;min-height:42px}.editRatingBtnsV42 .rateBtn.on{background:#edf0e8!important;border-color:#b9c2ac!important;color:#304131!important}
+.editFooterV42{position:sticky;bottom:88px;background:rgba(246,241,232,.92);backdrop-filter:blur(12px);padding-top:6px;display:grid;gap:9px}.editFooterV42 .doneBtn{width:100%;border-radius:22px;padding:16px;font-size:18px}.editFooterV42 .secondaryAction{width:100%;margin-top:0}
+.detailEditBtnV42{background:#f2eadf!important;border:1px solid var(--line)!important;color:#6a6258!important;box-shadow:none!important}
+@media(max-width:420px){.editHeroTopV42{grid-template-columns:48px 1fr 48px}.editHeroCenterV42 h2{font-size:27px}.shelfSearchWrap .shelfSearchInput::placeholder{font-size:14px}}
+
 </style>
 </head>
 <body>
@@ -1895,6 +1959,7 @@ let shelfSearch='';
 let shelfSort='recent';
 let shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
 let shelfFilterOpen=false;
+let editBookDraft=null;
 let shelfSortOpen=false;
 
 function uniqueList(arr){
@@ -1931,6 +1996,15 @@ function addCustomStampTag(){
   S.customStampTags=uniqueList([...(S.customStampTags||[]), tag]);
   save();
   renderSummary();
+  toast('החותמת נשמרה');
+}
+function addCustomStampTagFromEdit(bookId){
+  const tag=(prompt('איזו חותמת תרצי להוסיף?')||'').trim();
+  if(!tag) return;
+  S.customStampTags=uniqueList([...(S.customStampTags||[]), tag]);
+  if(editBookDraft) editBookDraft.bottomLine=tag;
+  save();
+  renderBookEdit(bookId);
   toast('החותמת נשמרה');
 }
 
@@ -2643,7 +2717,7 @@ function renderShelf(){
         <button class="pillBtn shelfAddBtn" onclick="startNewBook()">+ ספר חדש</button>
       </div>
       <div class="searchPanelNew">
-        <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש לפי ספר, סופרת, דמות או רגע מהשטח" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
+        <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש במדף" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
         <div class="sortBarNew">
           <button class="toolBtn ${shelfSort==='recent'?'on':''}" onclick="setShelfSort('recent')">הכי חדש</button>
           <button class="toolBtn ${shelfSort==='love'?'on':''}" onclick="setShelfSort('love')">הכי אהבתי</button>
@@ -2700,7 +2774,7 @@ function filterPanelHtml(){
   return `
     <div class="filterGroup">
       <div class="filterTitle">שורה תחתונה</div>
-      <div class="filterChips">${BOTTOM_LINES.map(x=>filterChip('bottomLine',x,x)).join('')}</div>
+      <div class="filterChips">${allStampTags().map(x=>filterChip('bottomLine',x,x)).join('')}</div>
     </div>
     <div class="filterGroup">
       <div class="filterTitle">דירוג</div>
@@ -2827,7 +2901,7 @@ function openBook(bookId){
             <div class="detailStat"><small>שבר אותי</small><b>${b.cry?iconStack('broken',b.cry):'—'}</b></div>
             <div class="detailStat"><small>קצב</small><b>${b.speed?SPEED[b.speed-1]:'—'}</b></div>
           </div>
-          <div class="editorActionsRow" style="margin-top:16px"><button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
+          <div class="editorActionsRow" style="margin-top:16px"><button class="secondaryAction detailEditBtnV42" onclick="editBook('${b.id}')">עריכה</button><button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
         </div>
       </div>
       <div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
@@ -2836,6 +2910,79 @@ function openBook(bookId){
     </div>`;
   scrollTo(0,0);
 }
+
+function editBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  editBookDraft={
+    title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',
+    stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0
+  };
+  renderBookEdit(bookId);
+}
+function renderBookEdit(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const d=editBookDraft||{title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0};
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('shelf').classList.add('active');
+  currentScreen='bookEdit';
+  document.getElementById('shelf').innerHTML=`
+    <div class="editBookPageV42">
+      <section class="editHeroV42">
+        <div class="editHeroTopV42">
+          <button class="iconBtn" onclick="openBook('${bookId}')">${uiIcon('arrow')}</button>
+          <div class="editHeroCenterV42"><div class="brandEyebrow">Edit book</div><h2>עריכת ספר</h2><p>אפשר לעדכן פרטים בלי להוציא אותו מהמדף.</p></div>
+          <button class="iconBtn" onclick="saveBookEdit('${bookId}')">${uiIcon('check')}</button>
+        </div>
+      </section>
+      <section class="editPanelV42">
+        <div class="editFormGridV42">
+          <div class="editFieldV42"><label>שם הספר</label><input id="editBookTitle" class="input" value="${esc(d.title)}" oninput="setEditBookDraft('title',this.value,false)"></div>
+          <div class="editFieldV42"><label>סופרת</label><input id="editBookAuthor" class="input" value="${esc(d.author)}" oninput="setEditBookDraft('author',this.value,false)"></div>
+          <div class="editFieldV42"><label>חותמת</label><div class="editStampBoxV42">${allStampTags().map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setEditBookDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div><div class="editStampActionsV42"><button class="secondaryPill" onclick="addCustomStampTagFromEdit('${bookId}')">+ חותמת משלי</button></div></div>
+          <div class="editFieldV42"><label>זה היה ספר על…</label><textarea id="editBookAbout" class="textarea" oninput="setEditBookDraft('about',this.value,false)" placeholder="מה הסיפור בגדול?">${esc(d.about)}</textarea></div>
+          <div class="editFieldV42"><label>והוא השאיר אותי…</label><textarea id="editBookMadeMe" class="textarea" oninput="setEditBookDraft('madeMe',this.value,false)" placeholder="מה זה עשה לך?">${esc(d.madeMe)}</textarea></div>
+        </div>
+      </section>
+      <section class="editPanelV42">
+        <div class="summaryPanelHeadV38"><h3>מדדים</h3><p>אפשר לתקן גם את הדירוגים אחרי שהספר כבר במדף.</p></div>
+        <div class="editRatingsGridV42">
+          ${editRatingRowV42('stars','כמה אהבתי?','heart',d.stars)}
+          ${editRatingRowV42('heat','מד חום','pepper',d.heat)}
+          ${editRatingRowV42('cry','כמה זה שבר אותי?','broken',d.cry)}
+          <div class="editRatingRowV42"><div class="editRatingTitleV42">כמה מהר בלעתי?</div><div class="speedBox speedBoxV38"><input class="speedSlider" type="range" min="1" max="5" step="1" value="${d.speed||3}" oninput="setEditBookDraft('speed',+this.value)"><div class="speedLabels">${SPEED.map(x=>`<span>${x}</span>`).join('')}</div><div class="speedValue">${SPEED[(d.speed||3)-1]}</div></div></div>
+        </div>
+      </section>
+      <div class="editFooterV42"><button class="doneBtn" onclick="saveBookEdit('${bookId}')">שמירת שינויים</button><button class="secondaryAction" onclick="openBook('${bookId}')">ביטול</button></div>
+    </div>`;
+  scrollTo(0,0);
+}
+function editRatingRowV42(key,label,iconType,value){
+  return `<div class="editRatingRowV42"><div class="editRatingTitleV42">${label}</div><div class="editRatingBtnsV42">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${(+value||0)===n?'on':''}" onclick="setEditBookDraft('${key}',${n})">${iconStack(iconType,n)}</button>`).join('')}</div></div>`;
+}
+function setEditBookDraft(k,v,rer=true){
+  editBookDraft=editBookDraft||{};
+  editBookDraft[k]=v;
+  if(rer && currentScreen==='bookEdit'){
+    const active=S.books.find(b=>b.id);
+  }
+  if(rer){
+    const idMatch=(document.querySelector('.editBookPageV42 button[onclick^="saveBookEdit"]')||{}).getAttribute?.('onclick')||'';
+    const m=idMatch.match(/saveBookEdit\('([^']+)'\)/);
+    if(m) renderBookEdit(m[1]);
+  }
+}
+function saveBookEdit(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const d=editBookDraft||{};
+  b.title=String(d.title||document.getElementById('editBookTitle')?.value||b.title||'').trim()||b.title;
+  b.author=String(d.author||document.getElementById('editBookAuthor')?.value||'').trim();
+  b.bottomLine=String(d.bottomLine||'').trim();
+  b.about=String(d.about ?? document.getElementById('editBookAbout')?.value ?? '').trim();
+  b.madeMe=String(d.madeMe ?? document.getElementById('editBookMadeMe')?.value ?? '').trim();
+  b.stars=+d.stars||0;b.heat=+d.heat||0;b.cry=+d.cry||0;b.speed=+d.speed||0;
+  save();editBookDraft=null;toast('הספר עודכן');openBook(bookId);
+}
+
 function confirmDeleteBook(bookId){
   const b=S.books.find(x=>x.id===bookId); if(!b)return;
   const box=document.getElementById('deleteConfirm');

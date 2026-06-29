@@ -2075,6 +2075,72 @@ body{background:
   .actionsV48 .quickCardNew{border-radius:24px!important;min-height:100px!important}
 }
 
+
+
+/* v49 — illustrated dynamic covers + gallery covers */
+.genericCoverV49.cover{
+  direction:rtl!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  text-align:center!important;
+  padding:18px 14px 16px!important;
+  min-height:230px!important;
+  border-radius:28px!important;
+  background:linear-gradient(180deg,#fffaf2 0%,#fbf2e7 58%,#f1e5d5 100%)!important;
+  border:1px solid #d8c9b7!important;
+  box-shadow:0 16px 34px rgba(89,72,52,.12)!important;
+  overflow:hidden!important;
+  isolation:isolate;
+  gap:8px!important;
+}
+.genericCoverV49:before,.genericCoverV49:after{display:none!important}
+.coverInitial{display:none!important}
+.coverArtV49{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 50% 54%,rgba(231,165,134,.18),transparent 28%)}
+.coverTextV49{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;margin-top:2px;min-height:32%;}
+.genericCoverV49 .coverTitle{
+  color:#23442f!important;
+  font-size:clamp(24px,7.4vw,52px)!important;
+  line-height:.98!important;
+  letter-spacing:-.035em!important;
+  font-weight:1000!important;
+  text-shadow:none!important;
+  max-width:94%!important;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.genericCoverV49 .coverAuthor{
+  color:#58705c!important;
+  font-size:clamp(12px,3.4vw,19px)!important;
+  line-height:1.1!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  max-width:90%!important;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.genericCoverV49 .coverDivider{position:relative;z-index:2;width:72px;height:2px;background:#c7a98f!important;border-radius:99px;margin:8px auto 7px!important;box-shadow:none!important}
+.artSparkV49{position:absolute;width:13px;height:13px;transform:rotate(45deg);background:#c89b58;opacity:.85;border-radius:2px;box-shadow:0 0 0 7px rgba(200,155,88,.03)}
+.artSparkV49.s1{left:33%;top:39%}.artSparkV49.s2{right:24%;top:50%;width:8px;height:8px}.artSparkV49.s3{left:24%;bottom:26%;width:8px;height:8px}
+.artBranchV49{position:absolute;left:48%;bottom:20%;width:3px;height:34%;background:#78805e;transform:rotate(-18deg);border-radius:99px;transform-origin:bottom}
+.artBranchV49 i{position:absolute;width:34px;height:15px;background:#a9ad82;border-radius:100% 0 100% 0;opacity:.88;transform-origin:left center}
+.artBranchV49 i:nth-child(1){top:20%;left:2px;transform:rotate(-36deg)}.artBranchV49 i:nth-child(2){top:38%;right:2px;transform:scaleX(-1) rotate(-30deg)}.artBranchV49 i:nth-child(3){top:58%;left:2px;transform:rotate(-24deg)}.artBranchV49 i:nth-child(4){top:74%;right:2px;transform:scaleX(-1) rotate(-20deg)}
+.artBookV49{position:absolute;left:50%;bottom:12%;width:42%;height:11%;transform:translateX(-50%);border-radius:7% 7% 45% 45%;background:linear-gradient(90deg,#f8f0df 0 49%,#e9dcc7 50% 51%,#f8f0df 52%);border-bottom:6px solid #23442f;box-shadow:0 8px 18px rgba(89,72,52,.09)}
+.artBookV49:before,.artBookV49:after{content:"";position:absolute;top:18%;width:38%;height:1px;background:#d9c9b6;box-shadow:0 8px 0 #d9c9b6,0 16px 0 #d9c9b6}.artBookV49:before{left:9%}.artBookV49:after{right:9%}
+.artPathV49{position:absolute;left:43%;bottom:25%;width:12%;height:42%;border-radius:50%;border-left:12px solid rgba(255,255,255,.65);transform:rotate(18deg);filter:blur(.1px)}
+.artSunV49{position:absolute;left:50%;bottom:23%;width:54%;height:29%;background:rgba(232,165,136,.22);border-radius:50% 50% 0 0;transform:translateX(-50%)}
+.artMoonV49{display:none;position:absolute}
+.coverVar0 .coverArtV49{background:radial-gradient(circle at 52% 58%,rgba(232,165,136,.22),transparent 33%)}
+.coverVar1 .artBookV49,.coverVar1 .artBranchV49{display:none}.coverVar1 .artPathV49{left:45%;bottom:5%;height:54%;width:16%;border-left:18px solid rgba(255,255,255,.70);transform:rotate(-8deg)}.coverVar1 .artSunV49{bottom:32%;width:34%;height:20%;background:rgba(232,165,136,.24);border-radius:50%}.coverVar1 .coverArtV49{background:linear-gradient(180deg,transparent 0 44%,rgba(166,178,141,.40) 45% 58%,rgba(231,165,134,.28) 59% 71%,rgba(183,194,159,.45) 72%)}
+.coverVar2 .artBookV49,.coverVar2 .artPathV49{display:none}.coverVar2 .artMoonV49{display:block;left:50%;bottom:20%;width:48%;height:44%;transform:translateX(-50%);border-radius:45% 45% 6% 6%;background:rgba(218,205,188,.33);border:2px solid rgba(194,174,151,.65)}.coverVar2 .artMoonV49:before{content:"";position:absolute;left:18%;top:14%;width:42px;height:42px;border-radius:50%;box-shadow:-14px 0 0 #fff7ed}.coverVar2 .artBranchV49{bottom:19%;height:28%;left:50%}.coverVar2 .artSunV49{bottom:11%;width:80%;height:24%;background:rgba(232,165,136,.16)}
+.coverVar3 .artBookV49{bottom:17%;width:35%;height:8%;border-bottom-width:4px}.coverVar3 .artBranchV49{height:29%;bottom:19%;left:50%}.coverVar3 .artPathV49{display:none}.coverVar3 .artSunV49{bottom:32%;width:28%;height:18%;border-radius:50%;background:rgba(232,165,136,.30)}.coverVar3 .coverArtV49{background:radial-gradient(circle at 52% 50%,rgba(232,165,136,.16),transparent 30%)}
+.customPhotoCoverV49{padding:0!important;justify-content:flex-end!important;background:#eee1d1!important}
+.coverPhotoV49{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.95) contrast(.98)}
+.customPhotoCoverV49:before{content:""!important;display:block!important;position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.10) 55%,rgba(0,0,0,.52));z-index:1}
+.customPhotoCoverV49 .coverTextV49{justify-content:flex-end;min-height:44%;padding:0 14px 16px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.42)}
+.customPhotoCoverV49 .coverTitle{color:#fff!important;text-shadow:0 2px 14px rgba(0,0,0,.48)!important}.customPhotoCoverV49 .coverAuthor{color:rgba(255,255,255,.86)!important}.customPhotoCoverV49 .coverDivider{background:rgba(255,255,255,.62)!important}
+.heroBookPanel .genericCoverV49{min-height:300px!important}.fieldHeroCoverV35 .genericCoverV49{min-height:160px!important}.summaryCoverV38 .genericCoverV49{min-height:190px!important}.shelfCardNew .genericCoverV49{min-height:250px!important}.detailHeroNew .genericCoverV49{min-height:320px!important}.miniShelfBook .genericCoverV49{min-height:185px!important}
+.homePageNew .miniShelfBook .genericCoverV49 .coverTitle{font-size:clamp(21px,6vw,36px)!important}.shelfCardNew .genericCoverV49 .coverTitle{font-size:clamp(24px,7vw,46px)!important}.detailHeroNew .genericCoverV49 .coverTitle{font-size:clamp(32px,8.6vw,58px)!important}.fieldHeroCoverV35 .genericCoverV49 .coverTitle,.summaryCoverV38 .genericCoverV49 .coverTitle{font-size:clamp(23px,6.8vw,40px)!important}
+.coverTinyBtnV49{border:1px solid #dccfbe;background:#fffaf3;color:#6a6258;border-radius:999px;padding:12px 16px;font-weight:900;box-shadow:none}.homeSecondaryActionsV46{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}.fieldCoverActionsV49{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 8px}.fieldCoverActionsV49 button{border:1px solid #dccfbe;background:#fffaf3;color:#6a6258;border-radius:999px;padding:9px 12px;font-weight:900}.coverEditGridV49{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:16px;align-items:center}.coverEditPreviewV49 .genericCoverV49{min-height:300px!important}.coverEditActionsV49{display:grid;gap:10px}.goalTinyInside{display:none!important}.goalArc{width:138px!important;height:138px!important;margin:16px auto!important}.goalPercent{font-size:48px!important;line-height:1!important}.fieldAbandonBtnV45{display:inline-flex!important;align-items:center;justify-content:center;min-height:0!important;width:auto!important;max-width:max-content!important;border-radius:999px!important;padding:9px 13px!important;font-size:13px!important;background:#f7f0e6!important;color:#6a6258!important;border:1px solid #dccfbe!important;box-shadow:none!important}
+@media(max-width:430px){.genericCoverV49.cover{min-height:210px!important}.heroBookPanel .genericCoverV49{min-height:260px!important}.detailHeroNew .genericCoverV49{min-height:280px!important}.coverEditGridV49{grid-template-columns:1fr}.coverEditPreviewV49{max-width:210px;margin:0 auto}.goalArc{width:128px!important;height:128px!important}.goalPercent{font-size:42px!important}}
+
 </style>
 </head>
 <body>
@@ -2260,6 +2326,8 @@ function normalizeBook(b){
   b.cry=+b.cry||0;
   b.speed=+b.speed||0;
   b.status=b.status||'finished';
+  b.coverVariant=(b.coverVariant===0||b.coverVariant)?Math.max(0,Math.min(3,parseInt(b.coverVariant)||0)):coverVariantFrom(b.title,b.author,b.id);
+  b.coverImage=b.coverImage||'';
   b.abandonReason=b.abandonReason||'';
   b.abandonMood=b.abandonMood||'';
   b.abandonedAt=b.abandonedAt||'';
@@ -2278,6 +2346,8 @@ function normalizeCurrent(c){
   c.author=c.author||'';
   c.percent=pct(c.percent);
   c.lastMood=c.lastMood||'';
+  c.coverVariant=(c.coverVariant===0||c.coverVariant)?Math.max(0,Math.min(3,parseInt(c.coverVariant)||0)):coverVariantFrom(c.title,c.author,c.id);
+  c.coverImage=c.coverImage||'';
   c.updates=Array.isArray(c.updates)?c.updates:[];
   c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
   c.characters=Array.isArray(c.characters)?c.characters:[];
@@ -2331,9 +2401,20 @@ function topHtml(){
     <button class="iconBtn" aria-label="וייב">${uiIcon('spark')}</button>
   </div>`;
 }
-function coverHtml(title,author){
+function coverVariantFrom(title='',author='',seed=''){
+  const str=String(seed||'')+String(title||'')+'|'+String(author||'');
+  let h=0;
+  for(let i=0;i<str.length;i++) h=(h*31+str.charCodeAt(i))>>>0;
+  return h%4;
+}
+function coverHtml(title,author,item={}){
   const t=title||'עוד פרק אחד';
-  return `<div class="cover editorialCoverCard"><div class="coverInitial">${esc(firstLetter(t))}</div><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>`;
+  const variant=(item&&(item.coverVariant===0||item.coverVariant))?Math.max(0,Math.min(3,parseInt(item.coverVariant)||0)):coverVariantFrom(t,author,item&&item.id);
+  const img=item&&item.coverImage?String(item.coverImage):'';
+  return `<div class="cover editorialCoverCard genericCoverV49 coverVar${variant} ${img?'customPhotoCoverV49':''}">
+    ${img?`<img class="coverPhotoV49" src="${esc(img)}" alt="">`:`<div class="coverArtV49" aria-hidden="true"><span class="artSunV49"></span><span class="artPathV49"></span><span class="artBookV49"></span><span class="artBranchV49"><i></i><i></i><i></i><i></i></span><span class="artMoonV49"></span><span class="artSparkV49 s1"></span><span class="artSparkV49 s2"></span><span class="artSparkV49 s3"></span></div>`}
+    <div class="coverTextV49"><div class="coverTitle">${esc(t)}</div><div class="coverDivider"></div><div class="coverAuthor">${esc(author||'')}</div></div>
+  </div>`;
 }
 function firstLetter(s){return String(s||'ע').trim().charAt(0)||'ע'}
 
@@ -2392,7 +2473,7 @@ function currentHome(c){
           ${lastUpdate?`<div class="lastMomentV48"><b>הרגע האחרון:</b><span>${esc((lastUpdate.text||'').slice(0,92))}${(lastUpdate.text||'').length>92?'…':''}</span></div>`:''}
         </div>
         <div class="heroBookPanel activeBookPanelV48">
-          ${coverHtml(c.title,c.author)}
+          ${coverHtml(c.title,c.author,c)}
           <div class="heroStatsRow">
             <div class="heroStat"><span>עדכונים מהשטח</span><b>${(c.updates||[]).length}</b></div>
             <div class="heroStat"><span>דמויות ששמרת</span><b>${(c.characters||[]).length}</b></div>
@@ -2406,7 +2487,7 @@ function currentHome(c){
       <button class="quickCardNew" onclick="goField('character')"><span class="quickIcon">${uiIcon('users')}</span><span class="quickLabel">דמות/רגע</span><span class="quickSub">לשמור משהו שקפץ</span></button>
     </div>
     <div class="homeSecondaryActionsV46">
-      <button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
+      <button class="coverTinyBtnV49" onclick="cycleCurrentCover()">החלפת איור כריכה</button><button class="coverTinyBtnV49" onclick="chooseCoverImageForCurrent()">תמונה מהגלריה</button><button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
     </div>
   </div>`;
 }
@@ -2468,7 +2549,7 @@ function timelineMomentHtml(u){
 }
 
 function bookSmall(b){
-  return `<button class="miniShelfBook" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="miniShelfMetaNew"><div class="title">${esc(b.title)}</div><div class="author">${esc(b.author)}</div>${b.bottomLine?`<div class="stamp"><span class="softPill">${esc(b.bottomLine)}</span></div>`:''}</div></button>`;
+  return `<button class="miniShelfBook" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author,b)}<div class="miniShelfMetaNew"><div class="title">${esc(b.title)}</div><div class="author">${esc(b.author)}</div>${b.bottomLine?`<div class="stamp"><span class="softPill">${esc(b.bottomLine)}</span></div>`:''}</div></button>`;
 }
 function miniIcon(type){
   if(type==='heart'){
@@ -2505,7 +2586,7 @@ function startNewBook(){
   const title=prompt('שם הספר?');
   if(!title)return;
   const author=prompt('שם הסופרת?')||'';
-  S.current=normalizeCurrent({title,author,percent:0,updates:[],characters:[]});
+  S.current=normalizeCurrent({title,author,percent:0,updates:[],characters:[],coverVariant:coverVariantFrom(title,author)});
   save();show('home');toast('התחלנו לקרוא');
 }
 function goField(acc='percent'){
@@ -2538,9 +2619,9 @@ function renderField(){
               <span class="fieldInfoChipV35">${esc(mood)}</span>
               <span class="fieldInfoChipV35">${updatesCount} רגעים שמורים</span>
             </div>
-            <button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
+            <div class="fieldCoverActionsV49"><button onclick="cycleCurrentCover()">החלפת איור</button><button onclick="chooseCoverImageForCurrent()">תמונה מהגלריה</button></div><button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
           </div>
-          <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author)}</div>
+          <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author,c)}</div>
         </div>
         <div class="fieldSnapshotGridV35">
           <div class="fieldSnapshotV35"><span>אחוז נוכחי</span><strong>${pct(c.percent)}%</strong><small>עדכון אחד קטן והכול נשמר בציר.</small></div>
@@ -2831,7 +2912,7 @@ function renderSummary(){
           <span class="summaryChipV38">${pct(c.percent)}%</span>
         </div>
         <div class="summaryBookBoxV38">
-          <div class="summaryCoverV38">${coverHtml(c.title,c.author)}</div>
+          <div class="summaryCoverV38">${coverHtml(c.title,c.author,c)}</div>
           <div class="summaryBookMetaV38">
             <div class="summaryNowBadgeV38">הספר שסגרת עכשיו</div>
             <div class="summaryBookTitleV38">${esc(c.title)}</div>
@@ -3181,7 +3262,7 @@ function bookRow(b){
   const topChar=(b.characters||[]).find(ch=>ch.finalTag)||(b.characters||[])[0]||null;
   const isAbandoned=(b.status||'finished')==='abandoned';
   const excerpt=isAbandoned?(b.abandonReason||'ננטש בלי סיבה רשומה'):(b.madeMe || b.about || '');
-  return `<button class="shelfCardNew ${isAbandoned?'abandonedV45':''}" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${isAbandoned?`<span class="softPill">נטשתי ב־${pct(b.percent||0)}%</span>`:''}${b.bottomLine&&!isAbandoned?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar&&!isAbandoned?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
+  return `<button class="shelfCardNew ${isAbandoned?'abandonedV45':''}" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author,b)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${isAbandoned?`<span class="softPill">נטשתי ב־${pct(b.percent||0)}%</span>`:''}${b.bottomLine&&!isAbandoned?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar&&!isAbandoned?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
 }
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
@@ -3197,7 +3278,7 @@ function openBook(bookId){
         <button class="iconBtn" onclick="show('shelf')">${uiIcon('book')}</button>
       </div>
       <div class="detailHeroNew">
-        ${coverHtml(b.title,b.author)}
+        ${coverHtml(b.title,b.author,b)}
         <div class="detailInfo">
           <h2>${esc(b.title)}</h2>
           <p>${esc(b.author)}</p>
@@ -3257,13 +3338,13 @@ function editBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   editBookDraft={
     title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',
-    stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0
+    stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0,coverVariant:(b.coverVariant===0||b.coverVariant)?+b.coverVariant:coverVariantFrom(b.title,b.author,b.id),coverImage:b.coverImage||''
   };
   renderBookEdit(bookId);
 }
 function renderBookEdit(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
-  const d=editBookDraft||{title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0};
+  const d=editBookDraft||{title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0,coverVariant:(b.coverVariant===0||b.coverVariant)?+b.coverVariant:coverVariantFrom(b.title,b.author,b.id),coverImage:b.coverImage||''};
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('shelf').classList.add('active');
   currentScreen='bookEdit';
@@ -3274,6 +3355,13 @@ function renderBookEdit(bookId){
           <button class="iconBtn" onclick="openBook('${bookId}')">${uiIcon('arrow')}</button>
           <div class="editHeroCenterV42"><div class="brandEyebrow">Edit book</div><h2>עריכת ספר</h2><p>אפשר לעדכן פרטים בלי להוציא אותו מהמדף.</p></div>
           <button class="iconBtn" onclick="saveBookEdit('${bookId}')">${uiIcon('check')}</button>
+        </div>
+      </section>
+      <section class="editPanelV42 coverEditPanelV49">
+        <div class="summaryPanelHeadV38"><h3>כריכה</h3><p>ברירת המחדל היא כריכה מעוצבת, ואפשר להחליף וריאציה או להעלות תמונה מהגלריה.</p></div>
+        <div class="coverEditGridV49">
+          <div class="coverEditPreviewV49">${coverHtml(d.title||b.title,d.author||b.author,d)}</div>
+          <div class="coverEditActionsV49"><button class="secondaryAction" onclick="cycleEditBookCover('${bookId}')">החלפת איור אוטומטי</button><button class="secondaryAction" onclick="chooseCoverImageForEdit('${bookId}')">תמונה מהגלריה</button><button class="secondaryAction" onclick="clearEditBookCover('${bookId}')">חזרה לכריכה מעוצבת</button></div>
         </div>
       </section>
       <section class="editPanelV42">
@@ -3322,7 +3410,68 @@ function saveBookEdit(bookId){
   b.about=String(d.about ?? document.getElementById('editBookAbout')?.value ?? '').trim();
   b.madeMe=String(d.madeMe ?? document.getElementById('editBookMadeMe')?.value ?? '').trim();
   b.stars=+d.stars||0;b.heat=+d.heat||0;b.cry=+d.cry||0;b.speed=+d.speed||0;
+  b.coverVariant=(d.coverVariant===0||d.coverVariant)?Math.max(0,Math.min(3,parseInt(d.coverVariant)||0)):coverVariantFrom(b.title,b.author,b.id);
+  b.coverImage=d.coverImage||'';
   save();editBookDraft=null;toast('הספר עודכן');openBook(bookId);
+}
+
+
+function readAndResizeCoverImage(file,cb){
+  if(!file)return;
+  if(!file.type || !file.type.startsWith('image/')){toast('צריך לבחור תמונה');return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const maxW=900,maxH=1350;
+      let w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
+      const r=Math.min(maxW/w,maxH/h,1);
+      w=Math.round(w*r);h=Math.round(h*r);
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.fillStyle='#fbf6ee';ctx.fillRect(0,0,w,h);
+      ctx.drawImage(img,0,0,w,h);
+      cb(canvas.toDataURL('image/jpeg',0.82));
+    };
+    img.onerror=()=>toast('לא הצלחתי לפתוח את התמונה');
+    img.src=String(reader.result||'');
+  };
+  reader.onerror=()=>toast('לא הצלחתי לקרוא את התמונה');
+  reader.readAsDataURL(file);
+}
+function pickCoverImage(cb){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='image/*';
+  input.onchange=()=>{const file=input.files&&input.files[0]; if(file) readAndResizeCoverImage(file,cb);};
+  input.click();
+}
+function cycleCurrentCover(){
+  if(!S.current)return;
+  S.current.coverImage='';
+  S.current.coverVariant=((+S.current.coverVariant||0)+1)%4;
+  save();render();toast('הכריכה הוחלפה');
+}
+function chooseCoverImageForCurrent(){
+  if(!S.current)return;
+  pickCoverImage(data=>{S.current.coverImage=data;save();render();toast('התמונה נשמרה ככריכה');});
+}
+function cycleEditBookCover(bookId){
+  editBookDraft=editBookDraft||{};
+  editBookDraft.coverImage='';
+  editBookDraft.coverVariant=((+editBookDraft.coverVariant||0)+1)%4;
+  renderBookEdit(bookId);
+}
+function chooseCoverImageForEdit(bookId){
+  editBookDraft=editBookDraft||{};
+  pickCoverImage(data=>{editBookDraft.coverImage=data;renderBookEdit(bookId);toast('התמונה נוספה לכריכה');});
+}
+function clearEditBookCover(bookId){
+  editBookDraft=editBookDraft||{};
+  editBookDraft.coverImage='';
+  editBookDraft.coverVariant=editBookDraft.coverVariant||0;
+  renderBookEdit(bookId);
 }
 
 function confirmDeleteBook(bookId){
@@ -3477,7 +3626,7 @@ function statRowNew(label,value,sub,icon){
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:47,
+    version:49,
     exportedAt:new Date().toISOString(),
     data:S
   };

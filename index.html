@@ -2000,6 +2000,34 @@ body{background:
 .filterChip{display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:normal!important;line-height:1.2!important;min-height:38px!important;margin:0!important;max-width:100%!important}
 .shelfModeTabsV45{margin-top:16px!important}
 .abandonBadgeV45{background:#f3ede4!important;color:#735c45!important}
+
+
+/* v47 — abandoned detail spacing + abandonment stats */
+.detailPageNew{padding-bottom:180px!important}
+.detailHeroNew{margin-bottom:18px!important}
+.detailHeroNew .detailInfo{display:flex!important;flex-direction:column!important;gap:10px!important}
+.detailHeroNew .detailGridNew{margin-top:8px!important}
+.detailHeroNew .abandonNoteV45{margin-top:8px!important;margin-bottom:4px!important}
+.detailActionsV45{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;margin-top:18px!important;width:100%!important}
+.detailActionsV45 .secondaryAction,.detailActionsV45 button{width:100%!important;min-height:54px!important;border-radius:22px!important;margin:0!important}
+.detailActionsV45 .dangerBtn{width:100%!important}
+.detailSectionNew{margin-top:2px!important}
+.detailSectionNew:last-child{margin-bottom:90px!important}
+.detailSectionNew.abandonDetailsV47{margin-top:4px!important}
+.abandonDetailsV47 .rowItemNew{padding:16px!important}
+.abandonReasonTextV47{white-space:pre-wrap;line-height:1.55!important}
+.statsAbandonGridV47{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.statsAbandonReasonsV47{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.statsReasonPillV47{background:#f6f1e8;border:1px solid var(--line);border-radius:20px;padding:12px 14px;color:#675e52;font-weight:850;line-height:1.45}
+.statsReasonPillV47 b{display:block;color:#304131;margin-bottom:4px;font-size:14px}
+@media(max-width:520px){
+  .detailPageNew{padding-bottom:205px!important}
+  .detailHeroNew{gap:18px!important}
+  .detailActionsV45{gap:10px!important;margin-top:16px!important}
+  .detailActionsV45 .secondaryAction,.detailActionsV45 button{min-height:52px!important}
+  .statsAbandonGridV47{grid-template-columns:1fr 1fr;gap:10px}
+}
+
 @media(max-width:420px){
   .homeSecondaryActionsV46{margin-top:8px}
   .abandonLinkBtnV46{font-size:13px;padding:8px 10px}
@@ -3108,7 +3136,7 @@ function openBook(bookId){
           <div class="editorActionsRow detailActionsV45" style="margin-top:16px">${(b.status||'finished')==='abandoned'?`<button class="secondaryAction" onclick="restoreAbandonedBook('${b.id}')">להחזיר לקריאה</button><button class="secondaryAction" onclick="editAbandonReason('${b.id}')">עריכת סיבה</button>`:`<button class="secondaryAction detailEditBtnV42" onclick="editBook('${b.id}')">עריכה</button>`}<button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
         </div>
       </div>
-      ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
@@ -3250,8 +3278,14 @@ function deleteBook(bookId){
 function renderStats(){
   const el=document.getElementById('stats');
   if(!el)return;
-  const books=Array.isArray(S.books)?S.books:[];
-  const total=books.length;
+  const allBooks=Array.isArray(S.books)?S.books:[];
+  const finishedBooks=allBooks.filter(b=>(b.status||'finished')!=='abandoned');
+  const abandonedBooks=allBooks.filter(b=>(b.status||'finished')==='abandoned');
+  const books=finishedBooks;
+  const total=finishedBooks.length;
+  const abandonedTotal=abandonedBooks.length;
+  const avgAbandonedPercent=abandonedTotal?Math.round(abandonedBooks.reduce((sum,b)=>sum+(+b.percent||0),0)/abandonedTotal):0;
+  const abandonReasons=abandonedBooks.map(b=>String(b.abandonReason||'').trim()).filter(Boolean);
   const avg=(key)=>{
     const vals=books.map(b=>+b[key]||0).filter(v=>v>0);
     return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
@@ -3277,7 +3311,8 @@ function renderStats(){
   const noTalk=allLogs.filter(u=>/לא לדבר איתי/.test(`${u.text||''} ${u.label||''}`)).length + books.filter(b=>/לא לדבר איתי/.test(`${b.bottomLine||''} ${b.madeMe||''}`)).length;
   const swallowed=books.filter(b=>(+b.speed||0)>=4).length;
   const diagnosis=()=>{
-    if(!total)return 'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים.';
+    if(!total && !abandonedTotal)return 'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים.';
+    if(!total && abandonedTotal)return 'המדף כרגע יותר בקטע של נטישות. גם זה דפוס, ואנחנו מכבדות אמת.';
     if(redFlags>=3)return 'יש לך יכולת מרשימה לזהות דגלים אדומים ועדיין להמשיך לקרוא. מחקרית: חשוד.';
     if((parseFloat(avg('cry'))||0)>=4)return 'המדף שלך רגשי מאוד. לא סתם ספרים, יותר אירועי לב.';
     if(swallowed>=Math.max(1,Math.ceil(total*0.4)))return 'כשספר תופס אותך — את לא קוראת, את נעלמת אליו.';
@@ -3295,7 +3330,7 @@ function renderStats(){
 
       ${total?`
       <section class="statsGridNew">
-        ${statCardNew(total,'ספרים במדף','כמה ספרים כבר קיבלו מקום קבוע','book')}
+        ${statCardNew(total,'ספרים שסיימתי','כמה ספרים קיבלו מקום קבוע','book')}
         ${statCardNew(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
         ${statCardNew(avg('heat'),'ממוצע לוהט','כמה אש יש במדף','percent')}
         ${statCardNew(avg('cry'),'ממוצע שבר','כמה הלב שילם בדרך','chat')}
@@ -3333,6 +3368,16 @@ function renderStats(){
       </section>
       `:`<div class="statsEmptyNew">עוד אין מספיק נתונים לסטטיסטיקה. ברגע שתסיימי ספר ראשון, המסך הזה יתחיל לספר לך על המדף שלך.</div>`}
 
+      ${abandonedTotal?`
+      <section class="statsSectionNew statsAbandonV47">
+        <div class="statsSectionHeadNew"><div><h3>ספרים שנטשתי</h3><p>לא כל ספר חייב להגיע לסוף. גם איפה שעצרת אומר משהו.</p></div></div>
+        <div class="statsAbandonGridV47">
+          ${statCardNew(abandonedTotal,'נטשתי','ספרים שנפלו בדרך','book')}
+          ${statCardNew(avgAbandonedPercent+'%','ממוצע עצירה','בערך איפה הם ירדו מהמדף','percent')}
+        </div>
+        ${abandonReasons.length?`<div class="statsAbandonReasonsV47">${abandonReasons.slice(0,3).map((r,i)=>`<div class="statsReasonPillV47"><b>${i===0?'סיבה אחרונה':'עוד סיבה'}</b>${esc(r)}</div>`).join('')}</div>`:`<div class="statsReasonPillV47"><b>אין סיבות רשומות עדיין</b>בפעם הבאה שתנטשי ספר ותכתבי למה, זה יופיע כאן.</div>`}
+      </section>`:''}
+
       ${renderCustomTagsPanel()}
 
       <section class="backupPanelNew">
@@ -3356,7 +3401,7 @@ function statRowNew(label,value,sub,icon){
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:44,
+    version:47,
     exportedAt:new Date().toISOString(),
     data:S
   };

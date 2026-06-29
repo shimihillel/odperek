@@ -2037,6 +2037,44 @@ body{background:
   .filterTag,.filterChip{font-size:12px!important}
 }
 
+
+/* v48 — active book home polish */
+.activeHomeV48{gap:14px!important}
+.activeHeroV48{padding:20px!important;border-radius:36px!important}
+.activeHeroTopV48{align-items:center!important;margin-bottom:16px!important}
+.activeHeroBodyV48{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;gap:16px!important}
+.activeProgressPanelV48{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:10px!important;background:linear-gradient(180deg,#fffdf8,#fbf6ee)!important}
+.activeProgressPanelV48 .goalPanelTitle{font-size:25px!important;color:#2e432f!important;margin-bottom:0!important}
+.activeProgressPanelV48 .goalPanelCopy{font-size:14px!important;margin-bottom:4px!important}
+.activeProgressPanelV48 .goalArc{max-width:190px!important;margin:2px auto 8px!important}
+.activeProgressPanelV48 .goalPercent{font-size:42px!important;color:#29412f!important}
+.progressStepperV48{display:grid;grid-template-columns:.75fr 1.15fr .75fr;gap:8px;margin-top:0}
+.progressStepperV48 button{border:1px solid var(--line);background:#f7f0e6;color:#675b4e;border-radius:16px;padding:12px 6px;font-size:15px;font-weight:950;min-width:0}
+.progressStepperV48 button.main{background:#2f4a35;color:#fff;border-color:#2f4a35;box-shadow:0 10px 22px rgba(47,74,53,.12)}
+.activePrimaryV48{margin-top:2px!important;background:#e29a72!important;color:#fff!important;border-color:#e29a72!important;box-shadow:0 12px 24px rgba(226,154,114,.18)!important}
+.lastMomentV48{margin-top:2px;border:1px dashed #d9cbbb;background:#fffaf2;border-radius:18px;padding:12px 13px;color:#756a5f;font-weight:800;line-height:1.42;text-align:right}
+.lastMomentV48 b{display:block;color:#2f4331;font-weight:950;margin-bottom:3px}
+.lastMomentV48 span{display:block;font-size:13px;overflow-wrap:anywhere}
+.activeBookPanelV48 .cover{min-height:238px!important}
+.actionsV48{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.actionsV48 .quickCardNew{min-height:108px!important;padding:16px 8px!important}
+.actionsV48 .quickCardNew.primary{background:#f1e9dd!important;border-color:#dbcab7!important}
+.actionsV48 .quickLabel{font-size:17px!important}
+.actionsV48 .quickSub{font-size:12px!important}
+@media (max-width:720px){
+  .activeHeroBodyV48{grid-template-columns:1fr!important}
+  .activeBookPanelV48{order:-1!important}
+  .activeBookPanelV48 .cover{min-height:220px!important;max-width:260px;margin-inline:auto;width:100%}
+}
+@media (max-width:420px){
+  .activeHeroV48{padding:16px!important}
+  .activeProgressPanelV48 .goalArc{max-width:168px!important}
+  .activeProgressPanelV48 .goalPercent{font-size:38px!important}
+  .progressStepperV48 button{font-size:14px!important;padding:11px 4px!important}
+  .actionsV48{gap:9px!important}
+  .actionsV48 .quickCardNew{border-radius:24px!important;min-height:100px!important}
+}
+
 </style>
 </head>
 <body>
@@ -2324,9 +2362,10 @@ function renderHome(){
 }
 function currentHome(c){
   const mood=c.lastMood||'עוד לא בחרת וייב';
-  return `<div class="homeHeroNew">
-    <div class="homeHeroCard">
-      <div class="homeHeroTop">
+  const lastUpdate=(c.updates||[])[0];
+  return `<div class="homeHeroNew activeHomeV48">
+    <div class="homeHeroCard activeHeroV48">
+      <div class="homeHeroTop activeHeroTopV48">
         <div>
           <div class="eyebrow">Reading now</div>
           <div class="homeNowTitle">${esc(c.title)}</div>
@@ -2334,19 +2373,25 @@ function currentHome(c){
         </div>
         <span class="moodBadgeNew">${uiIcon('spark')} ${esc(mood)}</span>
       </div>
-      <div class="homeHeroBody">
-        <div class="goalPanelNew">
-          <div class="goalPanelTitle">Reading goals</div>
-          <div class="goalPanelCopy">כל מה שחשוב בספר הפעיל שלך — במקום אחד, בלי לחפש בין מסכים.</div>
+      <div class="homeHeroBody activeHeroBodyV48">
+        <div class="goalPanelNew activeProgressPanelV48">
+          <div class="goalPanelTitle">איפה אני בספר</div>
+          <div class="goalPanelCopy">עדכון מהיר לאחוזים, וכניסה זריזה לרגעים מהשטח כשקורה משהו ששווה לזכור.</div>
           <div class="goalArc" style="--p:${pct(c.percent)}">
             <div class="goalArcInner">
               <div class="goalPercent">${pct(c.percent)}%</div>
               <div class="goalTiny goalTinyInside">התקדמות</div>
             </div>
           </div>
-          <button class="primaryHeroBtn" onclick="goField('percent')">להמשיך לקרוא</button>
+          <div class="progressStepperV48" aria-label="עדכון התקדמות מהיר">
+            <button onclick="nudgeCurrentProgress(-5)">−5%</button>
+            <button class="main" onclick="promptCurrentProgress()">עדכון אחוז</button>
+            <button onclick="nudgeCurrentProgress(5)">+5%</button>
+          </div>
+          <button class="primaryHeroBtn activePrimaryV48" onclick="goField()">לשמור רגע מהשטח</button>
+          ${lastUpdate?`<div class="lastMomentV48"><b>הרגע האחרון:</b><span>${esc((lastUpdate.text||'').slice(0,92))}${(lastUpdate.text||'').length>92?'…':''}</span></div>`:''}
         </div>
-        <div class="heroBookPanel">
+        <div class="heroBookPanel activeBookPanelV48">
           ${coverHtml(c.title,c.author)}
           <div class="heroStatsRow">
             <div class="heroStat"><span>עדכונים מהשטח</span><b>${(c.updates||[]).length}</b></div>
@@ -2355,10 +2400,10 @@ function currentHome(c){
         </div>
       </div>
     </div>
-    <div class="homeActionsNew">
+    <div class="homeActionsNew actionsV48">
       <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
-      <button class="quickCardNew primary" onclick="goField()"><span class="quickIcon">${uiIcon('book')}</span><span class="quickLabel">עדכון מהשטח</span><span class="quickSub">כל הרגעים של הספר במקום אחד</span></button>
-      <button class="quickCardNew" onclick="goSummary()"><span class="quickIcon">${uiIcon('check')}</span><span class="quickLabel">סיימתי</span><span class="quickSub">לסכם, לדרג ולהכניס למדף</span></button>
+      <button class="quickCardNew primary" onclick="goSummary()"><span class="quickIcon">${uiIcon('check')}</span><span class="quickLabel">סיימתי</span><span class="quickSub">לסכם ולהכניס למדף</span></button>
+      <button class="quickCardNew" onclick="goField('character')"><span class="quickIcon">${uiIcon('users')}</span><span class="quickLabel">דמות/רגע</span><span class="quickSub">לשמור משהו שקפץ</span></button>
     </div>
     <div class="homeSecondaryActionsV46">
       <button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
@@ -2367,6 +2412,37 @@ function currentHome(c){
 }
 function emptyHome(){
   return `<div class="emptyNew"><div style="font-size:28px;color:#324534;font-weight:900;margin-bottom:10px">אין ספר פעיל כרגע</div><div style="line-height:1.6;margin-bottom:18px">בואי נתחיל ספר חדש ונבנה סביבו את כל הקריאה.</div><button class="primaryHeroBtn" style="max-width:280px" onclick="startNewBook()">להתחיל ספר</button></div>`;
+}
+function clampPercentValue(v){
+  const n=Number(v);
+  if(!Number.isFinite(n))return null;
+  return Math.max(0,Math.min(100,Math.round(n)));
+}
+function addProgressMoment(percent){
+  const c=S.current;
+  if(!c)return;
+  c.updates=c.updates||[];
+  c.updates.unshift({id:id(),type:'progress',text:`הגעתי ל־${pct(percent)}%`,percent,createdAt:new Date().toISOString()});
+}
+function nudgeCurrentProgress(delta){
+  const c=S.current;
+  if(!c)return;
+  const next=clampPercentValue((+c.percent||0)+delta);
+  if(next===null)return;
+  c.percent=next;
+  addProgressMoment(next);
+  save();render();toast(`עודכן ל־${pct(next)}%`);
+}
+function promptCurrentProgress(){
+  const c=S.current;
+  if(!c)return;
+  const raw=prompt('לאיזה אחוז הגעת?', pct(c.percent));
+  if(raw===null)return;
+  const next=clampPercentValue(String(raw).replace('%','').trim());
+  if(next===null){toast('זה צריך להיות מספר בין 0 ל־100');return;}
+  c.percent=next;
+  addProgressMoment(next);
+  save();render();toast(`עודכן ל־${pct(next)}%`);
 }
 function moodEmoji(m){
   if(m.includes('מכורה'))return '😍';

@@ -1983,6 +1983,32 @@ body{background:
 .shelfCardNew.abandonedV45 .cover{filter:saturate(.72);}
 .detailActionsV45{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
 
+
+
+/* v46 — abandon cleanup + shelf filters fix */
+.homeSecondaryActionsV46{display:flex;justify-content:center;margin-top:10px}
+.abandonLinkBtnV46{border:0;background:transparent;color:#7c6f61;text-decoration:underline;text-underline-offset:4px;font-weight:900;font-size:14px;padding:9px 12px;border-radius:999px}
+.abandonLinkBtnV46:active{background:#f1ebe2}
+.quickCardNew.abandonV45{display:none!important}
+.searchPanelNew{overflow:visible!important}
+.sortBarNew{display:flex!important;flex-wrap:wrap!important;gap:9px!important;align-items:center!important}
+.sortBarNew .toolBtn{flex:0 0 auto!important;min-height:42px!important;line-height:1!important;margin:0!important}
+.activeFilters{display:flex!important;flex-wrap:wrap!important;gap:8px!important;align-items:flex-start!important;margin-top:12px!important;clear:both!important;position:relative!important;z-index:1!important}
+.filterTag{display:inline-flex!important;align-items:center!important;max-width:100%!important;white-space:normal!important;line-height:1.2!important;padding:7px 10px!important;margin:0!important}
+.filterPanel{overflow:visible!important;clear:both!important;margin-top:12px!important}
+.filterChips{display:flex!important;flex-wrap:wrap!important;gap:8px!important;align-items:flex-start!important}
+.filterChip{display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:normal!important;line-height:1.2!important;min-height:38px!important;margin:0!important;max-width:100%!important}
+.shelfModeTabsV45{margin-top:16px!important}
+.abandonBadgeV45{background:#f3ede4!important;color:#735c45!important}
+@media(max-width:420px){
+  .homeSecondaryActionsV46{margin-top:8px}
+  .abandonLinkBtnV46{font-size:13px;padding:8px 10px}
+  .sortBarNew{gap:8px!important}
+  .sortBarNew .toolBtn{font-size:13px!important;padding:10px 12px!important}
+  .activeFilters{gap:7px!important;margin-top:10px!important}
+  .filterTag,.filterChip{font-size:12px!important}
+}
+
 </style>
 </head>
 <body>
@@ -2305,7 +2331,9 @@ function currentHome(c){
       <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
       <button class="quickCardNew primary" onclick="goField()"><span class="quickIcon">${uiIcon('book')}</span><span class="quickLabel">עדכון מהשטח</span><span class="quickSub">כל הרגעים של הספר במקום אחד</span></button>
       <button class="quickCardNew" onclick="goSummary()"><span class="quickIcon">${uiIcon('check')}</span><span class="quickLabel">סיימתי</span><span class="quickSub">לסכם, לדרג ולהכניס למדף</span></button>
-      <button class="quickCardNew abandonV45" onclick="abandonCurrentBook()"><span class="quickIcon">${uiIcon('quote')}</span><span class="quickLabel">נטשתי</span><span class="quickSub">לא כל ספר חייב להיגמר</span></button>
+    </div>
+    <div class="homeSecondaryActionsV46">
+      <button class="abandonLinkBtnV46" onclick="abandonCurrentBook()">נטשתי את הספר הזה</button>
     </div>
   </div>`;
 }
@@ -2847,22 +2875,22 @@ function finishBook(){
 
 function abandonCurrentBook(){
   const c=S.current;if(!c)return;
-  const reason=(prompt('למה נטשת את הספר?')||'').trim();
-  if(reason===null)return;
-  const mood=(prompt('זה "לא עכשיו" או "אין מצב שאני חוזרת לזה"?', 'לא עכשיו')||'').trim();
+  const raw=prompt('למה נטשת את הספר?', c.abandonReason||'');
+  if(raw===null)return;
+  const reason=raw.trim();
   if(!confirm(`להעביר את "${c.title}" למדף הנטושים?`))return;
   const b=normalizeBook({
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'abandoned',
-    abandonReason:reason,abandonMood:mood,abandonedAt:new Date().toISOString(),
+    abandonReason:reason,abandonMood:'',abandonedAt:new Date().toISOString(),
     characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent)
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();shelfMode='abandoned';show('shelf');toast('הספר עבר לנטשתי');
 }
 function editAbandonReason(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
-  const reason=(prompt('למה נטשתי?',b.abandonReason||'')||'').trim();
-  const mood=(prompt('לא עכשיו / אין מצב שאני חוזרת לזה?',b.abandonMood||'לא עכשיו')||'').trim();
-  b.abandonReason=reason;b.abandonMood=mood;save();openBook(bookId);toast('פרטי הנטישה עודכנו');
+  const raw=prompt('למה נטשתי?',b.abandonReason||'');
+  if(raw===null)return;
+  b.abandonReason=raw.trim();b.abandonMood='';save();openBook(bookId);toast('סיבת הנטישה עודכנה');
 }
 function restoreAbandonedBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
@@ -3080,7 +3108,7 @@ function openBook(bookId){
           <div class="editorActionsRow detailActionsV45" style="margin-top:16px">${(b.status||'finished')==='abandoned'?`<button class="secondaryAction" onclick="restoreAbandonedBook('${b.id}')">להחזיר לקריאה</button><button class="secondaryAction" onclick="editAbandonReason('${b.id}')">עריכת סיבה</button>`:`<button class="secondaryAction detailEditBtnV42" onclick="editBook('${b.id}')">עריכה</button>`}<button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
         </div>
       </div>
-      ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub">${esc(b.abandonMood||'אין סימון אם זו נטישה סופית או רק לא עכשיו')}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;

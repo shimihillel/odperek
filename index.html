@@ -1949,6 +1949,27 @@ body{background:
 .detailMomentActionsV43{margin-top:0;flex:0 0 auto;justify-content:flex-end}
 @media(max-width:420px){.momentRowV43{display:block}.detailMomentActionsV43{margin-top:10px}}
 
+
+/* v44 — custom tag manager */
+.tagManagePanelV44{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 12px 28px rgba(85,73,57,.06)}
+.tagManagePanelV44 h3{margin:0;color:#304131;font-size:24px;font-weight:950}
+.tagManagePanelV44 p{margin:8px 0 14px;color:var(--muted);font-size:14px;line-height:1.5;font-weight:750}
+.tagGroupV44{background:#fbf7f0;border:1px solid var(--line);border-radius:24px;padding:14px;margin-top:12px}
+.tagGroupHeadV44{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.tagGroupTitleV44{font-size:18px;font-weight:950;color:#304131}
+.tagGroupCountV44{font-size:12px;font-weight:850;color:#8f8578;background:#f1ebe2;border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
+.tagListV44{display:grid;gap:9px}
+.tagItemV44{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:#fffdfa;border:1px solid var(--line);border-radius:18px;padding:10px 11px}
+.tagNameV44{font-size:14px;font-weight:900;color:#2f2b26;line-height:1.35;overflow-wrap:anywhere}
+.tagActionsV44{display:flex;gap:7px}
+.tagMiniBtnV44{border:1px solid var(--line);background:#f3ede3;color:#665c50;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:900}
+.tagMiniBtnV44.danger{background:#f7e6df;color:#a75b45;border-color:#ead0c6}
+.tagEmptyV44{color:var(--muted);font-size:13px;line-height:1.45;padding:8px 2px;font-weight:760}
+@media(max-width:420px){
+  .tagItemV44{grid-template-columns:1fr}
+  .tagActionsV44{justify-content:flex-start}
+}
+
 </style>
 </head>
 <body>
@@ -2022,6 +2043,72 @@ function addCustomStampTag(){
   save();
   renderSummary();
   toast('החותמת נשמרה');
+}
+
+function customTagConfig(kind){
+  const configs={
+    mood:{title:'תגיות וייב',list:'customMoodTags',defaults:MOODS},
+    char:{title:'תגיות דמות',list:'customCharTags',defaults:CHAR_TAGS},
+    stamp:{title:'חותמות ספר',list:'customStampTags',defaults:BOTTOM_LINES}
+  };
+  return configs[kind]||configs.mood;
+}
+function renderCustomTagsPanel(){
+  return `<section class="tagManagePanelV44">
+    <h3>ניהול תגיות אישיות</h3>
+    <p>כאן אפשר לערוך או למחוק רק תגיות שאת הוספת בעצמך. תגיות ברירת המחדל נשארות כמו שהן.</p>
+    ${renderCustomTagGroup('mood')}
+    ${renderCustomTagGroup('char')}
+    ${renderCustomTagGroup('stamp')}
+  </section>`;
+}
+function renderCustomTagGroup(kind){
+  const cfg=customTagConfig(kind);
+  const list=uniqueList(S[cfg.list]||[]);
+  return `<div class="tagGroupV44">
+    <div class="tagGroupHeadV44"><div class="tagGroupTitleV44">${cfg.title}</div><div class="tagGroupCountV44">${list.length} אישיות</div></div>
+    ${list.length?`<div class="tagListV44">${list.map(t=>`<div class="tagItemV44"><div class="tagNameV44">${esc(t)}</div><div class="tagActionsV44"><button class="tagMiniBtnV44" onclick="renameCustomTag('${kind}','${jsEsc(t)}')">עריכה</button><button class="tagMiniBtnV44 danger" onclick="deleteCustomTag('${kind}','${jsEsc(t)}')">מחיקה</button></div></div>`).join('')}</div>`:`<div class="tagEmptyV44">עוד לא הוספת תגיות אישיות בקטגוריה הזאת.</div>`}
+  </div>`;
+}
+function renameCustomTag(kind,oldTag){
+  const cfg=customTagConfig(kind);
+  const next=(prompt('שם חדש לתגית:',oldTag)||'').trim();
+  if(!next || next===oldTag)return;
+  const existing=uniqueList([...(cfg.defaults||[]), ...(S[cfg.list]||[])]).filter(x=>x!==oldTag);
+  if(existing.includes(next)){toast('כבר קיימת תגית כזאת');return}
+  S[cfg.list]=uniqueList((S[cfg.list]||[]).map(x=>x===oldTag?next:x));
+  migrateCustomTag(kind,oldTag,next);
+  save();
+  render();
+  toast('התגית עודכנה');
+}
+function deleteCustomTag(kind,tag){
+  const cfg=customTagConfig(kind);
+  if(!confirm(`למחוק את "${tag}" מהרשימה האישית?\\nשימושים שכבר נשמרו בספרים יישארו כמו שהם.`))return;
+  S[cfg.list]=uniqueList((S[cfg.list]||[]).filter(x=>x!==tag));
+  save();
+  render();
+  toast('התגית נמחקה מהרשימה');
+}
+function migrateCustomTag(kind,oldTag,newTag){
+  const replaceMood=(u)=>{if(u&&u.type==='mood'){if(u.label===oldTag)u.label=newTag;if(u.text===oldTag)u.text=newTag;}};
+  const replaceChar=(ch)=>{if(ch&&ch.tag===oldTag)ch.tag=newTag;if(ch&&ch.finalTag===oldTag)ch.finalTag=newTag;};
+  if(kind==='mood'){
+    if(S.current){
+      if(S.current.lastMood===oldTag)S.current.lastMood=newTag;
+      (S.current.updates||[]).forEach(replaceMood);
+    }
+    (S.books||[]).forEach(b=>(b.readingLog||[]).forEach(replaceMood));
+  }
+  if(kind==='char'){
+    if(S.current)(S.current.characters||[]).forEach(replaceChar);
+    (S.books||[]).forEach(b=>(b.characters||[]).forEach(replaceChar));
+  }
+  if(kind==='stamp'){
+    if(S.summaryDraft&&S.summaryDraft.bottomLine===oldTag)S.summaryDraft.bottomLine=newTag;
+    if(shelfFilters&&shelfFilters.bottomLine===oldTag)shelfFilters.bottomLine=newTag;
+    (S.books||[]).forEach(b=>{if(b.bottomLine===oldTag)b.bottomLine=newTag;});
+  }
 }
 function addCustomStampTagFromEdit(bookId){
   const tag=(prompt('איזו חותמת תרצי להוסיף?')||'').trim();
@@ -3157,6 +3244,8 @@ function renderStats(){
       </section>
       `:`<div class="statsEmptyNew">עוד אין מספיק נתונים לסטטיסטיקה. ברגע שתסיימי ספר ראשון, המסך הזה יתחיל לספר לך על המדף שלך.</div>`}
 
+      ${renderCustomTagsPanel()}
+
       <section class="backupPanelNew">
         <h3>גיבוי ושחזור</h3>
         <p>שומר קובץ JSON עם כל הספרים, הספר הפעיל, רגעים מהשטח, דמויות, תגיות אישיות, דירוגים וסטטיסטיקות. שחזור מחליף את הנתונים הקיימים.</p>
@@ -3178,7 +3267,7 @@ function statRowNew(label,value,sub,icon){
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:34,
+    version:44,
     exportedAt:new Date().toISOString(),
     data:S
   };

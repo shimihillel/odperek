@@ -2381,6 +2381,28 @@ body{background:
   .homePageNew .homeShelfSectionV53 .miniShelfBook .realCoverV50.cover{max-width:136px!important;}
 }
 
+
+
+/* v54 — fun statistics polish */
+.statsPageV54{padding-bottom:calc(140px + env(safe-area-inset-bottom))}
+.statsHeroV54 .statsHeroNote{max-width:100%;line-height:1.45}
+.statsMainGridV54{margin-top:0}
+.statsAwardsGridV54{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.statsAwardCardV54{background:#fbf7f0;border:1px solid var(--line);border-radius:26px;padding:15px;box-shadow:0 10px 24px rgba(85,73,57,.055);min-height:166px;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.statsAwardTopV54{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.statsAwardIconV54{width:42px;height:42px;border-radius:16px;background:#f0e9dd;border:1px solid var(--line);display:grid;place-items:center;color:#b98b3d;flex:0 0 auto}
+.statsAwardIconV54 .neonIcon{width:21px;height:21px;filter:none!important}
+.statsAwardScoreV54{font-size:15px;font-weight:950;color:#b97953;text-align:left;line-height:1.2}
+.statsAwardLabelV54{font-size:13px;color:#8a8176;font-weight:950;margin-top:2px}
+.statsAwardTitleV54{font-size:19px;line-height:1.15;color:#2e3f30;font-weight:1000;letter-spacing:-.2px}
+.statsAwardAuthorV54{font-size:13px;line-height:1.35;color:#82786d;font-weight:800}
+.statsAbandonV54 .statsAbandonGridV47{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:380px){
+  .statsAwardsGridV54{gap:10px}
+  .statsAwardCardV54{padding:13px;border-radius:24px;min-height:154px}
+  .statsAwardTitleV54{font-size:17px}
+}
+
 </style>
 </head>
 <body>
@@ -3768,8 +3790,19 @@ function renderStats(){
   const books=finishedBooks;
   const total=finishedBooks.length;
   const abandonedTotal=abandonedBooks.length;
+  const allTracked=total+abandonedTotal;
+  const abandonmentRate=allTracked?Math.round((abandonedTotal/allTracked)*100):0;
   const avgAbandonedPercent=abandonedTotal?Math.round(abandonedBooks.reduce((sum,b)=>sum+(+b.percent||0),0)/abandonedTotal):0;
   const abandonReasons=abandonedBooks.map(b=>String(b.abandonReason||'').trim()).filter(Boolean);
+  const now=new Date();
+  const monthKey=now.toISOString().slice(0,7);
+  const bookMonth=(b)=>{
+    const d=new Date(b.createdAt||b.finishedAt||b.updatedAt||0);
+    return Number.isFinite(d.getTime())?d.toISOString().slice(0,7):'';
+  };
+  const finishedThisMonth=finishedBooks.filter(b=>bookMonth(b)===monthKey).length;
+  const abandonedThisMonth=abandonedBooks.filter(b=>bookMonth(b)===monthKey).length;
+  const monthLabel=now.toLocaleDateString('he-IL',{month:'long',year:'numeric'});
   const avg=(key)=>{
     const vals=books.map(b=>+b[key]||0).filter(v=>v>0);
     return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
@@ -3790,6 +3823,7 @@ function renderStats(){
   const topStamp=common(books.map(b=>b.bottomLine));
   const topAuthor=common(books.map(b=>b.author));
   const topChar=common(allChars.map(c=>c.name));
+  const authorRepeat=(topAuthor&&topAuthor[1]>1)?topAuthor:null;
   const heat=maxBook('heat'), cry=maxBook('cry'), stars=maxBook('stars'), fast=maxBook('speed'), slow=maxBook('speed',true);
   const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length;
   const noTalk=allLogs.filter(u=>/לא לדבר איתי/.test(`${u.text||''} ${u.label||''}`)).length + books.filter(b=>/לא לדבר איתי/.test(`${b.bottomLine||''} ${b.madeMe||''}`)).length;
@@ -3797,6 +3831,8 @@ function renderStats(){
   const diagnosis=()=>{
     if(!total && !abandonedTotal)return 'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים.';
     if(!total && abandonedTotal)return 'המדף כרגע יותר בקטע של נטישות. גם זה דפוס, ואנחנו מכבדות אמת.';
+    if(authorRepeat)return `יש פה חשד להתאהבות חוזרת ב${authorRepeat[0]}. נעקוב.`;
+    if(abandonmentRate>=35)return 'יש פה סטנדרטים. לא כל ספר עובר את ועדת שימי.';
     if(redFlags>=3)return 'יש לך יכולת מרשימה לזהות דגלים אדומים ועדיין להמשיך לקרוא. מחקרית: חשוד.';
     if((parseFloat(avg('cry'))||0)>=4)return 'המדף שלך רגשי מאוד. לא סתם ספרים, יותר אירועי לב.';
     if(swallowed>=Math.max(1,Math.ceil(total*0.4)))return 'כשספר תופס אותך — את לא קוראת, את נעלמת אליו.';
@@ -3804,60 +3840,73 @@ function renderStats(){
     return 'יש פה מדף עם טעם, מצב רוח, וקצת דרמה בריאה.';
   };
   el.innerHTML=topHtml()+`
-    <div class="statsPageNew">
-      <section class="statsHeroNew">
+    <div class="statsPageNew statsPageV54">
+      <section class="statsHeroNew statsHeroV54">
         <div class="eyebrow">Reading stats</div>
         <h2>סטטיסטיקה</h2>
-        <p>לא רק מספרים — תמונת מצב של מה את קוראת, מה נשאר איתך, ומה הספרים עושים לך בדרך.</p>
+        <p>לא רק מספרים — המצעד, הדרמות, הנטישות והדפוסים שחוזרים במדף שלך.</p>
         <div class="statsHeroNote">${uiIcon('spark')} ${diagnosis()}</div>
       </section>
 
-      ${total?`
-      <section class="statsGridNew">
-        ${statCardNew(total,'ספרים שסיימתי','כמה ספרים קיבלו מקום קבוע','book')}
-        ${statCardNew(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
-        ${statCardNew(avg('heat'),'ממוצע לוהט','כמה אש יש במדף','percent')}
-        ${statCardNew(avg('cry'),'ממוצע שבר','כמה הלב שילם בדרך','chat')}
+      ${(total||abandonedTotal)?`
+      <section class="statsGridNew statsMainGridV54">
+        ${statCardNew(total,'סיימתי','ספרים שנכנסו למדף הקבוע','book')}
+        ${statCardNew(finishedThisMonth,'החודש','ספרים שסיימת ב־'+monthLabel,'spark')}
+        ${statCardNew(abandonedTotal,'נטשתי','ספרים שנפלו בדרך','chat')}
+        ${statCardNew(abandonmentRate+'%','אחוז נטישה','מתוך כל הספרים שנרשמו','percent')}
       </section>
 
-      <section class="statsSectionNew">
-        <div class="statsSectionHeadNew"><div><h3>מי כיכבו</h3><p>המצטיינים של המדף כרגע.</p></div></div>
-        <div class="statsListNew">
-          ${statRowNew('הכי אהבתי',stars?stars.title:'עוד אין',stars?iconStack('heart',stars.stars):'—','spark')}
-          ${statRowNew('הכי לוהט',heat?heat.title:'עוד אין',heat?iconStack('pepper',heat.heat):'—','percent')}
-          ${statRowNew('הכי שבר אותי',cry?cry.title:'עוד אין',cry?iconStack('broken',cry.cry):'—','chat')}
-          ${statRowNew('בלעתי הכי מהר',fast?fast.title:'עוד אין',fast?(SPEED[fast.speed-1]||'—'):'—','book')}
-          ${statRowNew('הכי נמרח',slow?slow.title:'עוד אין',slow?(SPEED[slow.speed-1]||'—'):'—','book')}
+      ${total?`
+      <section class="statsSectionNew statsAwardsSectionV54">
+        <div class="statsSectionHeadNew"><div><h3>המצעד של המדף</h3><p>הספרים שלקחו קטגוריה. כן, יש פה טקס.</p></div></div>
+        <div class="statsAwardsGridV54">
+          ${statsAwardCardV54('הכי אהוב',stars,stars?iconStack('heart',stars.stars):'—','spark')}
+          ${statsAwardCardV54('הכי שבר אותי',cry,cry?iconStack('broken',cry.cry):'—','chat')}
+          ${statsAwardCardV54('הכי לוהט',heat,heat?iconStack('pepper',heat.heat):'—','percent')}
+          ${statsAwardCardV54('נבלע הכי מהר',fast,fast?(SPEED[fast.speed-1]||'—'):'—','book')}
         </div>
       </section>
 
       <section class="statsSectionNew">
-        <div class="statsSectionHeadNew"><div><h3>דפוסים שחוזרים</h3><p>הדברים שהאפליקציה כבר מתחילה לזהות אצלך.</p></div></div>
+        <div class="statsSectionHeadNew"><div><h3>דפוסים שחוזרים</h3><p>מה חוזר אצלך שוב ושוב, גם אם לא התכוונת להודות בזה.</p></div></div>
         <div class="statsListNew">
+          ${statRowNew('סופרת/מחבר שחוזרים',topAuthor?topAuthor[0]:'עוד אין',topAuthor?`מופיע/ה ${topAuthor[1]} פעמים`:'כשיהיו יותר ספרים זה יתבהר','book')}
           ${statRowNew('חותמת שחוזרת',topStamp?topStamp[0]:'עוד אין',topStamp?`הופיעה ${topStamp[1]} פעמים`:'יתמלא כשיהיו עוד ספרים','spark')}
           ${statRowNew('וייב שכיח',topMood?topMood[0]:'עוד אין',topMood?`הופיע ${topMood[1]} פעמים`:'עדכוני וייב יופיעו כאן','chat')}
-          ${statRowNew('סופרת שחוזרת',topAuthor?topAuthor[0]:'עוד אין',topAuthor?`מופיעה ${topAuthor[1]} פעמים`:'עוד מוקדם לקבוע','book')}
           ${statRowNew('דמות שחזרה הכי הרבה',topChar?topChar[0]:'עוד אין',topChar?`חזרה ${topChar[1]} פעמים`:'כשתוסיפי דמויות זה יתמלא','users')}
         </div>
       </section>
 
       <section class="statsSectionNew">
-        <div class="statsSectionHeadNew"><div><h3>הרגלי קריאה</h3><p>קצת רכילות שימושית על המדף.</p></div></div>
+        <div class="statsSectionHeadNew"><div><h3>מדדי דרמה</h3><p>ממוצעים והרגלים, אבל עם פחות תחושת דו״ח.</p></div></div>
+        <div class="statsGridNew">
+          ${statCardNew(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
+          ${statCardNew(avg('heat'),'ממוצע לוהט','כמה אש יש במדף','percent')}
+          ${statCardNew(avg('cry'),'ממוצע שבר','כמה הלב שילם בדרך','chat')}
+          ${statCardNew(allLogs.length,'רגעים מהשטח','כל העדכונים ששמרת בדרך','book')}
+        </div>
+      </section>
+
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>רכילות שימושית</h3><p>דברים קטנים שהצטברו בדרך.</p></div></div>
         <div class="statsGridNew">
           ${statCardNew(noTalk,'לא לדבר איתי','כמה פעמים הספר סידר לך מצב רוח','spark')}
           ${statCardNew(redFlags,'דגלים אדומים','דמויות שזוהו כעניין בעייתי','users')}
           ${statCardNew(swallowed,'בלעתי בלי לנשום','ספרים שנקראו בקצב גבוה','book')}
-          ${statCardNew(allLogs.length,'רגעים מהשטח','כל העדכונים ששמרת בדרך','chat')}
+          ${statCardNew(slow?SPEED[slow.speed-1]:'—','הכי איטי','הספר שנמרח יותר מהשאר','chat')}
         </div>
       </section>
+      `:''}
       `:`<div class="statsEmptyNew">עוד אין מספיק נתונים לסטטיסטיקה. ברגע שתסיימי ספר ראשון, המסך הזה יתחיל לספר לך על המדף שלך.</div>`}
 
       ${abandonedTotal?`
-      <section class="statsSectionNew statsAbandonV47">
+      <section class="statsSectionNew statsAbandonV47 statsAbandonV54">
         <div class="statsSectionHeadNew"><div><h3>ספרים שנטשתי</h3><p>לא כל ספר חייב להגיע לסוף. גם איפה שעצרת אומר משהו.</p></div></div>
         <div class="statsAbandonGridV47">
-          ${statCardNew(abandonedTotal,'נטשתי','ספרים שנפלו בדרך','book')}
+          ${statCardNew(abandonedTotal,'נטישות בסך הכל','ספרים שלא שרדו עד הסוף','book')}
+          ${statCardNew(abandonedThisMonth,'נטשתי החודש','ב־'+monthLabel,'chat')}
           ${statCardNew(avgAbandonedPercent+'%','ממוצע עצירה','בערך איפה הם ירדו מהמדף','percent')}
+          ${statCardNew(abandonmentRate+'%','אחוז נטישה','מתוך כל הספרים שנרשמו','spark')}
         </div>
         ${abandonReasons.length?`<div class="statsAbandonReasonsV47">${abandonReasons.slice(0,3).map((r,i)=>`<div class="statsReasonPillV47"><b>${i===0?'סיבה אחרונה':'עוד סיבה'}</b>${esc(r)}</div>`).join('')}</div>`:`<div class="statsReasonPillV47"><b>אין סיבות רשומות עדיין</b>בפעם הבאה שתנטשי ספר ותכתבי למה, זה יופיע כאן.</div>`}
       </section>`:''}
@@ -3866,7 +3915,7 @@ function renderStats(){
 
       <section class="backupPanelNew">
         <h3>גיבוי ושחזור</h3>
-        <p>שומר קובץ JSON עם כל הספרים, הספר הפעיל, רגעים מהשטח, דמויות, תגיות אישיות, דירוגים וסטטיסטיקות. שחזור מחליף את הנתונים הקיימים.</p>
+        <p>שומר קובץ JSON עם כל הספרים, הספר הפעיל, רגעים מהשטח, דמויות, תגיות אישיות, דירוגים, כריכות וסטטיסטיקות. שחזור מחליף את הנתונים הקיימים.</p>
         <div class="backupActionsNew">
           <button class="backupPrimaryNew" onclick="exportBackup()">${uiIcon('backup')} גיבוי הנתונים</button>
           <button class="backupSecondaryNew" onclick="chooseRestoreFile()">${uiIcon('restore')} שחזור מגיבוי</button>
@@ -3881,11 +3930,14 @@ function statCardNew(value,label,sub,icon){
 function statRowNew(label,value,sub,icon){
   return `<div class="statRowNew"><div class="statRowText"><div class="statRowLabel">${esc(label)}</div><div class="statRowValue">${esc(value)}</div><div class="statRowSub">${sub}</div></div><div class="statRowIcon">${uiIcon(icon)}</div></div>`;
 }
+function statsAwardCardV54(label,book,score,icon){
+  return `<div class="statsAwardCardV54"><div class="statsAwardTopV54"><div class="statsAwardIconV54">${uiIcon(icon)}</div><div class="statsAwardScoreV54">${score}</div></div><div class="statsAwardLabelV54">${esc(label)}</div><div class="statsAwardTitleV54">${book?esc(book.title||'בלי שם'):'עוד אין'}</div><div class="statsAwardAuthorV54">${book&&book.author?esc(book.author):'יתמלא כשיהיו עוד נתונים'}</div></div>`;
+}
 
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:49,
+    version:54,
     exportedAt:new Date().toISOString(),
     data:S
   };

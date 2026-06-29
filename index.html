@@ -1970,6 +1970,19 @@ body{background:
   .tagActionsV44{justify-content:flex-start}
 }
 
+
+/* v45 — abandoned books */
+.shelfModeTabsV45{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 0}
+.shelfModeTabsV45 button{border:1px solid var(--line);background:#f7f1e8;color:#675e52;border-radius:18px;padding:12px 14px;font-weight:950;font-size:14px;box-shadow:none}
+.shelfModeTabsV45 button.on{background:#304131;color:#fff;border-color:#304131}
+.abandonBadgeV45{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#f0e5d8;border:1px solid #dcc9b4;color:#7c5638;font-weight:950;font-size:12px;padding:7px 11px;margin-bottom:10px}
+.abandonNoteV45{margin-top:12px;padding:13px 14px;border-radius:20px;background:#fbf7f0;border:1px solid var(--line);color:#655b4f;font-weight:760;line-height:1.45}
+.quickCardNew.abandonV45 .quickIcon{background:#f0e5d8;color:#8a5a39}
+.fieldAbandonBtnV45{margin-top:12px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:#f8f2ea;color:#7a6049;border-radius:999px;padding:10px 14px;font-weight:900}
+.shelfCardNew.abandonedV45{opacity:.94}
+.shelfCardNew.abandonedV45 .cover{filter:saturate(.72);}
+.detailActionsV45{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+
 </style>
 </head>
 <body>
@@ -2003,6 +2016,7 @@ let openAcc='percent';
 let currentScreen='home';
 let shelfSearch='';
 let shelfSort='recent';
+let shelfMode='finished';
 let shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
 let shelfFilterOpen=false;
 let editBookDraft=null;
@@ -2153,6 +2167,10 @@ function normalizeBook(b){
   b.heat=+b.heat||0;
   b.cry=+b.cry||0;
   b.speed=+b.speed||0;
+  b.status=b.status||'finished';
+  b.abandonReason=b.abandonReason||'';
+  b.abandonMood=b.abandonMood||'';
+  b.abandonedAt=b.abandonedAt||'';
   b.bottomLine=b.bottomLine||'';
   b.about=b.about||b.heroine||'';
   b.madeMe=b.madeMe||b.linger||'';
@@ -2236,7 +2254,7 @@ function render(){
 }
 function renderHome(){
   const c=S.current;
-  const recent=S.books.slice(0,4);
+  const recent=S.books.filter(b=>(b.status||'finished')==='finished').slice(0,4);
   document.getElementById('home').innerHTML=`${topHtml()}
     <div class="homePageNew">
       ${c?currentHome(c):emptyHome()}
@@ -2287,6 +2305,7 @@ function currentHome(c){
       <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
       <button class="quickCardNew primary" onclick="goField()"><span class="quickIcon">${uiIcon('book')}</span><span class="quickLabel">עדכון מהשטח</span><span class="quickSub">כל הרגעים של הספר במקום אחד</span></button>
       <button class="quickCardNew" onclick="goSummary()"><span class="quickIcon">${uiIcon('check')}</span><span class="quickLabel">סיימתי</span><span class="quickSub">לסכם, לדרג ולהכניס למדף</span></button>
+      <button class="quickCardNew abandonV45" onclick="abandonCurrentBook()"><span class="quickIcon">${uiIcon('quote')}</span><span class="quickLabel">נטשתי</span><span class="quickSub">לא כל ספר חייב להיגמר</span></button>
     </div>
   </div>`;
 }
@@ -2344,7 +2363,7 @@ function ratingsLine(b){
 }
 function searchBookText(b){
   return [
-    b.title,b.author,b.bottomLine,b.about,b.madeMe,
+    b.title,b.author,b.bottomLine,b.about,b.madeMe,b.abandonReason,b.abandonMood,
     (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag].join(' ')).join(' '),
     (b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')
   ].join(' ').toLowerCase();
@@ -2387,6 +2406,7 @@ function renderField(){
               <span class="fieldInfoChipV35">${esc(mood)}</span>
               <span class="fieldInfoChipV35">${updatesCount} רגעים שמורים</span>
             </div>
+            <button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
           </div>
           <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author)}</div>
         </div>
@@ -2816,7 +2836,7 @@ function finishBook(){
   const chars=c.characters.map(ch=>({...ch,finalTag:(d.charFinal||{})[ch.id]||ch.finalTag||''}));
   const log=c.updates.map(u=>({...u,finalTag:(d.momentTags||{})[u.id]||u.finalTag||''}));
   const b=normalizeBook({
-    id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),
+    id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'finished',
     stars:d.stars||0,heat:d.heat||0,cry:d.cry||0,speed:d.speed||0,
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
     characters:chars,readingLog:log,percent:c.percent
@@ -2824,13 +2844,42 @@ function finishBook(){
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
 
+
+function abandonCurrentBook(){
+  const c=S.current;if(!c)return;
+  const reason=(prompt('למה נטשת את הספר?')||'').trim();
+  if(reason===null)return;
+  const mood=(prompt('זה "לא עכשיו" או "אין מצב שאני חוזרת לזה"?', 'לא עכשיו')||'').trim();
+  if(!confirm(`להעביר את "${c.title}" למדף הנטושים?`))return;
+  const b=normalizeBook({
+    id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'abandoned',
+    abandonReason:reason,abandonMood:mood,abandonedAt:new Date().toISOString(),
+    characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent)
+  });
+  S.books.unshift(b);S.current=null;S.summaryDraft=null;save();shelfMode='abandoned';show('shelf');toast('הספר עבר לנטשתי');
+}
+function editAbandonReason(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const reason=(prompt('למה נטשתי?',b.abandonReason||'')||'').trim();
+  const mood=(prompt('לא עכשיו / אין מצב שאני חוזרת לזה?',b.abandonMood||'לא עכשיו')||'').trim();
+  b.abandonReason=reason;b.abandonMood=mood;save();openBook(bookId);toast('פרטי הנטישה עודכנו');
+}
+function restoreAbandonedBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  if(S.current && !confirm('יש כבר ספר פעיל. להחליף אותו בספר הזה? הספר הפעיל הנוכחי לא יישמר אוטומטית.'))return;
+  S.current=normalizeCurrent({id:b.id,title:b.title,author:b.author,percent:pct(b.percent||0),updates:b.readingLog||[],characters:b.characters||[],startedAt:new Date().toISOString()});
+  S.books=S.books.filter(x=>x.id!==bookId);
+  save();show('home');toast('הספר חזר לקריאה');
+}
+
 function renderShelf(){
   document.getElementById('shelf').innerHTML=`${topHtml()}
     <div class="shelfPageNew">
       <div class="shelfIntroCard">
-        <div><h2>המדף שלי</h2><p>כל הספרים שסיימת, עם הסיכומים, הדמויות והרגעים שנשארו איתך.</p></div>
+        <div><h2>המדף שלי</h2><p>ספרים שסיימת וגם אלה שנפלו בדרך. כי גם נטישה היא מידע חשוב.</p></div>
         <button class="pillBtn shelfAddBtn" onclick="startNewBook()">+ ספר חדש</button>
       </div>
+      <div class="shelfModeTabsV45"><button class="${shelfMode==='finished'?'on':''}" onclick="setShelfMode('finished')">סיימתי</button><button class="${shelfMode==='abandoned'?'on':''}" onclick="setShelfMode('abandoned')">נטשתי</button></div>
       <div class="searchPanelNew">
         <div class="shelfSearchWrap"><span class="shelfSearchIcon">${uiIcon('search')}</span><input id="shelfSearchInput" class="input shelfSearchInput" placeholder="חיפוש במדף" value="${esc(shelfSearch)}" oninput="updateShelfSearch(this.value)"></div>
         <div class="sortBarNew">
@@ -2845,6 +2894,11 @@ function renderShelf(){
       </div>
       <div id="shelfResults">${shelfResultsHtml()}</div>
     </div>`;
+}
+function setShelfMode(mode){
+  shelfMode=mode==='abandoned'?'abandoned':'finished';
+  shelfFilterOpen=false;
+  renderShelf();
 }
 function updateShelfSearch(q){
   shelfSearch=q;
@@ -2929,6 +2983,7 @@ function toggleShelfFilter(key,val){
 function resetShelfTools(){
   shelfSearch='';
   shelfSort='recent';
+  shelfMode='finished';
   shelfFilters={bottomLine:'',stars:0,heat:0,cry:0,speed:0,char:''};
   shelfFilterOpen=false;
   shelfSortOpen=false;
@@ -2936,6 +2991,7 @@ function resetShelfTools(){
 }
 function activeShelfFiltersHtml(){
   const tags=[];
+  if(shelfMode==='abandoned') tags.push('נטשתי');
   if(shelfSearch.trim()) tags.push(`חיפוש: ${shelfSearch.trim()}`);
   if(shelfSort!=='recent') tags.push(`מיון: ${sortLabel(shelfSort)}`);
   if(shelfFilters.bottomLine) tags.push(shelfFilters.bottomLine);
@@ -2979,17 +3035,21 @@ function sortShelfBooks(arr){
 
 function shelfResultsHtml(){
   const q=(shelfSearch||'').trim().toLowerCase();
-  let books=S.books.filter(b=>!q || searchBookText(b).includes(q));
+  const mode=shelfMode==='abandoned'?'abandoned':'finished';
+  const allInMode=S.books.filter(b=>(b.status||'finished')===mode);
+  let books=allInMode.filter(b=>!q || searchBookText(b).includes(q));
   books=books.filter(matchesShelfFilters);
   books=sortShelfBooks(books);
-  if(!S.books.length) return `<div class="emptyNew">עוד אין ספרים שסיימת. כשהראשון ייכנס למדף — הכל יתמלא כאן.</div>`;
+  if(!S.books.length) return `<div class="emptyNew">עוד אין ספרים במדף. הראשון שיסתיים או יינטש יופיע כאן.</div>`;
+  if(!allInMode.length) return `<div class="emptyNew">${mode==='abandoned'?'עוד אין ספרים שנטשת. מרשים, או מדאיג.':'עוד אין ספרים שסיימת. כשהראשון ייכנס למדף — הכל יתמלא כאן.'}</div>`;
   if(!books.length) return `<div class="emptyNew">לא מצאתי שום דבר שמתאים לחיפוש או לסינון שבחרת.</div>`;
   return `<div class="shelfGridEditorial">${books.map(bookRow).join('')}</div>`;
 }
 function bookRow(b){
   const topChar=(b.characters||[]).find(ch=>ch.finalTag)||(b.characters||[])[0]||null;
-  const excerpt=b.madeMe || b.about || '';
-  return `<button class="shelfCardNew" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${b.bottomLine?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
+  const isAbandoned=(b.status||'finished')==='abandoned';
+  const excerpt=isAbandoned?(b.abandonReason||'ננטש בלי סיבה רשומה'):(b.madeMe || b.about || '');
+  return `<button class="shelfCardNew ${isAbandoned?'abandonedV45':''}" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${isAbandoned?`<span class="softPill">נטשתי ב־${pct(b.percent||0)}%</span>`:''}${b.bottomLine&&!isAbandoned?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar&&!isAbandoned?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
 }
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
@@ -3009,17 +3069,18 @@ function openBook(bookId){
         <div class="detailInfo">
           <h2>${esc(b.title)}</h2>
           <p>${esc(b.author)}</p>
-          ${b.bottomLine?`<div class="softPill" style="margin-bottom:12px">${esc(b.bottomLine)}</div>`:''}
+          ${(b.status||'finished')==='abandoned'?`<div class="abandonBadgeV45">נטשתי ב־${pct(b.percent||0)}%</div>`:(b.bottomLine?`<div class="softPill" style="margin-bottom:12px">${esc(b.bottomLine)}</div>`:'')}
+          ${(b.status||'finished')==='abandoned'&&b.abandonReason?`<div class="abandonNoteV45"><b>למה נטשתי:</b><br>${esc(b.abandonReason)}</div>`:''}
           <div class="detailGridNew">
             <div class="detailStat"><small>אהבתי</small><b>${b.stars?iconStack('heart',b.stars):'—'}</b></div>
             <div class="detailStat"><small>לוהט</small><b>${b.heat?iconStack('pepper',b.heat):'—'}</b></div>
             <div class="detailStat"><small>שבר אותי</small><b>${b.cry?iconStack('broken',b.cry):'—'}</b></div>
             <div class="detailStat"><small>קצב</small><b>${b.speed?SPEED[b.speed-1]:'—'}</b></div>
           </div>
-          <div class="editorActionsRow" style="margin-top:16px"><button class="secondaryAction detailEditBtnV42" onclick="editBook('${b.id}')">עריכה</button><button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
+          <div class="editorActionsRow detailActionsV45" style="margin-top:16px">${(b.status||'finished')==='abandoned'?`<button class="secondaryAction" onclick="restoreAbandonedBook('${b.id}')">להחזיר לקריאה</button><button class="secondaryAction" onclick="editAbandonReason('${b.id}')">עריכת סיבה</button>`:`<button class="secondaryAction detailEditBtnV42" onclick="editBook('${b.id}')">עריכה</button>`}<button class="secondaryAction" onclick="show('shelf')">חזרה למדף</button><button class="secondaryAction" onclick="confirmDeleteBook('${b.id}')">הסרת ספר</button></div>
         </div>
       </div>
-      <div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub">${esc(b.abandonMood||'אין סימון אם זו נטישה סופית או רק לא עכשיו')}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;

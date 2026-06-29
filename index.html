@@ -1924,6 +1924,31 @@ body{background:
 .detailEditBtnV42{background:#f2eadf!important;border:1px solid var(--line)!important;color:#6a6258!important;box-shadow:none!important}
 @media(max-width:420px){.editHeroTopV42{grid-template-columns:48px 1fr 48px}.editHeroCenterV42 h2{font-size:27px}.shelfSearchWrap .shelfSearchInput::placeholder{font-size:14px}}
 
+
+/* v43 — bigger titles on covers + moment edit/delete */
+.coverTitle{font-size:30px!important;line-height:1.04!important;font-weight:1000!important;letter-spacing:-.02em;max-width:96%!important}
+.coverAuthor{font-size:14px!important;line-height:1.15!important}
+.homePageNew .miniShelfBook .coverTitle{font-size:28px!important;line-height:1.04!important}
+.homePageNew .miniShelfBook .coverAuthor{font-size:13px!important}
+.shelfCardNew .coverTitle{font-size:30px!important;line-height:1.03!important}
+.shelfCardNew .coverAuthor{font-size:14px!important}
+.detailHeroNew .coverTitle{font-size:34px!important;line-height:1.02!important}
+.detailHeroNew .coverAuthor{font-size:15px!important}
+.fieldHeaderCover .coverTitle,.fieldHeroCoverV35 .coverTitle,.summaryCoverV38 .coverTitle,.summaryCoverV37 .coverTitle{font-size:27px!important;line-height:1.04!important}
+.summaryCoverV38 .coverAuthor,.summaryCoverV37 .coverAuthor{font-size:13px!important}
+@media(max-width:420px){
+  .coverTitle{font-size:27px!important}
+  .homePageNew .miniShelfBook .coverTitle{font-size:25px!important}
+  .shelfCardNew .coverTitle{font-size:27px!important}
+  .detailHeroNew .coverTitle{font-size:31px!important}
+}
+.momentActionsV43{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.momentActionsV43 button{border:1px solid var(--line);background:#f7f1e8;color:#6d655a;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900}
+.momentActionsV43 button:last-child{color:#9a5a45;background:#fbf4ee}
+.momentRowV43{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.detailMomentActionsV43{margin-top:0;flex:0 0 auto;justify-content:flex-end}
+@media(max-width:420px){.momentRowV43{display:block}.detailMomentActionsV43{margin-top:10px}}
+
 </style>
 </head>
 <body>
@@ -2046,6 +2071,7 @@ function normalizeBook(b){
   b.madeMe=b.madeMe||b.linger||'';
   b.characters=Array.isArray(b.characters)?b.characters:[];
   b.readingLog=Array.isArray(b.readingLog)?b.readingLog:(Array.isArray(b.updates)?b.updates:[]);
+  b.readingLog=b.readingLog.map(u=>({...u,id:u.id||id()}));
   b.createdAt=b.createdAt||new Date().toISOString();
   return b;
 }
@@ -2056,6 +2082,7 @@ function normalizeCurrent(c){
   c.percent=pct(c.percent);
   c.lastMood=c.lastMood||'';
   c.updates=Array.isArray(c.updates)?c.updates:[];
+  c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
   c.characters=Array.isArray(c.characters)?c.characters:[];
   c.startedAt=c.startedAt||new Date().toISOString();
   return c;
@@ -2194,8 +2221,9 @@ function momentIcon(type){
 function momentLabel(type){
   return {progress:'איפה אני',mood:'מה הוייב?',note:'מה בתכלס קורה',quote:'לגזור ולשמור',character:'על מי מדובר'}[type]||'עדכון';
 }
-function momentHtml(u){
-  return `<div class="momentInline"><div class="momentBody"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div><div class="momentType">${momentIcon(u.type)}</div></div>`;
+function momentHtml(u,editable=false){
+  const actions=editable?`<div class="momentActionsV43"><button onclick="editCurrentMoment('${u.id}')">עריכה</button><button onclick="deleteCurrentMoment('${u.id}')">מחיקה</button></div>`:'';
+  return `<div class="momentInline"><div class="momentBody"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div>${actions}</div><div class="momentType">${momentIcon(u.type)}</div></div>`;
 }
 function timelineMomentHtml(u){
   return `<div class="timelineMoment"><div class="timelineDot">${momentIcon(u.type)}</div><div class="timelineContent"><div class="momentMeta">${u.percent||0}% · ${momentLabel(u.type)}${u.finalTag?' · '+esc(u.finalTag):''}</div><div class="momentText">${esc(u.text||u.label||'')}</div></div></div>`;
@@ -2380,7 +2408,7 @@ function renderField(){
               <p>הציר נשמר כדי שתוכלי לחזור אליו גם בסיכום וגם במדף.</p>
             </div>
           </div>
-          ${c.updates.length?`<div class="momentColumnNew fieldMomentsListV35">${c.updates.slice(0,8).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
+          ${c.updates.length?`<div class="momentColumnNew fieldMomentsListV35">${c.updates.slice(0,8).map(u=>`<div class="momentCardNew">${momentHtml(u,true)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
         </section>
       </div>
     </div>`;
@@ -2906,9 +2934,43 @@ function openBook(bookId){
       </div>
       <div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
-      ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>`<div class="rowItemNew"><div class="title">${esc(momentLabel(u.type))} · ${u.percent||0}%</div><div class="sub">${esc(u.text||u.label||'')}${u.finalTag?` · ${esc(u.finalTag)}`:''}</div></div>`).join('')}</div></div>`:''}
+      ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
   scrollTo(0,0);
+}
+
+function bookMomentRow(bookId,u){
+  return `<div class="rowItemNew momentRowV43"><div><div class="title">${esc(momentLabel(u.type))} · ${u.percent||0}%</div><div class="sub">${esc(u.text||u.label||'')}${u.finalTag?` · ${esc(u.finalTag)}`:''}</div></div><div class="momentActionsV43 detailMomentActionsV43"><button onclick="editBookMoment('${bookId}','${u.id}')">עריכה</button><button onclick="deleteBookMoment('${bookId}','${u.id}')">מחיקה</button></div></div>`;
+}
+function editCurrentMoment(mid){
+  const c=S.current;if(!c)return;
+  const u=(c.updates||[]).find(x=>x.id===mid);if(!u)return;
+  const next=(prompt('עריכת רגע מהשטח',u.text||u.label||'')||'').trim();
+  if(!next)return;
+  u.text=next;
+  if(!u.label || u.label===u.text) u.label=next;
+  save();renderField();renderHome();toast('הרגע עודכן');
+}
+function deleteCurrentMoment(mid){
+  const c=S.current;if(!c)return;
+  if(!confirm('למחוק את הרגע הזה מהשטח?'))return;
+  c.updates=(c.updates||[]).filter(x=>x.id!==mid);
+  save();renderField();renderHome();toast('הרגע נמחק');
+}
+function editBookMoment(bookId,mid){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const u=(b.readingLog||[]).find(x=>x.id===mid);if(!u)return;
+  const next=(prompt('עריכת רגע מהשטח',u.text||u.label||'')||'').trim();
+  if(!next)return;
+  u.text=next;
+  if(!u.label || u.label===u.text) u.label=next;
+  save();openBook(bookId);toast('הרגע עודכן');
+}
+function deleteBookMoment(bookId,mid){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  if(!confirm('למחוק את הרגע הזה מהספר?'))return;
+  b.readingLog=(b.readingLog||[]).filter(x=>x.id!==mid);
+  save();openBook(bookId);toast('הרגע נמחק');
 }
 
 function editBook(bookId){

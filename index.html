@@ -2181,6 +2181,21 @@ body{background:
   .coverEditPreviewV49 .realCoverV50{width:min(62vw,210px)!important}
 }
 
+
+/* v51 — cover persistence + clickable placeholders */
+.coverPlaceholderButtonV51{
+  border:0!important;
+  cursor:pointer!important;
+  font-family:inherit!important;
+}
+.coverPlaceholderButtonV51:active{transform:scale(.985)}
+.neutralPlaceholderV51 span:last-child{opacity:.72}
+.bookCoverActionsV51{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start;margin:10px 0 10px}
+.detailHeroNew .bookCoverActionsV51{justify-content:flex-start}
+.shelfCardNew .neutralPlaceholderV51 span:last-child,.miniShelfBook .neutralPlaceholderV51 span:last-child{font-size:14px}
+.shelfCardNew .coverPlaceholderV50,.miniShelfBook .coverPlaceholderV50{gap:8px;padding:12px}
+@media(max-width:430px){.bookCoverActionsV51{justify-content:center}.detailHeroNew .bookCoverActionsV51{justify-content:center}}
+
 </style>
 </head>
 <body>
@@ -2447,10 +2462,15 @@ function coverVariantFrom(title='',author='',seed=''){
   for(let i=0;i<str.length;i++) h=(h*31+str.charCodeAt(i))>>>0;
   return h%4;
 }
-function coverHtml(title,author,item={}){
+function coverHtml(title,author,item={},opts={}){
   const img=item&&item.coverImage?String(item.coverImage):'';
+  const uploadAction=opts&&opts.uploadAction?String(opts.uploadAction):'';
+  const placeholderText=uploadAction?'להוספת כריכה':'אין כריכה';
+  const placeholder=uploadAction
+    ? `<button type="button" class="coverPlaceholderV50 coverPlaceholderButtonV51" onclick="event.stopPropagation();${esc(uploadAction)}"><span class="coverPlaceholderIconV50">${uiIcon('book')}</span><span>${placeholderText}</span></button>`
+    : `<div class="coverPlaceholderV50 neutralPlaceholderV51" aria-hidden="true"><span class="coverPlaceholderIconV50">${uiIcon('book')}</span><span>${placeholderText}</span></div>`;
   return `<div class="cover editorialCoverCard realCoverV50 ${img?'hasPhotoV50':'emptyCoverV50'}" aria-label="כריכת ספר">
-    ${img?`<img class="coverPhotoV49 coverPhotoV50" src="${esc(img)}" alt="">`:`<div class="coverPlaceholderV50" aria-hidden="true"><span class="coverPlaceholderIconV50">${uiIcon('book')}</span><span>להוספת כריכה</span></div>`}
+    ${img?`<img class="coverPhotoV49 coverPhotoV50" src="${esc(img)}" alt="">`:placeholder}
   </div>`;
 }
 function firstLetter(s){return String(s||'ע').trim().charAt(0)||'ע'}
@@ -2510,7 +2530,7 @@ function currentHome(c){
           ${lastUpdate?`<div class="lastMomentV48"><b>הרגע האחרון:</b><span>${esc((lastUpdate.text||'').slice(0,92))}${(lastUpdate.text||'').length>92?'…':''}</span></div>`:''}
         </div>
         <div class="heroBookPanel activeBookPanelV48">
-          ${coverHtml(c.title,c.author,c)}
+          ${coverHtml(c.title,c.author,c,{uploadAction:'chooseCoverImageForCurrent()'})}
           <div class="heroStatsRow">
             <div class="heroStat"><span>עדכונים מהשטח</span><b>${(c.updates||[]).length}</b></div>
             <div class="heroStat"><span>דמויות ששמרת</span><b>${(c.characters||[]).length}</b></div>
@@ -2659,7 +2679,7 @@ function renderField(){
             </div>
             <div class="fieldCoverActionsV49">${c.coverImage?`<button onclick="chooseCoverImageForCurrent()">החלפת כריכה</button><button onclick="clearCoverImageForCurrent()">הסרת כריכה</button>`:`<button onclick="chooseCoverImageForCurrent()">הוספת כריכה מהגלריה</button>`}</div><button class="fieldAbandonBtnV45" onclick="abandonCurrentBook()">נטשתי את הספר</button>
           </div>
-          <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author,c)}</div>
+          <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author,c,{uploadAction:'chooseCoverImageForCurrent()'})}</div>
         </div>
         <div class="fieldSnapshotGridV35">
           <div class="fieldSnapshotV35"><span>אחוז נוכחי</span><strong>${pct(c.percent)}%</strong><small>עדכון אחד קטן והכול נשמר בציר.</small></div>
@@ -2950,7 +2970,7 @@ function renderSummary(){
           <span class="summaryChipV38">${pct(c.percent)}%</span>
         </div>
         <div class="summaryBookBoxV38">
-          <div class="summaryCoverV38">${coverHtml(c.title,c.author,c)}</div>
+          <div class="summaryCoverV38">${coverHtml(c.title,c.author,c,{uploadAction:'chooseCoverImageForCurrent()'})}</div>
           <div class="summaryBookMetaV38">
             <div class="summaryNowBadgeV38">הספר שסגרת עכשיו</div>
             <div class="summaryBookTitleV38">${esc(c.title)}</div>
@@ -3090,7 +3110,7 @@ function finishBook(){
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'finished',
     stars:d.stars||0,heat:d.heat||0,cry:d.cry||0,speed:d.speed||0,
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
-    characters:chars,readingLog:log,percent:c.percent
+    characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||''
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
@@ -3105,7 +3125,7 @@ function abandonCurrentBook(){
   const b=normalizeBook({
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'abandoned',
     abandonReason:reason,abandonMood:'',abandonedAt:new Date().toISOString(),
-    characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent)
+    characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent),coverImage:c.coverImage||''
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();shelfMode='abandoned';show('shelf');toast('הספר עבר לנטשתי');
 }
@@ -3118,7 +3138,7 @@ function editAbandonReason(bookId){
 function restoreAbandonedBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   if(S.current && !confirm('יש כבר ספר פעיל. להחליף אותו בספר הזה? הספר הפעיל הנוכחי לא יישמר אוטומטית.'))return;
-  S.current=normalizeCurrent({id:b.id,title:b.title,author:b.author,percent:pct(b.percent||0),updates:b.readingLog||[],characters:b.characters||[],startedAt:new Date().toISOString()});
+  S.current=normalizeCurrent({id:b.id,title:b.title,author:b.author,percent:pct(b.percent||0),updates:b.readingLog||[],characters:b.characters||[],startedAt:new Date().toISOString(),coverImage:b.coverImage||''});
   S.books=S.books.filter(x=>x.id!==bookId);
   save();show('home');toast('הספר חזר לקריאה');
 }
@@ -3316,10 +3336,11 @@ function openBook(bookId){
         <button class="iconBtn" onclick="show('shelf')">${uiIcon('book')}</button>
       </div>
       <div class="detailHeroNew">
-        ${coverHtml(b.title,b.author,b)}
+        ${coverHtml(b.title,b.author,b,{uploadAction:`chooseCoverImageForBook('${b.id}')`})}
         <div class="detailInfo">
           <h2>${esc(b.title)}</h2>
           <p>${esc(b.author)}</p>
+          <div class="bookCoverActionsV51">${b.coverImage?`<button class="coverTinyBtnV49" onclick="chooseCoverImageForBook('${b.id}')">החלפת כריכה</button><button class="coverTinyBtnV49" onclick="clearCoverImageForBook('${b.id}')">הסרת כריכה</button>`:`<button class="coverTinyBtnV49" onclick="chooseCoverImageForBook('${b.id}')">הוספת כריכה</button>`}</div>
           ${(b.status||'finished')==='abandoned'?`<div class="abandonBadgeV45">נטשתי ב־${pct(b.percent||0)}%</div>`:(b.bottomLine?`<div class="softPill" style="margin-bottom:12px">${esc(b.bottomLine)}</div>`:'')}
           ${(b.status||'finished')==='abandoned'&&b.abandonReason?`<div class="abandonNoteV45"><b>למה נטשתי:</b><br>${esc(b.abandonReason)}</div>`:''}
           <div class="detailGridNew">
@@ -3398,7 +3419,7 @@ function renderBookEdit(bookId){
       <section class="editPanelV42 coverEditPanelV49">
         <div class="summaryPanelHeadV38"><h3>כריכה</h3><p>כריכה אמיתית מהגלריה. שם הספר והסופרת נשארים מחוץ לכריכה, כדי שהתמונה תישאר נקייה.</p></div>
         <div class="coverEditGridV49">
-          <div class="coverEditPreviewV49">${coverHtml(d.title||b.title,d.author||b.author,d)}</div>
+          <div class="coverEditPreviewV49">${coverHtml(d.title||b.title,d.author||b.author,d,{uploadAction:`chooseCoverImageForEdit('${bookId}')`})}</div>
           <div class="coverEditActionsV49"><button class="secondaryAction" onclick="chooseCoverImageForEdit('${bookId}')">בחירת תמונה מהגלריה</button><button class="secondaryAction" onclick="clearEditBookCover('${bookId}')">הסרת כריכה</button></div>
         </div>
       </section>
@@ -3515,6 +3536,16 @@ function clearEditBookCover(bookId){
   editBookDraft.coverImage='';
   renderBookEdit(bookId);
   toast('הכריכה הוסרה');
+}
+
+
+function chooseCoverImageForBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  pickCoverImage(data=>{b.coverImage=data;save();openBook(bookId);toast('הכריכה נשמרה');});
+}
+function clearCoverImageForBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  b.coverImage='';save();openBook(bookId);toast('הכריכה הוסרה');
 }
 
 function confirmDeleteBook(bookId){

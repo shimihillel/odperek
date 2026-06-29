@@ -2304,6 +2304,83 @@ body{background:
   .summarySoftPillV38{font-size:11px!important;padding:6px 9px!important;}
 }
 
+
+
+/* v53 — home spacing polish: more air for moments + shelf */
+.homePageNew .homeMomentsSectionV53,
+.homePageNew .homeShelfSectionV53{
+  width:calc(100% - 20px)!important;
+  margin:22px auto 0!important;
+  padding:24px 22px 26px!important;
+  border-radius:32px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+.homePageNew .homeMomentsSectionV53 .editorialSectionHead,
+.homePageNew .homeShelfSectionV53 .editorialSectionHead{
+  padding:0 2px!important;
+  margin:0 0 18px!important;
+  align-items:flex-start!important;
+}
+.homePageNew .homeMomentsSectionV53 .editorialSectionHead h3,
+.homePageNew .homeShelfSectionV53 .editorialSectionHead h3{
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+}
+.homePageNew .homeMomentsSectionV53 .textBtn,
+.homePageNew .homeShelfSectionV53 .textBtn{
+  margin-inline-start:12px!important;
+  white-space:nowrap!important;
+}
+.homePageNew .homeMomentsSectionV53 .momentColumnNew{
+  gap:16px!important;
+  padding:0!important;
+}
+.homePageNew .homeMomentsSectionV53 .momentCardNew{
+  border-radius:28px!important;
+  padding:20px 18px!important;
+  margin:0!important;
+}
+.homePageNew .homeShelfSectionV53 .miniShelfGrid{
+  width:100%!important;
+  gap:18px!important;
+  padding:0!important;
+  align-items:start!important;
+  justify-items:stretch!important;
+}
+.homePageNew .homeShelfSectionV53 .miniShelfBook{
+  border-radius:30px!important;
+  padding:16px!important;
+  margin:0!important;
+  min-width:0!important;
+}
+.homePageNew .homeShelfSectionV53 .miniShelfBook .realCoverV50.cover{
+  border-radius:24px!important;
+  max-width:150px!important;
+  margin:0 auto 12px!important;
+}
+.homePageNew .homeShelfSectionV53 .miniShelfMetaNew{
+  padding:0 4px 2px!important;
+  text-align:right!important;
+}
+.homePageNew .homeShelfSectionV53 .emptyNew,
+.homePageNew .homeMomentsSectionV53 .emptyNew{
+  margin:0!important;
+  padding:30px 22px!important;
+  border-radius:28px!important;
+}
+@media (max-width:420px){
+  .homePageNew .homeMomentsSectionV53,
+  .homePageNew .homeShelfSectionV53{
+    width:calc(100% - 18px)!important;
+    padding:22px 18px 24px!important;
+    border-radius:30px!important;
+  }
+  .homePageNew .homeShelfSectionV53 .miniShelfGrid{gap:16px!important;}
+  .homePageNew .homeShelfSectionV53 .miniShelfBook{padding:14px!important;}
+  .homePageNew .homeShelfSectionV53 .miniShelfBook .realCoverV50.cover{max-width:136px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -2596,11 +2673,11 @@ function renderHome(){
   document.getElementById('home').innerHTML=`${topHtml()}
     <div class="homePageNew">
       ${c?currentHome(c):emptyHome()}
-      <div class="editorialSectionBlock">
+      <div class="editorialSectionBlock homeMomentsSectionV53">
         <div class="editorialSectionHead"><h3>רגעים אחרונים מהשטח</h3>${c?`<button class="textBtn" onclick="show('field')">הצג הכל</button>`:''}</div>
         ${c&&c.updates.length?`<div class="momentColumnNew">${c.updates.slice(0,3).map(u=>`<div class="momentCardNew">${momentHtml(u)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שנשמרו מהספר הזה. ברגע שהדרמה מתחילה — היא תגיע לכאן.</div>`}
       </div>
-      <div class="editorialSectionBlock">
+      <div class="editorialSectionBlock homeShelfSectionV53">
         <div class="editorialSectionHead"><h3>המדף שלי</h3><button class="textBtn" onclick="show('shelf')">לכל המדף</button></div>
         ${recent.length?`<div class="miniShelfGrid">${recent.map(bookSmall).join('')}</div>`:`<div class="emptyNew">המדף שלך עוד ריק. כשתסיימי ספר — הוא ייכנס ישר לכאן.</div>`}
       </div>

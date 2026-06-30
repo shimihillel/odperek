@@ -2514,6 +2514,84 @@ body{background:
   .statsPageV54 .statsAwardScoreV54 .heatIconSvg{width:12px!important;height:12px!important}
 }
 
+
+
+/* v56 — stats cleanup: one clean icon per card */
+.statsPageV54 .statsAwardCardV56{
+  min-height:158px!important;
+  padding:16px!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+}
+.statsPageV54 .statsAwardHeadV56{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  direction:rtl!important;
+  margin:0 0 8px!important;
+}
+.statsPageV54 .statsAwardTextV56{
+  min-width:0!important;
+  flex:1 1 auto!important;
+  text-align:right!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardIconV54,
+.statsPageV54 .statCardIcon,
+.statsPageV54 .statRowIcon{
+  width:46px!important;
+  height:46px!important;
+  border-radius:17px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#f0e9dd!important;
+  border:1px solid var(--line)!important;
+  overflow:hidden!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardIconV54 .neonIcon,
+.statsPageV54 .statCardIcon .neonIcon,
+.statsPageV54 .statRowIcon .neonIcon{
+  width:22px!important;
+  height:22px!important;
+  color:#8d8478!important;
+  filter:none!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardScoreV54{
+  display:block!important;
+  direction:rtl!important;
+  text-align:right!important;
+  color:#c47c55!important;
+  font-size:13px!important;
+  font-weight:950!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  max-width:none!important;
+  margin-top:4px!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardLabelV54{
+  font-size:14px!important;
+  margin:0!important;
+  color:#81776c!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardTitleV54{
+  margin-top:4px!important;
+  font-size:20px!important;
+  line-height:1.15!important;
+}
+.statsPageV54 .statsAwardCardV56 .statsAwardAuthorV54{
+  margin-top:2px!important;
+}
+.statsPageV54 .statsAwardTopV54{display:none!important;}
+.statsPageV54 .statsAwardScoreV54 .ratingStack,
+.statsPageV54 .statsAwardScoreV54 .ratingSvg,
+.statsPageV54 .statsAwardScoreV54 .heatIconSvg{display:none!important;}
+@media(max-width:390px){
+  .statsPageV54 .statsAwardCardV56{padding:14px!important;min-height:152px!important;}
+  .statsPageV54 .statsAwardCardV56 .statsAwardTitleV54{font-size:18px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -3933,7 +4011,8 @@ function renderStats(){
   const topMood=common(allLogs.filter(u=>u.type==='mood').map(u=>u.text||u.label));
   const topStamp=common(books.map(b=>b.bottomLine));
   const topAuthor=common(books.map(b=>b.author));
-  const topChar=common(allChars.map(c=>c.name));
+  const mostLoggedBook=books.slice().sort((a,b)=>((b.readingLog||[]).length)-((a.readingLog||[]).length))[0]||null;
+  const mostLoggedCount=mostLoggedBook?(mostLoggedBook.readingLog||[]).length:0;
   const authorRepeat=(topAuthor&&topAuthor[1]>1)?topAuthor:null;
   const heat=maxBook('heat'), cry=maxBook('cry'), stars=maxBook('stars'), fast=maxBook('speed'), slow=maxBook('speed',true);
   const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length;
@@ -3971,9 +4050,9 @@ function renderStats(){
       <section class="statsSectionNew statsAwardsSectionV54">
         <div class="statsSectionHeadNew"><div><h3>המצעד של המדף</h3><p>הספרים שלקחו קטגוריה. כן, יש פה טקס.</p></div></div>
         <div class="statsAwardsGridV54">
-          ${statsAwardCardV54('הכי אהוב',stars,stars?iconStack('heart',stars.stars):'—','spark')}
-          ${statsAwardCardV54('הכי שבר אותי',cry,cry?iconStack('broken',cry.cry):'—','chat')}
-          ${statsAwardCardV54('הכי לוהט',heat,heat?iconStack('pepper',heat.heat):'—','percent')}
+          ${statsAwardCardV54('הכי אהוב',stars,stars?`אהבתי ${stars.stars}/5`:'—','spark')}
+          ${statsAwardCardV54('הכי שבר אותי',cry,cry?`שבר ${cry.cry}/5`:'—','chat')}
+          ${statsAwardCardV54('הכי לוהט',heat,heat?`לוהט ${heat.heat}/5`:'—','percent')}
           ${statsAwardCardV54('נבלע הכי מהר',fast,fast?(SPEED[fast.speed-1]||'—'):'—','book')}
         </div>
       </section>
@@ -3984,7 +4063,7 @@ function renderStats(){
           ${statRowNew('סופרת/מחבר שחוזרים',topAuthor?topAuthor[0]:'עוד אין',topAuthor?`מופיע/ה ${topAuthor[1]} פעמים`:'כשיהיו יותר ספרים זה יתבהר','book')}
           ${statRowNew('חותמת שחוזרת',topStamp?topStamp[0]:'עוד אין',topStamp?`הופיעה ${topStamp[1]} פעמים`:'יתמלא כשיהיו עוד ספרים','spark')}
           ${statRowNew('וייב שכיח',topMood?topMood[0]:'עוד אין',topMood?`הופיע ${topMood[1]} פעמים`:'עדכוני וייב יופיעו כאן','chat')}
-          ${statRowNew('דמות שחזרה הכי הרבה',topChar?topChar[0]:'עוד אין',topChar?`חזרה ${topChar[1]} פעמים`:'כשתוסיפי דמויות זה יתמלא','users')}
+          ${statRowNew('הכי הרבה רגעים מהשטח',mostLoggedCount?mostLoggedBook.title:'עוד אין',mostLoggedCount?`${mostLoggedCount} רגעים שמורים`:'ברגע שתשמרי יותר רגעים, יהיה כאן מנצח','note')}
         </div>
       </section>
 
@@ -4042,13 +4121,13 @@ function statRowNew(label,value,sub,icon){
   return `<div class="statRowNew"><div class="statRowText"><div class="statRowLabel">${esc(label)}</div><div class="statRowValue">${esc(value)}</div><div class="statRowSub">${sub}</div></div><div class="statRowIcon">${uiIcon(icon)}</div></div>`;
 }
 function statsAwardCardV54(label,book,score,icon){
-  return `<div class="statsAwardCardV54"><div class="statsAwardTopV54"><div class="statsAwardIconV54">${uiIcon(icon)}</div><div class="statsAwardScoreV54">${score}</div></div><div class="statsAwardLabelV54">${esc(label)}</div><div class="statsAwardTitleV54">${book?esc(book.title||'בלי שם'):'עוד אין'}</div><div class="statsAwardAuthorV54">${book&&book.author?esc(book.author):'יתמלא כשיהיו עוד נתונים'}</div></div>`;
+  return `<div class="statsAwardCardV54 statsAwardCardV56"><div class="statsAwardHeadV56"><div class="statsAwardTextV56"><div class="statsAwardLabelV54">${esc(label)}</div><div class="statsAwardScoreV54">${score}</div></div><div class="statsAwardIconV54">${uiIcon(icon)}</div></div><div class="statsAwardTitleV54">${book?esc(book.title||'בלי שם'):'עוד אין'}</div><div class="statsAwardAuthorV54">${book&&book.author?esc(book.author):'יתמלא כשיהיו עוד נתונים'}</div></div>`;
 }
 
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:55,
+    version:56,
     exportedAt:new Date().toISOString(),
     data:S
   };

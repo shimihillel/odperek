@@ -2592,6 +2592,17 @@ body{background:
   .statsPageV54 .statsAwardCardV56 .statsAwardTitleV54{font-size:18px!important;}
 }
 
+
+/* v57 — short character descriptions */
+.charDescInputV57{margin-top:10px}
+.charDescriptionDisplayV57{margin:10px 0 12px;padding:12px 14px;border-radius:18px;background:#fbf7ef;border:1px solid var(--line);color:var(--muted);font-weight:850;line-height:1.35}
+.charDescEditRowV57{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin:10px 0 12px}
+.charDescEditRowV57 .input{margin:0!important}
+.charDescInlineV57{color:var(--ink);font-weight:950}
+.charToken small{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.characterDetailRowV57{display:flex!important;align-items:center;justify-content:space-between;gap:12px}
+@media(max-width:520px){.charDescEditRowV57{grid-template-columns:1fr}.charDescEditRowV57 .secondaryPill{width:100%}}
+
 </style>
 </head>
 <body>
@@ -2785,7 +2796,7 @@ function normalizeBook(b){
   b.bottomLine=b.bottomLine||'';
   b.about=b.about||b.heroine||'';
   b.madeMe=b.madeMe||b.linger||'';
-  b.characters=Array.isArray(b.characters)?b.characters:[];
+  b.characters=Array.isArray(b.characters)?b.characters.map(ch=>({...ch,description:ch.description||''})):[];
   b.readingLog=Array.isArray(b.readingLog)?b.readingLog:(Array.isArray(b.updates)?b.updates:[]);
   b.readingLog=b.readingLog.map(u=>({...u,id:u.id||id()}));
   b.createdAt=b.createdAt||new Date().toISOString();
@@ -2801,7 +2812,7 @@ function normalizeCurrent(c){
   c.coverImage=c.coverImage||'';
   c.updates=Array.isArray(c.updates)?c.updates:[];
   c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
-  c.characters=Array.isArray(c.characters)?c.characters:[];
+  c.characters=Array.isArray(c.characters)?c.characters.map(ch=>({...ch,description:ch.description||''})):[];
   c.startedAt=c.startedAt||new Date().toISOString();
   return c;
 }
@@ -3031,7 +3042,7 @@ function ratingsLine(b){
 function searchBookText(b){
   return [
     b.title,b.author,b.bottomLine,b.about,b.madeMe,b.abandonReason,b.abandonMood,
-    (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag].join(' ')).join(' '),
+    (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag,c.description].join(' ')).join(' '),
     (b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')
   ].join(' ').toLowerCase();
 }
@@ -3160,12 +3171,13 @@ function renderField(){
               <p>לעדכן מה את חושבת עליהן עכשיו, ולהוסיף תגיות משלך שיישמרו הלאה.</p>
             </div>
           </div>
-          ${(c.characters||[]).length?`<div class="characterStrip fieldCharacterStripV35">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
-          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
+          ${(c.characters||[]).length?`<div class="characterStrip fieldCharacterStripV35">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.description||ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
+          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="charDescriptionDisplayV57">${selectedChar.description?esc(selectedChar.description):'אין עדיין תיאור קצר לדמות'}</div><div class="charDescEditRowV57"><input id="charDesc_${selectedChar.id}" class="input" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(selectedChar.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${selectedChar.id}')">שמירת תיאור</button></div><div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
           <div class="sectionDivider"></div>
           <div class="fieldAddCharacterV35">
             <div class="fieldSubSectionTitleV35">להוסיף דמות חדשה</div>
             <input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
+            <input id="charDescription" class="input charDescInputV57" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(pendingCharDescription)}" oninput="pendingCharDescription=this.value">
             <div class="genderRow"><button class="genderPill ${pickedGender==='זכר'?'on':''}" onclick="pickGender('זכר')">זכר</button><button class="genderPill ${pickedGender==='נקבה'?'on':''}" onclick="pickGender('נקבה')">נקבה</button></div>
             <div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
             <div class="fieldCardFooterV35">
@@ -3199,7 +3211,7 @@ function latestOf(type){
 function characterSummary(c){
   if(!c.characters || !c.characters.length) return 'עוד לא נוספו דמויות';
   const last=c.characters[c.characters.length-1];
-  return `${last.name}${last.tag?' · '+last.tag:''}`;
+  return `${last.name}${last.description?' · '+last.description:(last.tag?' · '+last.tag:'')}`;
 }
 function fieldActivePanel(c){
   const map={
@@ -3232,11 +3244,13 @@ function textBody(type,ph){
   return `<textarea id="${type}Text" class="textarea" placeholder="${ph}"></textarea><div style="margin-top:9px"><button class="saveBtn" onclick="saveText('${type}')">שמרי לציר</button></div>`;
 }
 let pendingCharName='';
+let pendingCharDescription='';
 let editingCharId='';
 function charactersBody(c){
   const selectedM = pickedGender==='זכר'?'on':'';
   const selectedF = pickedGender==='נקבה'?'on':'';
   return `<input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
+  <input id="charDescription" class="input charDescInputV57" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(pendingCharDescription)}" oninput="pendingCharDescription=this.value">
   <div class="help">זכר / נקבה</div>
   <div class="chips"><button class="chip ${selectedM}" onclick="pickGender('זכר')">זכר</button><button class="chip ${selectedF}" onclick="pickGender('נקבה')">נקבה</button></div>
   <div class="help">מה אני חושבת עליו/עליה עכשיו?</div>
@@ -3250,7 +3264,7 @@ function charHtml(ch){
     <div class="charRowTop">
       <button class="charOpen" onclick="toggleCharEdit('${ch.id}')">
         <div class="charName">${esc(ch.name)}</div>
-        <div class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}</div>
+        <div class="charMeta">${esc([ch.gender,ch.description,ch.tag].filter(Boolean).join(' · '))}</div>
       </button>
       <button class="miniBtn" onclick="deleteChar('${ch.id}')">מחקי</button>
     </div>
@@ -3259,6 +3273,8 @@ function charHtml(ch){
 }
 function charEditHtml(ch){
   return `<div class="charEditPanel">
+    <div class="help">תיאור קצר</div>
+    <div class="charDescEditRowV57"><input id="charDesc_${ch.id}" class="input" placeholder="למשל: אחות של לני" value="${esc(ch.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${ch.id}')">שמירה</button></div>
     <div class="help">לעדכן מה אני חושבת עליו/עליה עכשיו</div>
     <div class="chips">${allCharTags().map(t=>`<button class="chip ${ch.tag===t?'on':''}" onclick="updateCharacterTag('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
     <div class="help">מין הדמות</div>
@@ -3269,6 +3285,8 @@ let pickedGender='זכר';
 function pickGender(g){
   const el=document.getElementById('charName');
   pendingCharName=el?el.value:pendingCharName;
+  const descEl=document.getElementById('charDescription');
+  pendingCharDescription=descEl?descEl.value:pendingCharDescription;
   pickedGender=g;
   openAcc='character';
   renderField();
@@ -3283,7 +3301,7 @@ function updateCharacterTag(cid,tag){
   const c=S.current;if(!c)return;
   const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
   ch.tag=tag;
-  addUpdate('character','על מי מדובר',`${ch.name} · ${ch.gender||''} · ${tag}`,{characterId:ch.id});
+  addUpdate('character','על מי מדובר',[ch.name,ch.description,ch.gender,tag].filter(Boolean).join(' · '),{characterId:ch.id});
   editingCharId=cid;
   openAcc='character';
   save();
@@ -3298,6 +3316,18 @@ function updateCharacterGender(cid,gender){
   editingCharId=cid;
   openAcc='character';
   renderField();
+}
+
+function updateCharacterDescription(cid){
+  const c=S.current;if(!c)return;
+  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
+  const el=document.getElementById('charDesc_'+cid);
+  ch.description=(el?.value||'').trim();
+  save();
+  editingCharId=cid;
+  openAcc='character';
+  renderField();
+  toast('התיאור נשמר');
 }
 
 function jsEsc(s){return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
@@ -3328,11 +3358,14 @@ function saveCharacter(tag){
   const c=S.current;if(!c)return;
   const el=document.getElementById('charName');
   const name=(el?.value||pendingCharName||'').trim();
+  const descEl=document.getElementById('charDescription');
+  const description=(descEl?.value||pendingCharDescription||'').trim();
   if(!name){toast('חסר שם דמות');return}
-  const ch={id:id(),name,gender:pickedGender,tag,finalTag:'',ts:new Date().toISOString()};
+  const ch={id:id(),name,description,gender:pickedGender,tag,finalTag:'',ts:new Date().toISOString()};
   c.characters.push(ch);
   pendingCharName='';
-  addUpdate('character','על מי מדובר',`${name} · ${pickedGender} · ${tag}`,{characterId:ch.id});
+  pendingCharDescription='';
+  addUpdate('character','על מי מדובר',[name,description,pickedGender,tag].filter(Boolean).join(' · '),{characterId:ch.id});
   openAcc='character';
   save();
   renderField();
@@ -3454,7 +3487,7 @@ function setDraft(k,v,rer=true){
 }
 function summaryChar(ch){
   const d=S.summaryDraft||{}; const val=(d.charFinal||{})[ch.id]||ch.finalTag||'';
-  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc(ch.gender||'')} · ${esc(ch.tag||'')}</span></div>
+  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc([ch.gender,ch.description,ch.tag].filter(Boolean).join(' · '))}</span></div>
     <div class="chips" style="margin-top:8px">${FINAL_CHAR_TAGS.map(t=>`<button class="chip ${val===t?'on':''}" onclick="setCharFinal('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   </div>`;
 }
@@ -3477,6 +3510,7 @@ function summaryAddCharacterBox(){
   return `<div class="summaryAddBox">
     <div class="stepTitle" style="font-size:16px;margin-bottom:8px">+ להוסיף דמות לסיכום</div><div class="summaryHint" style="margin-bottom:10px">אם יש מישהו שלא הוספת תוך כדי הקריאה — זה המקום.</div>
     <input id="sumCharName" class="input" placeholder="שם הדמות">
+    <input id="sumCharDescription" class="input charDescInputV57" placeholder="תיאור קצר, למשל: אחות של לני">
     <div class="help">זכר / נקבה</div>
     <div class="chips"><button class="chip" onclick="pickSummaryGender('זכר')">זכר</button><button class="chip" onclick="pickSummaryGender('נקבה')">נקבה</button></div>
     <div class="help">איך היא/הוא נשארו אצלך?</div>
@@ -3489,7 +3523,8 @@ function addSummaryCharacter(finalTag){
   const c=S.current;if(!c)return;
   const name=(document.getElementById('sumCharName')?.value||'').trim();
   if(!name){toast('חסר שם דמות');return}
-  const ch={id:id(),name,gender:summaryGender,tag:'נוספה בסיכום',finalTag,ts:new Date().toISOString()};
+  const description=(document.getElementById('sumCharDescription')?.value||'').trim();
+  const ch={id:id(),name,description,gender:summaryGender,tag:'נוספה בסיכום',finalTag,ts:new Date().toISOString()};
   c.characters.push(ch);
   S.summaryDraft=S.summaryDraft||{};
   S.summaryDraft.charFinal=S.summaryDraft.charFinal||{};
@@ -3749,7 +3784,7 @@ function openBook(bookId){
         </div>
       </div>
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
-      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew"><div class="title">${esc(ch.name)}</div><div class="sub">${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div>`).join('')}</div></div>`:''}
+      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
   scrollTo(0,0);
@@ -3757,6 +3792,15 @@ function openBook(bookId){
 
 function bookMomentRow(bookId,u){
   return `<div class="rowItemNew momentRowV43"><div><div class="title">${esc(momentLabel(u.type))} · ${u.percent||0}%</div><div class="sub">${esc(u.text||u.label||'')}${u.finalTag?` · ${esc(u.finalTag)}`:''}</div></div><div class="momentActionsV43 detailMomentActionsV43"><button onclick="editBookMoment('${bookId}','${u.id}')">עריכה</button><button onclick="deleteBookMoment('${bookId}','${u.id}')">מחיקה</button></div></div>`;
+}
+
+function editBookCharacterDescription(bookId,cid){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const ch=(b.characters||[]).find(x=>x.id===cid);if(!ch)return;
+  const next=prompt('תיאור קצר לדמות',ch.description||'')
+  if(next===null)return;
+  ch.description=String(next||'').trim();
+  save();openBook(bookId);toast('התיאור נשמר');
 }
 function editCurrentMoment(mid){
   const c=S.current;if(!c)return;

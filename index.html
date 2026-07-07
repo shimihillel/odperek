@@ -2603,6 +2603,156 @@ body{background:
 .characterDetailRowV57{display:flex!important;align-items:center;justify-content:space-between;gap:12px}
 @media(max-width:520px){.charDescEditRowV57{grid-template-columns:1fr}.charDescEditRowV57 .secondaryPill{width:100%}}
 
+
+
+/* v58 — field layout hotfix: keep update screen inside the phone */
+#field,
+#field *{
+  box-sizing:border-box!important;
+}
+#field{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+#field .fieldPageNew,
+#field .fieldPageV35{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  padding-inline:0!important;
+}
+#field .fieldHeroV35New,
+#field .fieldCardV35,
+#field .fieldGridV35,
+#field .fieldSnapshotGridV35,
+#field .fieldProgressSplitV35{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#field .fieldHeroV35New,
+#field .fieldCardV35{
+  overflow:hidden!important;
+}
+#field .fieldHeroTopV35{
+  grid-template-columns:50px minmax(0,1fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+#field .fieldHeroCoverV35{
+  grid-column:1/-1!important;
+  justify-self:center!important;
+  width:min(128px,42vw)!important;
+  max-width:128px!important;
+}
+#field .fieldHeroTextV35,
+#field .fieldCardHeadV35 > div,
+#field .fieldProgressColumnV35,
+#field .fieldSelectedCharTopV35 > div,
+#field .characterEditBox,
+#field .fieldAddCharacterV35{
+  min-width:0!important;
+}
+#field .fieldHeroTextV35 h2,
+#field .fieldCardHeadV35 h3,
+#field .fieldHeroAuthorV35,
+#field .fieldHeroTextV35 p,
+#field .fieldCardHeadV35 p{
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+#field .fieldGridV35,
+#field .fieldProgressSplitV35,
+#field .fieldSnapshotGridV35{
+  grid-template-columns:1fr!important;
+}
+#field .fieldCardHeadV35.split{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:start!important;
+}
+#field .fieldLeadValueV35{
+  font-size:34px!important;
+  line-height:1!important;
+  text-align:left!important;
+  min-width:auto!important;
+  max-width:86px!important;
+}
+#field .progressCardV35 .editorPercentRow.compact{
+  display:grid!important;
+  grid-template-columns:minmax(74px,96px) minmax(0,1fr)!important;
+  gap:10px!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+#field .input,
+#field .textarea,
+#field textarea,
+#field input{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+#field .saveBtn,
+#field .primaryPill,
+#field .secondaryPill{
+  max-width:100%!important;
+  white-space:normal!important;
+}
+#field .tagsWrap,
+#field .fieldTagsV35,
+#field .genderRow,
+#field .fieldHeroChipsV35{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:9px!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+#field .tagChipNew,
+#field .chip,
+#field .genderPill,
+#field .charToken,
+#field .fieldInfoChipV35{
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#field .characterStrip,
+#field .fieldCharacterStripV35{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:10px!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+#field .charToken small{
+  max-width:100%!important;
+}
+#field .charDescEditRowV57{
+  grid-template-columns:1fr!important;
+}
+#field .fieldCardFooterV35{
+  align-items:stretch!important;
+}
+#field .fieldCardFooterV35 .primaryPill,
+#field .fieldCardFooterV35 .secondaryPill,
+#field .fieldCardFooterV35 .tagAddBtn{
+  width:100%!important;
+}
+@media(min-width:560px){
+  #field .fieldHeroTopV35{
+    grid-template-columns:50px minmax(0,1fr) 112px!important;
+  }
+  #field .fieldHeroCoverV35{
+    grid-column:auto!important;
+    justify-self:auto!important;
+    width:112px!important;
+  }
+}
+
 </style>
 </head>
 <body>

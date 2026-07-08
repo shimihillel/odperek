@@ -2922,6 +2922,15 @@ body{background:
 .characterDetailRowV60 .charFlagsBoxV60{margin-top:10px;max-width:100%}
 .fieldSelectedCharV35 .charFlagsBoxV60{margin:12px 0}
 
+
+/* v62 — upgraded finish ritual */
+.summaryRitualPanelV62 .summaryFieldV38{background:#fbf7f0;border:1px solid var(--line);border-radius:22px;padding:14px}
+.ritualGridV62{gap:12px!important}
+.ritualChoicePillsV62{gap:8px;margin-top:8px}.ritualChoicePillsV62 .chip{font-size:13px;padding:9px 12px}
+.ritualObsessionV62{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:8px}.ritualObsessionV62 .rateBtn{min-height:70px;border-radius:18px;padding:8px 6px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}.ritualObsessionV62 .rateBtn span{font-size:20px;font-weight:950;color:#2f4331}.ritualObsessionV62 .rateBtn small{font-size:10px;line-height:1.15;color:var(--muted);font-weight:850;text-align:center}.ritualObsessionV62 .rateBtn.on span,.ritualObsessionV62 .rateBtn.on small{color:#fff}
+.ritualDetailSectionV62{background:linear-gradient(145deg,#fffdf8,#fbf5eb)!important}.ritualDetailGridV62{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ritualDetailItemV62{background:#fbf7f0;border:1px solid var(--line);border-radius:22px;padding:14px;min-height:96px}.ritualDetailItemV62.wide{grid-column:1/-1}.ritualDetailItemV62 b{display:block;color:#304131;font-size:14px;font-weight:950;margin-bottom:8px}.ritualDetailItemV62 span{display:block;color:#6f665b;font-size:15px;font-weight:800;line-height:1.45;white-space:pre-wrap}.ritualEditPanelV62 .textarea{min-height:92px}
+@media(max-width:430px){.ritualObsessionV62{grid-template-columns:repeat(2,minmax(0,1fr))}.ritualDetailGridV62{grid-template-columns:1fr}.summaryRitualPanelV62 .summaryFieldV38{padding:12px}.ritualObsessionV62 .rateBtn{min-height:62px}}
+
 </style>
 </head>
 <body>
@@ -3119,6 +3128,12 @@ function normalizeBook(b){
   b.bottomLine=b.bottomLine||'';
   b.about=b.about||b.heroine||'';
   b.madeMe=b.madeMe||b.linger||'';
+  b.friendPitch=b.friendPitch||'';
+  b.recommendTo=b.recommendTo||'';
+  b.readMoreAuthor=b.readMoreAuthor||'';
+  b.readingWarning=b.readingWarning||'';
+  b.obsession=+b.obsession||0;
+  b.shimiLine=b.shimiLine||'';
   b.characters=Array.isArray(b.characters)?b.characters.map(ch=>({...ch,description:ch.description||'',greenFlag:ch.greenFlag||'',redFlag:ch.redFlag||'',stance:ch.stance||'',flagNote:ch.flagNote||''})):[];
   b.readingLog=Array.isArray(b.readingLog)?b.readingLog:(Array.isArray(b.updates)?b.updates:[]);
   b.readingLog=b.readingLog.map(u=>({...u,id:u.id||id()}));
@@ -3816,10 +3831,33 @@ function deleteChar(cid){
 function goSummary(){
   if(!S.current)return;
   if(!S.summaryDraft){
-    S.summaryDraft={stars:0,heat:0,cry:0,speed:0,bottomLine:'',about:'',madeMe:'',momentTags:{},charFinal:{}};
+    S.summaryDraft={stars:0,heat:0,cry:0,speed:0,bottomLine:'',about:'',madeMe:'',friendPitch:'',recommendTo:'',readMoreAuthor:'',readingWarning:'',obsession:0,shimiLine:'',momentTags:{},charFinal:{}};
   }
   show('summary');
 }
+
+const READ_MORE_OPTIONS=['כן ברור','אולי, אם היא מתנהגת יפה','לא בטוחה','לא כרגע','רק אם כולם יישבעו שזה טוב'];
+const OBSESSION_LABELS=['עבר לידי','חמוד וזהו','עדיין חושבת עליו','לא התאוששתי','נכנס לי ל-DNA'];
+function obsessionLabel(n){return OBSESSION_LABELS[Math.max(1,Math.min(5,+n||0))-1]||'לא נבחר';}
+function summaryChoicePillsV62(key,options){
+  const d=S.summaryDraft||{};
+  return `<div class="chips ritualChoicePillsV62">${options.map(x=>`<button class="chip ${d[key]===x?'on':''}" onclick="setDraft('${key}','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div>`;
+}
+function summaryObsessionV62(){
+  const d=S.summaryDraft||{};
+  return `<div class="ritualObsessionV62">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${(+d.obsession||0)===n?'on':''}" onclick="setDraft('obsession',${n})"><span>${n}</span><small>${esc(OBSESSION_LABELS[n-1])}</small></button>`).join('')}</div>`;
+}
+function bookRitualHtmlV62(b){
+  const parts=[];
+  if(b.friendPitch) parts.push(`<div class="ritualDetailItemV62"><b>מה אגיד לחברה שתשאל?</b><span>${esc(b.friendPitch)}</span></div>`);
+  if(b.recommendTo) parts.push(`<div class="ritualDetailItemV62"><b>למי להמליץ?</b><span>${esc(b.recommendTo)}</span></div>`);
+  if(b.readMoreAuthor) parts.push(`<div class="ritualDetailItemV62"><b>עוד מהסופרת?</b><span>${esc(b.readMoreAuthor)}</span></div>`);
+  if(b.readingWarning) parts.push(`<div class="ritualDetailItemV62"><b>אזהרת קריאה</b><span>${esc(b.readingWarning)}</span></div>`);
+  if(+b.obsession) parts.push(`<div class="ritualDetailItemV62"><b>דרגת אובססיה</b><span>${+b.obsession}/5 · ${esc(obsessionLabel(b.obsession))}</span></div>`);
+  if(b.shimiLine) parts.push(`<div class="ritualDetailItemV62 wide"><b>השורה התחתונה של שימי</b><span>${esc(b.shimiLine)}</span></div>`);
+  return parts.length?`<div class="detailSectionNew ritualDetailSectionV62"><h3>טקס הסיום שלי</h3><div class="ritualDetailGridV62">${parts.join('')}</div></div>`:'';
+}
+
 function renderSummary(){
   const c=S.current,d=S.summaryDraft||{};
   document.getElementById('summary').innerHTML=c?`
@@ -3863,6 +3901,18 @@ function renderSummary(){
         <div class="summaryTextGridV38">
           <div class="summaryFieldV38"><label>זה היה ספר על…</label><textarea id="aboutText" class="textarea" placeholder="מה הסיפור בגדול?" oninput="setDraft('about',this.value,false)">${esc(d.about||'')}</textarea></div>
           <div class="summaryFieldV38"><label>והוא השאיר אותי…</label><textarea id="madeMeText" class="textarea" placeholder="מה זה עשה לך?" oninput="setDraft('madeMe',this.value,false)">${esc(d.madeMe||'')}</textarea></div>
+        </div>
+      </section>
+
+      <section class="summaryPanelV38 summaryRitualPanelV62">
+        <div class="summaryPanelHeadV38"><h3>טקס סיום של שימי</h3><p>כמה שאלות קצרות שעושות מהסיכום ביקורת אישית, לא טופס.</p></div>
+        <div class="summaryTextGridV38 ritualGridV62">
+          <div class="summaryFieldV38"><label>מה אגיד לחברה שתשאל?</label><textarea id="friendPitchText" class="textarea" placeholder="נגיד: תתחילי, אבל תדעי שהוא יעצבן אותך לפני שהוא יישבר לך את הלב" oninput="setDraft('friendPitch',this.value,false)">${esc(d.friendPitch||'')}</textarea></div>
+          <div class="summaryFieldV38"><label>למי הייתי ממליצה?</label><input id="recommendToText" class="input" placeholder="למי זה מתאים? חברות של דרמה? מי שאוהבת גברים בעייתיים?" value="${esc(d.recommendTo||'')}" oninput="setDraft('recommendTo',this.value,false)"></div>
+          <div class="summaryFieldV38"><label>האם אקרא עוד מהסופרת?</label>${summaryChoicePillsV62('readMoreAuthor',READ_MORE_OPTIONS)}</div>
+          <div class="summaryFieldV38"><label>אזהרת קריאה</label><input id="readingWarningText" class="input" placeholder="למשל: לא להתחיל בלילה / מכיל עצבים / גבר חשוד מדי" value="${esc(d.readingWarning||'')}" oninput="setDraft('readingWarning',this.value,false)"></div>
+          <div class="summaryFieldV38"><label>דרגת אובססיה</label>${summaryObsessionV62()}</div>
+          <div class="summaryFieldV38"><label>משפט סיכום של שימי</label><textarea id="shimiLineText" class="textarea" placeholder="השורה התחתונה שלך, בלי להתנצל" oninput="setDraft('shimiLine',this.value,false)">${esc(d.shimiLine||'')}</textarea></div>
         </div>
       </section>
 
@@ -3977,6 +4027,7 @@ function finishBook(){
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'finished',
     stars:d.stars||0,heat:d.heat||0,cry:d.cry||0,speed:d.speed||0,
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
+    friendPitch:d.friendPitch||'',recommendTo:d.recommendTo||'',readMoreAuthor:d.readMoreAuthor||'',readingWarning:d.readingWarning||'',obsession:+d.obsession||0,shimiLine:d.shimiLine||'',
     characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||'',lastActivityAt:c.lastActivityAt||'',stuckDismissedUntil:c.stuckDismissedUntil||''
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
@@ -4220,6 +4271,7 @@ function openBook(bookId){
         </div>
       </div>
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${bookRitualHtmlV62(b)}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57 characterDetailRowV60"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}${characterFlagBadges(ch)}${ch.flagNote?`<div class="charFlagsInlineV60">“${esc(ch.flagNote)}”</div>`:''}</div>${characterFlagEditor(ch,'book',b.id)}</div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
@@ -4286,14 +4338,14 @@ function deleteBookMoment(bookId,mid){
 function editBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   editBookDraft={
-    title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',
+    title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',friendPitch:b.friendPitch||'',recommendTo:b.recommendTo||'',readMoreAuthor:b.readMoreAuthor||'',readingWarning:b.readingWarning||'',obsession:+b.obsession||0,shimiLine:b.shimiLine||'',
     stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0,coverVariant:(b.coverVariant===0||b.coverVariant)?+b.coverVariant:coverVariantFrom(b.title,b.author,b.id),coverImage:b.coverImage||''
   };
   renderBookEdit(bookId);
 }
 function renderBookEdit(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
-  const d=editBookDraft||{title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0,coverVariant:(b.coverVariant===0||b.coverVariant)?+b.coverVariant:coverVariantFrom(b.title,b.author,b.id),coverImage:b.coverImage||''};
+  const d=editBookDraft||{title:b.title||'',author:b.author||'',bottomLine:b.bottomLine||'',about:b.about||'',madeMe:b.madeMe||'',friendPitch:b.friendPitch||'',recommendTo:b.recommendTo||'',readMoreAuthor:b.readMoreAuthor||'',readingWarning:b.readingWarning||'',obsession:+b.obsession||0,shimiLine:b.shimiLine||'',stars:+b.stars||0,heat:+b.heat||0,cry:+b.cry||0,speed:+b.speed||0,coverVariant:(b.coverVariant===0||b.coverVariant)?+b.coverVariant:coverVariantFrom(b.title,b.author,b.id),coverImage:b.coverImage||''};
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('shelf').classList.add('active');
   currentScreen='bookEdit';
@@ -4320,6 +4372,17 @@ function renderBookEdit(bookId){
           <div class="editFieldV42"><label>חותמת</label><div class="editStampBoxV42">${allStampTags().map(x=>`<button class="chip ${d.bottomLine===x?'on':''}" onclick="setEditBookDraft('bottomLine','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div><div class="editStampActionsV42"><button class="secondaryPill" onclick="addCustomStampTagFromEdit('${bookId}')">+ חותמת משלי</button></div></div>
           <div class="editFieldV42"><label>זה היה ספר על…</label><textarea id="editBookAbout" class="textarea" oninput="setEditBookDraft('about',this.value,false)" placeholder="מה הסיפור בגדול?">${esc(d.about)}</textarea></div>
           <div class="editFieldV42"><label>והוא השאיר אותי…</label><textarea id="editBookMadeMe" class="textarea" oninput="setEditBookDraft('madeMe',this.value,false)" placeholder="מה זה עשה לך?">${esc(d.madeMe)}</textarea></div>
+        </div>
+      </section>
+      <section class="editPanelV42 ritualEditPanelV62">
+        <div class="summaryPanelHeadV38"><h3>טקס הסיום</h3><p>אפשר לחדד גם את הביקורת האישית אחרי שהספר כבר במדף.</p></div>
+        <div class="editFormGridV42 ritualEditGridV62">
+          <div class="editFieldV42"><label>מה אגיד לחברה שתשאל?</label><textarea id="editFriendPitch" class="textarea" oninput="setEditBookDraft('friendPitch',this.value,false)" placeholder="מה היית אומרת עליו בוואטסאפ?">${esc(d.friendPitch||'')}</textarea></div>
+          <div class="editFieldV42"><label>למי הייתי ממליצה?</label><input class="input" value="${esc(d.recommendTo||'')}" oninput="setEditBookDraft('recommendTo',this.value,false)" placeholder="למי זה מתאים?"></div>
+          <div class="editFieldV42"><label>עוד מהסופרת?</label><div class="chips ritualChoicePillsV62">${READ_MORE_OPTIONS.map(x=>`<button class="chip ${d.readMoreAuthor===x?'on':''}" onclick="setEditBookDraft('readMoreAuthor','${jsEsc(x)}')">${esc(x)}</button>`).join('')}</div></div>
+          <div class="editFieldV42"><label>אזהרת קריאה</label><input class="input" value="${esc(d.readingWarning||'')}" oninput="setEditBookDraft('readingWarning',this.value,false)" placeholder="למשל: לא להתחיל בלילה"></div>
+          <div class="editFieldV42"><label>דרגת אובססיה</label><div class="ritualObsessionV62">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${(+d.obsession||0)===n?'on':''}" onclick="setEditBookDraft('obsession',${n})"><span>${n}</span><small>${esc(OBSESSION_LABELS[n-1])}</small></button>`).join('')}</div></div>
+          <div class="editFieldV42"><label>משפט סיכום של שימי</label><textarea class="textarea" oninput="setEditBookDraft('shimiLine',this.value,false)" placeholder="השורה התחתונה">${esc(d.shimiLine||'')}</textarea></div>
         </div>
       </section>
       <section class="editPanelV42">
@@ -4358,6 +4421,12 @@ function saveBookEdit(bookId){
   b.bottomLine=String(d.bottomLine||'').trim();
   b.about=String(d.about ?? document.getElementById('editBookAbout')?.value ?? '').trim();
   b.madeMe=String(d.madeMe ?? document.getElementById('editBookMadeMe')?.value ?? '').trim();
+  b.friendPitch=String(d.friendPitch||'').trim();
+  b.recommendTo=String(d.recommendTo||'').trim();
+  b.readMoreAuthor=String(d.readMoreAuthor||'').trim();
+  b.readingWarning=String(d.readingWarning||'').trim();
+  b.obsession=+d.obsession||0;
+  b.shimiLine=String(d.shimiLine||'').trim();
   b.stars=+d.stars||0;b.heat=+d.heat||0;b.cry=+d.cry||0;b.speed=+d.speed||0;
   b.coverVariant=(d.coverVariant===0||d.coverVariant)?Math.max(0,Math.min(3,parseInt(d.coverVariant)||0)):coverVariantFrom(b.title,b.author,b.id);
   b.coverImage=d.coverImage||'';

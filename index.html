@@ -2953,6 +2953,35 @@ body{background:
 .friendEmptyV63{background:#fbf6ee;border:1px dashed #d7c9b8;border-radius:22px;padding:16px;color:var(--muted);font-weight:800;line-height:1.45}
 @media(max-width:430px){.bookFriendsHeadV63{flex-direction:column}.addFriendBtnV63{width:100%}.friendCardV63{grid-template-columns:auto 1fr;padding:11px}.friendCoverV63{width:48px!important;min-width:48px!important;height:72px!important}}
 
+
+
+/* v64 — funny stats & awards */
+.statsPageV64{padding-bottom:calc(150px + env(safe-area-inset-bottom));gap:16px}
+.statsHeroV64{position:relative;overflow:hidden;background:radial-gradient(circle at 16% 20%,rgba(185,123,83,.12),transparent 30%),linear-gradient(145deg,#fffdf8,#f8efe1)!important}
+.statsDiagnosisV64{display:block;border-radius:24px!important;padding:14px 16px!important;background:#efe6d7!important;border:1px solid var(--line)!important;color:#554c42!important;line-height:1.45;font-size:14px!important;white-space:normal!important}
+.statsDiagnosisV64 b{display:block;color:#304131;font-size:15px;margin-bottom:4px}
+.statsAwardsGridV64{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.awardCardV64{background:#fbf7f0;border:1px solid var(--line);border-radius:26px;padding:14px;box-shadow:0 10px 24px rgba(85,73,57,.055);min-height:164px;display:flex;flex-direction:column;gap:10px;justify-content:space-between;overflow:hidden}
+.awardTopV64{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.awardBadgeV64{display:grid;place-items:center;width:44px;height:44px;border-radius:17px;background:#f0e8da;border:1px solid var(--line);color:#b98b3d;flex:0 0 auto}
+.awardBadgeV64 .neonIcon{filter:none!important;width:22px;height:22px}
+.awardLabelV64{font-size:12px;color:#8a8176;font-weight:950;line-height:1.2}
+.awardScoreV64{margin-top:5px;font-size:13px;color:#b97953;font-weight:1000;line-height:1.25}
+.awardTitleV64{font-size:18px;line-height:1.15;color:#2e3f30;font-weight:1000;overflow-wrap:anywhere}
+.awardMetaV64{font-size:12px;line-height:1.35;color:#82786d;font-weight:800;overflow-wrap:anywhere}
+.awardEmptyV64{opacity:.72}
+.shimiAwardsGridV64{display:grid;grid-template-columns:1fr;gap:10px}
+.shimiAwardV64{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:#fbf7f0;border:1px solid var(--line);border-radius:24px;padding:13px 14px}
+.shimiAwardEmojiV64{width:40px;height:40px;border-radius:16px;background:#efe6d7;display:grid;place-items:center;font-size:20px;border:1px solid var(--line)}
+.shimiAwardTitleV64{font-size:16px;font-weight:1000;color:#304131;line-height:1.2}
+.shimiAwardTextV64{margin-top:4px;font-size:13px;color:#70675c;font-weight:800;line-height:1.45}
+.statsTinyGridV64{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.statsTinyV64{border:1px solid var(--line);border-radius:22px;background:#fbf7f0;padding:13px;min-height:86px}
+.statsTinyValueV64{font-size:22px;font-weight:1000;color:#304131;line-height:1}
+.statsTinyLabelV64{margin-top:7px;font-size:12px;font-weight:900;color:#82786d;line-height:1.25}
+.statsFriendReasonV64{display:inline-flex;align-self:flex-start;background:#ede5d8;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:#675d50;font-weight:900;font-size:12px;line-height:1}
+@media(max-width:520px){.statsAwardsGridV64{grid-template-columns:1fr}.statsTinyGridV64{grid-template-columns:1fr 1fr}.awardCardV64{min-height:142px}.statsHeroV64 h2{font-size:28px!important}}
+
 </style>
 </head>
 <body>
@@ -4605,6 +4634,7 @@ function deleteBook(bookId){
 
 
 
+
 function renderStats(){
   const el=document.getElementById('stats');
   if(!el)return;
@@ -4620,16 +4650,22 @@ function renderStats(){
   const abandonReasons=abandonedBooks.map(b=>String(b.abandonReason||'').trim()).filter(Boolean);
   const now=new Date();
   const monthKey=now.toISOString().slice(0,7);
-  const bookMonth=(b)=>{
-    const d=new Date(b.createdAt||b.finishedAt||b.updatedAt||0);
-    return Number.isFinite(d.getTime())?d.toISOString().slice(0,7):'';
-  };
+  const currentYear=String(now.getFullYear());
+  const monthLabel=now.toLocaleDateString('he-IL',{month:'long',year:'numeric'});
+  const safeDate=(x)=>{const d=new Date(x||0);return Number.isFinite(d.getTime())?d:null};
+  const bookMonth=(b)=>{const d=safeDate(b.finishedAt||b.createdAt||b.updatedAt);return d?d.toISOString().slice(0,7):''};
+  const bookYear=(b)=>{const d=safeDate(b.finishedAt||b.createdAt||b.updatedAt);return d?String(d.getFullYear()):''};
   const finishedThisMonth=finishedBooks.filter(b=>bookMonth(b)===monthKey).length;
   const abandonedThisMonth=abandonedBooks.filter(b=>bookMonth(b)===monthKey).length;
-  const monthLabel=now.toLocaleDateString('he-IL',{month:'long',year:'numeric'});
+  const booksThisYear=finishedBooks.filter(b=>bookYear(b)===currentYear);
+  const abandonedThisYear=abandonedBooks.filter(b=>bookYear(b)===currentYear);
   const avg=(key)=>{
     const vals=books.map(b=>+b[key]||0).filter(v=>v>0);
     return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
+  };
+  const avgNum=(key)=>{
+    const vals=books.map(b=>+b[key]||0).filter(v=>v>0);
+    return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length):0;
   };
   const maxBook=(key,min=false)=>{
     const vals=books.filter(b=>(+b[key]||0)>0);
@@ -4637,7 +4673,8 @@ function renderStats(){
     return vals.sort((a,b)=>min?(+a[key]||0)-(+b[key]||0):(+b[key]||0)-(+a[key]||0))[0];
   };
   const allLogs=books.flatMap(b=>b.readingLog||[]);
-  const allChars=books.flatMap(b=>b.characters||[]);
+  const allChars=books.flatMap(b=>(b.characters||[]).map(ch=>({...ch,bookTitle:b.title,bookId:b.id})));
+  const allFriends=books.flatMap(b=>(b.bookFriends||[]).map(f=>({...f,ownerTitle:b.title,ownerId:b.id})));
   const common=(arr)=>{
     const map={};
     arr.forEach(x=>{const k=String(x||'').trim(); if(k)map[k]=(map[k]||0)+1;});
@@ -4646,31 +4683,63 @@ function renderStats(){
   const topMood=common(allLogs.filter(u=>u.type==='mood').map(u=>u.text||u.label));
   const topStamp=common(books.map(b=>b.bottomLine));
   const topAuthor=common(books.map(b=>b.author));
+  const topFriendReason=common(allFriends.map(f=>f.reason));
   const mostLoggedBook=books.slice().sort((a,b)=>((b.readingLog||[]).length)-((a.readingLog||[]).length))[0]||null;
   const mostLoggedCount=mostLoggedBook?(mostLoggedBook.readingLog||[]).length:0;
+  const friendCount=(b)=>Array.isArray(b.bookFriends)?b.bookFriends.length:0;
+  const socialBook=books.filter(b=>friendCount(b)>0).sort((a,b)=>friendCount(b)-friendCount(a))[0]||null;
+  const firstBookYear=booksThisYear.slice().sort((a,b)=>(safeDate(a.finishedAt||a.createdAt||a.updatedAt)||0)-(safeDate(b.finishedAt||b.createdAt||b.updatedAt)||0))[0]||null;
+  const lastBook=books.slice().sort((a,b)=>(safeDate(b.finishedAt||b.createdAt||b.updatedAt)||0)-(safeDate(a.finishedAt||a.createdAt||a.updatedAt)||0))[0]||null;
   const authorRepeat=(topAuthor&&topAuthor[1]>1)?topAuthor:null;
-  const heat=maxBook('heat'), cry=maxBook('cry'), stars=maxBook('stars'), fast=maxBook('speed'), slow=maxBook('speed',true);
-  const redFlags=allChars.filter(ch=>/דגל אדום|בעייתי/.test(`${ch.tag||''} ${ch.finalTag||''}`)).length;
-  const noTalk=allLogs.filter(u=>/לא לדבר איתי/.test(`${u.text||''} ${u.label||''}`)).length + books.filter(b=>/לא לדבר איתי/.test(`${b.bottomLine||''} ${b.madeMe||''}`)).length;
+  const heat=maxBook('heat'), cry=maxBook('cry'), stars=maxBook('stars'), fast=maxBook('speed'), slow=maxBook('speed',true), obsession=maxBook('obsession');
+  const redFlagChars=allChars.filter(ch=>ch.redFlag||/דגל אדום|בעייתי|בעיה|חשוד/.test(`${ch.tag||''} ${ch.finalTag||''} ${ch.stance||''}`));
+  const greenFlagChars=allChars.filter(ch=>ch.greenFlag||/דגל ירוק|נשמה טובה/.test(`${ch.tag||''} ${ch.finalTag||''}`));
+  const redFlags=redFlagChars.length;
+  const greenFlags=greenFlagChars.length;
+  const suspiciousChar=redFlagChars[0]||null;
+  const noTalk=allLogs.filter(u=>/לא לדבר איתי/.test(`${u.text||''} ${u.label||''}`)).length + books.filter(b=>/לא לדבר איתי/.test(`${b.bottomLine||''} ${b.madeMe||''} ${b.shimiLine||''}`)).length;
   const swallowed=books.filter(b=>(+b.speed||0)>=4).length;
+  const warnings=books.filter(b=>String(b.readingWarning||'').trim()).length;
+  const pitches=books.filter(b=>String(b.friendPitch||'').trim()).length;
+  const readMoreYes=books.filter(b=>/ברור|כן|בטח|רצה|ארוץ/i.test(String(b.readMoreAuthor||''))).length;
+  const avgObs=avgNum('obsession');
+  const avgHeat=avgNum('heat');
+  const avgCry=avgNum('cry');
   const diagnosis=()=>{
-    if(!total && !abandonedTotal)return 'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים.';
-    if(!total && abandonedTotal)return 'המדף כרגע יותר בקטע של נטישות. גם זה דפוס, ואנחנו מכבדות אמת.';
-    if(authorRepeat)return `יש פה חשד להתאהבות חוזרת ב${authorRepeat[0]}. נעקוב.`;
-    if(abandonmentRate>=35)return 'יש פה סטנדרטים. לא כל ספר עובר את ועדת שימי.';
-    if(redFlags>=3)return 'יש לך יכולת מרשימה לזהות דגלים אדומים ועדיין להמשיך לקרוא. מחקרית: חשוד.';
-    if((parseFloat(avg('cry'))||0)>=4)return 'המדף שלך רגשי מאוד. לא סתם ספרים, יותר אירועי לב.';
-    if(swallowed>=Math.max(1,Math.ceil(total*0.4)))return 'כשספר תופס אותך — את לא קוראת, את נעלמת אליו.';
-    if((parseFloat(avg('stars'))||0)>=4)return 'המדף שלך מפונק, ובצדק. לא כל ספר מקבל מקום של כבוד.';
-    return 'יש פה מדף עם טעם, מצב רוח, וקצת דרמה בריאה.';
+    if(!total && !abandonedTotal)return {title:'האבחון של גוגז',text:'המדף עוד מתארגן. אחרי הספר הראשון נתחיל לראות דפוסים ולהוציא מסקנות מוגזמות אך מבוססות.'};
+    if(!total && abandonedTotal)return {title:'האבחון של גוגז',text:'כרגע המדף יותר בקטע של נטישות. גם זה דפוס, ואנחנו מכבדות אמת.'};
+    if(socialBook&&friendCount(socialBook)>=3)return {title:'האבחון של גוגז',text:`${socialBook.title} הפך להיות מרכז חברתי קטן. ספר עם קשרים, דרמה וכנראה היסטוריה.`};
+    if(avgObs>=4)return {title:'האבחון של גוגז',text:'יש פה רמת אובססיה יפה. את לא קוראת ספרים, את מפתחת קשרים רגשיים עם כריכה.'};
+    if(redFlags>=3)return {title:'האבחון של גוגז',text:'יש חשד כבד שאת מזהה דגלים אדומים ועדיין ממשיכה לקרוא. לא שופטת, רק מתעדת.'};
+    if(authorRepeat)return {title:'האבחון של גוגז',text:`${authorRepeat[0]} חזרה אצלך יותר מפעם אחת. זה כבר לא “סתם יצא”, זו מערכת יחסים.`};
+    if(abandonmentRate>=35)return {title:'האבחון של גוגז',text:'ועדת הקבלה למדף שלך קשוחה. לא כל ספר מקבל ויזה עד הסוף.'};
+    if(avgCry>=4)return {title:'האבחון של גוגז',text:'המדף שלך רגיש מאוד. יש פה פחות ספרים ויותר אירועי לב.'};
+    if(swallowed>=Math.max(1,Math.ceil(total*0.4)))return {title:'האבחון של גוגז',text:'כשספר תופס אותך — את לא קוראת, את נעלמת אליו וחוזרת עם אחוזים חדשים.'};
+    return {title:'האבחון של גוגז',text:'יש פה מדף עם טעם, מצב רוח וקצת דרמה בריאה. ממש חומר גלם טוב לפרסים.'};
   };
+  const diag=diagnosis();
+  const shimiAwards=[];
+  if(redFlags>=3) shimiAwards.push(['🚩','מחפשת רד פלאגס','או לפחות מוצאת אותם מהר מאוד. השאלה מה את עושה עם המידע הזה היא כבר מחקר המשך.']);
+  if(avgObs>=4) shimiAwards.push(['🧠','לא התאוששה רשמית','ממוצע האובססיה אומר שהספרים לא בדיוק נשארים רק במדף.']);
+  if(swallowed>=2) shimiAwards.push(['⚡','אוכלת ספרים לארוחת בוקר','כמה ספרים אצלך עברו במצב “רק עוד פרק אחד” והפכו ל־“אופס סיימתי”.']);
+  if(avgHeat>=4) shimiAwards.push(['🌡️','מדף עם מזגן חובה','ממוצע הלוהט גבוה מספיק כדי להצדיק אזהרת אש קטנה.']);
+  if(avgCry>=4) shimiAwards.push(['💔','מלכת הדרמות','הלב שילם, אבל לפחות יש סטטיסטיקה יפה.']);
+  if(readMoreYes>=2) shimiAwards.push(['✍️','מתאהבת בסופרות','כשסופרת עובדת טוב — את לא נפרדת, את פותחת לה תיקייה בראש.']);
+  if(socialBook) shimiAwards.push(['🤝','מנהלת רשת קשרים רגשית',`ל־${socialBook.title} כבר יש ${friendCount(socialBook)} חברים במדף. זה לא ספר, זו שכונה.`]);
+  if(!shimiAwards.length) shimiAwards.push(['🏅','המדף עוד שומר על מסתורין','עוד כמה ספרים, רגעים ודגלים — ואז האפליקציה תתחיל לרכל עלייך כמו שצריך.']);
+  const awardCard=(label,book,score,icon,emptyText='יתמלא כשיהיו עוד נתונים')=>{
+    const empty=!book;
+    return `<div class="awardCardV64 ${empty?'awardEmptyV64':''}"><div class="awardTopV64"><div><div class="awardLabelV64">${esc(label)}</div><div class="awardScoreV64">${score||'—'}</div></div><div class="awardBadgeV64">${uiIcon(icon)}</div></div><div><div class="awardTitleV64">${book?esc(book.title||'בלי שם'):'עוד אין'}</div><div class="awardMetaV64">${book?esc(book.author||'בלי מחבר/ת'):emptyText}</div></div></div>`;
+  };
+  const characterAward=(label,ch,score)=>`<div class="awardCardV64 ${ch?'':'awardEmptyV64'}"><div class="awardTopV64"><div><div class="awardLabelV64">${esc(label)}</div><div class="awardScoreV64">${esc(score||'—')}</div></div><div class="awardBadgeV64">${uiIcon('users')}</div></div><div><div class="awardTitleV64">${ch?esc(ch.name||'דמות בלי שם'):'עוד אין'}</div><div class="awardMetaV64">${ch?esc([ch.bookTitle,ch.redFlag||ch.greenFlag||ch.stance||ch.tag].filter(Boolean).join(' · ')):'יופיע כשיהיו עוד דמויות ודגלים'}</div></div></div>`;
+  const tiny=(value,label)=>`<div class="statsTinyV64"><div class="statsTinyValueV64">${esc(String(value))}</div><div class="statsTinyLabelV64">${esc(label)}</div></div>`;
   el.innerHTML=topHtml()+`
-    <div class="statsPageNew statsPageV54">
-      <section class="statsHeroNew statsHeroV54">
+    <div class="statsPageNew statsPageV64">
+      <section class="statsHeroNew statsHeroV64">
         <div class="eyebrow">Reading stats</div>
-        <h2>סטטיסטיקה</h2>
-        <p>לא רק מספרים — המצעד, הדרמות, הנטישות והדפוסים שחוזרים במדף שלך.</p>
-        <div class="statsHeroNote">${uiIcon('spark')} ${diagnosis()}</div>
+        <h2>סטטיסטיקה ופרסים</h2>
+        <p>לא רק מספרים — המצעד, ההרגלים, הפרסים הקטנים והאבחון המאוד מדעי של גוגז.</p>
+        <div class="statsHeroNote statsDiagnosisV64">${uiIcon('spark')} <b>${esc(diag.title)}</b>${esc(diag.text)}</div>
       </section>
 
       ${(total||abandonedTotal)?`
@@ -4682,43 +4751,60 @@ function renderStats(){
       </section>
 
       ${total?`
-      <section class="statsSectionNew statsAwardsSectionV54">
-        <div class="statsSectionHeadNew"><div><h3>המצעד של המדף</h3><p>הספרים שלקחו קטגוריה. כן, יש פה טקס.</p></div></div>
-        <div class="statsAwardsGridV54">
-          ${statsAwardCardV54('הכי אהוב',stars,stars?`אהבתי ${stars.stars}/5`:'—','spark')}
-          ${statsAwardCardV54('הכי שבר אותי',cry,cry?`שבר ${cry.cry}/5`:'—','chat')}
-          ${statsAwardCardV54('הכי לוהט',heat,heat?`לוהט ${heat.heat}/5`:'—','percent')}
-          ${statsAwardCardV54('נבלע הכי מהר',fast,fast?(SPEED[fast.speed-1]||'—'):'—','book')}
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>המצעד של שימי</h3><p>הספרים שלקחו קטגוריה. כן, זה טקס.</p></div></div>
+        <div class="statsAwardsGridV64">
+          ${awardCard('הספר הכי אהוב',stars,stars?`אהבתי ${stars.stars}/5`:'—','heart')}
+          ${awardCard('הספר הכי שבר אותי',cry,cry?`שבר ${cry.cry}/5`:'—','chat')}
+          ${awardCard('הספר הכי לוהט',heat,heat?`לוהט ${heat.heat}/5`:'—','percent')}
+          ${awardCard('הספר שנבלע הכי מהר',fast,fast?(SPEED[fast.speed-1]||'קצב גבוה'):'—','book')}
+          ${awardCard('הכי נכנס לי לראש',obsession,obsession?`${obsession.obsession}/5 · ${obsessionLabel(obsession.obsession)}`:'—','spark')}
+          ${awardCard('הספר הכי חברתי',socialBook,socialBook?`${friendCount(socialBook)} קשרים במדף`:'—','users')}
+          ${characterAward('הדמות הכי חשודה',suspiciousChar,suspiciousChar?(suspiciousChar.redFlag||suspiciousChar.stance||'דגל אדום'):'—')}
+          ${awardCard('הכי הרבה רגעים מהשטח',mostLoggedCount?mostLoggedBook:null,mostLoggedCount?`${mostLoggedCount} רגעים`:'—','note')}
         </div>
       </section>
 
       <section class="statsSectionNew">
-        <div class="statsSectionHeadNew"><div><h3>דפוסים שחוזרים</h3><p>מה חוזר אצלך שוב ושוב, גם אם לא התכוונת להודות בזה.</p></div></div>
+        <div class="statsSectionHeadNew"><div><h3>ההרגלים שלי</h3><p>תובנות קטנות על מה שחוזר אצלך שוב ושוב.</p></div></div>
         <div class="statsListNew">
           ${statRowNew('סופרת/מחבר שחוזרים',topAuthor?topAuthor[0]:'עוד אין',topAuthor?`מופיע/ה ${topAuthor[1]} פעמים`:'כשיהיו יותר ספרים זה יתבהר','book')}
-          ${statRowNew('חותמת שחוזרת',topStamp?topStamp[0]:'עוד אין',topStamp?`הופיעה ${topStamp[1]} פעמים`:'יתמלא כשיהיו עוד ספרים','spark')}
           ${statRowNew('וייב שכיח',topMood?topMood[0]:'עוד אין',topMood?`הופיע ${topMood[1]} פעמים`:'עדכוני וייב יופיעו כאן','chat')}
-          ${statRowNew('הכי הרבה רגעים מהשטח',mostLoggedCount?mostLoggedBook.title:'עוד אין',mostLoggedCount?`${mostLoggedCount} רגעים שמורים`:'ברגע שתשמרי יותר רגעים, יהיה כאן מנצח','note')}
+          ${statRowNew('סיבת קשר שחוזרת',topFriendReason?topFriendReason[0]:'עוד אין',topFriendReason?`הופיעה ${topFriendReason[1]} פעמים בין חברים של ספרים`:'יתמלא כשתקשרי עוד ספרים','users')}
+          ${statRowNew('חותמת שחוזרת',topStamp?topStamp[0]:'עוד אין',topStamp?`הופיעה ${topStamp[1]} פעמים`:'יתמלא כשיהיו עוד סיכומים','spark')}
         </div>
+      </section>
+
+      <section class="statsSectionNew">
+        <div class="statsSectionHeadNew"><div><h3>שימי Awards</h3><p>האפליקציה מחלקת לך תארים לפי ההתנהגות הספרותית שלך. בלי בושה.</p></div></div>
+        <div class="shimiAwardsGridV64">${shimiAwards.slice(0,5).map(a=>`<div class="shimiAwardV64"><div class="shimiAwardEmojiV64">${a[0]}</div><div><div class="shimiAwardTitleV64">${esc(a[1])}</div><div class="shimiAwardTextV64">${esc(a[2])}</div></div></div>`).join('')}</div>
       </section>
 
       <section class="statsSectionNew">
         <div class="statsSectionHeadNew"><div><h3>מדדי דרמה</h3><p>ממוצעים והרגלים, אבל עם פחות תחושת דו״ח.</p></div></div>
         <div class="statsGridNew">
           ${statCardNew(avg('stars'),'ממוצע אהבתי','כמה קשה להרשים אותך','spark')}
+          ${statCardNew(avg('obsession'),'ממוצע אובססיה','כמה הספרים נשארים בראש','heart')}
           ${statCardNew(avg('heat'),'ממוצע לוהט','כמה אש יש במדף','percent')}
           ${statCardNew(avg('cry'),'ממוצע שבר','כמה הלב שילם בדרך','chat')}
           ${statCardNew(allLogs.length,'רגעים מהשטח','כל העדכונים ששמרת בדרך','book')}
+          ${statCardNew(warnings,'אזהרות קריאה','ספרים שקיבלו תמרור קטן','note')}
+          ${statCardNew(redFlags,'דגלים אדומים','דמויות שזוהו כעניין בעייתי','users')}
+          ${statCardNew(greenFlags,'דגלים ירוקים','דמויות שיצאו יחסית תקינות','spark')}
         </div>
       </section>
 
       <section class="statsSectionNew">
-        <div class="statsSectionHeadNew"><div><h3>רכילות שימושית</h3><p>דברים קטנים שהצטברו בדרך.</p></div></div>
-        <div class="statsGridNew">
-          ${statCardNew(noTalk,'לא לדבר איתי','כמה פעמים הספר סידר לך מצב רוח','spark')}
-          ${statCardNew(redFlags,'דגלים אדומים','דמויות שזוהו כעניין בעייתי','users')}
-          ${statCardNew(swallowed,'בלעתי בלי לנשום','ספרים שנקראו בקצב גבוה','book')}
-          ${statCardNew(slow?SPEED[slow.speed-1]:'—','הכי איטי','הספר שנמרח יותר מהשאר','chat')}
+        <div class="statsSectionHeadNew"><div><h3>השנה שלי בקריאה</h3><p>תמונת מצב קטנה של ${currentYear}.</p></div></div>
+        <div class="statsTinyGridV64">
+          ${tiny(booksThisYear.length,'ספרים שסיימתי השנה')}
+          ${tiny(abandonedThisYear.length,'ספרים שנטשתי השנה')}
+          ${tiny(firstBookYear?firstBookYear.title:'—','הספר הראשון השנה')}
+          ${tiny(lastBook?lastBook.title:'—','הספר האחרון שנכנס למדף')}
+          ${tiny(allChars.length,'דמויות שתיעדת')}
+          ${tiny(allFriends.length,'חברויות בין ספרים')}
+          ${tiny(pitches,'ספרים עם תשובה לחברה')}
+          ${tiny(noTalk,'רגעי לא לדבר איתי')}
         </div>
       </section>
       `:''}
@@ -4762,7 +4848,7 @@ function statsAwardCardV54(label,book,score,icon){
 function exportBackup(){
   const payload={
     app:'עוד פרק אחד',
-    version:56,
+    version:64,
     exportedAt:new Date().toISOString(),
     data:S
   };

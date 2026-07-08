@@ -2931,6 +2931,28 @@ body{background:
 .ritualDetailSectionV62{background:linear-gradient(145deg,#fffdf8,#fbf5eb)!important}.ritualDetailGridV62{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ritualDetailItemV62{background:#fbf7f0;border:1px solid var(--line);border-radius:22px;padding:14px;min-height:96px}.ritualDetailItemV62.wide{grid-column:1/-1}.ritualDetailItemV62 b{display:block;color:#304131;font-size:14px;font-weight:950;margin-bottom:8px}.ritualDetailItemV62 span{display:block;color:#6f665b;font-size:15px;font-weight:800;line-height:1.45;white-space:pre-wrap}.ritualEditPanelV62 .textarea{min-height:92px}
 @media(max-width:430px){.ritualObsessionV62{grid-template-columns:repeat(2,minmax(0,1fr))}.ritualDetailGridV62{grid-template-columns:1fr}.summaryRitualPanelV62 .summaryFieldV38{padding:12px}.ritualObsessionV62 .rateBtn{min-height:62px}}
 
+
+
+/* v63 — friends of this book */
+.bookFriendsSectionV63{display:flex;flex-direction:column;gap:14px}
+.bookFriendsHeadV63{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+.bookFriendsHeadV63 h3{margin:0!important}
+.bookFriendsHeadV63 p{margin:4px 0 0;color:var(--muted);font-weight:750;font-size:13px;line-height:1.35}
+.addFriendBtnV63{border:1px solid var(--line);background:#f5ede1;color:#5f5549;border-radius:999px;padding:10px 14px;font-weight:950;white-space:nowrap;cursor:pointer}
+.friendGridV63{display:grid;grid-template-columns:1fr;gap:11px}
+.friendCardV63{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:right;background:#fbf6ee;border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 8px 18px rgba(85,73,57,.05)}
+.friendCoverV63{width:54px!important;min-width:54px!important;height:80px!important;border-radius:14px!important;box-shadow:0 8px 16px rgba(70,54,36,.12)!important}
+.friendCoverV63 .coverPlaceholderTextV50{font-size:10px!important;line-height:1.1!important;padding:4px!important}
+.friendInfoV63{min-width:0;display:flex;flex-direction:column;gap:5px}
+.friendTitleV63{font-weight:1000;color:#2f352a;font-size:16px;line-height:1.1;overflow-wrap:anywhere}
+.friendAuthorV63{font-size:12px;color:var(--muted);font-weight:800;overflow-wrap:anywhere}
+.friendReasonV63{display:inline-flex;align-self:flex-start;background:#ede5d8;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:#675d50;font-weight:900;font-size:12px;line-height:1}
+.friendActionsV63{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.friendActionsV63 button{border:1px solid var(--line);background:#fffaf2;color:#6b5f52;border-radius:999px;padding:7px 10px;font-weight:900;cursor:pointer}
+.friendActionsV63 button.danger{color:#9a4d43;background:#fff3ef}
+.friendEmptyV63{background:#fbf6ee;border:1px dashed #d7c9b8;border-radius:22px;padding:16px;color:var(--muted);font-weight:800;line-height:1.45}
+@media(max-width:430px){.bookFriendsHeadV63{flex-direction:column}.addFriendBtnV63{width:100%}.friendCardV63{grid-template-columns:auto 1fr;padding:11px}.friendCoverV63{width:48px!important;min-width:48px!important;height:72px!important}}
+
 </style>
 </head>
 <body>
@@ -3134,6 +3156,7 @@ function normalizeBook(b){
   b.readingWarning=b.readingWarning||'';
   b.obsession=+b.obsession||0;
   b.shimiLine=b.shimiLine||'';
+  b.bookFriends=Array.isArray(b.bookFriends)?b.bookFriends.map(f=>({id:f.id||id(),bookId:f.bookId||'',reason:f.reason||'',note:f.note||'',createdAt:f.createdAt||new Date().toISOString()})).filter(f=>f.bookId):[];
   b.characters=Array.isArray(b.characters)?b.characters.map(ch=>({...ch,description:ch.description||'',greenFlag:ch.greenFlag||'',redFlag:ch.redFlag||'',stance:ch.stance||'',flagNote:ch.flagNote||''})):[];
   b.readingLog=Array.isArray(b.readingLog)?b.readingLog:(Array.isArray(b.updates)?b.updates:[]);
   b.readingLog=b.readingLog.map(u=>({...u,id:u.id||id()}));
@@ -4240,6 +4263,54 @@ function bookRow(b){
   const excerpt=isAbandoned?(b.abandonReason||'ננטש בלי סיבה רשומה'):(b.madeMe || b.about || '');
   return `<button class="shelfCardNew ${isAbandoned?'abandonedV45':''}" onclick="openBook('${b.id}')">${coverHtml(b.title,b.author,b)}<div class="shelfCardMeta"><div class="shelfCardTitle">${esc(b.title)}</div><div class="shelfCardAuthor">${esc(b.author)}</div><div class="shelfCardTags">${isAbandoned?`<span class="softPill">נטשתי ב־${pct(b.percent||0)}%</span>`:''}${b.bottomLine&&!isAbandoned?`<span class="softPill">${esc(b.bottomLine)}</span>`:''}${topChar&&!isAbandoned?`<span class="softPill">${esc(topChar.name)}</span>`:''}</div>${excerpt?`<div class="shelfCardSnippet">${esc(excerpt)}</div>`:''}</div></button>`;
 }
+
+function friendReasonsV63(){return ['אותו וייב','אותה דרמה','אותו כאב','אותו גבר בעייתי','אותה התמכרות','אותה סופרת','לא יודעת, זה הזכיר לי']}
+function friendReasonChoiceV63(){
+  const opts=friendReasonsV63();
+  const raw=prompt('למה הספרים חברים?\n'+opts.map((x,i)=>`${i+1}. ${x}`).join('\n')+'\n\nאפשר גם לכתוב סיבה משלך');
+  if(raw===null)return null;
+  const t=String(raw||'').trim();
+  if(!t)return 'לא יודעת, זה הזכיר לי';
+  const n=parseInt(t,10);
+  if(n>=1&&n<=opts.length)return opts[n-1];
+  return t.slice(0,80);
+}
+function bookFriendsHtmlV63(b){
+  const friends=(b.bookFriends||[]).map(f=>({link:f,book:S.books.find(x=>x.id===f.bookId)})).filter(x=>x.book);
+  const canAdd=S.books.filter(x=>x.id!==b.id).length>0;
+  return `<div class="detailSectionNew bookFriendsSectionV63"><div class="bookFriendsHeadV63"><div><h3>חברים של הספר הזה</h3><p>ספרים שמזכירים אותו באותו וייב, כאב, דרמה או גבר בעייתי.</p></div>${canAdd?`<button class="addFriendBtnV63" onclick="addBookFriendV63('${b.id}')">+ לקשר ספר</button>`:''}</div>${friends.length?`<div class="friendGridV63">${friends.map(({link,book})=>friendCardV63(b.id,book,link.reason)).join('')}</div>`:`<div class="friendEmptyV63">עוד לא קישרת לו חברים מהמדף. כשספר יזכיר לך ספר אחר — זה המקום לרכל על זה.</div>`}</div>`;
+}
+function friendCardV63(ownerId,book,reason){
+  const cover=coverHtml(book.title,book.author,book,{neutral:true}).replace('realCoverV50','realCoverV50 friendCoverV63');
+  return `<div class="friendCardV63">${cover}<div class="friendInfoV63"><div class="friendTitleV63">${esc(book.title)}</div><div class="friendAuthorV63">${esc(book.author)}</div><span class="friendReasonV63">${esc(reason||'ספר חבר')}</span><div class="friendActionsV63"><button onclick="openBook('${book.id}')">לפתוח</button><button class="danger" onclick="removeBookFriendV63('${ownerId}','${book.id}')">להסיר קשר</button></div></div></div>`;
+}
+function addBookFriendV63(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const existing=new Set((b.bookFriends||[]).map(f=>f.bookId));
+  const candidates=S.books.filter(x=>x.id!==bookId&&!existing.has(x.id));
+  if(!candidates.length){toast('אין עוד ספרים לקשר');return;}
+  const raw=prompt('איזה ספר לקשר?\n'+candidates.map((x,i)=>`${i+1}. ${x.title}${x.author?' — '+x.author:''}`).join('\n'));
+  if(raw===null)return;
+  const n=parseInt(raw,10);
+  if(!(n>=1&&n<=candidates.length)){toast('לא בחרתי ספר');return;}
+  const other=candidates[n-1];
+  const reason=friendReasonChoiceV63();
+  if(reason===null)return;
+  const createdAt=new Date().toISOString();
+  b.bookFriends=b.bookFriends||[];
+  b.bookFriends.push({id:id(),bookId:other.id,reason,createdAt});
+  other.bookFriends=other.bookFriends||[];
+  if(!other.bookFriends.some(f=>f.bookId===b.id)) other.bookFriends.push({id:id(),bookId:b.id,reason,createdAt});
+  save();openBook(bookId);toast('הספרים קושרו');
+}
+function removeBookFriendV63(bookId,friendId){
+  const b=S.books.find(x=>x.id===bookId);const other=S.books.find(x=>x.id===friendId);if(!b)return;
+  if(!confirm('להסיר את הקשר בין הספרים?'))return;
+  b.bookFriends=(b.bookFriends||[]).filter(f=>f.bookId!==friendId);
+  if(other) other.bookFriends=(other.bookFriends||[]).filter(f=>f.bookId!==bookId);
+  save();openBook(bookId);toast('הקשר הוסר');
+}
+
 function openBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -4272,6 +4343,7 @@ function openBook(bookId){
       </div>
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${bookRitualHtmlV62(b)}
+      ${bookFriendsHtmlV63(b)}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57 characterDetailRowV60"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}${characterFlagBadges(ch)}${ch.flagNote?`<div class="charFlagsInlineV60">“${esc(ch.flagNote)}”</div>`:''}</div>${characterFlagEditor(ch,'book',b.id)}</div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}

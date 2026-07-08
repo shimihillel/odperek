@@ -3000,6 +3000,23 @@ body{background:
 .fieldFriendPanelV65 .bookFriendSearchV65{background:#fbf6ee}
 @media(max-width:430px){.bookFriendSearchV65{padding:12px;border-radius:19px}.bookFriendResultBtnV65{grid-template-columns:auto 1fr}.bookFriendResultCoverV65{width:30px!important;min-width:30px!important;height:45px!important}}
 
+
+
+/* v66 — shelf character flags are collapsed by default */
+.characterRowBookV66{align-items:flex-start!important;gap:12px!important}
+.characterBookMainV66{min-width:0;flex:1}
+.characterBookActionsV66{display:flex!important;gap:8px!important;flex-wrap:wrap!important;align-items:flex-start!important;justify-content:flex-start!important}
+.bookCharacterFlagEditorV66{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(122,110,95,.24)}
+.bookCharacterFlagEditorV66 .charFlagsBoxV60{margin-top:0!important;max-width:100%!important;overflow:hidden!important}
+.characterRowBookV66 .charFlagBadgesV61{margin-top:8px;justify-content:flex-start}
+.characterRowBookV66 .charFlagBadgeV61{font-size:12px!important;padding:6px 9px!important}
+@media(max-width:560px){
+  .characterRowBookV66{display:block!important}
+  .characterBookActionsV66{margin-top:10px!important}
+  .bookCharacterFlagEditorV66 .chips{justify-content:flex-start!important}
+  .bookCharacterFlagEditorV66 .chip{font-size:13px!important;padding:8px 10px!important}
+}
+
 </style>
 </head>
 <body>
@@ -4453,7 +4470,7 @@ function openBook(bookId){
       ${bookRitualHtmlV62(b)}
       ${bookFriendsHtmlV63(b)}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
-      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57 characterDetailRowV60"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}${characterFlagBadges(ch)}${ch.flagNote?`<div class="charFlagsInlineV60">“${esc(ch.flagNote)}”</div>`:''}</div>${characterFlagEditor(ch,'book',b.id)}</div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
+      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>bookCharacterRowV66(b,ch)).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
   scrollTo(0,0);
@@ -4461,6 +4478,36 @@ function openBook(bookId){
 
 function bookMomentRow(bookId,u){
   return `<div class="rowItemNew momentRowV43"><div><div class="title">${esc(momentLabel(u.type))} · ${u.percent||0}%</div><div class="sub">${esc(u.text||u.label||'')}${u.finalTag?` · ${esc(u.finalTag)}`:''}</div></div><div class="momentActionsV43 detailMomentActionsV43"><button onclick="editBookMoment('${bookId}','${u.id}')">עריכה</button><button onclick="deleteBookMoment('${bookId}','${u.id}')">מחיקה</button></div></div>`;
+}
+
+
+let editingBookCharacterFlagsV66='';
+function bookCharacterRowV66(b,ch){
+  const key=b.id+'_'+ch.id;
+  const isEdit=editingBookCharacterFlagsV66===key;
+  const flags=characterFlagBadges(ch);
+  const meta=[ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · ');
+  return `<div class="rowItemNew characterDetailRowV57 characterDetailRowV60 characterRowBookV66">
+    <div class="characterBookMainV66">
+      <div class="title">${esc(ch.name)}</div>
+      <div class="sub">
+        ${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}
+        ${meta?esc(meta):''}
+        ${flags}
+        ${ch.flagNote?`<div class="charFlagsInlineV60">“${esc(ch.flagNote)}”</div>`:''}
+      </div>
+      ${isEdit?`<div class="bookCharacterFlagEditorV66">${characterFlagEditor(ch,'book',b.id)}</div>`:''}
+    </div>
+    <div class="momentActionsV43 characterBookActionsV66">
+      <button onclick="toggleBookCharacterFlagsV66('${b.id}','${ch.id}')">${isEdit?'סגירה':'דגלים'}</button>
+      <button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button>
+    </div>
+  </div>`;
+}
+function toggleBookCharacterFlagsV66(bookId,cid){
+  const key=bookId+'_'+cid;
+  editingBookCharacterFlagsV66=editingBookCharacterFlagsV66===key?'':key;
+  openBook(bookId);
 }
 
 function editBookCharacterDescription(bookId,cid){

@@ -2880,6 +2880,16 @@ body{background:
   .liveDotV59{justify-self:start;}
 }
 
+
+/* v60 — character flags */
+.charFlagsBoxV60{margin-top:14px;padding:12px;border-radius:18px;background:rgba(245,238,226,.72);border:1px solid var(--line);display:grid;gap:8px}
+.flagChipsV60{gap:8px!important;justify-content:flex-start!important}
+.flagChipV60{font-size:13px!important;padding:8px 11px!important;line-height:1.2!important}
+.charFlagsInlineV60{display:inline-block;margin-top:4px;color:var(--green);font-weight:800;line-height:1.45}
+.characterDetailRowV60{align-items:flex-start!important}
+.characterDetailRowV60 .charFlagsBoxV60{margin-top:10px;max-width:100%}
+.fieldSelectedCharV35 .charFlagsBoxV60{margin:12px 0}
+
 </style>
 </head>
 <body>
@@ -2905,6 +2915,9 @@ const OLD_KEYS=['od-perek-ehad-v1'];
 const MOODS=['נמרח','זורם','מתחיל לקרות משהו','מכורה','לא לדבר איתי','עצבנית עליו','הלב שלי לא בנוי לזה','וואו וואו וואו','חמוד בינתיים','לא סגורה עליו','מחכה שיתפוצץ','יש דגל אדום ואני מתעלמת','הוא בעייתי ואני בעייתית','רוצה לנער את כולם','אני לא נושמת','זה מתחיל לשרוף','זקוקה להפסקה','אוקיי עכשיו הבנתי'];
 const CHAR_TAGS=['אוהב/ת','מחבבת בינתיים','חשוד/ה','מעצבן/ת','רוצה עוד ממנו/ממנה','דגל אדום','דגל ירוק','Book boyfriend / Book girlfriend','צריכ/ה טיפול','לא סגורה עליו/עליה','מתחיל/ה לגדול עליי','בא לי לנער אותו/ה','לא אמין/ה לי','מסתיר/ה משהו','מסוכן/ת אבל מעניין','חמוד/ה מדי','בעיה מהלכת','נשמה טובה','שונאת שאכפת לי','בינתיים לא קונה את זה','אובססיה בהתהוות','צריך/ה עמוד שדרה'];
 const FINAL_CHAR_TAGS=['נשאר/ה לי בראש','אהוב/ה עליי','בעייתי/ת אבל מה לעשות','דגל אדום מפואר','דגל ירוק נדיר','בלתי נסבל/ת','הייתי צריכה יותר ממנו/ה','לא סלחתי','מלך/מלכה','שונאת שאהבתי','לא קניתי אותו/ה','הפתיע/ה לטובה','הרס/ה לי את העצבים','הייתי קוראת עליו/עליה ספר שלם','שכחתי ממנו/ממנה'];
+const CHARACTER_GREEN_FLAGS=['מגונן/ת','נאמן/ה','מצחיק/ה','רך/ה במקום הנכון','כנה','חכם/ה','מפרגנ/ת','נותנ/ת ביטחון','יודע/ת להתנצל'];
+const CHARACTER_RED_FLAGS=['מסתיר/ה משהו','מניפולטיבי/ת','דרמה מהלכת','יותר מדי שקט/ה','מתנשא/ת','בורח/ת מרגש','לא מתקשר/ת','מסוכן/ת מדי','צריך/ה טיפול דחוף'];
+const CHARACTER_STANCES=['בעדו/בעדה','חשוד/ה','לא סגורה עליו/עליה','תפסיק/י לדבר','שווה לעקוב','אני מאמינה לו/לה','לא קונה את זה','אהבתי למרות הכל'];
 const MOMENT_TAGS=['רגע וואו','רגע עצבים','רגע לב','רגע חשוב','לא יצא לי מהראש'];
 const BOTTOM_LINES=['נשאר לי בראש','בלעתי בלי לנשום','לא לדבר איתי','אהבתי אבל יש לי תלונות','חמוד ותו לא','הייתי עוברת לגור שם','לא התאוששתי','צריכה ספר המשך עכשיו'];
 const SPEED=['נמרח','לקח זמן','זרם','מהר','בלעתי'];
@@ -3074,7 +3087,7 @@ function normalizeBook(b){
   b.bottomLine=b.bottomLine||'';
   b.about=b.about||b.heroine||'';
   b.madeMe=b.madeMe||b.linger||'';
-  b.characters=Array.isArray(b.characters)?b.characters.map(ch=>({...ch,description:ch.description||''})):[];
+  b.characters=Array.isArray(b.characters)?b.characters.map(ch=>({...ch,description:ch.description||'',greenFlag:ch.greenFlag||'',redFlag:ch.redFlag||'',stance:ch.stance||'',flagNote:ch.flagNote||''})):[];
   b.readingLog=Array.isArray(b.readingLog)?b.readingLog:(Array.isArray(b.updates)?b.updates:[]);
   b.readingLog=b.readingLog.map(u=>({...u,id:u.id||id()}));
   b.createdAt=b.createdAt||new Date().toISOString();
@@ -3091,7 +3104,7 @@ function normalizeCurrent(c){
   c.stuckDismissedUntil=c.stuckDismissedUntil||'';
   c.updates=Array.isArray(c.updates)?c.updates:[];
   c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
-  c.characters=Array.isArray(c.characters)?c.characters.map(ch=>({...ch,description:ch.description||''})):[];
+  c.characters=Array.isArray(c.characters)?c.characters.map(ch=>({...ch,description:ch.description||'',greenFlag:ch.greenFlag||'',redFlag:ch.redFlag||'',stance:ch.stance||'',flagNote:ch.flagNote||''})):[];
   c.startedAt=c.startedAt||new Date().toISOString();
   return c;
 }
@@ -3378,7 +3391,7 @@ function ratingsLine(b){
 function searchBookText(b){
   return [
     b.title,b.author,b.bottomLine,b.about,b.madeMe,b.abandonReason,b.abandonMood,
-    (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag,c.description].join(' ')).join(' '),
+    (b.characters||[]).map(c=>[c.name,c.gender,c.tag,c.finalTag,c.description,c.greenFlag,c.redFlag,c.stance,c.flagNote].join(' ')).join(' '),
     (b.readingLog||[]).map(u=>[u.text,u.label,u.finalTag].join(' ')).join(' ')
   ].join(' ').toLowerCase();
 }
@@ -3513,7 +3526,7 @@ function renderField(){
             </div>
           </div>
           ${(c.characters||[]).length?`<div class="characterStrip fieldCharacterStripV35">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.description||ch.tag||'בלי תגית')}</small></button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
-          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="charDescriptionDisplayV57">${selectedChar.description?esc(selectedChar.description):'אין עדיין תיאור קצר לדמות'}</div><div class="charDescEditRowV57"><input id="charDesc_${selectedChar.id}" class="input" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(selectedChar.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${selectedChar.id}')">שמירת תיאור</button></div><div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
+          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="charDescriptionDisplayV57">${selectedChar.description?esc(selectedChar.description):'אין עדיין תיאור קצר לדמות'}</div><div class="charDescEditRowV57"><input id="charDesc_${selectedChar.id}" class="input" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(selectedChar.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${selectedChar.id}')">שמירת תיאור</button></div>${characterFlagEditor(selectedChar,'current')}<div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
           <div class="sectionDivider"></div>
           <div class="fieldAddCharacterV35">
             <div class="fieldSubSectionTitleV35">להוסיף דמות חדשה</div>
@@ -3552,7 +3565,7 @@ function latestOf(type){
 function characterSummary(c){
   if(!c.characters || !c.characters.length) return 'עוד לא נוספו דמויות';
   const last=c.characters[c.characters.length-1];
-  return `${last.name}${last.description?' · '+last.description:(last.tag?' · '+last.tag:'')}`;
+  return `${last.name}${last.description?' · '+last.description:(last.stance?' · '+last.stance:(last.tag?' · '+last.tag:''))}`;
 }
 function fieldActivePanel(c){
   const map={
@@ -3605,11 +3618,35 @@ function charHtml(ch){
     <div class="charRowTop">
       <button class="charOpen" onclick="toggleCharEdit('${ch.id}')">
         <div class="charName">${esc(ch.name)}</div>
-        <div class="charMeta">${esc([ch.gender,ch.description,ch.tag].filter(Boolean).join(' · '))}</div>
+        <div class="charMeta">${esc([ch.gender,ch.description,ch.tag,ch.greenFlag?('🟢 '+ch.greenFlag):'',ch.redFlag?('🔴 '+ch.redFlag):'',ch.stance].filter(Boolean).join(' · '))}</div>
       </button>
       <button class="miniBtn" onclick="deleteChar('${ch.id}')">מחקי</button>
     </div>
     ${isEdit?charEditHtml(ch):''}
+  </div>`;
+}
+
+function characterFlagsSummary(ch){
+  const bits=[];
+  if(ch.greenFlag) bits.push('🟢 '+ch.greenFlag);
+  if(ch.redFlag) bits.push('🔴 '+ch.redFlag);
+  if(ch.stance) bits.push(ch.stance);
+  if(ch.flagNote) bits.push('“'+ch.flagNote+'”');
+  return bits.join(' · ');
+}
+function characterFlagEditor(ch,context='current',bookId=''){
+  const idp=context+'_'+ch.id;
+  const call=(field,val)=>context==='book'?`updateBookCharacterFlag('${bookId}','${ch.id}','${field}','${jsEsc(val)}')`:`updateCharacterFlag('${ch.id}','${field}','${jsEsc(val)}')`;
+  const noteCall=context==='book'?`updateBookCharacterFlagNote('${bookId}','${ch.id}','${idp}_note')`:`updateCharacterFlagNote('${ch.id}','${idp}_note')`;
+  return `<div class="charFlagsBoxV60">
+    <div class="help">דגל ירוק</div>
+    <div class="chips flagChipsV60">${CHARACTER_GREEN_FLAGS.map(t=>`<button class="chip flagChipV60 ${ch.greenFlag===t?'on':''}" onclick="${call('greenFlag',t)}">🟢 ${esc(t)}</button>`).join('')}</div>
+    <div class="help">דגל אדום</div>
+    <div class="chips flagChipsV60">${CHARACTER_RED_FLAGS.map(t=>`<button class="chip flagChipV60 ${ch.redFlag===t?'on':''}" onclick="${call('redFlag',t)}">🔴 ${esc(t)}</button>`).join('')}</div>
+    <div class="help">מה העמדה שלי לגביו/ה?</div>
+    <div class="chips flagChipsV60">${CHARACTER_STANCES.map(t=>`<button class="chip flagChipV60 ${ch.stance===t?'on':''}" onclick="${call('stance',t)}">${esc(t)}</button>`).join('')}</div>
+    <div class="help">למה? לא חובה</div>
+    <div class="charDescEditRowV57"><input id="${idp}_note" class="input" placeholder="למשל: מסתירה משהו אבל אני בעדה" value="${esc(ch.flagNote||'')}"><button class="secondaryPill" onclick="${noteCall}">שמירה</button></div>
   </div>`;
 }
 function charEditHtml(ch){
@@ -3620,6 +3657,7 @@ function charEditHtml(ch){
     <div class="chips">${allCharTags().map(t=>`<button class="chip ${ch.tag===t?'on':''}" onclick="updateCharacterTag('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
     <div class="help">מין הדמות</div>
     <div class="chips"><button class="chip ${ch.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${ch.id}','זכר')">זכר</button><button class="chip ${ch.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${ch.id}','נקבה')">נקבה</button></div>
+    ${characterFlagEditor(ch,'current')}
   </div>`;
 }
 let pickedGender='זכר';
@@ -3671,6 +3709,21 @@ function updateCharacterDescription(cid){
   toast('התיאור נשמר');
 }
 
+
+function updateCharacterFlag(cid,field,value){
+  const c=S.current;if(!c)return;
+  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
+  ch[field]=value;
+  save();editingCharId=cid;openAcc='character';renderField();toast('הדגל נשמר');
+}
+function updateCharacterFlagNote(cid,inputId){
+  const c=S.current;if(!c)return;
+  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
+  const el=document.getElementById(inputId);
+  ch.flagNote=(el?.value||'').trim();
+  save();editingCharId=cid;openAcc='character';renderField();toast('ההערה נשמרה');
+}
+
 function jsEsc(s){return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
 function addUpdate(type,label,text,extra={}){
   const c=S.current;if(!c)return;
@@ -3704,7 +3757,7 @@ function saveCharacter(tag){
   const descEl=document.getElementById('charDescription');
   const description=(descEl?.value||pendingCharDescription||'').trim();
   if(!name){toast('חסר שם דמות');return}
-  const ch={id:id(),name,description,gender:pickedGender,tag,finalTag:'',ts:new Date().toISOString()};
+  const ch={id:id(),name,description,gender:pickedGender,tag,greenFlag:'',redFlag:'',stance:'',flagNote:'',finalTag:'',ts:new Date().toISOString()};
   c.characters.push(ch);
   pendingCharName='';
   pendingCharDescription='';
@@ -3830,7 +3883,7 @@ function setDraft(k,v,rer=true){
 }
 function summaryChar(ch){
   const d=S.summaryDraft||{}; const val=(d.charFinal||{})[ch.id]||ch.finalTag||'';
-  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc([ch.gender,ch.description,ch.tag].filter(Boolean).join(' · '))}</span></div>
+  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc([ch.gender,ch.description,ch.tag,ch.greenFlag?('🟢 '+ch.greenFlag):'',ch.redFlag?('🔴 '+ch.redFlag):'',ch.stance].filter(Boolean).join(' · '))}</span></div>
     <div class="chips" style="margin-top:8px">${FINAL_CHAR_TAGS.map(t=>`<button class="chip ${val===t?'on':''}" onclick="setCharFinal('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   </div>`;
 }
@@ -3867,7 +3920,7 @@ function addSummaryCharacter(finalTag){
   const name=(document.getElementById('sumCharName')?.value||'').trim();
   if(!name){toast('חסר שם דמות');return}
   const description=(document.getElementById('sumCharDescription')?.value||'').trim();
-  const ch={id:id(),name,description,gender:summaryGender,tag:'נוספה בסיכום',finalTag,ts:new Date().toISOString()};
+  const ch={id:id(),name,description,gender:summaryGender,tag:'נוספה בסיכום',greenFlag:'',redFlag:'',stance:'',flagNote:'',finalTag,ts:new Date().toISOString()};
   c.characters.push(ch);
   S.summaryDraft=S.summaryDraft||{};
   S.summaryDraft.charFinal=S.summaryDraft.charFinal||{};
@@ -4128,7 +4181,7 @@ function openBook(bookId){
       </div>
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
-      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
+      ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57 characterDetailRowV60"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}${characterFlagsSummary(ch)?`<br><span class="charFlagsInlineV60">${esc(characterFlagsSummary(ch))}</span>`:''}</div>${characterFlagEditor(ch,'book',b.id)}</div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
   scrollTo(0,0);
@@ -4146,6 +4199,19 @@ function editBookCharacterDescription(bookId,cid){
   ch.description=String(next||'').trim();
   save();openBook(bookId);toast('התיאור נשמר');
 }
+
+function updateBookCharacterFlag(bookId,cid,field,value){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const ch=(b.characters||[]).find(x=>x.id===cid);if(!ch)return;
+  ch[field]=value;save();openBook(bookId);toast('הדגל נשמר');
+}
+function updateBookCharacterFlagNote(bookId,cid,inputId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const ch=(b.characters||[]).find(x=>x.id===cid);if(!ch)return;
+  const el=document.getElementById(inputId);
+  ch.flagNote=(el?.value||'').trim();save();openBook(bookId);toast('ההערה נשמרה');
+}
+
 function editCurrentMoment(mid){
   const c=S.current;if(!c)return;
   const u=(c.updates||[]).find(x=>x.id===mid);if(!u)return;

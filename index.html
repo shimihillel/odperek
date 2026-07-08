@@ -2753,6 +2753,133 @@ body{background:
   }
 }
 
+
+
+/* v59 — live reading journey + stuck book */
+.homeLiveReadingV59,
+.fieldLivePanelV59,
+.readingJourneyDetailV59{
+  margin-top:18px;
+}
+.homeLiveReadingV59{
+  border:1.5px solid rgba(213,199,181,.9);
+  background:rgba(255,250,243,.72);
+  border-radius:28px;
+  padding:18px 18px 16px;
+}
+.homeLiveHeadV59{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.homeLiveHeadV59 h3{
+  margin:0;
+  font-size:22px;
+  color:#2e4b37;
+  letter-spacing:-.02em;
+}
+.homeLiveHeadV59 span{
+  color:#8b8175;
+  font-size:13px;
+  font-weight:800;
+  white-space:nowrap;
+  padding-top:3px;
+}
+.liveJourneyV59{
+  display:grid;
+  gap:10px;
+}
+.liveStepV59{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  align-items:center;
+  text-align:right;
+  background:#fffaf3;
+  border:1px solid rgba(213,199,181,.78);
+  border-radius:20px;
+  padding:12px 14px;
+}
+.liveDotV59{
+  min-width:54px;
+  height:38px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:#2f4b36;
+  background:#f1e9dc;
+  border:1px solid #d9cbb9;
+  font-weight:1000;
+  font-size:15px;
+}
+.liveStepV59 b{
+  display:block;
+  color:#2d2924;
+  font-size:16px;
+  line-height:1.25;
+}
+.liveStepV59 small{
+  display:block;
+  color:#8b8175;
+  font-weight:800;
+  margin-top:2px;
+}
+.liveEmptyV59{padding:16px!important;}
+.stuckPanelV59{
+  margin-top:16px;
+  padding:16px;
+  border-radius:24px;
+  background:#fff6ed;
+  border:1.5px solid rgba(225,156,111,.58);
+  box-shadow:0 14px 34px rgba(84,55,28,.08);
+}
+.stuckPanelV59 b{
+  display:block;
+  color:#2e4b37;
+  font-size:20px;
+  margin-bottom:4px;
+}
+.stuckPanelV59 span{
+  display:block;
+  color:#81766b;
+  font-weight:700;
+  line-height:1.45;
+}
+.stuckActionsV59{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.stuckActionsV59 button{
+  border:1px solid #dacbb9;
+  border-radius:999px;
+  background:#fffaf3;
+  color:#6f665d;
+  padding:9px 12px;
+  font-weight:900;
+}
+.stuckActionsV59 button:first-child{
+  background:#2e4b37;
+  color:#fffaf3;
+  border-color:#2e4b37;
+}
+.fieldLivePanelV59{
+  max-width:100%;
+  box-sizing:border-box;
+}
+.readingJourneyDetailV59 .liveJourneyV59{
+  margin-top:12px;
+}
+@media(max-width:520px){
+  .homeLiveHeadV59{display:block;}
+  .homeLiveHeadV59 span{display:block;margin-top:4px;}
+  .liveStepV59{grid-template-columns:1fr;gap:8px;}
+  .liveDotV59{justify-self:start;}
+}
+
 </style>
 </head>
 <body>
@@ -2940,6 +3067,7 @@ function normalizeBook(b){
   b.status=b.status||'finished';
   b.coverVariant=(b.coverVariant===0||b.coverVariant)?Math.max(0,Math.min(3,parseInt(b.coverVariant)||0)):coverVariantFrom(b.title,b.author,b.id);
   b.coverImage=b.coverImage||'';
+  b.stuckDismissedUntil=b.stuckDismissedUntil||'';
   b.abandonReason=b.abandonReason||'';
   b.abandonMood=b.abandonMood||'';
   b.abandonedAt=b.abandonedAt||'';
@@ -2960,6 +3088,7 @@ function normalizeCurrent(c){
   c.lastMood=c.lastMood||'';
   c.coverVariant=(c.coverVariant===0||c.coverVariant)?Math.max(0,Math.min(3,parseInt(c.coverVariant)||0)):coverVariantFrom(c.title,c.author,c.id);
   c.coverImage=c.coverImage||'';
+  c.stuckDismissedUntil=c.stuckDismissedUntil||'';
   c.updates=Array.isArray(c.updates)?c.updates:[];
   c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
   c.characters=Array.isArray(c.characters)?c.characters.map(ch=>({...ch,description:ch.description||''})):[];
@@ -3039,6 +3168,59 @@ function render(){
   renderShelf();
   renderStats();
 }
+
+function updateTimestamp(u){
+  return Date.parse(u?.ts||u?.createdAt||u?.date||'')||0;
+}
+function lastReadingActivityMs(c){
+  const updateTimes=(c.updates||[]).map(updateTimestamp).filter(Boolean);
+  const base=Date.parse(c.lastActivityAt||c.startedAt||'')||0;
+  return Math.max(base,...updateTimes,0);
+}
+function daysSinceActivity(c){
+  const ms=lastReadingActivityMs(c);
+  if(!ms) return 0;
+  return Math.floor((Date.now()-ms)/(1000*60*60*24));
+}
+function readingStateForMoment(type,label,text,percent){
+  const p=pct(percent);
+  if(type==='mood') return label || 'הוייב השתנה';
+  if(type==='quote') return 'משפט לשמור';
+  if(type==='character') return 'דמות נכנסה לתמונה';
+  if(type==='progress'){
+    if(p<15) return 'רק מתחמם';
+    if(p<35) return 'מתחילה להבין מי נגד מי';
+    if(p<60) return 'כבר בתוך זה';
+    if(p<85) return 'העניינים מסתבכים';
+    return 'ישורת אחרונה, לא לנשום';
+  }
+  const clean=String(text||label||'').trim();
+  return clean?clean.slice(0,44)+(clean.length>44?'…':''):'רגע מהשטח';
+}
+function momentStateText(u){
+  return u.readingState || readingStateForMoment(u.type,u.label,u.text,u.percent);
+}
+function readingJourneyHtml(updates=[],limit=5){
+  const list=(updates||[]).slice().sort((a,b)=>(a.percent||0)-(b.percent||0)||updateTimestamp(a)-updateTimestamp(b)).slice(-limit);
+  if(!list.length) return `<div class="emptyNew liveEmptyV59">עוד אין מסע קריאה. ברגע שתשמרי רגעים — יתחיל להיווצר פה ציר קטן.</div>`;
+  return `<div class="liveJourneyV59">${list.map(u=>`<div class="liveStepV59"><span class="liveDotV59">${pct(u.percent||0)}%</span><div><b>${esc(momentStateText(u))}</b><small>${esc(momentLabel(u.type))}</small></div></div>`).join('')}</div>`;
+}
+function currentStuckInfo(c){
+  const days=daysSinceActivity(c);
+  const dismissed=Date.parse(c.stuckDismissedUntil||'')||0;
+  return {days,active:days>=5 && dismissed<Date.now()};
+}
+function stuckPanelHtml(c){
+  const st=currentStuckInfo(c);
+  if(!st.active) return '';
+  return `<div class="stuckPanelV59"><div><b>הספר הזה קצת נתקע?</b><span>לא היה עדכון כבר ${st.days} ימים. בלי לחץ, רק בדיקת דופק ספרותית.</span></div><div class="stuckActionsV59"><button onclick="goField('percent')">לעדכן אחוז</button><button onclick="abandonCurrentBook()">נטשתי</button><button onclick="dismissStuckBook()">עדיין איתו</button></div></div>`;
+}
+function dismissStuckBook(){
+  if(!S.current)return;
+  S.current.stuckDismissedUntil=new Date(Date.now()+3*24*60*60*1000).toISOString();
+  save();renderHome();toast('לא מלחיצה אותך שלושה ימים');
+}
+
 function renderHome(){
   const c=S.current;
   const recent=S.books.filter(b=>(b.status||'finished')==='finished').slice(0,4);
@@ -3094,6 +3276,8 @@ function currentHome(c){
           </div>
         </div>
       </div>
+      <div class="homeLiveReadingV59"><div class="homeLiveHeadV59"><h3>מסע הקריאה בינתיים</h3><span>${daysSinceActivity(c)?`עודכן לפני ${daysSinceActivity(c)} ימים`:'עודכן היום'}</span></div>${readingJourneyHtml(c.updates,4)}</div>
+      ${stuckPanelHtml(c)}
     </div>
     <div class="homeActionsNew actionsV48">
       <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
@@ -3118,7 +3302,9 @@ function addProgressMoment(percent){
   const c=S.current;
   if(!c)return;
   c.updates=c.updates||[];
-  c.updates.unshift({id:id(),type:'progress',text:`הגעתי ל־${pct(percent)}%`,percent,createdAt:new Date().toISOString()});
+  const now=new Date().toISOString();
+  c.lastActivityAt=now;
+  c.updates.unshift({id:id(),type:'progress',label:'איפה אני',text:`הגעתי ל־${pct(percent)}%`,percent:pct(percent),ts:now,createdAt:now,readingState:readingStateForMoment('progress','איפה אני',`הגעתי ל־${pct(percent)}%`,pct(percent))});
 }
 function nudgeCurrentProgress(delta){
   const c=S.current;
@@ -3244,6 +3430,11 @@ function renderField(){
           <div class="fieldSnapshotV35"><span>דמויות</span><strong>${charCount}</strong><small>${charCount?`כרגע יש ${charCount} דמויות שמורות.`:'עוד לא נוספו דמויות.'}</small></div>
           <div class="fieldSnapshotV35"><span>רגעים שמורים</span><strong>${updatesCount}</strong><small>${quoteCount} ציטוטים · ${noteCount} רגעי עלילה</small></div>
         </div>
+      </section>
+
+      <section class="fieldCardV35 fieldLivePanelV59">
+        <div class="fieldCardHeadV35"><div><h3>מצב הקריאה עד עכשיו</h3><p>ציר קטן שנבנה מכל אחוז, וייב ורגע שאת שומרת.</p></div></div>
+        ${readingJourneyHtml(c.updates,6)}
       </section>
 
       <div class="fieldGridV35">
@@ -3483,8 +3674,10 @@ function updateCharacterDescription(cid){
 function jsEsc(s){return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
 function addUpdate(type,label,text,extra={}){
   const c=S.current;if(!c)return;
-  const u={id:id(),type,label,text,percent:pct(c.percent),ts:new Date().toISOString(),...extra};
+  const now=new Date().toISOString();
+  const u={id:id(),type,label,text,percent:pct(extra.percent ?? c.percent),ts:now,createdAt:now,readingState:readingStateForMoment(type,label,text,pct(extra.percent ?? c.percent)),...extra};
   c.updates.unshift(u);
+  c.lastActivityAt=now;
   if(type==='mood')c.lastMood=label;
   save();render();toast('נשמר לציר');
 }
@@ -3691,7 +3884,7 @@ function finishBook(){
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'finished',
     stars:d.stars||0,heat:d.heat||0,cry:d.cry||0,speed:d.speed||0,
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
-    characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||''
+    characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||'',lastActivityAt:c.lastActivityAt||'',stuckDismissedUntil:c.stuckDismissedUntil||''
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
@@ -3706,7 +3899,7 @@ function abandonCurrentBook(){
   const b=normalizeBook({
     id:c.id,title:c.title,author:c.author,createdAt:new Date().toISOString(),status:'abandoned',
     abandonReason:reason,abandonMood:'',abandonedAt:new Date().toISOString(),
-    characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent),coverImage:c.coverImage||''
+    characters:c.characters||[],readingLog:c.updates||[],percent:pct(c.percent),coverImage:c.coverImage||'',lastActivityAt:c.lastActivityAt||'',stuckDismissedUntil:c.stuckDismissedUntil||''
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();shelfMode='abandoned';show('shelf');toast('הספר עבר לנטשתי');
 }
@@ -3719,7 +3912,7 @@ function editAbandonReason(bookId){
 function restoreAbandonedBook(bookId){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   if(S.current && !confirm('יש כבר ספר פעיל. להחליף אותו בספר הזה? הספר הפעיל הנוכחי לא יישמר אוטומטית.'))return;
-  S.current=normalizeCurrent({id:b.id,title:b.title,author:b.author,percent:pct(b.percent||0),updates:b.readingLog||[],characters:b.characters||[],startedAt:new Date().toISOString(),coverImage:b.coverImage||''});
+  S.current=normalizeCurrent({id:b.id,title:b.title,author:b.author,percent:pct(b.percent||0),updates:b.readingLog||[],characters:b.characters||[],startedAt:new Date().toISOString(),coverImage:b.coverImage||'',lastActivityAt:new Date().toISOString(),stuckDismissedUntil:''});
   S.books=S.books.filter(x=>x.id!==bookId);
   save();show('home');toast('הספר חזר לקריאה');
 }
@@ -3934,6 +4127,7 @@ function openBook(bookId){
         </div>
       </div>
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
+      ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>`<div class="rowItemNew characterDetailRowV57"><div><div class="title">${esc(ch.name)}</div><div class="sub">${ch.description?`<b class="charDescInlineV57">${esc(ch.description)}</b><br>`:''}${esc([ch.gender,ch.tag,ch.finalTag].filter(Boolean).join(' · '))}</div></div><div class="momentActionsV43"><button onclick="editBookCharacterDescription('${b.id}','${ch.id}')">תיאור</button></div></div>`).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;

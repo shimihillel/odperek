@@ -2982,6 +2982,24 @@ body{background:
 .statsFriendReasonV64{display:inline-flex;align-self:flex-start;background:#ede5d8;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:#675d50;font-weight:900;font-size:12px;line-height:1}
 @media(max-width:520px){.statsAwardsGridV64{grid-template-columns:1fr}.statsTinyGridV64{grid-template-columns:1fr 1fr}.awardCardV64{min-height:142px}.statsHeroV64 h2{font-size:28px!important}}
 
+
+
+/* v65 — smart book friends while reading */
+.bookFriendSearchV65{margin-top:14px;background:#fffaf2;border:1px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bookFriendSearchV65 label{font-size:12px;font-weight:1000;color:#766858;letter-spacing:.02em}
+.bookFriendSearchRowV65{position:relative;display:grid;grid-template-columns:1fr;gap:8px}
+.bookFriendResultsV65{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;padding-inline-end:2px}
+.bookFriendResultBtnV65{width:100%;border:1px solid #dccdbc;background:#fff;border-radius:18px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;text-align:right;cursor:pointer;color:#362f28}
+.bookFriendResultBtnV65:hover{background:#fbf1e4}
+.bookFriendResultCoverV65{width:34px!important;min-width:34px!important;height:50px!important;border-radius:10px!important;box-shadow:0 6px 12px rgba(70,54,36,.10)!important}
+.bookFriendResultMetaV65{min-width:0;display:flex;flex-direction:column;gap:3px}
+.bookFriendResultTitleV65{font-weight:1000;font-size:14px;line-height:1.1;overflow-wrap:anywhere}
+.bookFriendResultAuthorV65{font-size:12px;color:var(--muted);font-weight:800;overflow-wrap:anywhere}
+.bookFriendSearchHintV65{font-size:12px;color:var(--muted);font-weight:800;line-height:1.4;padding:3px 2px}
+.fieldFriendPanelV65 .bookFriendsHeadV63{margin-bottom:0}
+.fieldFriendPanelV65 .bookFriendSearchV65{background:#fbf6ee}
+@media(max-width:430px){.bookFriendSearchV65{padding:12px;border-radius:19px}.bookFriendResultBtnV65{grid-template-columns:auto 1fr}.bookFriendResultCoverV65{width:30px!important;min-width:30px!important;height:45px!important}}
+
 </style>
 </head>
 <body>
@@ -3201,6 +3219,7 @@ function normalizeCurrent(c){
   c.coverVariant=(c.coverVariant===0||c.coverVariant)?Math.max(0,Math.min(3,parseInt(c.coverVariant)||0)):coverVariantFrom(c.title,c.author,c.id);
   c.coverImage=c.coverImage||'';
   c.stuckDismissedUntil=c.stuckDismissedUntil||'';
+  c.bookFriends=Array.isArray(c.bookFriends)?c.bookFriends.map(f=>({id:f.id||id(),bookId:f.bookId||'',reason:f.reason||'',note:f.note||'',createdAt:f.createdAt||new Date().toISOString()})).filter(f=>f.bookId):[];
   c.updates=Array.isArray(c.updates)?c.updates:[];
   c.updates=c.updates.map(u=>({...u,id:u.id||id()}));
   c.characters=Array.isArray(c.characters)?c.characters.map(ch=>({...ch,description:ch.description||'',greenFlag:ch.greenFlag||'',redFlag:ch.redFlag||'',stance:ch.stance||'',flagNote:ch.flagNote||''})):[];
@@ -3601,6 +3620,16 @@ function renderField(){
             <div class="fieldTipV35">מה שתשמרי כאן ייכנס ישר לציר הרגעים.</div>
             <button class="primaryPill" onclick="saveText('note')">שומרת רגע</button>
           </div>
+        </section>
+
+        <section class="fieldCardV35 span2 fieldFriendPanelV65">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>הספר הזה מזכיר לי את…</h3>
+              <p>כשהאסימון נופל באמצע קריאה — קשרי אותו מיד לספר שכבר במדף.</p>
+            </div>
+          </div>
+          ${bookFriendsHtmlV63(c,'field')}
         </section>
 
         <section class="fieldCardV35">
@@ -4080,7 +4109,7 @@ function finishBook(){
     stars:d.stars||0,heat:d.heat||0,cry:d.cry||0,speed:d.speed||0,
     bottomLine:d.bottomLine||'',about:d.about||'',madeMe:d.madeMe||'',
     friendPitch:d.friendPitch||'',recommendTo:d.recommendTo||'',readMoreAuthor:d.readMoreAuthor||'',readingWarning:d.readingWarning||'',obsession:+d.obsession||0,shimiLine:d.shimiLine||'',
-    characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||'',lastActivityAt:c.lastActivityAt||'',stuckDismissedUntil:c.stuckDismissedUntil||''
+    characters:chars,readingLog:log,percent:c.percent,coverImage:c.coverImage||'',lastActivityAt:c.lastActivityAt||'',stuckDismissedUntil:c.stuckDismissedUntil||'',bookFriends:c.bookFriends||[]
   });
   S.books.unshift(b);S.current=null;S.summaryDraft=null;save();show('home');toast('הספר נכנס למדף');
 }
@@ -4304,40 +4333,90 @@ function friendReasonChoiceV63(){
   if(n>=1&&n<=opts.length)return opts[n-1];
   return t.slice(0,80);
 }
-function bookFriendsHtmlV63(b){
-  const friends=(b.bookFriends||[]).map(f=>({link:f,book:S.books.find(x=>x.id===f.bookId)})).filter(x=>x.book);
-  const canAdd=S.books.filter(x=>x.id!==b.id).length>0;
-  return `<div class="detailSectionNew bookFriendsSectionV63"><div class="bookFriendsHeadV63"><div><h3>חברים של הספר הזה</h3><p>ספרים שמזכירים אותו באותו וייב, כאב, דרמה או גבר בעייתי.</p></div>${canAdd?`<button class="addFriendBtnV63" onclick="addBookFriendV63('${b.id}')">+ לקשר ספר</button>`:''}</div>${friends.length?`<div class="friendGridV63">${friends.map(({link,book})=>friendCardV63(b.id,book,link.reason)).join('')}</div>`:`<div class="friendEmptyV63">עוד לא קישרת לו חברים מהמדף. כשספר יזכיר לך ספר אחר — זה המקום לרכל על זה.</div>`}</div>`;
+function ownerBookV65(bookId){
+  if(S.current&&S.current.id===bookId)return S.current;
+  return S.books.find(x=>x.id===bookId)||null;
 }
-function friendCardV63(ownerId,book,reason){
-  const cover=coverHtml(book.title,book.author,book,{neutral:true}).replace('realCoverV50','realCoverV50 friendCoverV63');
-  return `<div class="friendCardV63">${cover}<div class="friendInfoV63"><div class="friendTitleV63">${esc(book.title)}</div><div class="friendAuthorV63">${esc(book.author)}</div><span class="friendReasonV63">${esc(reason||'ספר חבר')}</span><div class="friendActionsV63"><button onclick="openBook('${book.id}')">לפתוח</button><button class="danger" onclick="removeBookFriendV63('${ownerId}','${book.id}')">להסיר קשר</button></div></div></div>`;
+function friendSearchInputIdV65(bookId,context){return `friendSearch_${context}_${String(bookId).replace(/[^a-zA-Z0-9_-]/g,'_')}`}
+function friendSearchResultsIdV65(bookId,context){return `friendResults_${context}_${String(bookId).replace(/[^a-zA-Z0-9_-]/g,'_')}`}
+function friendCandidatesV65(ownerId,query=''){
+  const owner=ownerBookV65(ownerId);if(!owner)return [];
+  const existing=new Set((owner.bookFriends||[]).map(f=>f.bookId));
+  const q=String(query||'').trim().toLowerCase();
+  let candidates=(S.books||[]).filter(x=>x.id!==ownerId&&!existing.has(x.id));
+  if(q){
+    candidates=candidates.filter(x=>String(x.title||'').toLowerCase().includes(q)||String(x.author||'').toLowerCase().includes(q));
+    candidates.sort((a,b)=>{
+      const at=String(a.title||'').toLowerCase(), bt=String(b.title||'').toLowerCase();
+      const aa=String(a.author||'').toLowerCase(), ba=String(b.author||'').toLowerCase();
+      const ar=(at.startsWith(q)?0:aa.startsWith(q)?1:2), br=(bt.startsWith(q)?0:ba.startsWith(q)?1:2);
+      return ar-br || at.localeCompare(bt,'he');
+    });
+  }else{
+    candidates=candidates.slice().sort((a,b)=>String(a.title||'').localeCompare(String(b.title||''),'he'));
+  }
+  return candidates.slice(0,8);
 }
-function addBookFriendV63(bookId){
-  const b=S.books.find(x=>x.id===bookId);if(!b)return;
-  const existing=new Set((b.bookFriends||[]).map(f=>f.bookId));
-  const candidates=S.books.filter(x=>x.id!==bookId&&!existing.has(x.id));
-  if(!candidates.length){toast('אין עוד ספרים לקשר');return;}
-  const raw=prompt('איזה ספר לקשר?\n'+candidates.map((x,i)=>`${i+1}. ${x.title}${x.author?' — '+x.author:''}`).join('\n'));
-  if(raw===null)return;
-  const n=parseInt(raw,10);
-  if(!(n>=1&&n<=candidates.length)){toast('לא בחרתי ספר');return;}
-  const other=candidates[n-1];
+function bookFriendSearchHtmlV65(ownerId,context='detail'){
+  const owner=ownerBookV65(ownerId);if(!owner)return '';
+  const canAdd=(S.books||[]).filter(x=>x.id!==ownerId && !(owner.bookFriends||[]).some(f=>f.bookId===x.id)).length>0;
+  if(!canAdd)return `<div class="friendEmptyV63">אין כרגע עוד ספרים פנויים לקישור.</div>`;
+  const inputId=friendSearchInputIdV65(ownerId,context), resultsId=friendSearchResultsIdV65(ownerId,context);
+  return `<div class="bookFriendSearchV65"><label>לחפש ספר לקישור</label><div class="bookFriendSearchRowV65"><input id="${inputId}" class="input" placeholder="תתחילי לכתוב שם ספר או סופרת…" autocomplete="off" oninput="onFriendSearchV65('${ownerId}','${inputId}','${resultsId}','${context}')" onfocus="onFriendSearchV65('${ownerId}','${inputId}','${resultsId}','${context}')"><div id="${resultsId}" class="bookFriendResultsV65"><div class="bookFriendSearchHintV65">במקום רשימה אינסופית: מקלידה שתי אותיות, בוחרת ספר, ואז סיבת הקשר.</div></div></div></div>`;
+}
+function onFriendSearchV65(ownerId,inputId,resultsId,context='detail'){
+  const input=document.getElementById(inputId), box=document.getElementById(resultsId);if(!input||!box)return;
+  const q=input.value||'';
+  const list=friendCandidatesV65(ownerId,q);
+  if(!q.trim()){
+    box.innerHTML=`<div class="bookFriendSearchHintV65">תתחילי לכתוב, נגיד רו, והאפליקציה תציע ספרים לפי שם או סופרת.</div>`;
+    return;
+  }
+  if(!list.length){box.innerHTML=`<div class="bookFriendSearchHintV65">לא מצאתי ספר מתאים במדף. נסי שם ספר או שם סופרת.</div>`;return;}
+  box.innerHTML=list.map(book=>friendSearchResultBtnV65(ownerId,book,context)).join('');
+}
+function friendSearchResultBtnV65(ownerId,book,context){
+  const cover=coverHtml(book.title,book.author,book,{neutral:true}).replace('realCoverV50','realCoverV50 bookFriendResultCoverV65');
+  return `<button class="bookFriendResultBtnV65" onclick="selectBookFriendV65('${ownerId}','${book.id}','${context}')">${cover}<span class="bookFriendResultMetaV65"><span class="bookFriendResultTitleV65">${esc(book.title)}</span><span class="bookFriendResultAuthorV65">${esc(book.author)}</span></span></button>`;
+}
+function selectBookFriendV65(ownerId,friendId,context='detail'){
   const reason=friendReasonChoiceV63();
   if(reason===null)return;
-  const createdAt=new Date().toISOString();
-  b.bookFriends=b.bookFriends||[];
-  b.bookFriends.push({id:id(),bookId:other.id,reason,createdAt});
-  other.bookFriends=other.bookFriends||[];
-  if(!other.bookFriends.some(f=>f.bookId===b.id)) other.bookFriends.push({id:id(),bookId:b.id,reason,createdAt});
-  save();openBook(bookId);toast('הספרים קושרו');
+  linkBookFriendV65(ownerId,friendId,reason,context);
 }
-function removeBookFriendV63(bookId,friendId){
-  const b=S.books.find(x=>x.id===bookId);const other=S.books.find(x=>x.id===friendId);if(!b)return;
+function linkBookFriendV65(ownerId,friendId,reason,context='detail'){
+  const owner=ownerBookV65(ownerId);const other=S.books.find(x=>x.id===friendId);if(!owner||!other)return;
+  const createdAt=new Date().toISOString();
+  owner.bookFriends=owner.bookFriends||[];
+  if(!owner.bookFriends.some(f=>f.bookId===other.id))owner.bookFriends.push({id:id(),bookId:other.id,reason,createdAt});
+  other.bookFriends=other.bookFriends||[];
+  if(!other.bookFriends.some(f=>f.bookId===owner.id))other.bookFriends.push({id:id(),bookId:owner.id,reason,createdAt});
+  save();
+  if(context==='field')renderField(); else openBook(ownerId);
+  toast('הספרים קושרו');
+}
+function bookFriendsHtmlV63(b,context='detail'){
+  const owner=ownerBookV65(b.id)||b;
+  const friends=(owner.bookFriends||[]).map(f=>({link:f,book:S.books.find(x=>x.id===f.bookId)})).filter(x=>x.book);
+  return `<div class="detailSectionNew bookFriendsSectionV63"><div class="bookFriendsHeadV63"><div><h3>חברים של הספר הזה</h3><p>ספרים שמזכירים אותו באותו וייב, כאב, דרמה או גבר בעייתי.</p></div></div>${bookFriendSearchHtmlV65(owner.id,context)}${friends.length?`<div class="friendGridV63" style="margin-top:12px">${friends.map(({link,book})=>friendCardV63(owner.id,book,link.reason,context)).join('')}</div>`:`<div class="friendEmptyV63" style="margin-top:12px">עוד לא קישרת לו חברים מהמדף. כשספר יזכיר לך ספר אחר — זה המקום לרכל על זה.</div>`}</div>`;
+}
+function friendCardV63(ownerId,book,reason,context='detail'){
+  const cover=coverHtml(book.title,book.author,book,{neutral:true}).replace('realCoverV50','realCoverV50 friendCoverV63');
+  return `<div class="friendCardV63">${cover}<div class="friendInfoV63"><div class="friendTitleV63">${esc(book.title)}</div><div class="friendAuthorV63">${esc(book.author)}</div><span class="friendReasonV63">${esc(reason||'ספר חבר')}</span><div class="friendActionsV63"><button onclick="openBook('${book.id}')">לפתוח</button><button class="danger" onclick="removeBookFriendV63('${ownerId}','${book.id}','${context}')">להסיר קשר</button></div></div></div>`;
+}
+function addBookFriendV63(bookId){
+  const input=document.getElementById(friendSearchInputIdV65(bookId,'detail'))||document.getElementById(friendSearchInputIdV65(bookId,'field'));
+  if(input){input.focus();toast('תתחילי להקליד שם ספר');return;}
+  toast('פתחתי לך חיפוש חכם לקישור ספר');
+}
+function removeBookFriendV63(bookId,friendId,context='detail'){
+  const b=ownerBookV65(bookId);const other=S.books.find(x=>x.id===friendId);if(!b)return;
   if(!confirm('להסיר את הקשר בין הספרים?'))return;
   b.bookFriends=(b.bookFriends||[]).filter(f=>f.bookId!==friendId);
   if(other) other.bookFriends=(other.bookFriends||[]).filter(f=>f.bookId!==bookId);
-  save();openBook(bookId);toast('הקשר הוסר');
+  save();
+  if(context==='field')renderField(); else openBook(bookId);
+  toast('הקשר הוסר');
 }
 
 function openBook(bookId){

@@ -3017,6 +3017,26 @@ body{background:
   .bookCharacterFlagEditorV66 .chip{font-size:13px!important;padding:8px 10px!important}
 }
 
+
+
+/* v67 — cleanup: remove noisy reading journey panels + simple red/green character flags */
+.homeLiveReadingV59,.fieldLivePanelV59,.readingJourneyDetailV59{display:none!important}
+.simpleFlagBadgesV67{display:inline-flex!important;gap:6px;align-items:center;margin-top:6px}
+.charColorDotV67{width:18px;height:18px;border-radius:999px;display:inline-block;box-shadow:inset 0 0 0 2px rgba(255,255,255,.78),0 2px 7px rgba(40,30,20,.16);vertical-align:middle}
+.charColorDotV67.green{background:linear-gradient(180deg,#20d234,#099315)}
+.charColorDotV67.red{background:linear-gradient(180deg,#f43b3b,#bd1414)}
+.flagColorPickerV67{display:flex;gap:12px;align-items:center;justify-content:flex-start;margin:8px 0 12px;direction:ltr}
+.flagColorBtnV67{width:48px;height:48px;border-radius:999px;border:1.5px solid var(--line);background:#fffaf3;display:flex;align-items:center;justify-content:center;box-shadow:none;padding:0}
+.flagColorBtnV67 span{width:26px;height:26px;border-radius:999px;display:block;box-shadow:inset 0 0 0 2px rgba(255,255,255,.82),0 3px 8px rgba(40,30,20,.12)}
+.flagColorBtnV67.green span{background:linear-gradient(180deg,#20d234,#099315)}
+.flagColorBtnV67.red span{background:linear-gradient(180deg,#f43b3b,#bd1414)}
+.flagColorBtnV67.on{border-color:#304734;background:#f3f7ef;box-shadow:0 0 0 3px rgba(48,71,52,.12)}
+.flagColorBtnV67.red.on{border-color:#b62020;background:#fff4f1;box-shadow:0 0 0 3px rgba(182,32,32,.10)}
+.simpleCharFlagsBoxV67{padding:12px!important}
+.flagSubTitleV67{margin-top:14px!important;margin-bottom:6px!important}
+.charToken .simpleFlagBadgesV67{justify-content:center;margin-top:7px}
+.charOpen .simpleFlagBadgesV67{justify-content:flex-start;margin-top:8px}
+
 </style>
 </head>
 <body>
@@ -3424,8 +3444,6 @@ function currentHome(c){
           </div>
         </div>
       </div>
-      <div class="homeLiveReadingV59"><div class="homeLiveHeadV59"><h3>מסע הקריאה בינתיים</h3><span>${daysSinceActivity(c)?`עודכן לפני ${daysSinceActivity(c)} ימים`:'עודכן היום'}</span></div>${readingJourneyHtml(c.updates,4)}</div>
-      ${stuckPanelHtml(c)}
     </div>
     <div class="homeActionsNew actionsV48">
       <button class="quickCardNew" onclick="goField('mood')"><span class="quickIcon">${uiIcon('spark')}</span><span class="quickLabel">מה הוייב?</span><span class="quickSub">${esc(mood)}</span></button>
@@ -3579,12 +3597,6 @@ function renderField(){
           <div class="fieldSnapshotV35"><span>רגעים שמורים</span><strong>${updatesCount}</strong><small>${quoteCount} ציטוטים · ${noteCount} רגעי עלילה</small></div>
         </div>
       </section>
-
-      <section class="fieldCardV35 fieldLivePanelV59">
-        <div class="fieldCardHeadV35"><div><h3>מצב הקריאה עד עכשיו</h3><p>ציר קטן שנבנה מכל אחוז, וייב ורגע שאת שומרת.</p></div></div>
-        ${readingJourneyHtml(c.updates,6)}
-      </section>
-
       <div class="fieldGridV35">
         <section class="fieldCardV35 span2 progressCardV35">
           <div class="fieldCardHeadV35 split">
@@ -3671,13 +3683,16 @@ function renderField(){
             </div>
           </div>
           ${(c.characters||[]).length?`<div class="characterStrip fieldCharacterStripV35">${c.characters.map(ch=>`<button class="charToken ${editingCharId===ch.id?'on':''}" onclick="toggleCharEdit('${ch.id}')"><b>${esc(ch.name)}</b><small>${esc(ch.description||ch.tag||'בלי תגית')}</small>${characterFlagBadges(ch,true)}</button>`).join('')}</div>`:`<div class="editorHelper" style="margin-bottom:14px">עוד לא נוספו דמויות. תוסיפי דמות ראשונה כאן למטה.</div>`}
-          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן מה את חושבת עליה עכשיו</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="charDescriptionDisplayV57">${selectedChar.description?esc(selectedChar.description):'אין עדיין תיאור קצר לדמות'}</div><div class="charDescEditRowV57"><input id="charDesc_${selectedChar.id}" class="input" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(selectedChar.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${selectedChar.id}')">שמירת תיאור</button></div>${characterFlagEditor(selectedChar,'current')}<div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
+          ${selectedChar?`<div class="characterEditBox fieldSelectedCharV35"><div class="fieldSelectedCharTopV35"><div><div class="fieldSelectedCharNameV35">${esc(selectedChar.name)}</div><div class="editorHelper">לעדכן דגל ותגית</div></div><div class="fieldSelectedCharMetaV35">${esc(selectedChar.gender||'')}</div></div><div class="charDescriptionDisplayV57">${selectedChar.description?esc(selectedChar.description):'אין עדיין תיאור קצר לדמות'}</div><div class="charDescEditRowV57"><input id="charDesc_${selectedChar.id}" class="input" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(selectedChar.description||'')}"><button class="secondaryPill" onclick="updateCharacterDescription('${selectedChar.id}')">שמירת תיאור</button></div>${characterFlagEditor(selectedChar,'current')}<div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew ${selectedChar.tag===t?'on':''}" onclick="updateCharacterTag('${selectedChar.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div><div class="genderRow"><button class="genderPill ${selectedChar.gender==='זכר'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','זכר')">זכר</button><button class="genderPill ${selectedChar.gender==='נקבה'?'on':''}" onclick="updateCharacterGender('${selectedChar.id}','נקבה')">נקבה</button><button class="secondaryPill" onclick="deleteChar('${selectedChar.id}')">מחיקה</button></div></div>`:''}
           <div class="sectionDivider"></div>
           <div class="fieldAddCharacterV35">
             <div class="fieldSubSectionTitleV35">להוסיף דמות חדשה</div>
             <input id="charName" class="input" placeholder="שם הדמות" value="${esc(pendingCharName)}" oninput="pendingCharName=this.value">
             <input id="charDescription" class="input charDescInputV57" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(pendingCharDescription)}" oninput="pendingCharDescription=this.value">
             <div class="genderRow"><button class="genderPill ${pickedGender==='זכר'?'on':''}" onclick="pickGender('זכר')">זכר</button><button class="genderPill ${pickedGender==='נקבה'?'on':''}" onclick="pickGender('נקבה')">נקבה</button></div>
+            <div class="fieldSubSectionTitleV35 flagSubTitleV67">דגל</div>
+            ${flagColorPickerHtmlV67(pendingCharFlag,'pending')}
+            <div class="fieldSubSectionTitleV35 flagSubTitleV67">תגית</div>
             <div class="tagsWrap fieldTagsV35">${allCharTags().map(t=>`<button class="tagChipNew" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
             <div class="fieldCardFooterV35">
               <div class="fieldTipV35">גם תגיות דמות חדשות שתוסיפי יישמרו לשימוש קבוע.</div>
@@ -3744,6 +3759,7 @@ function textBody(type,ph){
 }
 let pendingCharName='';
 let pendingCharDescription='';
+let pendingCharFlag='';
 let editingCharId='';
 function charactersBody(c){
   const selectedM = pickedGender==='זכר'?'on':'';
@@ -3752,7 +3768,9 @@ function charactersBody(c){
   <input id="charDescription" class="input charDescInputV57" placeholder="תיאור קצר, למשל: אחות של לני" value="${esc(pendingCharDescription)}" oninput="pendingCharDescription=this.value">
   <div class="help">זכר / נקבה</div>
   <div class="chips"><button class="chip ${selectedM}" onclick="pickGender('זכר')">זכר</button><button class="chip ${selectedF}" onclick="pickGender('נקבה')">נקבה</button></div>
-  <div class="help">מה אני חושבת עליו/עליה עכשיו?</div>
+  <div class="help">דגל</div>
+  ${flagColorPickerHtmlV67(pendingCharFlag,'pending')}
+  <div class="help">תגית</div>
   <div class="chips">${allCharTags().map(t=>`<button class="chip" onclick="saveCharacter('${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   <div class="help">אפשר להוסיף דמות חדשה, או לפתוח דמות קיימת ולעדכן את הסטטוס שלה.</div>
   <div class="charList">${c.characters.length?c.characters.map(charHtml).join(''):'<div class="empty" style="padding:14px">עוד לא נוספו דמויות.</div>'}</div>`;
@@ -3772,34 +3790,37 @@ function charHtml(ch){
   </div>`;
 }
 
+function characterFlagColor(ch){
+  if(ch.greenFlag)return 'green';
+  if(ch.redFlag)return 'red';
+  return '';
+}
 function characterFlagsSummary(ch){
-  const bits=[];
-  if(ch.greenFlag) bits.push('🟢 '+ch.greenFlag);
-  if(ch.redFlag) bits.push('🔴 '+ch.redFlag);
-  if(ch.stance) bits.push(ch.stance);
-  if(ch.flagNote) bits.push('“'+ch.flagNote+'”');
-  return bits.join(' · ');
+  const color=characterFlagColor(ch);
+  return color==='green'?'🟢':color==='red'?'🔴':'';
 }
 function characterFlagBadges(ch,compact=false){
-  const parts=[];
-  if(ch.greenFlag) parts.push(`<span class="charFlagBadgeV61 green">🟢 ${esc(compact?'ירוק':ch.greenFlag)}</span>`);
-  if(ch.redFlag) parts.push(`<span class="charFlagBadgeV61 red">🔴 ${esc(compact?'אדום':ch.redFlag)}</span>`);
-  if(ch.stance) parts.push(`<span class="charFlagBadgeV61 stance">${esc(ch.stance)}</span>`);
-  return parts.length?`<div class="charFlagBadgesV61">${parts.join('')}</div>`:'';
+  const color=characterFlagColor(ch);
+  if(!color)return '';
+  const label=color==='green'?'ירוק':'אדום';
+  return `<div class="charFlagBadgesV61 simpleFlagBadgesV67"><span class="charColorDotV67 ${color}" aria-label="דגל ${label}" title="דגל ${label}"></span></div>`;
+}
+function flagColorPickerHtmlV67(current,context,cid='',bookId=''){
+  const call=(color)=>{
+    if(context==='book')return `setBookCharacterFlagColor('${bookId}','${cid}','${color}')`;
+    if(context==='current')return `setCharacterFlagColor('${cid}','${color}')`;
+    return `pickPendingCharFlag('${color}')`;
+  };
+  return `<div class="flagColorPickerV67" aria-label="בחירת דגל">
+    <button class="flagColorBtnV67 green ${current==='green'?'on':''}" onclick="${call('green')}" title="דגל ירוק"><span></span></button>
+    <button class="flagColorBtnV67 red ${current==='red'?'on':''}" onclick="${call('red')}" title="דגל אדום"><span></span></button>
+  </div>`;
 }
 function characterFlagEditor(ch,context='current',bookId=''){
-  const idp=context+'_'+ch.id;
-  const call=(field,val)=>context==='book'?`updateBookCharacterFlag('${bookId}','${ch.id}','${field}','${jsEsc(val)}')`:`updateCharacterFlag('${ch.id}','${field}','${jsEsc(val)}')`;
-  const noteCall=context==='book'?`updateBookCharacterFlagNote('${bookId}','${ch.id}','${idp}_note')`:`updateCharacterFlagNote('${ch.id}','${idp}_note')`;
-  return `<div class="charFlagsBoxV60">
-    <div class="help">דגל ירוק</div>
-    <div class="chips flagChipsV60">${CHARACTER_GREEN_FLAGS.map(t=>`<button class="chip flagChipV60 ${ch.greenFlag===t?'on':''}" onclick="${call('greenFlag',t)}">🟢 ${esc(t)}</button>`).join('')}</div>
-    <div class="help">דגל אדום</div>
-    <div class="chips flagChipsV60">${CHARACTER_RED_FLAGS.map(t=>`<button class="chip flagChipV60 ${ch.redFlag===t?'on':''}" onclick="${call('redFlag',t)}">🔴 ${esc(t)}</button>`).join('')}</div>
-    <div class="help">מה העמדה שלי לגביו/ה?</div>
-    <div class="chips flagChipsV60">${CHARACTER_STANCES.map(t=>`<button class="chip flagChipV60 ${ch.stance===t?'on':''}" onclick="${call('stance',t)}">${esc(t)}</button>`).join('')}</div>
-    <div class="help">למה? לא חובה</div>
-    <div class="charDescEditRowV57"><input id="${idp}_note" class="input" placeholder="למשל: מסתירה משהו אבל אני בעדה" value="${esc(ch.flagNote||'')}"><button class="secondaryPill" onclick="${noteCall}">שמירה</button></div>
+  const color=characterFlagColor(ch);
+  return `<div class="charFlagsBoxV60 simpleCharFlagsBoxV67">
+    <div class="help">דגל</div>
+    ${flagColorPickerHtmlV67(color,context,ch.id,bookId)}
   </div>`;
 }
 function charEditHtml(ch){
@@ -3863,18 +3884,30 @@ function updateCharacterDescription(cid){
 }
 
 
-function updateCharacterFlag(cid,field,value){
+function pickPendingCharFlag(color){
+  pendingCharFlag=pendingCharFlag===color?'':color;
+  renderField();
+}
+function applyCharacterFlagColor(ch,color){
+  const current=characterFlagColor(ch);
+  if(current===color){ch.greenFlag='';ch.redFlag='';return;}
+  ch.greenFlag=color==='green'?'ירוק':'';
+  ch.redFlag=color==='red'?'אדום':'';
+  ch.stance='';
+  ch.flagNote='';
+}
+function setCharacterFlagColor(cid,color){
   const c=S.current;if(!c)return;
   const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
-  ch[field]=value;
+  applyCharacterFlagColor(ch,color);
   save();editingCharId=cid;openAcc='character';renderField();toast('הדגל נשמר');
 }
+function updateCharacterFlag(cid,field,value){
+  const color=field==='redFlag'?'red':'green';
+  setCharacterFlagColor(cid,color);
+}
 function updateCharacterFlagNote(cid,inputId){
-  const c=S.current;if(!c)return;
-  const ch=c.characters.find(x=>x.id===cid);if(!ch)return;
-  const el=document.getElementById(inputId);
-  ch.flagNote=(el?.value||'').trim();
-  save();editingCharId=cid;openAcc='character';renderField();toast('ההערה נשמרה');
+  toast('הורדנו הסברים לדגלים — נשאר רק עיגול אדום/ירוק');
 }
 
 function jsEsc(s){return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll('\n',' ')}
@@ -3910,10 +3943,11 @@ function saveCharacter(tag){
   const descEl=document.getElementById('charDescription');
   const description=(descEl?.value||pendingCharDescription||'').trim();
   if(!name){toast('חסר שם דמות');return}
-  const ch={id:id(),name,description,gender:pickedGender,tag,greenFlag:'',redFlag:'',stance:'',flagNote:'',finalTag:'',ts:new Date().toISOString()};
+  const ch={id:id(),name,description,gender:pickedGender,tag,greenFlag:pendingCharFlag==='green'?'ירוק':'',redFlag:pendingCharFlag==='red'?'אדום':'',stance:'',flagNote:'',finalTag:'',ts:new Date().toISOString()};
   c.characters.push(ch);
   pendingCharName='';
   pendingCharDescription='';
+  pendingCharFlag='';
   addUpdate('character','על מי מדובר',[name,description,pickedGender,tag].filter(Boolean).join(' · '),{characterId:ch.id});
   openAcc='character';
   save();
@@ -4071,7 +4105,7 @@ function setDraft(k,v,rer=true){
 }
 function summaryChar(ch){
   const d=S.summaryDraft||{}; const val=(d.charFinal||{})[ch.id]||ch.finalTag||'';
-  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc([ch.gender,ch.description,ch.tag,ch.greenFlag?('🟢 '+ch.greenFlag):'',ch.redFlag?('🔴 '+ch.redFlag):'',ch.stance].filter(Boolean).join(' · '))}</span></div>
+  return `<div class="charRow" style="display:block"><div class="charName">${esc(ch.name)} <span class="charMeta">${esc([ch.gender,ch.description,ch.tag].filter(Boolean).join(' · '))}</span></div>
     <div class="chips" style="margin-top:8px">${FINAL_CHAR_TAGS.map(t=>`<button class="chip ${val===t?'on':''}" onclick="setCharFinal('${ch.id}','${jsEsc(t)}')">${esc(t)}</button>`).join('')}</div>
   </div>`;
 }
@@ -4469,7 +4503,6 @@ function openBook(bookId){
       ${(b.status||'finished')==='abandoned'?`<div class="detailSectionNew abandonDetailsV47"><h3>פרטי נטישה</h3><div class="rowItemNew"><div class="title">נעצרתי ב־${pct(b.percent||0)}%</div><div class="sub abandonReasonTextV47">${b.abandonReason?esc(b.abandonReason):'אין סיבה רשומה'}</div></div></div>`:''}<div class="detailSectionNew"><h3>הסיכום שלי</h3>${b.about?`<div class="rowItemNew"><div class="title">זה היה ספר על…</div><div class="sub">${esc(b.about)}</div></div>`:''}${b.madeMe?`<div class="rowItemNew"><div class="title">והוא השאיר אותי…</div><div class="sub">${esc(b.madeMe)}</div></div>`:''}${(!b.about&&!b.madeMe&&!b.bottomLine)?`<div class="editorHelper">אין עדיין סיכום טקסטואלי לספר הזה.</div>`:''}</div>
       ${bookRitualHtmlV62(b)}
       ${bookFriendsHtmlV63(b)}
-      ${(b.readingLog||[]).length?`<div class="detailSectionNew readingJourneyDetailV59"><h3>מסע הקריאה</h3>${readingJourneyHtml(b.readingLog,8)}</div>`:''}
       ${(b.characters||[]).length?`<div class="detailSectionNew"><h3>הדמויות שלי</h3><div class="rowListNew">${b.characters.map(ch=>bookCharacterRowV66(b,ch)).join('')}</div></div>`:''}
       ${(b.readingLog||[]).length?`<div class="detailSectionNew"><h3>רגעים מהשטח</h3><div class="rowListNew">${b.readingLog.map(u=>bookMomentRow(b.id,u)).join('')}</div></div>`:''}
     </div>`;
@@ -4519,16 +4552,18 @@ function editBookCharacterDescription(bookId,cid){
   save();openBook(bookId);toast('התיאור נשמר');
 }
 
-function updateBookCharacterFlag(bookId,cid,field,value){
+function setBookCharacterFlagColor(bookId,cid,color){
   const b=S.books.find(x=>x.id===bookId);if(!b)return;
   const ch=(b.characters||[]).find(x=>x.id===cid);if(!ch)return;
-  ch[field]=value;save();openBook(bookId);toast('הדגל נשמר');
+  applyCharacterFlagColor(ch,color);
+  save();openBook(bookId);toast('הדגל נשמר');
+}
+function updateBookCharacterFlag(bookId,cid,field,value){
+  const color=field==='redFlag'?'red':'green';
+  setBookCharacterFlagColor(bookId,cid,color);
 }
 function updateBookCharacterFlagNote(bookId,cid,inputId){
-  const b=S.books.find(x=>x.id===bookId);if(!b)return;
-  const ch=(b.characters||[]).find(x=>x.id===cid);if(!ch)return;
-  const el=document.getElementById(inputId);
-  ch.flagNote=(el?.value||'').trim();save();openBook(bookId);toast('ההערה נשמרה');
+  toast('הורדנו הסברים לדגלים — נשאר רק עיגול אדום/ירוק');
 }
 
 function editCurrentMoment(mid){

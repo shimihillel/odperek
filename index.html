@@ -3429,9 +3429,9 @@ function currentHome(c){
             </div>
           </div>
           <div class="progressStepperV48" aria-label="עדכון התקדמות מהיר">
-            <button onclick="nudgeCurrentProgress(-5)">−5%</button>
+            <button onclick="nudgeCurrentProgress(-1)">−1%</button>
             <button class="main" onclick="promptCurrentProgress()">עדכון אחוז</button>
-            <button onclick="nudgeCurrentProgress(5)">+5%</button>
+            <button onclick="nudgeCurrentProgress(1)">+1%</button>
           </div>
           <button class="primaryHeroBtn activePrimaryV48" onclick="goField()">לשמור רגע מהשטח</button>
           ${lastUpdate?`<div class="lastMomentV48"><b>הרגע האחרון:</b><span>${esc((lastUpdate.text||'').slice(0,92))}${(lastUpdate.text||'').length>92?'…':''}</span></div>`:''}
@@ -3590,12 +3590,6 @@ function renderField(){
           </div>
           <div class="fieldHeroCoverV35">${coverHtml(c.title,c.author,c,{uploadAction:'chooseCoverImageForCurrent()'})}</div>
         </div>
-        <div class="fieldSnapshotGridV35">
-          <div class="fieldSnapshotV35"><span>אחוז נוכחי</span><strong>${pct(c.percent)}%</strong><small>עדכון אחד קטן והכול נשמר בציר.</small></div>
-          <div class="fieldSnapshotV35"><span>מה הוייב</span><strong>${esc(mood)}</strong><small>אפשר לבחור תגית קיימת או להוסיף משלך.</small></div>
-          <div class="fieldSnapshotV35"><span>דמויות</span><strong>${charCount}</strong><small>${charCount?`כרגע יש ${charCount} דמויות שמורות.`:'עוד לא נוספו דמויות.'}</small></div>
-          <div class="fieldSnapshotV35"><span>רגעים שמורים</span><strong>${updatesCount}</strong><small>${quoteCount} ציטוטים · ${noteCount} רגעי עלילה</small></div>
-        </div>
       </section>
       <div class="fieldGridV35">
         <section class="fieldCardV35 span2 progressCardV35">
@@ -3651,16 +3645,6 @@ function renderField(){
           </div>
         </section>
 
-        <section class="fieldCardV35 span2 fieldFriendPanelV65">
-          <div class="fieldCardHeadV35">
-            <div>
-              <h3>הספר הזה מזכיר לי את…</h3>
-              <p>כשהאסימון נופל באמצע קריאה — קשרי אותו מיד לספר שכבר במדף.</p>
-            </div>
-          </div>
-          ${bookFriendsHtmlV63(c,'field')}
-        </section>
-
         <section class="fieldCardV35">
           <div class="fieldCardHeadV35">
             <div>
@@ -3709,6 +3693,16 @@ function renderField(){
             </div>
           </div>
           ${c.updates.length?`<div class="momentColumnNew fieldMomentsListV35">${c.updates.slice(0,8).map(u=>`<div class="momentCardNew">${momentHtml(u,true)}</div>`).join('')}</div>`:`<div class="emptyNew">עוד אין רגעים שמורים. ברגע שתעדכני — הם יופיעו כאן.</div>`}
+        </section>
+
+        <section class="fieldCardV35 span2 fieldFriendPanelV65">
+          <div class="fieldCardHeadV35">
+            <div>
+              <h3>הספר הזה מזכיר לי את…</h3>
+              <p>כשהאסימון נופל באמצע קריאה — קשרי אותו מיד לספר שכבר במדף.</p>
+            </div>
+          </div>
+          ${bookFriendsHtmlV63(c,'field')}
         </section>
       </div>
     </div>`;

@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#5c2947">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="עוד פרק אחד">
+  <meta name="description" content="יומן קריאה אישי, קטן ושקט">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="icon-192.png">
+  <title>עוד פרק אחד</title>
+  <style>
+    :root{
+      --bg:#fbf7f3;
+      --paper:#fffdfb;
+      --paper-soft:#f7efec;
+      --plum:#5c2947;
+      --plum-deep:#3c1d31;
+      --plum-soft:#8a526d;
+      --rose:#ca8797;
+      --blush:#efd7da;
+      --sage:#8f9a81;
+      --sage-deep:#68735d;
+      --cream:#f2e8df;
+      --ink:#292425;
+      --muted:#8b807a;
+      --line:#e7dcd5;
+      --danger:#9b4658;
+      --shadow:0 18px 45px rgba(76,43,55,.10);
+      --radius:28px;
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans Hebrew",sans-serif}
+    body{min-height:100vh;overflow-x:hidden}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    img{display:block;max-width:100%}
+    .app{min-height:100vh;max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 18px) 20px calc(env(safe-area-inset-bottom) + 118px);position:relative}
+    .screen{display:none;animation:fade .2s ease}
+    .screen.active{display:block}
+    @keyframes fade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+    .brand{display:flex;flex-direction:column;gap:3px}
+    .brand h1,.screenTitle{margin:0;color:var(--plum);font-family:"Noto Serif Hebrew","Times New Roman",serif;font-size:32px;line-height:1;font-weight:800}
+    .brand small,.subtitle{color:var(--muted);font-size:13px;font-weight:700}
+    .iconBtn{border:0;background:transparent;color:var(--plum);width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+    .iconBtn:active{background:var(--paper-soft)}
+    .iconBtn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 0 10px}
+    .eyebrow{color:var(--muted);font-size:13px;font-weight:800;margin:18px 0 6px}
+    .bookTitle{margin:0;color:var(--plum-deep);font-size:29px;line-height:1.12;font-weight:950;max-width:380px}
+    .bookAuthor{margin-top:7px;color:var(--muted);font-size:15px;font-weight:700}
+    .coverWrap{width:min(67vw,280px);aspect-ratio:2/3;margin:10px auto 2px;position:relative}
+    .cover{width:100%;height:100%;object-fit:cover;border-radius:24px;box-shadow:0 22px 50px rgba(48,24,37,.22);background:linear-gradient(145deg,#ead8dc,#d6c3b7);border:1px solid rgba(92,41,71,.08)}
+    .coverPlaceholder{width:100%;height:100%;border-radius:24px;display:grid;place-items:center;padding:24px;background:linear-gradient(150deg,#693650,#3d2034);color:#fff7f1;text-align:center;box-shadow:0 22px 50px rgba(48,24,37,.20)}
+    .coverPlaceholder b{font-family:"Noto Serif Hebrew","Times New Roman",serif;font-size:25px;line-height:1.2}
+    .coverPlaceholder span{display:block;margin-top:10px;font-size:13px;opacity:.72}
+    .actions{display:grid;gap:12px;width:100%;margin-top:22px}
+    .btn{border:0;border-radius:999px;min-height:58px;padding:14px 20px;font-weight:950;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px;transition:.15s transform,.15s opacity}
+    .btn:active{transform:scale(.985);opacity:.9}
+    .btn.primary{background:var(--plum);color:white;box-shadow:0 12px 30px rgba(92,41,71,.23)}
+    .btn.soft{background:var(--blush);color:var(--plum-deep)}
+    .btn.outline{background:transparent;color:var(--plum);border:1px solid #d9c5cc}
+    .btn.sage{background:var(--sage-deep);color:white}
+    .btn.small{min-height:44px;font-size:14px;padding:10px 16px}
+    .btn.danger{color:var(--danger);background:#f8e9ec}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .tinyLink{border:0;background:transparent;color:var(--muted);font-weight:800;text-decoration:underline;text-underline-offset:4px;padding:12px}
+    .latestThought{margin-top:24px;padding:19px 20px;border-radius:24px;background:var(--paper);border:1px solid var(--line);text-align:right;box-shadow:0 10px 30px rgba(76,43,55,.05)}
+    .latestThought small{color:var(--plum-soft);font-weight:900}
+    .latestThought p{margin:8px 0 0;line-height:1.6;font-weight:700}
+    .emptyNow{margin-top:36px;padding:34px 22px;border-radius:var(--radius);background:var(--paper);border:1px solid var(--line);text-align:center;box-shadow:var(--shadow)}
+    .emptyNow .bookGlyph{font-size:54px;margin-bottom:8px}
+    .emptyNow h2{margin:0;color:var(--plum);font-size:28px;font-family:"Noto Serif Hebrew","Times New Roman",serif}
+    .emptyNow p{color:var(--muted);line-height:1.6;margin:10px auto 22px;max-width:320px}
+
+    .shelfHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .shelfHeader h2{margin:0;color:var(--plum);font-family:"Noto Serif Hebrew","Times New Roman",serif;font-size:31px}
+    .shelfHeader p{margin:5px 0 0;color:var(--muted);font-size:13px;font-weight:700}
+    .searchBox{position:relative;margin:12px 0 14px}
+    .searchBox input{width:100%;height:52px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:0 46px 0 18px;color:var(--ink);outline:none;font-weight:700}
+    .searchBox input:focus{border-color:#c59bab;box-shadow:0 0 0 3px rgba(92,41,71,.07)}
+    .searchBox svg{position:absolute;right:17px;top:15px;width:21px;height:21px;stroke:var(--muted);fill:none;stroke-width:2}
+    .filters{display:flex;gap:8px;overflow:auto;padding-bottom:5px;margin-bottom:16px;scrollbar-width:none}
+    .filters::-webkit-scrollbar{display:none}
+    .chip{border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:9px 15px;font-weight:900;white-space:nowrap}
+    .chip.on{background:var(--plum);border-color:var(--plum);color:white}
+    .shelfGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px 13px}
+    .bookTile{border:0;background:transparent;padding:0;color:inherit;text-align:right;min-width:0}
+    .tileCover{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px;box-shadow:0 10px 24px rgba(53,31,40,.17);background:#e9ddd6;border:1px solid rgba(92,41,71,.08)}
+    .tilePlaceholder{width:100%;aspect-ratio:2/3;border-radius:14px;background:linear-gradient(150deg,#74415d,#442438);color:white;padding:10px;display:grid;place-items:center;text-align:center;box-shadow:0 10px 24px rgba(53,31,40,.15)}
+    .tilePlaceholder b{font-family:"Noto Serif Hebrew","Times New Roman",serif;font-size:15px;line-height:1.25}
+    .tileTitle{font-size:13px;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:9px}
+    .tileMeta{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+    .tileBadge{display:inline-flex;margin-top:5px;align-items:center;gap:4px;color:var(--plum);font-size:11px;font-weight:950}
+    .emptyShelf{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--muted)}
+    .emptyShelf b{display:block;color:var(--plum);font-size:20px;margin-bottom:7px}
+
+    .bottomNav{position:fixed;z-index:30;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),492px);height:76px;background:rgba(255,253,251,.94);backdrop-filter:blur(18px);border:1px solid rgba(92,41,71,.12);box-shadow:0 16px 45px rgba(58,30,43,.16);border-radius:30px;display:grid;grid-template-columns:1fr 1fr;padding:7px}
+    .navBtn{border:0;background:transparent;color:var(--muted);border-radius:24px;font-size:12px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+    .navBtn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .navBtn.on{background:var(--paper-soft);color:var(--plum)}
+
+    .sheetBackdrop{position:fixed;inset:0;z-index:60;background:rgba(40,24,31,.36);backdrop-filter:blur(5px);display:none;align-items:flex-end;justify-content:center;padding:14px}
+    .sheetBackdrop.open{display:flex}
+    .sheet{width:min(100%,520px);max-height:92vh;overflow:auto;background:var(--paper);border-radius:32px 32px 24px 24px;padding:18px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 30px 80px rgba(40,24,31,.28);animation:slideUp .22s ease}
+    @keyframes slideUp{from{transform:translateY(25px);opacity:.5}to{transform:none;opacity:1}}
+    .sheetHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .sheetHead h3{margin:0;color:var(--plum);font-family:"Noto Serif Hebrew","Times New Roman",serif;font-size:26px}
+    .closeBtn{border:0;background:var(--paper-soft);width:40px;height:40px;border-radius:50%;font-size:25px;line-height:1;color:var(--plum)}
+    .field{margin-bottom:15px}
+    .field label{display:block;color:var(--plum-deep);font-weight:950;font-size:14px;margin-bottom:7px}
+    .input,.textarea{width:100%;border:1px solid var(--line);background:#fffefa;border-radius:18px;color:var(--ink);outline:none;font-weight:700}
+    .input{height:52px;padding:0 15px}
+    .textarea{min-height:138px;padding:14px 15px;resize:vertical;line-height:1.55}
+    .input:focus,.textarea:focus{border-color:#c49aaa;box-shadow:0 0 0 3px rgba(92,41,71,.07)}
+    .helper{color:var(--muted);font-size:12px;font-weight:700;line-height:1.45;margin-top:6px}
+    .uploadBox{display:grid;grid-template-columns:94px 1fr;gap:14px;align-items:center;margin-bottom:18px}
+    .uploadPreview{width:94px;aspect-ratio:2/3;border-radius:15px;object-fit:cover;background:var(--paper-soft);border:1px dashed #cdb7bf}
+    .uploadPlaceholder{width:94px;aspect-ratio:2/3;border-radius:15px;background:var(--paper-soft);border:1px dashed #cdb7bf;display:grid;place-items:center;text-align:center;color:var(--plum-soft);font-size:12px;font-weight:900;padding:7px}
+    .rateRow{display:flex;gap:5px;direction:ltr;justify-content:center;margin:8px 0 3px}
+    .rateBtn{border:0;background:transparent;padding:4px;font-size:37px;line-height:1;color:#d9c9c4}
+    .rateBtn.on{color:var(--rose)}
+    .flameBtn{border:0;background:transparent;padding:4px;font-size:31px;line-height:1;filter:grayscale(1);opacity:.28}
+    .flameBtn.on{filter:none;opacity:1}
+    .choiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .choice{border:1px solid var(--line);background:#fffefa;color:var(--muted);border-radius:18px;padding:13px 10px;font-weight:900;min-height:50px}
+    .choice.on{background:var(--plum);border-color:var(--plum);color:white}
+    .reasonList{display:grid;gap:8px}
+    .reason{border:1px solid var(--line);background:#fffefa;border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:10px;font-weight:850;color:var(--ink)}
+    .reason::before{content:"";width:18px;height:18px;border:1.5px solid #c9b6bd;border-radius:50%;flex:none}
+    .reason.on{border-color:#ba8799;background:#f9edf0;color:var(--plum)}
+    .reason.on::before{background:var(--plum);box-shadow:inset 0 0 0 4px white;border-color:var(--plum)}
+    .thoughtList{display:grid;gap:10px;margin-top:16px}
+    .thought{padding:16px;border-radius:18px;background:var(--paper-soft);border:1px solid var(--line)}
+    .thought p{margin:0;line-height:1.6;font-weight:700;white-space:pre-wrap}
+    .thought small{display:block;color:var(--muted);margin-top:8px;font-size:11px;font-weight:700}
+
+    .detailHero{text-align:center;padding-top:2px}
+    .detailCover{width:150px;aspect-ratio:2/3;object-fit:cover;border-radius:18px;margin:0 auto;box-shadow:0 16px 35px rgba(53,31,40,.20)}
+    .detailPlaceholder{width:150px;aspect-ratio:2/3;border-radius:18px;margin:0 auto;background:linear-gradient(150deg,#71405a,#402136);color:white;display:grid;place-items:center;padding:16px;text-align:center;box-shadow:0 16px 35px rgba(53,31,40,.18)}
+    .detailHero h3{margin:16px 0 4px;color:var(--plum-deep);font-size:26px}
+    .detailHero .author{color:var(--muted);font-weight:700}
+    .statusPill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--paper-soft);color:var(--plum);font-size:12px;font-weight:950;margin-top:11px}
+    .metricStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+    .metric{background:var(--paper-soft);border:1px solid var(--line);border-radius:18px;padding:12px 7px;text-align:center}
+    .metric small{display:block;color:var(--muted);font-size:10px;font-weight:900}
+    .metric b{display:block;margin-top:7px;color:var(--plum);font-size:15px}
+    .bookNote{margin-top:17px;background:#fffefa;border:1px solid var(--line);border-radius:20px;padding:17px;line-height:1.65;font-weight:700;white-space:pre-wrap}
+    .detailSection{margin-top:22px}
+    .detailSection h4{margin:0 0 10px;color:var(--plum);font-size:17px}
+    .settingsList{display:grid;gap:10px}
+    .settingBtn{width:100%;border:1px solid var(--line);background:#fffefa;border-radius:18px;padding:15px;text-align:right;color:var(--ink);font-weight:900}
+    .settingBtn small{display:block;color:var(--muted);font-weight:700;margin-top:4px}
+    .hidden{display:none!important}
+    .toast{position:fixed;z-index:100;left:50%;bottom:calc(102px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--plum-deep);color:white;padding:11px 17px;border-radius:999px;font-weight:900;font-size:13px;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .loading{position:fixed;inset:0;background:var(--bg);z-index:120;display:grid;place-items:center;color:var(--plum);font-weight:900}
+    .loading.hide{display:none}
+    @media(max-width:360px){
+      .app{padding-left:15px;padding-right:15px}
+      .bookTitle{font-size:26px}
+      .shelfGrid{gap:16px 10px}
+      .choiceGrid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">פותחת את המדף…</div>
+  <main class="app">
+    <section id="nowScreen" class="screen active"></section>
+    <section id="shelfScreen" class="screen"></section>
+  </main>
+
+  <nav class="bottomNav" aria-label="ניווט ראשי">
+    <button class="navBtn on" data-screen="now" onclick="showScreen('now')" aria-label="קוראת עכשיו">
+      <svg viewBox="0 0 24 24"><path d="M4 5.5c3.4-.7 6-.1 8 1.7v12c-2-1.8-4.6-2.4-8-1.7zM20 5.5c-3.4-.7-6-.1-8 1.7v12c2-1.8 4.6-2.4 8-1.7z"/></svg>
+      קוראת עכשיו
+    </button>
+    <button class="navBtn" data-screen="shelf" onclick="showScreen('shelf')" aria-label="המדף שלי">
+      <svg viewBox="0 0 24 24"><path d="M4 20V7M9 20V4M14 20V8M19 20V5M2.5 20h19"/></svg>
+      המדף שלי
+    </button>
+  </nav>
+
+  <div id="modal" class="sheetBackdrop" onclick="backdropClose(event)"><div id="sheet" class="sheet"></div></div>
+  <div id="toast" class="toast"></div>
+  <input id="coverInput" class="hidden" type="file" accept="image/*">
+  <input id="restoreInput" class="hidden" type="file" accept="application/json,.json">
+
+<script>
+'use strict';
+const KEY='od-perek-ehad-v5';
+const DB_NAME='od-perek-ehad-covers';
+const DB_STORE='covers';
+const SPEEDS=['בלעתי אותו','זרם','לקח לי זמן','נמרח'];
+const ABANDON_REASONS=['לא התחברתי','איטי מדי','הכתיבה','הדמויות','לא הזמן הנכון','אולי אחזור','אחר'];
+let S={books:[],current:null,appVersion:'reimagined-v1'};
+let coverDB=null;
+let coverCache=new Map();
+let activeScreen='now';
+let shelfFilter='all';
+let shelfQuery='';
+let uploadTarget=null;
+let draftCoverData='';
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const id=()=>Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+const today=()=>new Date().toISOString();
+const fmtDate=value=>{if(!value)return '';const d=new Date(value);return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('he-IL',{day:'numeric',month:'long',year:'numeric'}).format(d)};
+
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),1600)}
+function openModal(html){$('#sheet').innerHTML=html;$('#modal').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(){$('#modal').classList.remove('open');document.body.style.overflow='';uploadTarget=null;draftCoverData=''}
+function backdropClose(e){if(e.target.id==='modal')closeModal()}
+function closeHead(title){return `<div class="sheetHead"><h3>${esc(title)}</h3><button class="closeBtn" onclick="closeModal()" aria-label="סגירה">×</button></div>`}
+
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE)};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function dbGet(key){return new Promise((resolve,reject)=>{const tx=coverDB.transaction(DB_STORE,'readonly');const req=tx.objectStore(DB_STORE).get(key);req.onsuccess=()=>resolve(req.result||'');req.onerror=()=>reject(req.error)})}
+function dbPut(key,value){return new Promise((resolve,reject)=>{const tx=coverDB.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(value,key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+function dbDelete(key){return new Promise((resolve,reject)=>{const tx=coverDB.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).delete(key);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+
+function meaningfulThoughts(source){
+  const raw=Array.isArray(source?.thoughts)?source.thoughts:Array.isArray(source?.readingLog)?source.readingLog:Array.isArray(source?.updates)?source.updates:[];
+  return raw.map(item=>{
+    if(typeof item==='string')return {id:id(),text:item,createdAt:today()};
+    const type=String(item?.type||'').toLowerCase();
+    if(['progress','percent','mood','character'].includes(type))return null;
+    const text=String(item?.text||item?.note||item?.quote||item?.value||'').trim();
+    return text?{id:item.id||id(),text,createdAt:item.createdAt||item.date||today()}:null;
+  }).filter(Boolean);
+}
+function speedFromOld(value){
+  if(typeof value==='string'&&SPEEDS.includes(value))return value;
+  const n=Number(value)||0;
+  if(n>=5)return 'בלעתי אותו';
+  if(n>=3)return 'זרם';
+  if(n===2)return 'לקח לי זמן';
+  if(n===1)return 'נמרח';
+  return '';
+}
+function normalizeCurrent(c){
+  if(!c)return null;
+  return {...c,id:c.id||id(),title:String(c.title||'').trim(),author:String(c.author||'').trim(),coverKey:c.coverKey||'',coverImage:c.coverImage||'',startedAt:c.startedAt||today(),thoughts:meaningfulThoughts(c)};
+}
+function normalizeBook(b){
+  const status=b.status==='abandoned'?'abandoned':'finished';
+  return {...b,id:b.id||id(),title:String(b.title||'').trim(),author:String(b.author||'').trim(),status,coverKey:b.coverKey||'',coverImage:b.coverImage||'',thoughts:meaningfulThoughts(b),stars:Math.max(0,Math.min(5,Number(b.stars)||0)),heat:Math.max(0,Math.min(5,Number(b.heat)||0)),speedLabel:b.speedLabel||speedFromOld(b.speed),note:String(b.note||b.shimiLine||b.friendPitch||b.about||'').trim(),abandonReason:String(b.abandonReason||b.abandonMood||'').trim(),abandonNote:String(b.abandonNote||'').trim(),finishedAt:b.finishedAt||b.createdAt||'',abandonedAt:b.abandonedAt||b.createdAt||''};
+}
+function loadState(){
+  try{const raw=localStorage.getItem(KEY);if(raw){const parsed=JSON.parse(raw);return {books:Array.isArray(parsed.books)?parsed.books.map(normalizeBook):[],current:normalizeCurrent(parsed.current),appVersion:'reimagined-v1'}}}catch(e){console.warn(e)}
+  return {books:[],current:null,appVersion:'reimagined-v1'};
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+
+async function migrateCovers(){
+  let changed=false;
+  const all=[...(S.books||[]),...(S.current?[S.current]:[])];
+  for(const item of all){
+    if(item.coverImage&&item.coverImage.startsWith('data:')){
+      const key=item.coverKey||`cover-${item.id}`;
+      try{await dbPut(key,item.coverImage);coverCache.set(key,item.coverImage);item.coverKey=key;item.coverImage='';changed=true}catch(e){console.warn('cover migration failed',e)}
+    }else if(item.coverKey){
+      try{const data=await dbGet(item.coverKey);if(data)coverCache.set(item.coverKey,data)}catch(e){}
+    }
+  }
+  if(changed)save();
+}
+function coverSrc(item){return item?.coverKey?coverCache.get(item.coverKey)||'':item?.coverImage||''}
+function coverHTML(item,cls='cover'){
+  const src=coverSrc(item);
+  if(src)return `<img class="${cls}" src="${src}" alt="כריכת ${esc(item.title)}">`;
+  const p=cls==='tileCover'?'tilePlaceholder':cls==='detailCover'?'detailPlaceholder':'coverPlaceholder';
+  return `<div class="${p}"><div><b>${esc(item.title||'הספר שלי')}</b>${p==='coverPlaceholder'?'<span>אפשר להוסיף כריכה מהגלריה</span>':''}</div></div>`;
+}
+
+function showScreen(name){activeScreen=name;document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));render();window.scrollTo({top:0,behavior:'smooth'})}
+function render(){renderNow();renderShelf();$('#nowScreen').classList.toggle('active',activeScreen==='now');$('#shelfScreen').classList.toggle('active',activeScreen==='shelf')}
+
+function renderNow(){
+  const el=$('#nowScreen');
+  if(!S.current){
+    el.innerHTML=`<div class="topbar"><div class="brand"><h1>עוד פרק אחד</h1><small>יומן קריאה קטן ושקט</small></div></div>
+      <div class="emptyNow"><div class="bookGlyph">📖</div><h2>מה קוראות עכשיו?</h2><p>כריכה, שם הספר — וזהו. האפליקציה נשארת בצד ונותנת לך לקרוא.</p><button class="btn primary" onclick="openNewBook()">להתחיל ספר</button></div>`;
+    return;
+  }
+  const c=S.current;
+  const last=(c.thoughts||[]).slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))[0];
+  el.innerHTML=`
+    <div class="topbar"><div class="brand"><h1>עוד פרק אחד</h1><small>יומן קריאה אישי</small></div><button class="iconBtn" onclick="openCurrentEdit()" aria-label="עריכת הספר">${icon('more')}</button></div>
+    <div class="hero">
+      <div class="coverWrap">${coverHTML(c,'cover')}</div>
+      <div class="eyebrow">קוראת עכשיו</div>
+      <h2 class="bookTitle">${esc(c.title)}</h2>
+      ${c.author?`<div class="bookAuthor">${esc(c.author)}</div>`:''}
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="openFinish()">✓ סיימתי</button>
+      <button class="btn soft" onclick="openAbandon()">♡ נטשתי</button>
+      <button class="btn outline" onclick="openThought()">✎ מחשבה קטנה</button>
+    </div>
+    ${last?`<button class="latestThought" onclick="openThoughtHistory()"><small>המחשבה האחרונה</small><p>${esc(last.text)}</p></button>`:''}
+    <button class="tinyLink" onclick="chooseCoverFor('current')">${coverSrc(c)?'להחליף כריכה':'להוסיף כריכה מהגלריה'}</button>`;
+}
+
+function renderShelf(){
+  const el=$('#shelfScreen');
+  const q=shelfQuery.trim().toLowerCase();
+  const books=(S.books||[]).filter(b=>shelfFilter==='all'||b.status===shelfFilter).filter(b=>!q||`${b.title} ${b.author}`.toLowerCase().includes(q)).sort((a,b)=>new Date(b.finishedAt||b.abandonedAt||0)-new Date(a.finishedAt||a.abandonedAt||0));
+  const finished=S.books.filter(b=>b.status==='finished').length, abandoned=S.books.filter(b=>b.status==='abandoned').length;
+  el.innerHTML=`
+    <div class="shelfHeader"><div><h2>המדף שלי</h2><p>${finished} סיימתי · ${abandoned} נטשתי</p></div><button class="iconBtn" onclick="openSettings()" aria-label="גיבוי והגדרות">${icon('settings')}</button></div>
+    <div class="searchBox">${icon('search')}<input value="${esc(shelfQuery)}" oninput="shelfQuery=this.value;renderShelf()" placeholder="לחפש ספר או סופרת"></div>
+    <div class="filters"><button class="chip ${shelfFilter==='all'?'on':''}" onclick="setShelfFilter('all')">הכל</button><button class="chip ${shelfFilter==='finished'?'on':''}" onclick="setShelfFilter('finished')">סיימתי</button><button class="chip ${shelfFilter==='abandoned'?'on':''}" onclick="setShelfFilter('abandoned')">נטשתי</button></div>
+    <div class="shelfGrid">${books.length?books.map(tileHTML).join(''):`<div class="emptyShelf"><b>המדף עדיין שקט</b>${q?'לא מצאתי ספר שמתאים לחיפוש.':'ספרים שסיימת או נטשת יופיעו כאן.'}</div>`}</div>`;
+}
+function tileHTML(b){
+  const meta=b.status==='finished'?(b.stars?`${'★'.repeat(b.stars)}${'☆'.repeat(5-b.stars)}`:'סיימתי'):`♡ ${esc(b.abandonReason||'נטשתי')}`;
+  return `<button class="bookTile" onclick="openBook('${b.id}')">${coverHTML(b,'tileCover')}<div class="tileTitle">${esc(b.title)}</div><div class="tileMeta">${esc(b.author||'')}</div><div class="tileBadge">${meta}</div></button>`;
+}
+function setShelfFilter(v){shelfFilter=v;renderShelf()}
+
+function openNewBook(){
+  draftCoverData='';uploadTarget='new';
+  openModal(`${closeHead('ספר חדש')}
+    <div class="uploadBox"><div id="newCoverPreview" class="uploadPlaceholder">כריכה מהגלריה</div><div><button class="btn outline small" onclick="chooseCoverFor('new')">לבחור תמונה</button><div class="helper">התמונה מוקטנת ונשמרת רק במכשיר.</div></div></div>
+    <div class="field"><label>שם הספר</label><input id="newTitle" class="input" autocomplete="off"></div>
+    <div class="field"><label>סופרת / סופר</label><input id="newAuthor" class="input" autocomplete="off"></div>
+    <button class="btn primary" onclick="startBook()">מתחילה לקרוא</button>`);
+  setTimeout(()=>$('#newTitle')?.focus(),150);
+}
+async function startBook(){
+  const title=$('#newTitle').value.trim(),author=$('#newAuthor').value.trim();
+  if(!title){toast('צריך שם לספר');return}
+  const current={id:id(),title,author,startedAt:today(),thoughts:[],coverKey:''};
+  if(draftCoverData){current.coverKey=`cover-${current.id}`;await dbPut(current.coverKey,draftCoverData);coverCache.set(current.coverKey,draftCoverData)}
+  S.current=current;save();closeModal();render();toast('קריאה נעימה ♡')
+}
+
+function openThought(){
+  openModal(`${closeHead('מחשבה קטנה')}<div class="field"><label>מה בא לך לשמור?</label><textarea id="thoughtText" class="textarea" maxlength="800" placeholder="משפט, תחושה, משהו שלא בא לך לשכוח…"></textarea><div class="helper">בלי סוגים, בלי תגיות ובלי שיעורי בית.</div></div><button class="btn sage" onclick="saveThought()">לשמור</button>`);
+  setTimeout(()=>$('#thoughtText')?.focus(),150);
+}
+function saveThought(){const text=$('#thoughtText').value.trim();if(!text){toast('לא כתבת כלום');return}S.current.thoughts=S.current.thoughts||[];S.current.thoughts.push({id:id(),text,createdAt:today()});save();closeModal();render();toast('נשמר בשקט')}
+function openThoughtHistory(){
+  const thoughts=(S.current?.thoughts||[]).slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  openModal(`${closeHead('המחשבות שלי')}<div class="thoughtList">${thoughts.map(t=>`<div class="thought"><p>${esc(t.text)}</p><small>${fmtDate(t.createdAt)}</small></div>`).join('')}</div><button class="btn outline small" style="margin-top:16px" onclick="closeModal();openThought()">להוסיף מחשבה</button>`)
+}
+
+function openFinish(){
+  openModal(`${closeHead('סיימתי את הספר ✨')}
+    <div class="field"><label>דירוג</label><div id="starRow" class="rateRow">${[1,2,3,4,5].map(n=>`<button class="rateBtn" data-value="${n}" onclick="pickStars(${n})">★</button>`).join('')}</div></div>
+    <div class="field"><label>מהירות קריאה</label><div id="speedChoices" class="choiceGrid">${SPEEDS.map(x=>`<button class="choice" onclick="pickChoice(this,'speed')">${x}</button>`).join('')}</div></div>
+    <div class="field"><label>כמה לוהט?</label><div id="heatRow" class="rateRow">${[1,2,3,4,5].map(n=>`<button class="flameBtn" onclick="pickHeat(${n})">🔥</button>`).join('')}</div><div class="helper" style="text-align:center">אפשר להשאיר 0 אם הוא לא לוהט בכלל.</div></div>
+    <div class="field"><label>כמה מילים על הספר</label><textarea id="finishNote" class="textarea" maxlength="1000" placeholder="מה תרצי לזכור ממנו?"></textarea></div>
+    <button class="btn primary" onclick="finishBook()">לשמור במדף</button>`);
+  $('#sheet').dataset.stars='0';$('#sheet').dataset.heat='0';$('#sheet').dataset.speed='';
+}
+function pickStars(n){$('#sheet').dataset.stars=n;document.querySelectorAll('#starRow .rateBtn').forEach((b,i)=>b.classList.toggle('on',i<n))}
+function pickHeat(n){const cur=Number($('#sheet').dataset.heat||0),value=cur===n?0:n;$('#sheet').dataset.heat=value;document.querySelectorAll('#heatRow .flameBtn').forEach((b,i)=>b.classList.toggle('on',i<value))}
+function pickChoice(btn,key){btn.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));btn.classList.add('on');$('#sheet').dataset[key]=btn.textContent.trim()}
+function finishBook(){
+  const stars=Number($('#sheet').dataset.stars||0),heat=Number($('#sheet').dataset.heat||0),speedLabel=$('#sheet').dataset.speed||'',note=$('#finishNote').value.trim();
+  if(!stars){toast('חסר דירוג');return}if(!speedLabel){toast('בחרי מהירות קריאה');return}
+  const c=S.current;S.books.push({...c,status:'finished',stars,heat,speedLabel,note,finishedAt:today()});S.current=null;save();closeModal();activeScreen='shelf';render();document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen==='shelf'));toast('נכנס למדף ✨')
+}
+
+function openAbandon(){
+  openModal(`${closeHead('נטשתי את הספר ♡')}<div class="field"><label>למה נטשתי?</label><div id="reasonList" class="reasonList">${ABANDON_REASONS.map(x=>`<button class="reason" onclick="pickReason(this)">${x}</button>`).join('')}</div></div><div class="field"><label>משהו קטן להוסיף? <span style="color:var(--muted);font-weight:700">לא חובה</span></label><textarea id="abandonNote" class="textarea" maxlength="700" placeholder="למשל: אולי אנסה שוב בזמן אחר…"></textarea></div><button class="btn soft" onclick="abandonBook()">לשמור כנטשתי</button>`);
+  $('#sheet').dataset.reason='';
+}
+function pickReason(btn){btn.parentElement.querySelectorAll('.reason').forEach(x=>x.classList.remove('on'));btn.classList.add('on');$('#sheet').dataset.reason=btn.textContent.trim()}
+function abandonBook(){const reason=$('#sheet').dataset.reason||'',abandonNote=$('#abandonNote').value.trim();if(!reason){toast('בחרי סיבה');return}const c=S.current;S.books.push({...c,status:'abandoned',abandonReason:reason,abandonNote,abandonedAt:today()});S.current=null;save();closeModal();activeScreen='shelf';render();document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen==='shelf'));toast('נשמר במדף')}
+
+function openBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  const isDone=b.status==='finished';
+  openModal(`${closeHead('פרטי הספר')}<div class="detailHero">${coverHTML(b,'detailCover')}<h3>${esc(b.title)}</h3><div class="author">${esc(b.author||'')}</div><div class="statusPill">${isDone?'✓ סיימתי':'♡ נטשתי'} · ${fmtDate(isDone?b.finishedAt:b.abandonedAt)}</div></div>
+    ${isDone?`<div class="metricStrip"><div class="metric"><small>דירוג</small><b>${b.stars?'★'.repeat(b.stars):'—'}</b></div><div class="metric"><small>קצב</small><b>${esc(b.speedLabel||'—')}</b></div><div class="metric"><small>לוהט</small><b>${b.heat?'🔥'.repeat(b.heat):'0'}</b></div></div>${b.note?`<div class="bookNote">${esc(b.note)}</div>`:''}`:`<div class="bookNote"><b style="color:var(--plum)">${esc(b.abandonReason||'נטשתי')}</b>${b.abandonNote?`<br>${esc(b.abandonNote)}`:''}</div>`}
+    ${(b.thoughts||[]).length?`<div class="detailSection"><h4>מחשבות מהקריאה</h4><div class="thoughtList">${b.thoughts.slice().sort((a,c)=>new Date(c.createdAt)-new Date(a.createdAt)).map(t=>`<div class="thought"><p>${esc(t.text)}</p><small>${fmtDate(t.createdAt)}</small></div>`).join('')}</div></div>`:''}
+    <div class="split" style="margin-top:20px"><button class="btn outline small" onclick="openEditBook('${b.id}')">עריכה</button><button class="btn danger small" onclick="deleteBook('${b.id}')">מחיקה</button></div>`);
+}
+
+function openCurrentEdit(){
+  const c=S.current;if(!c)return;
+  openModal(`${closeHead('עריכת הספר')}<div class="field"><label>שם הספר</label><input id="editCurrentTitle" class="input" value="${esc(c.title)}"></div><div class="field"><label>סופרת / סופר</label><input id="editCurrentAuthor" class="input" value="${esc(c.author)}"></div><div class="settingsList"><button class="settingBtn" onclick="chooseCoverFor('currentEdit')">החלפת כריכה<small>בחירה חדשה מהגלריה</small></button>${coverSrc(c)?`<button class="settingBtn" onclick="removeCurrentCover()">הסרת כריכה</button>`:''}<button class="settingBtn" onclick="openSettings()">גיבוי ושחזור</button></div><button class="btn primary" style="margin-top:18px" onclick="saveCurrentEdit()">לשמור</button>`)
+}
+function saveCurrentEdit(){const title=$('#editCurrentTitle').value.trim();if(!title){toast('צריך שם לספר');return}S.current.title=title;S.current.author=$('#editCurrentAuthor').value.trim();save();closeModal();render();toast('עודכן')}
+async function removeCurrentCover(){if(!S.current)return;if(S.current.coverKey)await dbDelete(S.current.coverKey);coverCache.delete(S.current.coverKey);S.current.coverKey='';S.current.coverImage='';save();closeModal();render();toast('הכריכה הוסרה')}
+
+function openEditBook(bookId){
+  const b=S.books.find(x=>x.id===bookId);if(!b)return;
+  closeModal();
+  const metricFields=b.status==='finished'?`<div class="field"><label>דירוג</label><div id="editStarRow" class="rateRow">${[1,2,3,4,5].map(n=>`<button class="rateBtn ${n<=b.stars?'on':''}" onclick="editPickStars(${n})">★</button>`).join('')}</div></div><div class="field"><label>מהירות</label><div id="editSpeed" class="choiceGrid">${SPEEDS.map(x=>`<button class="choice ${x===b.speedLabel?'on':''}" onclick="editPickSpeed(this)">${x}</button>`).join('')}</div></div><div class="field"><label>לוהט</label><div id="editHeat" class="rateRow">${[1,2,3,4,5].map(n=>`<button class="flameBtn ${n<=b.heat?'on':''}" onclick="editPickHeat(${n})">🔥</button>`).join('')}</div></div><div class="field"><label>כמה מילים</label><textarea id="editNote" class="textarea">${esc(b.note||'')}</textarea></div>`:`<div class="field"><label>סיבת נטישה</label><div id="editReasons" class="reasonList">${ABANDON_REASONS.map(x=>`<button class="reason ${x===b.abandonReason?'on':''}" onclick="editPickReason(this)">${x}</button>`).join('')}</div></div><div class="field"><label>הערה</label><textarea id="editAbandonNote" class="textarea">${esc(b.abandonNote||'')}</textarea></div>`;
+  openModal(`${closeHead('עריכת ספר')}<div class="field"><label>שם הספר</label><input id="editBookTitle" class="input" value="${esc(b.title)}"></div><div class="field"><label>סופרת / סופר</label><input id="editBookAuthor" class="input" value="${esc(b.author)}"></div>${metricFields}<button class="btn outline small" onclick="chooseCoverFor('book:${b.id}')">להחליף כריכה</button><button class="btn primary" style="margin-top:12px" onclick="saveBookEdit('${b.id}')">לשמור</button>`);
+  $('#sheet').dataset.stars=b.stars||0;$('#sheet').dataset.heat=b.heat||0;$('#sheet').dataset.speed=b.speedLabel||'';$('#sheet').dataset.reason=b.abandonReason||'';
+}
+function editPickStars(n){$('#sheet').dataset.stars=n;document.querySelectorAll('#editStarRow .rateBtn').forEach((b,i)=>b.classList.toggle('on',i<n))}
+function editPickHeat(n){const cur=Number($('#sheet').dataset.heat||0),value=cur===n?0:n;$('#sheet').dataset.heat=value;document.querySelectorAll('#editHeat .flameBtn').forEach((b,i)=>b.classList.toggle('on',i<value))}
+function editPickSpeed(btn){btn.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));btn.classList.add('on');$('#sheet').dataset.speed=btn.textContent.trim()}
+function editPickReason(btn){btn.parentElement.querySelectorAll('.reason').forEach(x=>x.classList.remove('on'));btn.classList.add('on');$('#sheet').dataset.reason=btn.textContent.trim()}
+function saveBookEdit(bookId){const b=S.books.find(x=>x.id===bookId);if(!b)return;const title=$('#editBookTitle').value.trim();if(!title){toast('צריך שם לספר');return}b.title=title;b.author=$('#editBookAuthor').value.trim();if(b.status==='finished'){b.stars=Number($('#sheet').dataset.stars||0);b.heat=Number($('#sheet').dataset.heat||0);b.speedLabel=$('#sheet').dataset.speed||'';b.note=$('#editNote').value.trim()}else{b.abandonReason=$('#sheet').dataset.reason||'';b.abandonNote=$('#editAbandonNote').value.trim()}save();closeModal();render();toast('עודכן')}
+async function deleteBook(bookId){if(!confirm('למחוק את הספר מהמדף?'))return;const b=S.books.find(x=>x.id===bookId);if(b?.coverKey){await dbDelete(b.coverKey);coverCache.delete(b.coverKey)}S.books=S.books.filter(x=>x.id!==bookId);save();closeModal();render();toast('נמחק')}
+
+function chooseCoverFor(target){uploadTarget=target;$('#coverInput').value='';$('#coverInput').click()}
+$('#coverInput').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file||!uploadTarget)return;try{const data=await compressImage(file);if(uploadTarget==='new'){draftCoverData=data;const preview=$('#newCoverPreview');if(preview){preview.outerHTML=`<img id="newCoverPreview" class="uploadPreview" src="${data}" alt="תצוגת כריכה">`}}else if(uploadTarget==='current'||uploadTarget==='currentEdit'){const key=S.current.coverKey||`cover-${S.current.id}`;await dbPut(key,data);coverCache.set(key,data);S.current.coverKey=key;S.current.coverImage='';save();closeModal();render();toast('הכריכה עודכנה')}else if(uploadTarget.startsWith('book:')){const bookId=uploadTarget.slice(5),b=S.books.find(x=>x.id===bookId);if(b){const key=b.coverKey||`cover-${b.id}`;await dbPut(key,data);coverCache.set(key,data);b.coverKey=key;b.coverImage='';save();closeModal();render();toast('הכריכה עודכנה')}}}catch(err){console.error(err);toast('לא הצלחתי לקרוא את התמונה')}});
+function compressImage(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const max=900,scale=Math.min(1,max/Math.max(img.width,img.height));const w=Math.max(1,Math.round(img.width*scale)),h=Math.max(1,Math.round(img.height*scale));const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);resolve(canvas.toDataURL('image/webp',.82))};img.src=reader.result};reader.readAsDataURL(file)})}
+
+function openSettings(){
+  openModal(`${closeHead('גיבוי ושחזור')}<div class="settingsList"><button class="settingBtn" onclick="exportBackup()">להוריד גיבוי<small>קובץ JSON עם כל הספרים והכריכות</small></button><button class="settingBtn" onclick="$('#restoreInput').click()">לשחזר מגיבוי<small>מחליף את המידע הקיים בקובץ שבחרת</small></button><button class="settingBtn" onclick="clearAllData()" style="color:var(--danger)">למחוק את כל המידע</button></div>`)
+}
+async function exportBackup(){
+  const books=[];for(const b of S.books){books.push({...b,coverData:b.coverKey?await dbGet(b.coverKey):b.coverImage||''})}
+  const current=S.current?{...S.current,coverData:S.current.coverKey?await dbGet(S.current.coverKey):S.current.coverImage||''}:null;
+  const payload={version:'reimagined-v1',exportedAt:today(),books,current};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`od-perek-ehad-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('הגיבוי ירד')
+}
+$('#restoreInput').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text());if(!Array.isArray(parsed.books))throw new Error('bad');if(!confirm('לשחזר את הגיבוי ולהחליף את המידע הקיים?'))return;const books=[];for(const raw of parsed.books){const b=normalizeBook(raw);if(raw.coverData){b.coverKey=`cover-${b.id}`;await dbPut(b.coverKey,raw.coverData);coverCache.set(b.coverKey,raw.coverData)}b.coverImage='';books.push(b)}let current=normalizeCurrent(parsed.current);if(current&&parsed.current?.coverData){current.coverKey=`cover-${current.id}`;await dbPut(current.coverKey,parsed.current.coverData);coverCache.set(current.coverKey,parsed.current.coverData);current.coverImage=''}S={books,current,appVersion:'reimagined-v1'};save();closeModal();render();toast('השחזור הושלם')}catch(err){toast('זה לא נראה כמו קובץ גיבוי תקין')}})
+async function clearAllData(){if(!confirm('למחוק את כל הספרים והמחשבות? אי אפשר לבטל.'))return;for(const item of [...S.books,...(S.current?[S.current]:[])])if(item.coverKey)await dbDelete(item.coverKey);coverCache.clear();S={books:[],current:null,appVersion:'reimagined-v1'};save();closeModal();activeScreen='now';render();document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen==='now'));toast('המידע נמחק')}
+
+function icon(name){
+  const map={
+    more:`<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>`,
+    settings:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/></svg>`,
+    search:`<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>`
+  };return map[name]||''
+}
+
+async function init(){
+  try{coverDB=await openDB()}catch(e){console.warn('IndexedDB unavailable',e);coverDB={transaction:()=>{throw e}}}
+  S=loadState();
+  if(coverDB&&coverDB.transaction){try{await migrateCovers()}catch(e){console.warn(e)}}
+  render();$('#loading').classList.add('hide');
+  if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+init();
+</script>
+</body>
+</html>

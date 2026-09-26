@@ -388,11 +388,13 @@ function speedFromOld(value){
 }
 function normalizeCurrent(c){
   if(!c)return null;
-  return {...c,id:c.id||id(),title:String(c.title||'').trim(),author:String(c.author||'').trim(),coverKey:c.coverKey||'',coverImage:c.coverImage||'',startedAt:c.startedAt||today(),thoughts:meaningfulThoughts(c)};
+  const {coverData,...record}=c; // Backup images belong in IndexedDB, never localStorage.
+  return {...record,id:c.id||id(),title:String(c.title||'').trim(),author:String(c.author||'').trim(),coverKey:c.coverKey||'',coverImage:c.coverImage||'',startedAt:c.startedAt||today(),thoughts:meaningfulThoughts(c)};
 }
 function normalizeBook(b){
   const status=b.status==='abandoned'?'abandoned':'finished';
-  return {...b,id:b.id||id(),title:String(b.title||'').trim(),author:String(b.author||'').trim(),status,coverKey:b.coverKey||'',coverImage:b.coverImage||'',thoughts:meaningfulThoughts(b),stars:Math.max(0,Math.min(5,Number(b.stars)||0)),heat:Math.max(0,Math.min(5,Number(b.heat)||0)),speedLabel:b.speedLabel||speedFromOld(b.speed),note:String(b.note||b.shimiLine||b.friendPitch||b.about||'').trim(),abandonReason:String(b.abandonReason||b.abandonMood||'').trim(),abandonNote:String(b.abandonNote||'').trim(),finishedAt:b.finishedAt||b.createdAt||'',abandonedAt:b.abandonedAt||b.createdAt||''};
+  const {coverData,...record}=b;
+  return {...record,id:b.id||id(),title:String(b.title||'').trim(),author:String(b.author||'').trim(),status,coverKey:b.coverKey||'',coverImage:b.coverImage||'',thoughts:meaningfulThoughts(b),stars:Math.max(0,Math.min(5,Number(b.stars)||0)),heat:Math.max(0,Math.min(5,Number(b.heat)||0)),speedLabel:b.speedLabel||speedFromOld(b.speed),note:String(b.note||b.shimiLine||b.friendPitch||b.about||'').trim(),abandonReason:String(b.abandonReason||b.abandonMood||'').trim(),abandonNote:String(b.abandonNote||'').trim(),finishedAt:b.finishedAt||b.createdAt||'',abandonedAt:b.abandonedAt||b.createdAt||''};
 }
 function loadState(){
   try{const raw=localStorage.getItem(KEY);if(raw){const parsed=JSON.parse(raw);return {books:Array.isArray(parsed.books)?parsed.books.map(normalizeBook):[],current:normalizeCurrent(parsed.current),appVersion:'reimagined-v1'}}}catch(e){console.warn(e)}
@@ -562,7 +564,30 @@ async function exportBackup(){
   const payload={version:'reimagined-v1',exportedAt:today(),books,current};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`od-perek-ehad-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('הגיבוי ירד')
 }
-$('#restoreInput').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text());if(!Array.isArray(parsed.books))throw new Error('bad');if(!confirm('לשחזר את הגיבוי ולהחליף את המידע הקיים?'))return;const books=[];for(const raw of parsed.books){const b=normalizeBook(raw);if(raw.coverData){b.coverKey=`cover-${b.id}`;await dbPut(b.coverKey,raw.coverData);coverCache.set(b.coverKey,raw.coverData)}b.coverImage='';books.push(b)}let current=normalizeCurrent(parsed.current);if(current&&parsed.current?.coverData){current.coverKey=`cover-${current.id}`;await dbPut(current.coverKey,parsed.current.coverData);coverCache.set(current.coverKey,parsed.current.coverData);current.coverImage=''}S={books,current,appVersion:'reimagined-v1'};save();closeModal();render();toast('השחזור הושלם')}catch(err){toast('זה לא נראה כמו קובץ גיבוי תקין')}})
+$('#restoreInput').addEventListener('change',async e=>{
+  const input=e.target,file=input.files?.[0];
+  if(!file)return;
+  try{
+    const parsed=JSON.parse(await file.text());
+    if(!Array.isArray(parsed.books))throw new SyntaxError('Invalid backup structure');
+    if(!confirm('לשחזר את הגיבוי ולהחליף את המידע הקיים?'))return;
+    const books=[];
+    for(const raw of parsed.books){
+      const b=normalizeBook(raw);
+      if(raw.coverData){b.coverKey=`cover-${b.id}`;await dbPut(b.coverKey,raw.coverData);coverCache.set(b.coverKey,raw.coverData)}
+      b.coverImage='';books.push(b);
+    }
+    let current=normalizeCurrent(parsed.current);
+    if(current&&parsed.current?.coverData){current.coverKey=`cover-${current.id}`;await dbPut(current.coverKey,parsed.current.coverData);coverCache.set(current.coverKey,parsed.current.coverData);current.coverImage=''}
+    const restored={books,current,appVersion:'reimagined-v1'};
+    localStorage.setItem(KEY,JSON.stringify(restored));
+    S=restored;closeModal();render();toast('השחזור הושלם');
+  }catch(err){
+    console.error('Backup restore failed',err);
+    toast(err?.name==='QuotaExceededError'?'אין מספיק מקום במכשיר לשחזור':err instanceof SyntaxError?'זה לא נראה כמו קובץ גיבוי תקין':'השחזור לא הושלם. נסי שוב');
+  }finally{input.value=''}
+});
+
 async function clearAllData(){if(!confirm('למחוק את כל הספרים והמחשבות? אי אפשר לבטל.'))return;for(const item of [...S.books,...(S.current?[S.current]:[])])if(item.coverKey)await dbDelete(item.coverKey);coverCache.clear();S={books:[],current:null,appVersion:'reimagined-v1'};save();closeModal();activeScreen='now';render();document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('on',b.dataset.screen==='now'));toast('המידע נמחק')}
 
 function icon(name){

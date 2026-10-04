@@ -452,16 +452,20 @@ function renderNow(){
     <button class="tinyLink" onclick="chooseCoverFor('current')">${coverSrc(c)?'להחליף כריכה':'להוסיף כריכה מהגלריה'}</button>`;
 }
 
-function renderShelf(){
+function renderShelf(updateResultsOnly=false){
   const el=$('#shelfScreen');
   const q=shelfQuery.trim().toLowerCase();
   const books=(S.books||[]).filter(b=>shelfFilter==='all'||b.status===shelfFilter).filter(b=>!q||`${b.title} ${b.author}`.toLowerCase().includes(q)).sort((a,b)=>new Date(b.finishedAt||b.abandonedAt||0)-new Date(a.finishedAt||a.abandonedAt||0));
+  const gridHTML=books.length?books.map(tileHTML).join(''):`<div class="emptyShelf"><b>המדף עדיין שקט</b>${q?'לא מצאתי ספר שמתאים לחיפוש.':'ספרים שסיימת או נטשת יופיעו כאן.'}</div>`;
+  // Keep the search input mounted so typing preserves focus, selection and IME composition.
+  const grid=el.querySelector('.shelfGrid');
+  if(updateResultsOnly&&grid){grid.innerHTML=gridHTML;return}
   const finished=S.books.filter(b=>b.status==='finished').length, abandoned=S.books.filter(b=>b.status==='abandoned').length;
   el.innerHTML=`
     <div class="shelfHeader"><div><h2>המדף שלי</h2><p>${finished} סיימתי · ${abandoned} נטשתי</p></div><button class="iconBtn" onclick="openSettings()" aria-label="גיבוי והגדרות">${icon('settings')}</button></div>
-    <div class="searchBox">${icon('search')}<input value="${esc(shelfQuery)}" oninput="shelfQuery=this.value;renderShelf()" placeholder="לחפש ספר או סופרת"></div>
+    <div class="searchBox">${icon('search')}<input value="${esc(shelfQuery)}" oninput="shelfQuery=this.value;renderShelf(true)" placeholder="לחפש ספר או סופרת"></div>
     <div class="filters"><button class="chip ${shelfFilter==='all'?'on':''}" onclick="setShelfFilter('all')">הכל</button><button class="chip ${shelfFilter==='finished'?'on':''}" onclick="setShelfFilter('finished')">סיימתי</button><button class="chip ${shelfFilter==='abandoned'?'on':''}" onclick="setShelfFilter('abandoned')">נטשתי</button></div>
-    <div class="shelfGrid">${books.length?books.map(tileHTML).join(''):`<div class="emptyShelf"><b>המדף עדיין שקט</b>${q?'לא מצאתי ספר שמתאים לחיפוש.':'ספרים שסיימת או נטשת יופיעו כאן.'}</div>`}</div>`;
+    <div class="shelfGrid">${gridHTML}</div>`;
 }
 function tileHTML(b){
   const meta=b.status==='finished'?(b.stars?`${'★'.repeat(b.stars)}${'☆'.repeat(5-b.stars)}`:'סיימתי'):`♡ ${esc(b.abandonReason||'נטשתי')}`;
